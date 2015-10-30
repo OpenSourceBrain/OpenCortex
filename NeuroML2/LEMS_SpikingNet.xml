@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.1.5 (libNeuroML v0.2.10)
+        This LEMS file has been automatically generated using PyNeuroML v0.1.6 (libNeuroML v0.2.10)
 
      -->
     
@@ -16,7 +16,7 @@
     
     <Include file="SpikingNet.nml"/>
    
-    <Simulation id="SpikingNet" length="1000ms" step="0.05ms" target="simplenet">
+    <Simulation id="SpikingNet" length="1000ms" step="0.05ms" target="SpikingNet_network">
         
         <Display id="display_voltages0" title="Voltages Pop0" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-68" ymax="-47">
             <Line id="Pop0[0]: Vm" quantity="Pop0[0]/v" scale="1mV" color="#f46d4e" timeScale="1ms"/>

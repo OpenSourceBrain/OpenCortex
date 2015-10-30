@@ -1,8 +1,8 @@
 <neuroml xmlns="http://www.neuroml.org/schema/neuroml2"  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" id="SpikingNet">
-    <expTwoSynapse id="syn0" erev="0mV" gbase="10nS" tauDecay="10ms" tauRise="0.5ms"/>
+    <expTwoSynapse id="syn0" erev="0mV" gbase="1nS" tauDecay="10ms" tauRise="0.5ms"/>
     <iafCell id="iaf0" reset="-65mV" C="1.0 nF" thresh="-50mV" leakConductance="10 nS" leakReversal="-60mV"/>
-    <poissonFiringSynapse id="poissonFiringSyn" synapse="syn0" averageRate="5 Hz" spikeTarget="./syn0"/>
-    <network id="simplenet">
+    <poissonFiringSynapse id="poissonFiringSyn" synapse="syn0" averageRate="150 Hz" spikeTarget="./syn0"/>
+    <network id="SpikingNet_network">
         <population id="Pop0" component="iaf0" size="10"/>
         <population id="Pop1" component="iaf0" size="10"/>
         <projection id="Proj0" postsynapticPopulation="Pop1" presynapticPopulation="Pop0" synapse="syn0">
