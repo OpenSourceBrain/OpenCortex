@@ -34,7 +34,7 @@ nml_doc.networks.append(net)
 
 
 # Create populations
-size0 = 3
+size0 = 5
 pop0 = neuroml.Population(id="Pop0", size = size0,
                           component=izh0.id)
 net.populations.append(pop0)
@@ -65,7 +65,7 @@ validate_neuroml2(nml_file)
 
 # Create a LEMSSimulation to manage creation of LEMS file
 duration = 1000  # ms
-dt = 0.05  # ms
+dt = 0.01  # ms
 ls = LEMSSimulation(ref, duration, dt)
 
 
