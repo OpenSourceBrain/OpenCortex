@@ -85,6 +85,32 @@ def add_poisson_firing_synapse(nml_doc, id, average_rate, synapse_id):
     nml_doc.poisson_firing_synapses.append(pfs)
 
     return pfs
+
+def add_pulse_generator(nml_doc, id, delay, duration, amplitude):
+
+    pg = neuroml.PulseGenerator(id=id,
+                                delay=delay,
+                                duration=duration,
+                                amplitude=amplitude)
+                                       
+    nml_doc.pulse_generators.append(pg)
+
+    return pg
+    
+    
+def add_single_cell_population(net, pop_id, cell_id, x=0, y=0, z=0, color=None):
+    
+    pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=1)
+    if color is not None:
+        pop.properties.append(Property("color",color))
+    net.populations.append(pop)
+
+    inst = neuroml.Instance(id=0)
+    pop.instances.append(inst)
+    inst.location = neuroml.Location(x=x, y=y, z=z)
+
+    return pop
+    
     
 def add_population_in_rectangular_region(net, pop_id, cell_id, size, x_min, y_min, z_min, x_size, y_size, z_size, color=None):
     
@@ -192,7 +218,7 @@ def generate_lems_simulation(nml_doc, network, nml_file_name, duration, dt):
         # Specify Displays and Output Files
         if pop.size>0:
             disp = "display_%s"%pop.id
-            ls.create_display(disp, "Voltages %s"%pop.id, "-70", "10")
+            ls.create_display(disp, "Voltages %s"%pop.id, "-80", "40")
 
             of = "Volts_file_%s"%pop.id
             ls.create_output_file(of, "v_%s.dat"%pop.id)

@@ -1,0 +1,55 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.1.7 (libNeuroML v0.2.12)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="Sim_IClamps"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+    <Include file="IClamps.net.nml"/>
+    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
+    <Include file="../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml"/>
+    <Include file="Ca_conc.nml"/>
+    <Include file="Ca_pyr.channel.nml"/>
+    <Include file="Kahp_pyr.channel.nml"/>
+    <Include file="Kdr_pyr.channel.nml"/>
+    <Include file="LeakConductance_pyr.channel.nml"/>
+    <Include file="Na_pyr.channel.nml"/>
+    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
+    <Include file="../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml"/>
+    <Include file="Ca_conc.nml"/>
+    <Include file="Ca_pyr.channel.nml"/>
+    <Include file="Kahp_pyr.channel.nml"/>
+    <Include file="Kdr_pyr.channel.nml"/>
+    <Include file="LeakConductance_pyr.channel.nml"/>
+    <Include file="Na_pyr.channel.nml"/>
+   
+    <Simulation id="Sim_IClamps" length="500ms" step="0.025ms" target="IClamps">
+        
+        <Display id="display_popIzh" title="Voltages popIzh" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
+            <Line id="popIzh 0: Vm" quantity="popIzh/0/RS/v" scale="1mV" color="#f7697f" timeScale="1ms"/>
+        </Display>
+        
+        <Display id="display_popHH" title="Voltages popHH" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
+            <Line id="popHH 0: Vm" quantity="popHH/0/pyr_4_sym_soma/v" scale="1mV" color="#70d3da" timeScale="1ms"/>
+        </Display>
+        
+        <OutputFile id="Volts_file_popIzh" fileName="v_popIzh.dat">
+            <OutputColumn id="v_0" quantity="popIzh/0/RS/v"/> 
+        </OutputFile>
+        
+        <OutputFile id="Volts_file_popHH" fileName="v_popHH.dat">
+            <OutputColumn id="v_0" quantity="popHH/0/pyr_4_sym_soma/v"/> 
+        </OutputFile>
+        
+    </Simulation>
+
+</Lems>

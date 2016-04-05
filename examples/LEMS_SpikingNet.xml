@@ -20,7 +20,7 @@
    
     <Simulation id="Sim_SpikingNet" length="1000ms" step="0.05ms" target="SpikingNet">
         
-        <Display id="display_pop0" title="Voltages pop0" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-70" ymax="10">
+        <Display id="display_pop0" title="Voltages pop0" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
             <Line id="pop0 0: Vm" quantity="pop0/0/RS/v" scale="1mV" color="#6c0a9b" timeScale="1ms"/>
             <Line id="pop0 1: Vm" quantity="pop0/1/RS/v" scale="1mV" color="#af6ddc" timeScale="1ms"/>
             <Line id="pop0 2: Vm" quantity="pop0/2/RS/v" scale="1mV" color="#d8cf04" timeScale="1ms"/>
@@ -33,7 +33,7 @@
             <Line id="pop0 9: Vm" quantity="pop0/9/RS/v" scale="1mV" color="#1d1dfe" timeScale="1ms"/>
         </Display>
         
-        <Display id="display_pop1" title="Voltages pop1" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-70" ymax="10">
+        <Display id="display_pop1" title="Voltages pop1" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
             <Line id="pop1 0: Vm" quantity="pop1/0/RS/v" scale="1mV" color="#6016d6" timeScale="1ms"/>
             <Line id="pop1 1: Vm" quantity="pop1/1/RS/v" scale="1mV" color="#36c138" timeScale="1ms"/>
             <Line id="pop1 2: Vm" quantity="pop1/2/RS/v" scale="1mV" color="#b75b48" timeScale="1ms"/>
