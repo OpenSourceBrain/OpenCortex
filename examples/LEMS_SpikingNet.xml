@@ -1,0 +1,77 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.1.7 (libNeuroML v0.2.12)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="Sim_SpikingNet"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+    <Include file="SpikingNet.net.nml"/>
+    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
+    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
+   
+    <Simulation id="Sim_SpikingNet" length="1000ms" step="0.05ms" target="SpikingNet">
+        
+        <Display id="display_pop0" title="Voltages pop0" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-70" ymax="10">
+            <Line id="pop0 0: Vm" quantity="pop0/0/RS/v" scale="1mV" color="#6c0a9b" timeScale="1ms"/>
+            <Line id="pop0 1: Vm" quantity="pop0/1/RS/v" scale="1mV" color="#af6ddc" timeScale="1ms"/>
+            <Line id="pop0 2: Vm" quantity="pop0/2/RS/v" scale="1mV" color="#d8cf04" timeScale="1ms"/>
+            <Line id="pop0 3: Vm" quantity="pop0/3/RS/v" scale="1mV" color="#d6b97c" timeScale="1ms"/>
+            <Line id="pop0 4: Vm" quantity="pop0/4/RS/v" scale="1mV" color="#17c640" timeScale="1ms"/>
+            <Line id="pop0 5: Vm" quantity="pop0/5/RS/v" scale="1mV" color="#42a40d" timeScale="1ms"/>
+            <Line id="pop0 6: Vm" quantity="pop0/6/RS/v" scale="1mV" color="#6906ab" timeScale="1ms"/>
+            <Line id="pop0 7: Vm" quantity="pop0/7/RS/v" scale="1mV" color="#db9a60" timeScale="1ms"/>
+            <Line id="pop0 8: Vm" quantity="pop0/8/RS/v" scale="1mV" color="#46d899" timeScale="1ms"/>
+            <Line id="pop0 9: Vm" quantity="pop0/9/RS/v" scale="1mV" color="#1d1dfe" timeScale="1ms"/>
+        </Display>
+        
+        <Display id="display_pop1" title="Voltages pop1" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-70" ymax="10">
+            <Line id="pop1 0: Vm" quantity="pop1/0/RS/v" scale="1mV" color="#6016d6" timeScale="1ms"/>
+            <Line id="pop1 1: Vm" quantity="pop1/1/RS/v" scale="1mV" color="#36c138" timeScale="1ms"/>
+            <Line id="pop1 2: Vm" quantity="pop1/2/RS/v" scale="1mV" color="#b75b48" timeScale="1ms"/>
+            <Line id="pop1 3: Vm" quantity="pop1/3/RS/v" scale="1mV" color="#966706" timeScale="1ms"/>
+            <Line id="pop1 4: Vm" quantity="pop1/4/RS/v" scale="1mV" color="#0d7092" timeScale="1ms"/>
+            <Line id="pop1 5: Vm" quantity="pop1/5/RS/v" scale="1mV" color="#e09f46" timeScale="1ms"/>
+            <Line id="pop1 6: Vm" quantity="pop1/6/RS/v" scale="1mV" color="#70c837" timeScale="1ms"/>
+            <Line id="pop1 7: Vm" quantity="pop1/7/RS/v" scale="1mV" color="#c6e211" timeScale="1ms"/>
+            <Line id="pop1 8: Vm" quantity="pop1/8/RS/v" scale="1mV" color="#2a5275" timeScale="1ms"/>
+            <Line id="pop1 9: Vm" quantity="pop1/9/RS/v" scale="1mV" color="#4ed3a8" timeScale="1ms"/>
+        </Display>
+        
+        <OutputFile id="Volts_file_pop0" fileName="v_pop0.dat">
+            <OutputColumn id="v_0" quantity="pop0/0/RS/v"/> 
+            <OutputColumn id="v_1" quantity="pop0/1/RS/v"/> 
+            <OutputColumn id="v_2" quantity="pop0/2/RS/v"/> 
+            <OutputColumn id="v_3" quantity="pop0/3/RS/v"/> 
+            <OutputColumn id="v_4" quantity="pop0/4/RS/v"/> 
+            <OutputColumn id="v_5" quantity="pop0/5/RS/v"/> 
+            <OutputColumn id="v_6" quantity="pop0/6/RS/v"/> 
+            <OutputColumn id="v_7" quantity="pop0/7/RS/v"/> 
+            <OutputColumn id="v_8" quantity="pop0/8/RS/v"/> 
+            <OutputColumn id="v_9" quantity="pop0/9/RS/v"/> 
+        </OutputFile>
+        
+        <OutputFile id="Volts_file_pop1" fileName="v_pop1.dat">
+            <OutputColumn id="v_0" quantity="pop1/0/RS/v"/> 
+            <OutputColumn id="v_1" quantity="pop1/1/RS/v"/> 
+            <OutputColumn id="v_2" quantity="pop1/2/RS/v"/> 
+            <OutputColumn id="v_3" quantity="pop1/3/RS/v"/> 
+            <OutputColumn id="v_4" quantity="pop1/4/RS/v"/> 
+            <OutputColumn id="v_5" quantity="pop1/5/RS/v"/> 
+            <OutputColumn id="v_6" quantity="pop1/6/RS/v"/> 
+            <OutputColumn id="v_7" quantity="pop1/7/RS/v"/> 
+            <OutputColumn id="v_8" quantity="pop1/8/RS/v"/> 
+            <OutputColumn id="v_9" quantity="pop1/9/RS/v"/> 
+        </OutputFile>
+        
+    </Simulation>
+
+</Lems>

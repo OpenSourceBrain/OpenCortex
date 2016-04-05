@@ -17,37 +17,42 @@ import random
 import sys
 
 
-def add_connection(projection, id, pre_pop, pre_component, pre_cell_id, pre_seg_id, post_pop, post_component, post_cell_id, post_seg_id):
+def add_connection(projection, id, presynaptic_population, pre_cell_id, pre_seg_id, postsynaptic_population, post_cell_id, post_seg_id):
 
     connection = neuroml.Connection(id=id, \
-                            pre_cell_id="../%s/%i/%s"%(pre_pop, pre_cell_id, pre_component), \
+                            pre_cell_id="../%s/%i/%s"%(presynaptic_population.id, pre_cell_id, presynaptic_population.component), \
                             pre_segment_id=pre_seg_id, \
                             pre_fraction_along=0.5,
-                            post_cell_id="../%s/%i/%s"%(post_pop, post_cell_id, post_component), \
+                            post_cell_id="../%s/%i/%s"%(postsynaptic_population.id, post_cell_id, postsynaptic_population.component), \
                             post_segment_id=post_seg_id,
                             post_fraction_along=0.5)
 
     projection.connections.append(connection)
     
 
-def add_probabilistic_projection(net, presynaptic_population, pre_component, postsynaptic_population, post_component, prefix, synapse, numCells_pre, numCells_post, connection_probability):
+def add_probabilistic_projection(net, 
+                                 prefix, 
+                                 presynaptic_population, 
+                                 postsynaptic_population, 
+                                 synapse_id,  
+                                 connection_probability):
     
-    if numCells_pre==0 or numCells_post==0:
+    if presynaptic_population.size==0 or postsynaptic_population.size==0:
         return None
 
-    proj = neuroml.Projection(id="%s_%s_%s"%(prefix,presynaptic_population, postsynaptic_population), 
-                      presynaptic_population=presynaptic_population, 
-                      postsynaptic_population=postsynaptic_population, 
-                      synapse=synapse)
+    proj = neuroml.Projection(id="%s_%s_%s"%(prefix,presynaptic_population.id, postsynaptic_population.id), 
+                      presynaptic_population=presynaptic_population.id, 
+                      postsynaptic_population=postsynaptic_population.id, 
+                      synapse=synapse_id)
 
 
     count = 0
 
-    for i in range(0, numCells_pre):
-        for j in range(0, numCells_post):
+    for i in range(0, presynaptic_population.size):
+        for j in range(0, postsynaptic_population.size):
             if i != j:
                 if random.random() < connection_probability:
-                    add_connection(proj, count, presynaptic_population, pre_component, i, 0, postsynaptic_population, post_component, j, 0)
+                    add_connection(proj, count, presynaptic_population, i, 0, postsynaptic_population, j, 0)
                     count+=1
 
     net.projections.append(proj)
