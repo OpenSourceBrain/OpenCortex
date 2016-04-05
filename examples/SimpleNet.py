@@ -5,7 +5,7 @@ population_size = 3
 
 nml_doc, network = oc.generate_network("SimpleNet")
 
-oc.add_cell_to_network(nml_doc,'../NeuroML2/prototypes/izhikevich/RS.cell.nml')
+oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml')
 
 pop = oc.add_population_in_rectangular_region(network,
                                               'RS_pop',
@@ -33,7 +33,7 @@ oc.add_inputs_to_population(network,
                             all_cells=True)
 
 nml_file_name = '%s.net.nml'%network.id
-oc.save_network(nml_doc, nml_file_name)
+oc.save_network(nml_doc, nml_file_name, validate=True)
 
 oc.generate_lems_simulation(nml_doc, 
                             network, 

@@ -21,9 +21,9 @@
     <Simulation id="Sim_SimpleNet" length="500ms" step="0.025ms" target="SimpleNet">
         
         <Display id="display_RS_pop" title="Voltages RS_pop" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-70" ymax="10">
-            <Line id="RS_pop 0: Vm" quantity="RS_pop/0/RS/v" scale="1mV" color="#d6e460" timeScale="1ms"/>
-            <Line id="RS_pop 1: Vm" quantity="RS_pop/1/RS/v" scale="1mV" color="#9738e7" timeScale="1ms"/>
-            <Line id="RS_pop 2: Vm" quantity="RS_pop/2/RS/v" scale="1mV" color="#8be17d" timeScale="1ms"/>
+            <Line id="RS_pop 0: Vm" quantity="RS_pop/0/RS/v" scale="1mV" color="#3c9f90" timeScale="1ms"/>
+            <Line id="RS_pop 1: Vm" quantity="RS_pop/1/RS/v" scale="1mV" color="#07e36d" timeScale="1ms"/>
+            <Line id="RS_pop 2: Vm" quantity="RS_pop/2/RS/v" scale="1mV" color="#c9ed02" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Volts_file_RS_pop" fileName="v_RS_pop.dat">

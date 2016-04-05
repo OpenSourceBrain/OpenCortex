@@ -15,7 +15,12 @@ NeuroML2/*pynn.py
 NeuroML2/*definition.py
 NeuroML2/*.json
 
+
+examples/*.hoc
+examples/*.mod
+examples/*nrn.py
+/examples/*.dat
+
 OpenCortex.egg-info
 dist
 build/lib*
-/examples/*.dat
