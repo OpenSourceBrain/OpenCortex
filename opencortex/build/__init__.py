@@ -1,0 +1,201 @@
+#####################
+### Subject to change without notice!!
+#####################
+
+import opencortex
+import neuroml
+import pyneuroml
+import pyneuroml.lems
+
+import neuroml.writers as writers
+
+from pyneuroml import pynml
+from pyneuroml.lems.LEMSSimulation import LEMSSimulation
+
+from random import random
+from random import seed
+
+import sys
+
+
+def add_connection(projection, id, pre_pop, pre_component, pre_cell_id, pre_seg_id, post_pop, post_component, post_cell_id, post_seg_id):
+
+    connection = neuroml.Connection(id=id, \
+                            pre_cell_id="../%s/%i/%s"%(pre_pop, pre_cell_id, pre_component), \
+                            pre_segment_id=pre_seg_id, \
+                            pre_fraction_along=0.5,
+                            post_cell_id="../%s/%i/%s"%(post_pop, post_cell_id, post_component), \
+                            post_segment_id=post_seg_id,
+                            post_fraction_along=0.5)
+
+    projection.connections.append(connection)
+    
+
+def add_probabilistic_projection(net, presynaptic_population, pre_component, postsynaptic_population, post_component, prefix, synapse, numCells_pre, numCells_post, connection_probability):
+    
+    if numCells_pre==0 or numCells_post==0:
+        return None
+
+    proj = neuroml.Projection(id="%s_%s_%s"%(prefix,presynaptic_population, postsynaptic_population), 
+                      presynaptic_population=presynaptic_population, 
+                      postsynaptic_population=postsynaptic_population, 
+                      synapse=synapse)
+
+
+    count = 0
+
+    for i in range(0, numCells_pre):
+        for j in range(0, numCells_post):
+            if i != j:
+                if random() < connection_probability:
+                    add_connection(proj, count, presynaptic_population, pre_component, i, 0, postsynaptic_population, post_component, j, 0)
+                    count+=1
+
+    net.projections.append(proj)
+
+    return proj
+    
+def add_cell_to_network(nml_doc,cell_nml2_path):
+    
+    nml_doc.includes.append(neuroml.IncludeType(cell_nml2_path)) 
+    
+    
+def add_exp_two_syn(nml_doc, id, gbase, erev, tau_rise, tau_decay):
+    # Define synapse
+    syn0 = neuroml.ExpTwoSynapse(id=id, gbase=gbase,
+                                 erev=erev,
+                                 tau_rise=tau_rise,
+                                 tau_decay=tau_decay)
+                                 
+    nml_doc.exp_two_synapses.append(syn0)
+    
+    return syn0
+
+def add_poisson_firing_synapse(nml_doc, id, average_rate, synapse_id):
+
+    pfs = neuroml.PoissonFiringSynapse(id=id,
+                                       average_rate=average_rate,
+                                       synapse=synapse_id, 
+                                       spike_target="./%s"%synapse_id)
+                                       
+    nml_doc.poisson_firing_synapses.append(pfs)
+
+    return pfs
+    
+def add_population_in_rectangular_region(net, pop_id, cell_id, size, x_min, y_min, z_min, x_size, y_size, z_size, color=None):
+    
+    pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
+    if color is not None:
+        pop.properties.append(Property("color",color))
+    net.populations.append(pop)
+
+    for i in range(0, size) :
+            index = i
+            inst = neuroml.Instance(id=index)
+            pop.instances.append(inst)
+            inst.location = neuroml.Location(x=str(x_min +(x_size)*random()), y=str(y_min +(y_size)*random()), z=str(z_min+(z_size)*random()))
+    
+    return pop
+
+def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False, only_cells=None):
+    
+    input_list = neuroml.InputList(id=id,
+                         component=input_comp_id,
+                         populations=population.id)
+                         
+    if all_cells and only_cells is not None:
+        opencortex.print_comment_v("Error! Method opencortex.build.%s() called with both arguments all_cells and only_cells set!"%sys._getframe().f_code.co_name)
+        exit(-1)
+        
+    cell_ids = []
+    
+    if all_cells:
+        cell_ids = range(population.size)
+    if only_cells is not None:
+        cell_ids = only_cells
+        
+    count = 0
+    for cell_id in cell_ids:
+        input = neuroml.Input(id=count, 
+                      target="../%s/%i/%s"%(population.id, cell_id, population.component), 
+                      destination="synapses")  
+        input_list.input.append(input)
+        
+                         
+    net.input_lists.append(input_list)
+    
+    return input_list
+    
+
+def generate_network(reference):
+    
+    nml_doc = neuroml.NeuroMLDocument(id=reference)
+    
+    # Create network
+    network = neuroml.Network(id=reference)
+    nml_doc.networks.append(network)
+
+    opencortex.print_comment_v("Created NeuroMLDocument containing a network with id: %s"%reference)
+
+    return nml_doc, network
+
+
+def save_network(nml_doc, nml_file_name, validate=True, comment=True):
+
+    info = "\n\nThis NeuroML 2 file was generated by OpenCortex v%s using: \n"%(opencortex.__version__)
+    info += "    libNeuroML v%s\n"%(neuroml.__version__)
+    info += "    pyNeuroML v%s\n\n"%(pyneuroml.__version__)
+    
+    if nml_doc.notes:
+        nml_doc.notes += info
+    else:
+        nml_doc.notes = info
+    
+    writers.NeuroMLWriter.write(nml_doc, nml_file_name)
+    
+    opencortex.print_comment_v("Saved NeuroML with id: %s to %s"%(nml_doc.id, nml_file_name))
+    
+    if validate:
+        from pyneuroml.pynml import validate_neuroml2
+
+        passed = validate_neuroml2(nml_file_name)
+        
+        if passed:
+            opencortex.print_comment_v("Generated NeuroML file is valid")
+        else:
+            opencortex.print_comment_v("Generated NeuroML file is NOT valid!")
+            
+def generate_lems_simulation(nml_doc, network, nml_file_name, duration, dt):
+
+    ls = pyneuroml.lems.LEMSSimulation("Sim_%s"%nml_doc.id, duration, dt)
+
+    # Point to network as target of simulation
+    ls.assign_simulation_target(network.id)
+
+    # Include generated/existing NeuroML2 files
+    ls.include_neuroml2_file(nml_file_name)
+    for inc in nml_doc.includes:
+        ls.include_neuroml2_file(inc.href)
+
+    populations = nml_doc.networks[0].populations
+    
+    for pop in populations:
+        # Specify Displays and Output Files
+        if pop.size>0:
+            disp = "display_%s"%pop.id
+            ls.create_display(disp, "Voltages %s"%pop.id, "-70", "10")
+
+            of = "Volts_file_%s"%pop.id
+            ls.create_output_file(of, "v_%s.dat"%pop.id)
+
+
+            for i in range(pop.size):
+                quantity = "%s/%i/%s/v"%(pop.id, i, pop.component)
+                ls.add_line_to_display(disp, "%s %i: Vm"%(pop.id,i), quantity, "1mV", pynml.get_next_hex_color())
+                ls.add_column_to_output_file(of, "v_%i"%i, quantity)
+
+
+    # Save to LEMS XML file
+    lems_file_name = ls.save_to_file()
+            
+

@@ -17,5 +17,5 @@ NeuroML2/*.json
 
 OpenCortex.egg-info
 dist
-build
+build/lib*
 /examples/*.dat
