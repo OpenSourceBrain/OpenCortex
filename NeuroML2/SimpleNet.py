@@ -83,19 +83,21 @@ of0 = 'Volts0_file'
 ls.create_output_file(of0, "v_pop0.dat")
 
 max_traces = 10
+max_saves = 20
 
 for i in range(size0):
     quantity = "%s[%i]/v"%(pop0.id, i)
     if i<max_traces:
         ls.add_line_to_display(disp0, "%s[%i]: Vm"%(pop0.id,i), quantity, "1mV", pynml.get_next_hex_color())
-    ls.add_column_to_output_file(of0, 'v%i'%i, quantity)
+    if i<max_saves:
+        ls.add_column_to_output_file(of0, 'v%i'%i, quantity)
     
 
 # Save to LEMS XML file
 lems_file_name = ls.save_to_file()
 
 # Run with jNeuroML
-results1 = pynml.run_lems_with_jneuroml(lems_file_name, nogui=True, load_saved_data=True, plot=True)
+#results1 = pynml.run_lems_with_jneuroml(lems_file_name, nogui=True, load_saved_data=True, plot=True)
 
 # Run with jNeuroML_NEURON
 #results1 = pynml.run_lems_with_jneuroml_neuron(lems_file_name, nogui=True, load_saved_data=True, plot=True)
