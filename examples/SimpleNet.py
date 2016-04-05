@@ -14,11 +14,30 @@ pop = oc.add_population_in_rectangular_region(network,
                                               0,0,0,
                                               100,100,100)
                                               
-syn = oc.add_exp_two_syn(nml_doc, id="syn0", gbase="2nS",
-                             erev="0mV",
-                             tau_rise="0.5ms",
-                             tau_decay="10ms")
+syn = oc.add_exp_two_syn(nml_doc, 
+                         id="syn0", 
+                         gbase="2nS",
+                         erev="0mV",
+                         tau_rise="0.5ms",
+                         tau_decay="10ms")
+                             
+pfs = oc.add_poisson_firing_synapse(nml_doc,
+                                   id="poissonFiringSyn",
+                                   average_rate="50 Hz",
+                                   synapse_id=syn.id)
+                                   
+oc.add_inputs_to_population(network,
+                            "Stim0",
+                            pop,
+                            pfs.id,
+                            all_cells=True)
 
+nml_file_name = '%s.net.nml'%network.id
+oc.save_network(nml_doc, nml_file_name)
 
-oc.save_network(nml_doc, '%s.net.nml'%network.id)
+oc.generate_lems_simulation(nml_doc, 
+                            network, 
+                            nml_file_name, 
+                            duration =      500, 
+                            dt =            0.025)
                                               

@@ -1,0 +1,37 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.1.7 (libNeuroML v0.2.12)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="Sim_SimpleNet"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+    <Include file="SimpleNet.net.nml"/>
+    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
+    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
+   
+    <Simulation id="Sim_SimpleNet" length="500ms" step="0.025ms" target="SimpleNet">
+        
+        <Display id="display_RS_pop" title="Voltages RS_pop" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-70" ymax="10">
+            <Line id="RS_pop 0: Vm" quantity="RS_pop/0/RS/v" scale="1mV" color="#d6e460" timeScale="1ms"/>
+            <Line id="RS_pop 1: Vm" quantity="RS_pop/1/RS/v" scale="1mV" color="#9738e7" timeScale="1ms"/>
+            <Line id="RS_pop 2: Vm" quantity="RS_pop/2/RS/v" scale="1mV" color="#8be17d" timeScale="1ms"/>
+        </Display>
+        
+        <OutputFile id="Volts_file_RS_pop" fileName="v_RS_pop.dat">
+            <OutputColumn id="v_0" quantity="RS_pop/0/RS/v"/> 
+            <OutputColumn id="v_1" quantity="RS_pop/1/RS/v"/> 
+            <OutputColumn id="v_2" quantity="RS_pop/2/RS/v"/> 
+        </OutputFile>
+        
+    </Simulation>
+
+</Lems>
