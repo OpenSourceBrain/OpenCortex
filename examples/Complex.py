@@ -8,7 +8,7 @@ import opencortex.build as oc
 
 nml_doc, network = oc.generate_network("Complex")
 
-scale = 0.1
+scale = 0.01
 min_pop_size = 3
 
 def scale_pop_size(baseline):
@@ -20,6 +20,7 @@ oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml')
 oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/iaf/iaf.cell.nml')
 oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/iaf/iafRef.cell.nml')
 oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml')
+oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/acnet2/pyr_4_sym.cell.nml')
 
 xDim = 500
 yDim = 100
@@ -74,6 +75,22 @@ popIzh = oc.add_population_in_rectangular_region(network,
                                               xDim,yDim,zDim)
 offset+=yDim
 
+popPyrS = oc.add_population_in_rectangular_region(network,
+                                              'popPyrS',
+                                              'pyr_4_sym_soma',
+                                              scale_pop_size(20),
+                                              0,offset,0,
+                                              xDim,yDim,zDim)
+offset+=yDim
+'''
+popPyr = oc.add_population_in_rectangular_region(network,
+                                              'popPyr',
+                                              'pyr_4_sym',
+                                              scale_pop_size(20),
+                                              0,offset,0,
+                                              xDim,yDim,zDim)
+offset+=yDim'''
+
 
           
 #####   Inputs
@@ -86,9 +103,17 @@ oc.add_inputs_to_population(network, "Stim1",
                             popIaf, pfs200.id,
                             all_cells=True)
 
-oc.add_inputs_to_population(network, "Stim3",
+oc.add_inputs_to_population(network, "Stim2",
                             popIafRef, pfs200.id,
                             all_cells=True)
+
+oc.add_inputs_to_population(network, "Stim3",
+                            popPyrS, pfs100.id,
+                            all_cells=True)
+'''
+oc.add_inputs_to_population(network, "Stim4",
+                            popPyr, pfs100.id,
+                            all_cells=True)'''
 
 
 nml_file_name = '%s.net.nml'%network.id

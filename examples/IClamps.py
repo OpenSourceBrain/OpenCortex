@@ -34,9 +34,9 @@ oc.add_inputs_to_population(network,
                             popIzh,
                             pgIzh.id,
                             all_cells=True)
-                                   
+                        
 oc.add_inputs_to_population(network,
-                            "Stim0",
+                            "Stim1",
                             popHH,
                             pgHH.id,
                             all_cells=True)

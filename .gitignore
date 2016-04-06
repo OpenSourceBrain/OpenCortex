@@ -19,9 +19,13 @@ NeuroML2/*.json
 examples/*.hoc
 examples/*.mod
 examples/*nrn.py
+examples/*pynn.py
+examples/*definition.py
 /examples/*.dat
+/examples/*.json
 
 OpenCortex.egg-info
 dist
 build/lib*
 /examples/SpikingNet.net.svg
+/examples/test.py
