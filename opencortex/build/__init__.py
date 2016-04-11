@@ -50,8 +50,8 @@ def add_probabilistic_projection(net,
 
     for i in range(0, presynaptic_population.size):
         for j in range(0, postsynaptic_population.size):
-            if i != j:
-                if random.random() < connection_probability:
+            if i != j or presynaptic_population.id != postsynaptic_population.id:
+                if connection_probability>= 1 or random.random() < connection_probability:
                     add_connection(proj, count, presynaptic_population, i, 0, postsynaptic_population, j, 0)
                     count+=1
 
