@@ -201,7 +201,7 @@ def save_network(nml_doc, nml_file_name, validate=True, comment=True):
             opencortex.print_comment_v("Generated NeuroML file is NOT valid!")
             
             
-def generate_lems_simulation(nml_doc, network, nml_file_name, duration, dt):
+def generate_lems_simulation(nml_doc, network, nml_file_name, duration, dt, seed=12345):
 
     ls = pyneuroml.lems.LEMSSimulation("Sim_%s"%network.id, duration, dt)
 

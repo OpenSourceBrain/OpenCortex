@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.1.7 (libNeuroML v0.2.12)
+        This LEMS file has been automatically generated using PyNeuroML v0.1.9 (libNeuroML v0.2.12)
 
      -->
     
@@ -18,7 +18,7 @@
     <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
     <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
    
-    <Simulation id="Sim_SimpleNet" length="500ms" step="0.025ms" target="SimpleNet">
+    <Simulation id="Sim_SimpleNet" length="500ms" step="0.025ms" target="SimpleNet" seed="12345">
         
         <Display id="display_RS_pop" title="Voltages RS_pop" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
             <Line id="RS_pop 0: Vm" quantity="RS_pop/0/RS/v" scale="1mV" color="#3c9f90" timeScale="1ms"/>

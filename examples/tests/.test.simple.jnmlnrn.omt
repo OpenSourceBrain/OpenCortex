@@ -2,3 +2,38 @@
 
 target: ../LEMS_SimpleNet.xml
 engine: jNeuroML_NEURON
+mep: .test.simple.jnmlnrn.mep
+experiments:
+  0:
+    observables:
+      spike times:
+        file: 
+          path: ../v_RS_pop.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0
+  1:
+    observables:
+      spike times:
+        file: 
+          path: ../v_RS_pop.dat
+          columns: [0,2]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0
+  2:
+    observables:
+      spike times:
+        file: 
+          path: ../v_RS_pop.dat
+          columns: [0,3]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0
