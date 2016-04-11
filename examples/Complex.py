@@ -16,6 +16,7 @@ def scale_pop_size(baseline):
 
 #####   Cells
 
+#oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/izhikevich/Izh_471141261.cell.nml')
 oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml')
 oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/iaf/iaf.cell.nml')
 oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/iaf/iafRef.cell.nml')
@@ -31,6 +32,9 @@ offset = 0
 #####   Synapses
 
 synAmpa1 = oc.add_exp_two_syn(nml_doc, id="synAmpa1", gbase="1nS",
+                         erev="0mV", tau_rise="0.5ms", tau_decay="10ms")
+                         
+synAmpa2 = oc.add_exp_two_syn(nml_doc, id="synAmpa2", gbase="2nS",
                          erev="0mV", tau_rise="0.5ms", tau_decay="10ms")
 
 synGaba1 = oc.add_exp_two_syn(nml_doc, id="synGaba1", gbase="1nS",
@@ -48,6 +52,11 @@ pfs200 = oc.add_poisson_firing_synapse(nml_doc,
                                    id="poissonFiringSyn200",
                                    average_rate="200 Hz",
                                    synapse_id=synAmpa1.id)
+                             
+pfsStrong = oc.add_poisson_firing_synapse(nml_doc,
+                                   id="poissonFiringSynStrong",
+                                   average_rate="200 Hz",
+                                   synapse_id=synAmpa2.id)
                                    
 #####   Populations
 
@@ -82,21 +91,21 @@ popPyrS = oc.add_population_in_rectangular_region(network,
                                               0,offset,0,
                                               xDim,yDim,zDim)
 offset+=yDim
-'''
+
 popPyr = oc.add_population_in_rectangular_region(network,
                                               'popPyr',
                                               'pyr_4_sym',
                                               scale_pop_size(20),
                                               0,offset,0,
                                               xDim,yDim,zDim)
-offset+=yDim'''
+offset+=yDim
 
 
           
 #####   Inputs
 
 oc.add_inputs_to_population(network, "Stim0",
-                            popIzh, pfs100.id,
+                            popIzh, pfsStrong.id,
                             all_cells=True)
 
 oc.add_inputs_to_population(network, "Stim1",
@@ -110,10 +119,10 @@ oc.add_inputs_to_population(network, "Stim2",
 oc.add_inputs_to_population(network, "Stim3",
                             popPyrS, pfs100.id,
                             all_cells=True)
-'''
+
 oc.add_inputs_to_population(network, "Stim4",
-                            popPyr, pfs100.id,
-                            all_cells=True)'''
+                            popPyr, pfs200.id,
+                            all_cells=True)
 
 
 nml_file_name = '%s.net.nml'%network.id
