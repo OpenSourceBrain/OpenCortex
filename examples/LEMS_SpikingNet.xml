@@ -18,7 +18,7 @@
     <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
     <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
    
-    <Simulation id="Sim_SpikingNet" length="1000ms" step="0.01ms" target="SpikingNet" seed="12345">
+    <Simulation id="Sim_SpikingNet" length="1000ms" step="0.01ms" target="SpikingNet" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="display_pop_pre" title="Voltages pop_pre" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
             <Line id="pop_pre 0: Vm" quantity="pop_pre/0/RS/v" scale="1mV" color="#6016d6" timeScale="1ms"/>

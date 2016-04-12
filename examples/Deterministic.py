@@ -76,11 +76,11 @@ oc.add_probabilistic_projection(network,
 
 oc.add_inputs_to_population(network, "Stim0",
                             pop_iaf, pg0.id,
-                            only_cells=[0,2])
+                            only_cells=[i for i in [0,2] if i<pop_iaf.size])
                             
 oc.add_inputs_to_population(network, "Stim1",
                             pop_iaf, pg1.id,
-                            only_cells=[3,4])
+                            only_cells=[i for i in [3,4] if i<pop_iaf.size])
 
 
 

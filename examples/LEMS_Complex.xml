@@ -50,7 +50,7 @@
     <Include file="LeakConductance_pyr.channel.nml"/>
     <Include file="Na_pyr.channel.nml"/>
    
-    <Simulation id="Sim_Complex" length="500ms" step="0.025ms" target="Complex" seed="12345">
+    <Simulation id="Sim_Complex" length="500ms" step="0.025ms" target="Complex" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="display_popIaf" title="Voltages popIaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
             <Line id="popIaf 0: Vm" quantity="popIaf/0/iaf/v" scale="1mV" color="#ce779a" timeScale="1ms"/>

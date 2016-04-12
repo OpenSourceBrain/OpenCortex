@@ -32,7 +32,7 @@
     <Include file="LeakConductance_pyr.channel.nml"/>
     <Include file="Na_pyr.channel.nml"/>
    
-    <Simulation id="Sim_IClamps" length="500ms" step="0.025ms" target="IClamps" seed="12345">
+    <Simulation id="Sim_IClamps" length="500ms" step="0.025ms" target="IClamps" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="display_popIzh" title="Voltages popIzh" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
             <Line id="popIzh 0: Vm" quantity="popIzh/0/RS/v" scale="1mV" color="#f7697f" timeScale="1ms"/>

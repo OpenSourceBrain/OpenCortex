@@ -52,7 +52,9 @@ oc.add_probabilistic_projection(network,
                                 pop_pre,
                                 pop_post,
                                 syn1.id,
-                                0.3)
+                                0.3,
+                                weight=0.05,
+                                delay=5)
 
 nml_file_name = '%s.net.nml'%network.id
 oc.save_network(nml_doc, nml_file_name, validate=True)

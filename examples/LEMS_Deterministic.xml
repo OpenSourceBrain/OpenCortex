@@ -34,7 +34,7 @@
     <Include file="LeakConductance_pyr.channel.nml"/>
     <Include file="Na_pyr.channel.nml"/>
    
-    <Simulation id="Sim_Deterministic" length="500ms" step="0.005ms" target="Deterministic" seed="12345">
+    <Simulation id="Sim_Deterministic" length="500ms" step="0.005ms" target="Deterministic" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="display_pop_iaf" title="Voltages pop_iaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
             <Line id="pop_iaf 0: Vm" quantity="pop_iaf/0/iaf/v" scale="1mV" color="#2d665a" timeScale="1ms"/>

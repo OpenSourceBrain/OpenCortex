@@ -17,17 +17,28 @@ import random
 import sys
 
 
-def add_connection(projection, id, presynaptic_population, pre_cell_id, pre_seg_id, postsynaptic_population, post_cell_id, post_seg_id):
+def add_connection(projection, 
+                   id, 
+                   presynaptic_population, 
+                   pre_cell_id, 
+                   pre_seg_id, 
+                   postsynaptic_population, 
+                   post_cell_id, 
+                   post_seg_id,
+                   delay,
+                   weight):
 
-    connection = neuroml.Connection(id=id, \
+    connection = neuroml.ConnectionWD(id=id, \
                             pre_cell_id="../%s/%i/%s"%(presynaptic_population.id, pre_cell_id, presynaptic_population.component), \
                             pre_segment_id=pre_seg_id, \
                             pre_fraction_along=0.5,
                             post_cell_id="../%s/%i/%s"%(postsynaptic_population.id, post_cell_id, postsynaptic_population.component), \
                             post_segment_id=post_seg_id,
-                            post_fraction_along=0.5)
+                            post_fraction_along=0.5,
+                            delay = '%s ms'%delay,
+                            weight = weight)
 
-    projection.connections.append(connection)
+    projection.connection_wds.append(connection)
     
 
 def add_probabilistic_projection(net, 
@@ -35,7 +46,9 @@ def add_probabilistic_projection(net,
                                  presynaptic_population, 
                                  postsynaptic_population, 
                                  synapse_id,  
-                                 connection_probability):
+                                 connection_probability,
+                                 delay = 0,
+                                 weight = 1):
     
     if presynaptic_population.size==0 or postsynaptic_population.size==0:
         return None
@@ -52,7 +65,16 @@ def add_probabilistic_projection(net,
         for j in range(0, postsynaptic_population.size):
             if i != j or presynaptic_population.id != postsynaptic_population.id:
                 if connection_probability>= 1 or random.random() < connection_probability:
-                    add_connection(proj, count, presynaptic_population, i, 0, postsynaptic_population, j, 0)
+                    add_connection(proj, 
+                                   count, 
+                                   presynaptic_population, 
+                                   i, 
+                                   0, 
+                                   postsynaptic_population, 
+                                   j, 
+                                   0,
+                                   delay = delay,
+                                   weight = weight)
                     count+=1
 
     net.projections.append(proj)
@@ -129,10 +151,6 @@ def add_population_in_rectangular_region(net, pop_id, cell_id, size, x_min, y_mi
 
 def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False, only_cells=None):
     
-    input_list = neuroml.InputList(id=id,
-                         component=input_comp_id,
-                         populations=population.id)
-                         
     if all_cells and only_cells is not None:
         opencortex.print_comment_v("Error! Method opencortex.build.%s() called with both arguments all_cells and only_cells set!"%sys._getframe().f_code.co_name)
         exit(-1)
@@ -142,8 +160,13 @@ def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False
     if all_cells:
         cell_ids = range(population.size)
     if only_cells is not None:
+        if only_cells == []:
+            return
         cell_ids = only_cells
         
+    input_list = neuroml.InputList(id=id,
+                         component=input_comp_id,
+                         populations=population.id)
     count = 0
     for cell_id in cell_ids:
         input = neuroml.Input(id=count, 
