@@ -4,4 +4,5 @@ python Complex.py
 python IClamps.py
 python SpikingNet.py
 python SimpleNet.py
+python Deterministic.py
 
