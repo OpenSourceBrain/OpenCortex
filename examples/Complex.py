@@ -1,5 +1,5 @@
 '''
-Generates a complex NeuroML 2 file with many cells, populations and inputs
+Generates a complex NeuroML 2 file with many types of cells, populations and inputs
 for testing purposes
 '''
 
@@ -100,7 +100,15 @@ popPyr = oc.add_population_in_rectangular_region(network,
                                               xDim,yDim,zDim)
 offset+=yDim
 
+#####   Projections
 
+
+oc.add_probabilistic_projection(network,
+                                "proj0",
+                                popIaf,
+                                popIzh,
+                                synAmpa1.id,
+                                0.5)
           
 #####   Inputs
 

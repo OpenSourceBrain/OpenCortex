@@ -53,33 +53,33 @@
     <Simulation id="Sim_Complex" length="500ms" step="0.025ms" target="Complex" seed="12345">
         
         <Display id="display_popIaf" title="Voltages popIaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popIaf 0: Vm" quantity="popIaf/0/iaf/v" scale="1mV" color="#8ead31" timeScale="1ms"/>
-            <Line id="popIaf 1: Vm" quantity="popIaf/1/iaf/v" scale="1mV" color="#24ed49" timeScale="1ms"/>
-            <Line id="popIaf 2: Vm" quantity="popIaf/2/iaf/v" scale="1mV" color="#eff35b" timeScale="1ms"/>
+            <Line id="popIaf 0: Vm" quantity="popIaf/0/iaf/v" scale="1mV" color="#ce779a" timeScale="1ms"/>
+            <Line id="popIaf 1: Vm" quantity="popIaf/1/iaf/v" scale="1mV" color="#2d665a" timeScale="1ms"/>
+            <Line id="popIaf 2: Vm" quantity="popIaf/2/iaf/v" scale="1mV" color="#2791ee" timeScale="1ms"/>
         </Display>
         
         <Display id="display_popIafRef" title="Voltages popIafRef" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popIafRef 0: Vm" quantity="popIafRef/0/iafRef/v" scale="1mV" color="#c55ef1" timeScale="1ms"/>
-            <Line id="popIafRef 1: Vm" quantity="popIafRef/1/iafRef/v" scale="1mV" color="#f4f991" timeScale="1ms"/>
-            <Line id="popIafRef 2: Vm" quantity="popIafRef/2/iafRef/v" scale="1mV" color="#242780" timeScale="1ms"/>
+            <Line id="popIafRef 0: Vm" quantity="popIafRef/0/iafRef/v" scale="1mV" color="#f46871" timeScale="1ms"/>
+            <Line id="popIafRef 1: Vm" quantity="popIafRef/1/iafRef/v" scale="1mV" color="#2790ae" timeScale="1ms"/>
+            <Line id="popIafRef 2: Vm" quantity="popIafRef/2/iafRef/v" scale="1mV" color="#d579c4" timeScale="1ms"/>
         </Display>
         
         <Display id="display_popIzh" title="Voltages popIzh" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popIzh 0: Vm" quantity="popIzh/0/RS/v" scale="1mV" color="#4e2e37" timeScale="1ms"/>
-            <Line id="popIzh 1: Vm" quantity="popIzh/1/RS/v" scale="1mV" color="#0a228b" timeScale="1ms"/>
-            <Line id="popIzh 2: Vm" quantity="popIzh/2/RS/v" scale="1mV" color="#46db4b" timeScale="1ms"/>
+            <Line id="popIzh 0: Vm" quantity="popIzh/0/RS/v" scale="1mV" color="#0a8317" timeScale="1ms"/>
+            <Line id="popIzh 1: Vm" quantity="popIzh/1/RS/v" scale="1mV" color="#62dcec" timeScale="1ms"/>
+            <Line id="popIzh 2: Vm" quantity="popIzh/2/RS/v" scale="1mV" color="#597ee1" timeScale="1ms"/>
         </Display>
         
         <Display id="display_popPyrS" title="Voltages popPyrS" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popPyrS 0: Vm" quantity="popPyrS/0/pyr_4_sym_soma/v" scale="1mV" color="#ce779a" timeScale="1ms"/>
-            <Line id="popPyrS 1: Vm" quantity="popPyrS/1/pyr_4_sym_soma/v" scale="1mV" color="#2d665a" timeScale="1ms"/>
-            <Line id="popPyrS 2: Vm" quantity="popPyrS/2/pyr_4_sym_soma/v" scale="1mV" color="#2791ee" timeScale="1ms"/>
+            <Line id="popPyrS 0: Vm" quantity="popPyrS/0/pyr_4_sym_soma/v" scale="1mV" color="#577a29" timeScale="1ms"/>
+            <Line id="popPyrS 1: Vm" quantity="popPyrS/1/pyr_4_sym_soma/v" scale="1mV" color="#d103b9" timeScale="1ms"/>
+            <Line id="popPyrS 2: Vm" quantity="popPyrS/2/pyr_4_sym_soma/v" scale="1mV" color="#79d6de" timeScale="1ms"/>
         </Display>
         
         <Display id="display_popPyr" title="Voltages popPyr" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popPyr 0: Vm" quantity="popPyr/0/pyr_4_sym/v" scale="1mV" color="#f46871" timeScale="1ms"/>
-            <Line id="popPyr 1: Vm" quantity="popPyr/1/pyr_4_sym/v" scale="1mV" color="#2790ae" timeScale="1ms"/>
-            <Line id="popPyr 2: Vm" quantity="popPyr/2/pyr_4_sym/v" scale="1mV" color="#d579c4" timeScale="1ms"/>
+            <Line id="popPyr 0: Vm" quantity="popPyr/0/pyr_4_sym/v" scale="1mV" color="#c86b7f" timeScale="1ms"/>
+            <Line id="popPyr 1: Vm" quantity="popPyr/1/pyr_4_sym/v" scale="1mV" color="#7888fa" timeScale="1ms"/>
+            <Line id="popPyr 2: Vm" quantity="popPyr/2/pyr_4_sym/v" scale="1mV" color="#d13d74" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Volts_file_popIaf" fileName="v_popIaf.dat">
