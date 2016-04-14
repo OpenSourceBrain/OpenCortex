@@ -15,22 +15,6 @@
     <Include file="Simulation.xml"/>
     
     <Include file="IClamps.net.nml"/>
-    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
-    <Include file="../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml"/>
-    <Include file="Ca_conc.nml"/>
-    <Include file="Ca_pyr.channel.nml"/>
-    <Include file="Kahp_pyr.channel.nml"/>
-    <Include file="Kdr_pyr.channel.nml"/>
-    <Include file="LeakConductance_pyr.channel.nml"/>
-    <Include file="Na_pyr.channel.nml"/>
-    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
-    <Include file="../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml"/>
-    <Include file="Ca_conc.nml"/>
-    <Include file="Ca_pyr.channel.nml"/>
-    <Include file="Kahp_pyr.channel.nml"/>
-    <Include file="Kdr_pyr.channel.nml"/>
-    <Include file="LeakConductance_pyr.channel.nml"/>
-    <Include file="Na_pyr.channel.nml"/>
    
     <Simulation id="Sim_IClamps" length="500ms" step="0.025ms" target="IClamps" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
