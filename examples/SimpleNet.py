@@ -5,7 +5,7 @@ population_size = 3
 
 nml_doc, network = oc.generate_network("SimpleNet")
 
-oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml')
+oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml','RS')
 
 pop = oc.add_population_in_rectangular_region(network,
                                               'RS_pop',

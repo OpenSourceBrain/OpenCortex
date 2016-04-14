@@ -12,9 +12,9 @@ nml_doc, network = oc.generate_network("Deterministic")
 
 #####   Cells
 
-oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml')
-oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/iaf/iaf.cell.nml')
-oc.add_cell_prototype(nml_doc, '../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml')
+oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml','RS')
+oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/iaf/iaf.cell.nml','iaf')
+oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml','pyr_4_sym_soma')
 
 xDim = 500
 yDim = 100

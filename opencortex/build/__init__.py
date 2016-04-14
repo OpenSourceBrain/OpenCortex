@@ -8,6 +8,7 @@ import pyneuroml
 import pyneuroml.lems
 
 import neuroml.writers as writers
+import neuroml.loaders as loaders
 
 from pyneuroml import pynml
 from pyneuroml.lems.LEMSSimulation import LEMSSimulation
@@ -81,9 +82,74 @@ def add_probabilistic_projection(net,
 
     return proj
     
-def add_cell_prototype(nml_doc,cell_nml2_path):
+    
+def include_cell_prototype(nml_doc,cell_nml2_path):
     
     nml_doc.includes.append(neuroml.IncludeType(cell_nml2_path)) 
+    
+# Helper method which will be made redundant with a better generated Python API...
+def _get_cells_of_all_known_types(nml_doc):
+    
+    all_cells = []
+    all_cells.extend(nml_doc.cells)
+    all_cells.extend(nml_doc.izhikevich_cells)
+    all_cells.extend(nml_doc.izhikevich2007_cells)
+    all_cells.extend(nml_doc.iaf_cells)
+    all_cells.extend(nml_doc.iaf_ref_cells)
+    
+    return all_cells
+
+# Helper method which will be made redundant with a better generated Python API...
+def _get_channels_of_all_known_types(nml_doc):
+    
+    all_channels = []
+    all_channels.extend(nml_doc.ion_channel)
+    all_channels.extend(nml_doc.ion_channel_hhs)
+    all_channels.extend(nml_doc.ion_channel_kses)
+    all_channels.extend(nml_doc.fixed_factor_concentration_models)
+    all_channels.extend(nml_doc.ComponentType)
+    
+    return all_channels
+
+# Helper method which will be made redundant with a better generated Python API...
+def _add_to_neuroml_doc(nml_doc, element):
+    
+    if isinstance(element, neuroml.Cell):
+        nml_doc.cells.append(element)
+    elif isinstance(element, neuroml.IzhikevichCell):
+        nml_doc.izhikevich_cells.append(element)
+    elif isinstance(element, neuroml.Izhikevich2007Cell):
+        nml_doc.izhikevich2007_cells.append(element)
+    elif isinstance(element, neuroml.IafRefCell):
+        nml_doc.iaf_ref_cells.append(element)
+    elif isinstance(element, neuroml.IafCell):
+        nml_doc.iaf_cells.append(element)
+        
+    elif isinstance(element, neuroml.IonChannelKS):
+        nml_doc.ion_channel_kss.append(element)
+    elif isinstance(element, neuroml.IonChannelHH):
+        nml_doc.ion_channel_hhs.append(element)
+    elif isinstance(element, neuroml.IonChannel):
+        nml_doc.ion_channel.append(element)
+    elif isinstance(element, neuroml.FixedFactorConcentrationModel):
+        nml_doc.fixed_factor_concentration_models.append(element)
+    elif isinstance(element, neuroml.ComponentType):
+        nml_doc.ComponentType.append(element)
+        
+    
+    
+def add_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
+    
+    
+    nml2_doc_orig = pynml.read_neuroml2_file(cell_nml2_path, include_includes=True)
+    
+    for cell in _get_cells_of_all_known_types(nml2_doc_orig):
+        if cell.id == cell_id:
+            _add_to_neuroml_doc(nml_doc, cell)
+    
+    #TODO: Just check for channels in that cell
+    for channel in _get_channels_of_all_known_types(nml2_doc_orig):
+        _add_to_neuroml_doc(nml_doc, channel)
     
     
 def add_exp_two_syn(nml_doc, id, gbase, erev, tau_rise, tau_decay):
@@ -233,8 +299,6 @@ def generate_lems_simulation(nml_doc, network, nml_file_name, duration, dt, seed
 
     # Include generated/existing NeuroML2 files
     ls.include_neuroml2_file(nml_file_name)
-    for inc in nml_doc.includes:
-        ls.include_neuroml2_file(inc.href)
 
     populations = nml_doc.networks[0].populations
     

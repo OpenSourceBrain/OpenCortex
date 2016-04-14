@@ -15,8 +15,6 @@
     <Include file="Simulation.xml"/>
     
     <Include file="SimpleNet.net.nml"/>
-    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
-    <Include file="../NeuroML2/prototypes/izhikevich/RS.cell.nml"/>
    
     <Simulation id="Sim_SimpleNet" length="500ms" step="0.025ms" target="SimpleNet" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
