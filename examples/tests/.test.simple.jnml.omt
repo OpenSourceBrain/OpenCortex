@@ -8,7 +8,7 @@ experiments:
     observables:
       spike times:
         file: 
-          path: ../v_RS_pop.dat
+          path: ../Sim_SimpleNet.RS_pop.v.dat
           columns: [0,1]
           scaling: [1000, 1000]
         spike detection: 
@@ -19,7 +19,7 @@ experiments:
     observables:
       spike times:
         file: 
-          path: ../v_RS_pop.dat
+          path: ../Sim_SimpleNet.RS_pop.v.dat
           columns: [0,2]
           scaling: [1000, 1000]
         spike detection: 
@@ -30,7 +30,7 @@ experiments:
     observables:
       spike times:
         file: 
-          path: ../v_RS_pop.dat
+          path: ../Sim_SimpleNet.RS_pop.v.dat
           columns: [0,3]
           scaling: [1000, 1000]
         spike detection: 

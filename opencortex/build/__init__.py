@@ -290,33 +290,34 @@ def save_network(nml_doc, nml_file_name, validate=True, comment=True):
             opencortex.print_comment_v("Generated NeuroML file is NOT valid!")
             
             
-def generate_lems_simulation(nml_doc, network, nml_file_name, duration, dt, seed=12345):
-
-    ls = pyneuroml.lems.LEMSSimulation("Sim_%s"%network.id, duration, dt)
-
-    # Point to network as target of simulation
-    ls.assign_simulation_target(network.id)
-
-    # Include generated/existing NeuroML2 files
-    ls.include_neuroml2_file(nml_file_name)
-
-    populations = nml_doc.networks[0].populations
+def generate_lems_simulation(nml_doc, 
+                             network, 
+                             nml_file_name, 
+                             duration, 
+                             dt, 
+                             gen_plots_for_all_v = True,
+                             plot_all_segments = False,
+                             gen_plots_for_quantities = {},   #  Dict with displays vs lists of quantity paths
+                             gen_plots_for_only_populations = [],   #  List of populations, all pops if = []
+                             gen_saves_for_all_v = True,
+                             save_all_segments = False,
+                             gen_saves_for_only_populations = [],  #  List of populations, all pops if = []
+                             gen_saves_for_quantities = {},   #  Dict with file names vs lists of quantity paths
+                             seed=12345):
     
-    for pop in populations:
-        # Specify Displays and Output Files
-        if pop.size>0:
-            disp = "display_%s"%pop.id
-            ls.create_display(disp, "Voltages %s"%pop.id, "-80", "40")
-
-            of = "Volts_file_%s"%pop.id
-            ls.create_output_file(of, "v_%s.dat"%pop.id)
-
-
-            for i in range(pop.size):
-                quantity = "%s/%i/%s/v"%(pop.id, i, pop.component)
-                ls.add_line_to_display(disp, "%s %i: Vm"%(pop.id,i), quantity, "1mV", pynml.get_next_hex_color())
-                ls.add_column_to_output_file(of, "v_%i"%i, quantity)
-
-
-    # Save to LEMS XML file
-    lems_file_name = ls.save_to_file(file_name="LEMS_%s.xml"%network.id)
+    pyneuroml.lems.generate_lems_file_for_neuroml("Sim_%s"%network.id, 
+                                   nml_file_name, 
+                                   network.id, 
+                                   duration, 
+                                   dt, 
+                                   "LEMS_%s.xml"%network.id,
+                                   '.',
+                                   gen_plots_for_all_v = gen_plots_for_all_v,
+                                   plot_all_segments = plot_all_segments,
+                                   gen_plots_for_quantities = gen_plots_for_quantities, 
+                                   gen_plots_for_only_populations = gen_plots_for_only_populations,  
+                                   gen_saves_for_all_v = gen_saves_for_all_v,
+                                   save_all_segments = save_all_segments,
+                                   gen_saves_for_only_populations = gen_saves_for_only_populations,
+                                   gen_saves_for_quantities = gen_saves_for_quantities,
+                                   seed=seed)

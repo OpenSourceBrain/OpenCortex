@@ -29,3 +29,4 @@ dist
 build/lib*
 /examples/SpikingNet.net.svg
 /examples/test.py
+/examples/output.avi

@@ -18,64 +18,64 @@
    
     <Simulation id="Sim_Complex" length="500ms" step="0.025ms" target="Complex" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
-        <Display id="display_popIaf" title="Voltages popIaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popIaf 0: Vm" quantity="popIaf/0/iaf/v" scale="1mV" color="#ce779a" timeScale="1ms"/>
-            <Line id="popIaf 1: Vm" quantity="popIaf/1/iaf/v" scale="1mV" color="#2d665a" timeScale="1ms"/>
-            <Line id="popIaf 2: Vm" quantity="popIaf/2/iaf/v" scale="1mV" color="#2791ee" timeScale="1ms"/>
+        <Display id="DispPop__popIaf" title="Membrane potentials of cells in popIaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
+            <Line id="popIaf[0]: v" quantity="popIaf/0/iaf/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
+            <Line id="popIaf[1]: v" quantity="popIaf/1/iaf/v" scale="1mV" color="#029a72" timeScale="1ms"/>
+            <Line id="popIaf[2]: v" quantity="popIaf/2/iaf/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
         </Display>
         
-        <Display id="display_popIafRef" title="Voltages popIafRef" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popIafRef 0: Vm" quantity="popIafRef/0/iafRef/v" scale="1mV" color="#f46871" timeScale="1ms"/>
-            <Line id="popIafRef 1: Vm" quantity="popIafRef/1/iafRef/v" scale="1mV" color="#2790ae" timeScale="1ms"/>
-            <Line id="popIafRef 2: Vm" quantity="popIafRef/2/iafRef/v" scale="1mV" color="#d579c4" timeScale="1ms"/>
+        <Display id="DispPop__popIafRef" title="Membrane potentials of cells in popIafRef" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
+            <Line id="popIafRef[0]: v" quantity="popIafRef/0/iafRef/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
+            <Line id="popIafRef[1]: v" quantity="popIafRef/1/iafRef/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
+            <Line id="popIafRef[2]: v" quantity="popIafRef/2/iafRef/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
         </Display>
         
-        <Display id="display_popIzh" title="Voltages popIzh" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popIzh 0: Vm" quantity="popIzh/0/RS/v" scale="1mV" color="#0a8317" timeScale="1ms"/>
-            <Line id="popIzh 1: Vm" quantity="popIzh/1/RS/v" scale="1mV" color="#62dcec" timeScale="1ms"/>
-            <Line id="popIzh 2: Vm" quantity="popIzh/2/RS/v" scale="1mV" color="#597ee1" timeScale="1ms"/>
+        <Display id="DispPop__popIzh" title="Membrane potentials of cells in popIzh" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
+            <Line id="popIzh[0]: v" quantity="popIzh/0/RS/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
+            <Line id="popIzh[1]: v" quantity="popIzh/1/RS/v" scale="1mV" color="#29645f" timeScale="1ms"/>
+            <Line id="popIzh[2]: v" quantity="popIzh/2/RS/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
         </Display>
         
-        <Display id="display_popPyrS" title="Voltages popPyrS" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popPyrS 0: Vm" quantity="popPyrS/0/pyr_4_sym_soma/v" scale="1mV" color="#577a29" timeScale="1ms"/>
-            <Line id="popPyrS 1: Vm" quantity="popPyrS/1/pyr_4_sym_soma/v" scale="1mV" color="#d103b9" timeScale="1ms"/>
-            <Line id="popPyrS 2: Vm" quantity="popPyrS/2/pyr_4_sym_soma/v" scale="1mV" color="#79d6de" timeScale="1ms"/>
+        <Display id="DispPop__popPyrS" title="Membrane potentials of cells in popPyrS" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
+            <Line id="popPyrS[0]: v" quantity="popPyrS/0/pyr_4_sym_soma/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
+            <Line id="popPyrS[1]: v" quantity="popPyrS/1/pyr_4_sym_soma/v" scale="1mV" color="#8fe460" timeScale="1ms"/>
+            <Line id="popPyrS[2]: v" quantity="popPyrS/2/pyr_4_sym_soma/v" scale="1mV" color="#2ca1c7" timeScale="1ms"/>
         </Display>
         
-        <Display id="display_popPyr" title="Voltages popPyr" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="popPyr 0: Vm" quantity="popPyr/0/pyr_4_sym/v" scale="1mV" color="#c86b7f" timeScale="1ms"/>
-            <Line id="popPyr 1: Vm" quantity="popPyr/1/pyr_4_sym/v" scale="1mV" color="#7888fa" timeScale="1ms"/>
-            <Line id="popPyr 2: Vm" quantity="popPyr/2/pyr_4_sym/v" scale="1mV" color="#d13d74" timeScale="1ms"/>
+        <Display id="DispPop__popPyr" title="Membrane potentials of cells in popPyr" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
+            <Line id="popPyr[0]: v" quantity="popPyr/0/pyr_4_sym/v" scale="1mV" color="#8d9fe5" timeScale="1ms"/>
+            <Line id="popPyr[1]: v" quantity="popPyr/1/pyr_4_sym/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
+            <Line id="popPyr[2]: v" quantity="popPyr/2/pyr_4_sym/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
         </Display>
         
-        <OutputFile id="Volts_file_popIaf" fileName="v_popIaf.dat">
-            <OutputColumn id="v_0" quantity="popIaf/0/iaf/v"/> 
-            <OutputColumn id="v_1" quantity="popIaf/1/iaf/v"/> 
-            <OutputColumn id="v_2" quantity="popIaf/2/iaf/v"/> 
+        <OutputFile id="Volts_file__popIaf" fileName="Sim_Complex.popIaf.v.dat">
+            <OutputColumn id="v_popIaf_0_iaf_v" quantity="popIaf/0/iaf/v"/> 
+            <OutputColumn id="v_popIaf_1_iaf_v" quantity="popIaf/1/iaf/v"/> 
+            <OutputColumn id="v_popIaf_2_iaf_v" quantity="popIaf/2/iaf/v"/> 
         </OutputFile>
         
-        <OutputFile id="Volts_file_popIafRef" fileName="v_popIafRef.dat">
-            <OutputColumn id="v_0" quantity="popIafRef/0/iafRef/v"/> 
-            <OutputColumn id="v_1" quantity="popIafRef/1/iafRef/v"/> 
-            <OutputColumn id="v_2" quantity="popIafRef/2/iafRef/v"/> 
+        <OutputFile id="Volts_file__popIafRef" fileName="Sim_Complex.popIafRef.v.dat">
+            <OutputColumn id="v_popIafRef_0_iafRef_v" quantity="popIafRef/0/iafRef/v"/> 
+            <OutputColumn id="v_popIafRef_1_iafRef_v" quantity="popIafRef/1/iafRef/v"/> 
+            <OutputColumn id="v_popIafRef_2_iafRef_v" quantity="popIafRef/2/iafRef/v"/> 
         </OutputFile>
         
-        <OutputFile id="Volts_file_popIzh" fileName="v_popIzh.dat">
-            <OutputColumn id="v_0" quantity="popIzh/0/RS/v"/> 
-            <OutputColumn id="v_1" quantity="popIzh/1/RS/v"/> 
-            <OutputColumn id="v_2" quantity="popIzh/2/RS/v"/> 
+        <OutputFile id="Volts_file__popIzh" fileName="Sim_Complex.popIzh.v.dat">
+            <OutputColumn id="v_popIzh_0_RS_v" quantity="popIzh/0/RS/v"/> 
+            <OutputColumn id="v_popIzh_1_RS_v" quantity="popIzh/1/RS/v"/> 
+            <OutputColumn id="v_popIzh_2_RS_v" quantity="popIzh/2/RS/v"/> 
         </OutputFile>
         
-        <OutputFile id="Volts_file_popPyrS" fileName="v_popPyrS.dat">
-            <OutputColumn id="v_0" quantity="popPyrS/0/pyr_4_sym_soma/v"/> 
-            <OutputColumn id="v_1" quantity="popPyrS/1/pyr_4_sym_soma/v"/> 
-            <OutputColumn id="v_2" quantity="popPyrS/2/pyr_4_sym_soma/v"/> 
+        <OutputFile id="Volts_file__popPyrS" fileName="Sim_Complex.popPyrS.v.dat">
+            <OutputColumn id="v_popPyrS_0_pyr_4_sym_soma_v" quantity="popPyrS/0/pyr_4_sym_soma/v"/> 
+            <OutputColumn id="v_popPyrS_1_pyr_4_sym_soma_v" quantity="popPyrS/1/pyr_4_sym_soma/v"/> 
+            <OutputColumn id="v_popPyrS_2_pyr_4_sym_soma_v" quantity="popPyrS/2/pyr_4_sym_soma/v"/> 
         </OutputFile>
         
-        <OutputFile id="Volts_file_popPyr" fileName="v_popPyr.dat">
-            <OutputColumn id="v_0" quantity="popPyr/0/pyr_4_sym/v"/> 
-            <OutputColumn id="v_1" quantity="popPyr/1/pyr_4_sym/v"/> 
-            <OutputColumn id="v_2" quantity="popPyr/2/pyr_4_sym/v"/> 
+        <OutputFile id="Volts_file__popPyr" fileName="Sim_Complex.popPyr.v.dat">
+            <OutputColumn id="v_popPyr_0_pyr_4_sym_v" quantity="popPyr/0/pyr_4_sym/v"/> 
+            <OutputColumn id="v_popPyr_1_pyr_4_sym_v" quantity="popPyr/1/pyr_4_sym/v"/> 
+            <OutputColumn id="v_popPyr_2_pyr_4_sym_v" quantity="popPyr/2/pyr_4_sym/v"/> 
         </OutputFile>
         
     </Simulation>

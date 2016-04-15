@@ -18,36 +18,36 @@
    
     <Simulation id="Sim_Deterministic" length="500ms" step="0.005ms" target="Deterministic" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
-        <Display id="display_pop_iaf" title="Voltages pop_iaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="pop_iaf 0: Vm" quantity="pop_iaf/0/iaf/v" scale="1mV" color="#2d665a" timeScale="1ms"/>
-            <Line id="pop_iaf 1: Vm" quantity="pop_iaf/1/iaf/v" scale="1mV" color="#2791ee" timeScale="1ms"/>
-            <Line id="pop_iaf 2: Vm" quantity="pop_iaf/2/iaf/v" scale="1mV" color="#f46871" timeScale="1ms"/>
-            <Line id="pop_iaf 3: Vm" quantity="pop_iaf/3/iaf/v" scale="1mV" color="#2790ae" timeScale="1ms"/>
-            <Line id="pop_iaf 4: Vm" quantity="pop_iaf/4/iaf/v" scale="1mV" color="#d579c4" timeScale="1ms"/>
+        <Display id="DispPop__pop_iaf" title="Membrane potentials of cells in pop_iaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
+            <Line id="pop_iaf[0]: v" quantity="pop_iaf/0/iaf/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
+            <Line id="pop_iaf[1]: v" quantity="pop_iaf/1/iaf/v" scale="1mV" color="#029a72" timeScale="1ms"/>
+            <Line id="pop_iaf[2]: v" quantity="pop_iaf/2/iaf/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
+            <Line id="pop_iaf[3]: v" quantity="pop_iaf/3/iaf/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
+            <Line id="pop_iaf[4]: v" quantity="pop_iaf/4/iaf/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
         </Display>
         
-        <Display id="display_pop_rs" title="Voltages pop_rs" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
-            <Line id="pop_rs 0: Vm" quantity="pop_rs/0/RS/v" scale="1mV" color="#0a8317" timeScale="1ms"/>
-            <Line id="pop_rs 1: Vm" quantity="pop_rs/1/RS/v" scale="1mV" color="#62dcec" timeScale="1ms"/>
-            <Line id="pop_rs 2: Vm" quantity="pop_rs/2/RS/v" scale="1mV" color="#597ee1" timeScale="1ms"/>
-            <Line id="pop_rs 3: Vm" quantity="pop_rs/3/RS/v" scale="1mV" color="#577a29" timeScale="1ms"/>
-            <Line id="pop_rs 4: Vm" quantity="pop_rs/4/RS/v" scale="1mV" color="#d103b9" timeScale="1ms"/>
+        <Display id="DispPop__pop_rs" title="Membrane potentials of cells in pop_rs" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
+            <Line id="pop_rs[0]: v" quantity="pop_rs/0/RS/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
+            <Line id="pop_rs[1]: v" quantity="pop_rs/1/RS/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
+            <Line id="pop_rs[2]: v" quantity="pop_rs/2/RS/v" scale="1mV" color="#29645f" timeScale="1ms"/>
+            <Line id="pop_rs[3]: v" quantity="pop_rs/3/RS/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
+            <Line id="pop_rs[4]: v" quantity="pop_rs/4/RS/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
         </Display>
         
-        <OutputFile id="Volts_file_pop_iaf" fileName="v_pop_iaf.dat">
-            <OutputColumn id="v_0" quantity="pop_iaf/0/iaf/v"/> 
-            <OutputColumn id="v_1" quantity="pop_iaf/1/iaf/v"/> 
-            <OutputColumn id="v_2" quantity="pop_iaf/2/iaf/v"/> 
-            <OutputColumn id="v_3" quantity="pop_iaf/3/iaf/v"/> 
-            <OutputColumn id="v_4" quantity="pop_iaf/4/iaf/v"/> 
+        <OutputFile id="Volts_file__pop_iaf" fileName="Sim_Deterministic.pop_iaf.v.dat">
+            <OutputColumn id="v_pop_iaf_0_iaf_v" quantity="pop_iaf/0/iaf/v"/> 
+            <OutputColumn id="v_pop_iaf_1_iaf_v" quantity="pop_iaf/1/iaf/v"/> 
+            <OutputColumn id="v_pop_iaf_2_iaf_v" quantity="pop_iaf/2/iaf/v"/> 
+            <OutputColumn id="v_pop_iaf_3_iaf_v" quantity="pop_iaf/3/iaf/v"/> 
+            <OutputColumn id="v_pop_iaf_4_iaf_v" quantity="pop_iaf/4/iaf/v"/> 
         </OutputFile>
         
-        <OutputFile id="Volts_file_pop_rs" fileName="v_pop_rs.dat">
-            <OutputColumn id="v_0" quantity="pop_rs/0/RS/v"/> 
-            <OutputColumn id="v_1" quantity="pop_rs/1/RS/v"/> 
-            <OutputColumn id="v_2" quantity="pop_rs/2/RS/v"/> 
-            <OutputColumn id="v_3" quantity="pop_rs/3/RS/v"/> 
-            <OutputColumn id="v_4" quantity="pop_rs/4/RS/v"/> 
+        <OutputFile id="Volts_file__pop_rs" fileName="Sim_Deterministic.pop_rs.v.dat">
+            <OutputColumn id="v_pop_rs_0_RS_v" quantity="pop_rs/0/RS/v"/> 
+            <OutputColumn id="v_pop_rs_1_RS_v" quantity="pop_rs/1/RS/v"/> 
+            <OutputColumn id="v_pop_rs_2_RS_v" quantity="pop_rs/2/RS/v"/> 
+            <OutputColumn id="v_pop_rs_3_RS_v" quantity="pop_rs/3/RS/v"/> 
+            <OutputColumn id="v_pop_rs_4_RS_v" quantity="pop_rs/4/RS/v"/> 
         </OutputFile>
         
     </Simulation>
