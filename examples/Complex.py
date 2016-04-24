@@ -133,6 +133,8 @@ oc.add_inputs_to_population(network, "Stim4",
                             all_cells=True)
 
 
+#####   Save NeuroML and LEMS Simulation files
+
 nml_file_name = '%s.net.nml'%network.id
 oc.save_network(nml_doc, nml_file_name, validate=True)
 

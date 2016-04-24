@@ -1,0 +1,83 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.1.11 (libNeuroML v0.2.12)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="Sim_Balanced"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+    <Include file="Balanced.net.nml"/>
+   
+    <Simulation id="Sim_Balanced" length="1000ms" step="0.025ms" target="Balanced" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+        
+        <Display id="DispPop__popExc" title="Membrane potentials of cells in popExc" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
+            <Line id="popExc[0]: v" quantity="popExc/0/HH_464198958/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
+            <Line id="popExc[1]: v" quantity="popExc/1/HH_464198958/v" scale="1mV" color="#029a72" timeScale="1ms"/>
+            <Line id="popExc[2]: v" quantity="popExc/2/HH_464198958/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
+            <Line id="popExc[3]: v" quantity="popExc/3/HH_464198958/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
+            <Line id="popExc[4]: v" quantity="popExc/4/HH_464198958/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
+            <Line id="popExc[5]: v" quantity="popExc/5/HH_464198958/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
+            <Line id="popExc[6]: v" quantity="popExc/6/HH_464198958/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
+            <Line id="popExc[7]: v" quantity="popExc/7/HH_464198958/v" scale="1mV" color="#29645f" timeScale="1ms"/>
+            <Line id="popExc[8]: v" quantity="popExc/8/HH_464198958/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
+            <Line id="popExc[9]: v" quantity="popExc/9/HH_464198958/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
+            <Line id="popExc[10]: v" quantity="popExc/10/HH_464198958/v" scale="1mV" color="#8fe460" timeScale="1ms"/>
+            <Line id="popExc[11]: v" quantity="popExc/11/HH_464198958/v" scale="1mV" color="#2ca1c7" timeScale="1ms"/>
+            <Line id="popExc[12]: v" quantity="popExc/12/HH_464198958/v" scale="1mV" color="#8d9fe5" timeScale="1ms"/>
+            <Line id="popExc[13]: v" quantity="popExc/13/HH_464198958/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
+            <Line id="popExc[14]: v" quantity="popExc/14/HH_464198958/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
+            <Line id="popExc[15]: v" quantity="popExc/15/HH_464198958/v" scale="1mV" color="#175f0c" timeScale="1ms"/>
+        </Display>
+        
+        <Display id="DispPop__popInh" title="Membrane potentials of cells in popInh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
+            <Line id="popInh[0]: v" quantity="popInh/0/HH_471141261/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
+            <Line id="popInh[1]: v" quantity="popInh/1/HH_471141261/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
+            <Line id="popInh[2]: v" quantity="popInh/2/HH_471141261/v" scale="1mV" color="#8101e8" timeScale="1ms"/>
+            <Line id="popInh[3]: v" quantity="popInh/3/HH_471141261/v" scale="1mV" color="#25ece8" timeScale="1ms"/>
+            <Line id="popInh[4]: v" quantity="popInh/4/HH_471141261/v" scale="1mV" color="#b80e3b" timeScale="1ms"/>
+            <Line id="popInh[5]: v" quantity="popInh/5/HH_471141261/v" scale="1mV" color="#30a1f6" timeScale="1ms"/>
+            <Line id="popInh[6]: v" quantity="popInh/6/HH_471141261/v" scale="1mV" color="#577081" timeScale="1ms"/>
+            <Line id="popInh[7]: v" quantity="popInh/7/HH_471141261/v" scale="1mV" color="#06057c" timeScale="1ms"/>
+        </Display>
+        
+        <OutputFile id="Volts_file__popExc" fileName="Sim_Balanced.popExc.v.dat">
+            <OutputColumn id="v_popExc_0_HH_464198958_v" quantity="popExc/0/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_1_HH_464198958_v" quantity="popExc/1/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_2_HH_464198958_v" quantity="popExc/2/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_3_HH_464198958_v" quantity="popExc/3/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_4_HH_464198958_v" quantity="popExc/4/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_5_HH_464198958_v" quantity="popExc/5/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_6_HH_464198958_v" quantity="popExc/6/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_7_HH_464198958_v" quantity="popExc/7/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_8_HH_464198958_v" quantity="popExc/8/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_9_HH_464198958_v" quantity="popExc/9/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_10_HH_464198958_v" quantity="popExc/10/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_11_HH_464198958_v" quantity="popExc/11/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_12_HH_464198958_v" quantity="popExc/12/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_13_HH_464198958_v" quantity="popExc/13/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_14_HH_464198958_v" quantity="popExc/14/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_15_HH_464198958_v" quantity="popExc/15/HH_464198958/v"/> 
+        </OutputFile>
+        
+        <OutputFile id="Volts_file__popInh" fileName="Sim_Balanced.popInh.v.dat">
+            <OutputColumn id="v_popInh_0_HH_471141261_v" quantity="popInh/0/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_1_HH_471141261_v" quantity="popInh/1/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_2_HH_471141261_v" quantity="popInh/2/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_3_HH_471141261_v" quantity="popInh/3/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_4_HH_471141261_v" quantity="popInh/4/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_5_HH_471141261_v" quantity="popInh/5/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_6_HH_471141261_v" quantity="popInh/6/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_7_HH_471141261_v" quantity="popInh/7/HH_471141261/v"/> 
+        </OutputFile>
+        
+    </Simulation>
+
+</Lems>
