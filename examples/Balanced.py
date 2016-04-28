@@ -8,7 +8,7 @@ import opencortex.build as oc
 
 nml_doc, network = oc.generate_network("Balanced")
 
-scale = .2
+scale = .4
 min_pop_size = 3
 
 def scale_pop_size(baseline):
@@ -20,10 +20,13 @@ oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/AllenInstituteCellType
 oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
 
 
-xDim = 500
-yDim = 100
-zDim = 500
+xDim = 400
+yDim = 500
+zDim = 300
 
+xs = -200
+ys = -150
+zs = 100
 
 #####   Synapses
 
@@ -48,14 +51,14 @@ popExc = oc.add_population_in_rectangular_region(network,
                                               'popExc',
                                               'HH_464198958',
                                               scale_pop_size(80),
-                                              0,0,0,
+                                              xs,ys,zs,
                                               xDim,yDim,zDim)
 
 popInh = oc.add_population_in_rectangular_region(network,
                                               'popInh',
                                               'HH_471141261',
                                               scale_pop_size(40),
-                                              0,yDim,0,
+                                              xs,ys,zs,
                                               xDim,yDim,zDim)
 
 popBBP = oc.add_single_cell_population(network,

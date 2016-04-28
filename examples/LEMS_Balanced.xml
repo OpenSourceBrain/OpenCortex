@@ -13,9 +13,9 @@
     <Include file="Cells.xml"/>
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
+    <Include file="CaDynamics_E2_NML2.nml"/> 
     
     <Include file="Balanced.net.nml"/>
-    <Include file="CaDynamics_E2_NML2.nml"/> 
    
     <Simulation id="Sim_Balanced" length="1000ms" step="0.025ms" target="Balanced" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
