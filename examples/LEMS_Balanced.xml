@@ -15,6 +15,7 @@
     <Include file="Simulation.xml"/>
     
     <Include file="Balanced.net.nml"/>
+    <Include file="CaDynamics_E2_NML2.nml"/> 
    
     <Simulation id="Sim_Balanced" length="1000ms" step="0.025ms" target="Balanced" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
@@ -48,6 +49,10 @@
             <Line id="popInh[7]: v" quantity="popInh/7/HH_471141261/v" scale="1mV" color="#06057c" timeScale="1ms"/>
         </Display>
         
+        <Display id="DispPop__popBBP" title="Membrane potentials of cells in popBBP" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
+            <Line id="popBBP[0]: v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#56eaa3" timeScale="1ms"/>
+        </Display>
+        
         <OutputFile id="Volts_file__popExc" fileName="Sim_Balanced.popExc.v.dat">
             <OutputColumn id="v_popExc_0_HH_464198958_v" quantity="popExc/0/HH_464198958/v"/> 
             <OutputColumn id="v_popExc_1_HH_464198958_v" quantity="popExc/1/HH_464198958/v"/> 
@@ -76,6 +81,10 @@
             <OutputColumn id="v_popInh_5_HH_471141261_v" quantity="popInh/5/HH_471141261/v"/> 
             <OutputColumn id="v_popInh_6_HH_471141261_v" quantity="popInh/6/HH_471141261/v"/> 
             <OutputColumn id="v_popInh_7_HH_471141261_v" quantity="popInh/7/HH_471141261/v"/> 
+        </OutputFile>
+        
+        <OutputFile id="Volts_file__popBBP" fileName="Sim_Balanced.popBBP.v.dat">
+            <OutputColumn id="v_popBBP_0_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
         </OutputFile>
         
     </Simulation>

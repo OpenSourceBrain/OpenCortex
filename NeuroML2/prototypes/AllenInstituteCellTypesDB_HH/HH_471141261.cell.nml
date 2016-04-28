@@ -138,8 +138,8 @@ Tuning procedure metadata:
 </notes>
         <morphology id="morphology_RS">
             <segment id="0" name="Soma">
-                <proximal y="0.000000e+00" x="0.000000e+00" z="0.000000e+00" diameter="5.000000e+01"/>
-                <distal y="0.000000e+00" x="0.000000e+00" z="0.000000e+00" diameter="5.000000e+01"/>
+                <proximal y="0.000000e+00" x="0.000000e+00" z="0.000000e+00" diameter="10"/>
+                <distal y="0.000000e+00" x="0.000000e+00" z="0.000000e+00" diameter="10"/>
             </segment>
             <segmentGroup neuroLexId="sao864921383" id="Soma">
                 <member segment="0"/>
