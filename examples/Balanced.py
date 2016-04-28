@@ -61,34 +61,21 @@ popInh = oc.add_population_in_rectangular_region(network,
 #####   Projections
 
 
-oc.add_probabilistic_projection(network,
-                                "proj0",
-                                popExc,
-                                popExc,
-                                synAmpa1.id,
-                                0.3)
+oc.add_probabilistic_projection(network, "proj0",
+                                popExc, popExc,
+                                synAmpa1.id, 0.3)
 
+oc.add_probabilistic_projection(network, "proj1",
+                                popExc, popInh,
+                                synAmpa1.id, 0.5)
 
-oc.add_probabilistic_projection(network,
-                                "proj1",
-                                popExc,
-                                popInh,
-                                synAmpa1.id,
-                                0.5)
+oc.add_probabilistic_projection(network, "proj3",
+                                popInh, popExc,
+                                synGaba1.id, 0.7)
 
-oc.add_probabilistic_projection(network,
-                                "proj3",
-                                popInh,
-                                popExc,
-                                synGaba1.id,
-                                0.7)
-
-oc.add_probabilistic_projection(network,
-                                "proj4",
-                                popInh,
-                                popInh,
-                                synGaba1.id,
-                                0.5)
+oc.add_probabilistic_projection(network, "proj4",
+                                popInh, popInh,
+                                synGaba1.id, 0.5)
 
           
 #####   Inputs
@@ -104,8 +91,7 @@ oc.add_inputs_to_population(network, "Stim0",
 nml_file_name = '%s.net.nml'%network.id
 oc.save_network(nml_doc, nml_file_name, validate=True)
 
-oc.generate_lems_simulation(nml_doc, 
-                            network, 
+oc.generate_lems_simulation(nml_doc, network, 
                             nml_file_name, 
                             duration =      1000, 
                             dt =            0.025)
