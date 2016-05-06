@@ -106,6 +106,7 @@ def _get_channels_of_all_known_types(nml_doc):
     all_channels.extend(nml_doc.ion_channel)
     all_channels.extend(nml_doc.ion_channel_hhs)
     all_channels.extend(nml_doc.ion_channel_kses)
+    all_channels.extend(nml_doc.decaying_pool_concentration_models)
     all_channels.extend(nml_doc.fixed_factor_concentration_models)
     all_channels.extend(nml_doc.ComponentType)
     
@@ -295,6 +296,7 @@ def generate_lems_simulation(nml_doc,
                              nml_file_name, 
                              duration, 
                              dt, 
+                             include_extra_files = [],
                              gen_plots_for_all_v = True,
                              plot_all_segments = False,
                              gen_plots_for_quantities = {},   #  Dict with displays vs lists of quantity paths
@@ -312,6 +314,7 @@ def generate_lems_simulation(nml_doc,
                                    dt, 
                                    "LEMS_%s.xml"%network.id,
                                    '.',
+                                   include_extra_files = include_extra_files,
                                    gen_plots_for_all_v = gen_plots_for_all_v,
                                    plot_all_segments = plot_all_segments,
                                    gen_plots_for_quantities = gen_plots_for_quantities, 
