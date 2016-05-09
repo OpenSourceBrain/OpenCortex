@@ -5,7 +5,7 @@ nml_doc, network = oc.generate_network("IClamps")
 
 oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml', 'RS')
 oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml', 'pyr_4_sym_soma')
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
+#oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
 
 popIzh = oc.add_single_cell_population(network,
                                      'popIzh',
@@ -15,11 +15,11 @@ popHH = oc.add_single_cell_population(network,
                                      'popHH',
                                      'pyr_4_sym_soma',
                                      z=100)
-
+'''
 popBBP = oc.add_single_cell_population(network,
                                      'popBBP',
                                      'cADpyr229_L23_PC_5ecbf9b163_0_0',
-                                     z=200)
+                                     z=200)'''
                                      
 pgIzh = oc.add_pulse_generator(nml_doc,
                        id="pgIzh",
@@ -32,12 +32,12 @@ pgHH = oc.add_pulse_generator(nml_doc,
                        delay="100ms",
                        duration="300ms",
                        amplitude="0.7nA")
-                                     
+'''                                     
 pgBBP = oc.add_pulse_generator(nml_doc,
                        id="pgBBP",
                        delay="100ms",
                        duration="300ms",
-                       amplitude="0.7nA")
+                       amplitude="0.7nA")'''
                                               
                                    
 oc.add_inputs_to_population(network,
@@ -51,12 +51,12 @@ oc.add_inputs_to_population(network,
                             popHH,
                             pgHH.id,
                             all_cells=True)
-                        
+'''                        
 oc.add_inputs_to_population(network,
                             "Stim2",
                             popBBP,
                             pgBBP.id,
-                            all_cells=True)
+                            all_cells=True)'''
 
 nml_file_name = '%s.net.nml'%network.id
 oc.save_network(nml_doc, nml_file_name, validate=True)

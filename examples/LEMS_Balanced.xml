@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.1.11 (libNeuroML v0.2.12)
+        This LEMS file has been automatically generated using PyNeuroML v0.1.11 (libNeuroML v0.2.14)
 
      -->
     
@@ -13,7 +13,6 @@
     <Include file="Cells.xml"/>
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
-    <Include file="CaDynamics_E2_NML2.nml"/> 
     
     <Include file="Balanced.net.nml"/>
    
@@ -36,21 +35,41 @@
             <Line id="popExc[13]: v" quantity="popExc/13/HH_464198958/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
             <Line id="popExc[14]: v" quantity="popExc/14/HH_464198958/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
             <Line id="popExc[15]: v" quantity="popExc/15/HH_464198958/v" scale="1mV" color="#175f0c" timeScale="1ms"/>
+            <Line id="popExc[16]: v" quantity="popExc/16/HH_464198958/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
+            <Line id="popExc[17]: v" quantity="popExc/17/HH_464198958/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
+            <Line id="popExc[18]: v" quantity="popExc/18/HH_464198958/v" scale="1mV" color="#8101e8" timeScale="1ms"/>
+            <Line id="popExc[19]: v" quantity="popExc/19/HH_464198958/v" scale="1mV" color="#25ece8" timeScale="1ms"/>
+            <Line id="popExc[20]: v" quantity="popExc/20/HH_464198958/v" scale="1mV" color="#b80e3b" timeScale="1ms"/>
+            <Line id="popExc[21]: v" quantity="popExc/21/HH_464198958/v" scale="1mV" color="#30a1f6" timeScale="1ms"/>
+            <Line id="popExc[22]: v" quantity="popExc/22/HH_464198958/v" scale="1mV" color="#577081" timeScale="1ms"/>
+            <Line id="popExc[23]: v" quantity="popExc/23/HH_464198958/v" scale="1mV" color="#06057c" timeScale="1ms"/>
+            <Line id="popExc[24]: v" quantity="popExc/24/HH_464198958/v" scale="1mV" color="#56eaa3" timeScale="1ms"/>
+            <Line id="popExc[25]: v" quantity="popExc/25/HH_464198958/v" scale="1mV" color="#f7acee" timeScale="1ms"/>
+            <Line id="popExc[26]: v" quantity="popExc/26/HH_464198958/v" scale="1mV" color="#fa9289" timeScale="1ms"/>
+            <Line id="popExc[27]: v" quantity="popExc/27/HH_464198958/v" scale="1mV" color="#be9985" timeScale="1ms"/>
+            <Line id="popExc[28]: v" quantity="popExc/28/HH_464198958/v" scale="1mV" color="#00e266" timeScale="1ms"/>
+            <Line id="popExc[29]: v" quantity="popExc/29/HH_464198958/v" scale="1mV" color="#f0b378" timeScale="1ms"/>
+            <Line id="popExc[30]: v" quantity="popExc/30/HH_464198958/v" scale="1mV" color="#deea95" timeScale="1ms"/>
+            <Line id="popExc[31]: v" quantity="popExc/31/HH_464198958/v" scale="1mV" color="#c55566" timeScale="1ms"/>
         </Display>
         
         <Display id="DispPop__popInh" title="Membrane potentials of cells in popInh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popInh[0]: v" quantity="popInh/0/HH_471141261/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
-            <Line id="popInh[1]: v" quantity="popInh/1/HH_471141261/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
-            <Line id="popInh[2]: v" quantity="popInh/2/HH_471141261/v" scale="1mV" color="#8101e8" timeScale="1ms"/>
-            <Line id="popInh[3]: v" quantity="popInh/3/HH_471141261/v" scale="1mV" color="#25ece8" timeScale="1ms"/>
-            <Line id="popInh[4]: v" quantity="popInh/4/HH_471141261/v" scale="1mV" color="#b80e3b" timeScale="1ms"/>
-            <Line id="popInh[5]: v" quantity="popInh/5/HH_471141261/v" scale="1mV" color="#30a1f6" timeScale="1ms"/>
-            <Line id="popInh[6]: v" quantity="popInh/6/HH_471141261/v" scale="1mV" color="#577081" timeScale="1ms"/>
-            <Line id="popInh[7]: v" quantity="popInh/7/HH_471141261/v" scale="1mV" color="#06057c" timeScale="1ms"/>
-        </Display>
-        
-        <Display id="DispPop__popBBP" title="Membrane potentials of cells in popBBP" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popBBP[0]: v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#56eaa3" timeScale="1ms"/>
+            <Line id="popInh[0]: v" quantity="popInh/0/HH_471141261/v" scale="1mV" color="#2dcaab" timeScale="1ms"/>
+            <Line id="popInh[1]: v" quantity="popInh/1/HH_471141261/v" scale="1mV" color="#1978ce" timeScale="1ms"/>
+            <Line id="popInh[2]: v" quantity="popInh/2/HH_471141261/v" scale="1mV" color="#6a1ecc" timeScale="1ms"/>
+            <Line id="popInh[3]: v" quantity="popInh/3/HH_471141261/v" scale="1mV" color="#e2b284" timeScale="1ms"/>
+            <Line id="popInh[4]: v" quantity="popInh/4/HH_471141261/v" scale="1mV" color="#93fd72" timeScale="1ms"/>
+            <Line id="popInh[5]: v" quantity="popInh/5/HH_471141261/v" scale="1mV" color="#bc90a6" timeScale="1ms"/>
+            <Line id="popInh[6]: v" quantity="popInh/6/HH_471141261/v" scale="1mV" color="#3b8d0e" timeScale="1ms"/>
+            <Line id="popInh[7]: v" quantity="popInh/7/HH_471141261/v" scale="1mV" color="#860a7d" timeScale="1ms"/>
+            <Line id="popInh[8]: v" quantity="popInh/8/HH_471141261/v" scale="1mV" color="#b59a59" timeScale="1ms"/>
+            <Line id="popInh[9]: v" quantity="popInh/9/HH_471141261/v" scale="1mV" color="#d32851" timeScale="1ms"/>
+            <Line id="popInh[10]: v" quantity="popInh/10/HH_471141261/v" scale="1mV" color="#ce9fb6" timeScale="1ms"/>
+            <Line id="popInh[11]: v" quantity="popInh/11/HH_471141261/v" scale="1mV" color="#3b788b" timeScale="1ms"/>
+            <Line id="popInh[12]: v" quantity="popInh/12/HH_471141261/v" scale="1mV" color="#df8960" timeScale="1ms"/>
+            <Line id="popInh[13]: v" quantity="popInh/13/HH_471141261/v" scale="1mV" color="#3764b5" timeScale="1ms"/>
+            <Line id="popInh[14]: v" quantity="popInh/14/HH_471141261/v" scale="1mV" color="#cd4944" timeScale="1ms"/>
+            <Line id="popInh[15]: v" quantity="popInh/15/HH_471141261/v" scale="1mV" color="#8e1a11" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Volts_file__popExc" fileName="Sim_Balanced.popExc.v.dat">
@@ -70,6 +89,22 @@
             <OutputColumn id="v_popExc_13_HH_464198958_v" quantity="popExc/13/HH_464198958/v"/> 
             <OutputColumn id="v_popExc_14_HH_464198958_v" quantity="popExc/14/HH_464198958/v"/> 
             <OutputColumn id="v_popExc_15_HH_464198958_v" quantity="popExc/15/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_16_HH_464198958_v" quantity="popExc/16/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_17_HH_464198958_v" quantity="popExc/17/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_18_HH_464198958_v" quantity="popExc/18/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_19_HH_464198958_v" quantity="popExc/19/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_20_HH_464198958_v" quantity="popExc/20/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_21_HH_464198958_v" quantity="popExc/21/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_22_HH_464198958_v" quantity="popExc/22/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_23_HH_464198958_v" quantity="popExc/23/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_24_HH_464198958_v" quantity="popExc/24/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_25_HH_464198958_v" quantity="popExc/25/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_26_HH_464198958_v" quantity="popExc/26/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_27_HH_464198958_v" quantity="popExc/27/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_28_HH_464198958_v" quantity="popExc/28/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_29_HH_464198958_v" quantity="popExc/29/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_30_HH_464198958_v" quantity="popExc/30/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_31_HH_464198958_v" quantity="popExc/31/HH_464198958/v"/> 
         </OutputFile>
         
         <OutputFile id="Volts_file__popInh" fileName="Sim_Balanced.popInh.v.dat">
@@ -81,10 +116,14 @@
             <OutputColumn id="v_popInh_5_HH_471141261_v" quantity="popInh/5/HH_471141261/v"/> 
             <OutputColumn id="v_popInh_6_HH_471141261_v" quantity="popInh/6/HH_471141261/v"/> 
             <OutputColumn id="v_popInh_7_HH_471141261_v" quantity="popInh/7/HH_471141261/v"/> 
-        </OutputFile>
-        
-        <OutputFile id="Volts_file__popBBP" fileName="Sim_Balanced.popBBP.v.dat">
-            <OutputColumn id="v_popBBP_0_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
+            <OutputColumn id="v_popInh_8_HH_471141261_v" quantity="popInh/8/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_9_HH_471141261_v" quantity="popInh/9/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_10_HH_471141261_v" quantity="popInh/10/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_11_HH_471141261_v" quantity="popInh/11/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_12_HH_471141261_v" quantity="popInh/12/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_13_HH_471141261_v" quantity="popInh/13/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_14_HH_471141261_v" quantity="popInh/14/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_15_HH_471141261_v" quantity="popInh/15/HH_471141261/v"/> 
         </OutputFile>
         
     </Simulation>

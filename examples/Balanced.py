@@ -17,7 +17,7 @@ def scale_pop_size(baseline):
 
 oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/HH_464198958.cell.nml','HH_464198958')
 oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/HH_471141261.cell.nml','HH_471141261')
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
+#oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
 
 
 xDim = 400
@@ -60,11 +60,11 @@ popInh = oc.add_population_in_rectangular_region(network,
                                               scale_pop_size(40),
                                               xs,ys,zs,
                                               xDim,yDim,zDim)
-
+'''
 popBBP = oc.add_single_cell_population(network,
                                      'popBBP',
                                      'cADpyr229_L23_PC_5ecbf9b163_0_0',
-                                     z=200)
+                                     z=200)'''
 
 
 #####   Projections
@@ -87,10 +87,10 @@ oc.add_probabilistic_projection(network, "proj4",
                                 synGaba1.id, 0.5)
 
 
-
+'''
 oc.add_probabilistic_projection(network, "proj5",
                                 popExc, popBBP,
-                                synAmpa1.id, 1)
+                                synAmpa1.id, 1)'''
           
 #####   Inputs
 
