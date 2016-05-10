@@ -296,6 +296,7 @@ def generate_lems_simulation(nml_doc,
                              nml_file_name, 
                              duration, 
                              dt, 
+                             target_dir = '.',
                              include_extra_files = [],
                              gen_plots_for_all_v = True,
                              plot_all_segments = False,
@@ -306,14 +307,16 @@ def generate_lems_simulation(nml_doc,
                              gen_saves_for_only_populations = [],  #  List of populations, all pops if = []
                              gen_saves_for_quantities = {},   #  Dict with file names vs lists of quantity paths
                              seed=12345):
+                                 
+    lems_file_name = "LEMS_%s.xml"%network.id
     
     pyneuroml.lems.generate_lems_file_for_neuroml("Sim_%s"%network.id, 
                                    nml_file_name, 
                                    network.id, 
                                    duration, 
                                    dt, 
-                                   "LEMS_%s.xml"%network.id,
-                                   '.',
+                                   lems_file_name,
+                                   target_dir,
                                    include_extra_files = include_extra_files,
                                    gen_plots_for_all_v = gen_plots_for_all_v,
                                    plot_all_segments = plot_all_segments,
@@ -324,3 +327,5 @@ def generate_lems_simulation(nml_doc,
                                    gen_saves_for_only_populations = gen_saves_for_only_populations,
                                    gen_saves_for_quantities = gen_saves_for_quantities,
                                    seed=seed)
+
+    return lems_file_name
