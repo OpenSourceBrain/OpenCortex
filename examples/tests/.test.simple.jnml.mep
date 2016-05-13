@@ -1,0 +1,11 @@
+system: Test Simple
+experiments:
+    0:
+        expected:
+            spike times: [101.225, 219.3, 358.7]
+    1:
+        expected:
+            spike times: [262.425, 289.7, 395.375]
+    2:
+        expected:
+            spike times: [66.025, 209.675, 289.55, 374.125, 475.825]

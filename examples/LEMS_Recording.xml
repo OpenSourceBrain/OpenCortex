@@ -1,0 +1,135 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.1.11 (libNeuroML v0.2.14)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="Sim_Recording"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+    <Include file="Recording/RS.cell.nml"/>
+    <Include file="Recording/iaf.cell.nml"/>
+    <Include file="Recording/pyr_4_sym_soma.cell.nml"/>
+    <Include file="Recording/Ca_conc.nml"/>
+    <Include file="Recording/Ca_pyr.channel.nml"/>
+    <Include file="Recording/Kahp_pyr.channel.nml"/>
+    <Include file="Recording/Kdr_pyr.channel.nml"/>
+    <Include file="Recording/LeakConductance_pyr.channel.nml"/>
+    <Include file="Recording/Na_pyr.channel.nml"/>
+    <Include file="Recording/pyr_4_sym.cell.nml"/>
+    <Include file="Recording/Ca_conc.nml"/>
+    <Include file="Recording/Ca_pyr.channel.nml"/>
+    <Include file="Recording/Kahp_pyr.channel.nml"/>
+    <Include file="Recording/Kdr_pyr.channel.nml"/>
+    <Include file="Recording/LeakConductance_pyr.channel.nml"/>
+    <Include file="Recording/Na_pyr.channel.nml"/>
+    <Include file="Recording.net.nml"/>
+   
+    <Simulation id="Sim_Recording" length="500ms" step="0.005ms" target="Recording" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+        
+        <Display id="DispPop__pop0" title="Membrane potentials of cells in pop0" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
+            <Line id="pop0[0] seg 0: v" quantity="pop0/0/pyr_4_sym/0/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
+            <Line id="pop0[0] seg 1: v" quantity="pop0/0/pyr_4_sym/1/v" scale="1mV" color="#029a72" timeScale="1ms"/>
+            <Line id="pop0[0] seg 2: v" quantity="pop0/0/pyr_4_sym/2/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
+            <Line id="pop0[0] seg 3: v" quantity="pop0/0/pyr_4_sym/3/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
+            <Line id="pop0[0] seg 4: v" quantity="pop0/0/pyr_4_sym/4/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
+            <Line id="pop0[0] seg 5: v" quantity="pop0/0/pyr_4_sym/5/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
+            <Line id="pop0[0] seg 6: v" quantity="pop0/0/pyr_4_sym/6/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
+            <Line id="pop0[0] seg 7: v" quantity="pop0/0/pyr_4_sym/7/v" scale="1mV" color="#29645f" timeScale="1ms"/>
+            <Line id="pop0[0] seg 8: v" quantity="pop0/0/pyr_4_sym/8/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
+            <Line id="pop0[1] seg 0: v" quantity="pop0/1/pyr_4_sym/0/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
+            <Line id="pop0[1] seg 1: v" quantity="pop0/1/pyr_4_sym/1/v" scale="1mV" color="#8fe460" timeScale="1ms"/>
+            <Line id="pop0[1] seg 2: v" quantity="pop0/1/pyr_4_sym/2/v" scale="1mV" color="#2ca1c7" timeScale="1ms"/>
+            <Line id="pop0[1] seg 3: v" quantity="pop0/1/pyr_4_sym/3/v" scale="1mV" color="#8d9fe5" timeScale="1ms"/>
+            <Line id="pop0[1] seg 4: v" quantity="pop0/1/pyr_4_sym/4/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
+            <Line id="pop0[1] seg 5: v" quantity="pop0/1/pyr_4_sym/5/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
+            <Line id="pop0[1] seg 6: v" quantity="pop0/1/pyr_4_sym/6/v" scale="1mV" color="#175f0c" timeScale="1ms"/>
+            <Line id="pop0[1] seg 7: v" quantity="pop0/1/pyr_4_sym/7/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
+            <Line id="pop0[1] seg 8: v" quantity="pop0/1/pyr_4_sym/8/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
+            <Line id="pop0[2] seg 0: v" quantity="pop0/2/pyr_4_sym/0/v" scale="1mV" color="#8101e8" timeScale="1ms"/>
+            <Line id="pop0[2] seg 1: v" quantity="pop0/2/pyr_4_sym/1/v" scale="1mV" color="#25ece8" timeScale="1ms"/>
+            <Line id="pop0[2] seg 2: v" quantity="pop0/2/pyr_4_sym/2/v" scale="1mV" color="#b80e3b" timeScale="1ms"/>
+            <Line id="pop0[2] seg 3: v" quantity="pop0/2/pyr_4_sym/3/v" scale="1mV" color="#30a1f6" timeScale="1ms"/>
+            <Line id="pop0[2] seg 4: v" quantity="pop0/2/pyr_4_sym/4/v" scale="1mV" color="#577081" timeScale="1ms"/>
+            <Line id="pop0[2] seg 5: v" quantity="pop0/2/pyr_4_sym/5/v" scale="1mV" color="#06057c" timeScale="1ms"/>
+            <Line id="pop0[2] seg 6: v" quantity="pop0/2/pyr_4_sym/6/v" scale="1mV" color="#56eaa3" timeScale="1ms"/>
+            <Line id="pop0[2] seg 7: v" quantity="pop0/2/pyr_4_sym/7/v" scale="1mV" color="#f7acee" timeScale="1ms"/>
+            <Line id="pop0[2] seg 8: v" quantity="pop0/2/pyr_4_sym/8/v" scale="1mV" color="#fa9289" timeScale="1ms"/>
+            <Line id="pop0[3] seg 0: v" quantity="pop0/3/pyr_4_sym/0/v" scale="1mV" color="#be9985" timeScale="1ms"/>
+            <Line id="pop0[3] seg 1: v" quantity="pop0/3/pyr_4_sym/1/v" scale="1mV" color="#00e266" timeScale="1ms"/>
+            <Line id="pop0[3] seg 2: v" quantity="pop0/3/pyr_4_sym/2/v" scale="1mV" color="#f0b378" timeScale="1ms"/>
+            <Line id="pop0[3] seg 3: v" quantity="pop0/3/pyr_4_sym/3/v" scale="1mV" color="#deea95" timeScale="1ms"/>
+            <Line id="pop0[3] seg 4: v" quantity="pop0/3/pyr_4_sym/4/v" scale="1mV" color="#c55566" timeScale="1ms"/>
+            <Line id="pop0[3] seg 5: v" quantity="pop0/3/pyr_4_sym/5/v" scale="1mV" color="#2dcaab" timeScale="1ms"/>
+            <Line id="pop0[3] seg 6: v" quantity="pop0/3/pyr_4_sym/6/v" scale="1mV" color="#1978ce" timeScale="1ms"/>
+            <Line id="pop0[3] seg 7: v" quantity="pop0/3/pyr_4_sym/7/v" scale="1mV" color="#6a1ecc" timeScale="1ms"/>
+            <Line id="pop0[3] seg 8: v" quantity="pop0/3/pyr_4_sym/8/v" scale="1mV" color="#e2b284" timeScale="1ms"/>
+            <Line id="pop0[4] seg 0: v" quantity="pop0/4/pyr_4_sym/0/v" scale="1mV" color="#93fd72" timeScale="1ms"/>
+            <Line id="pop0[4] seg 1: v" quantity="pop0/4/pyr_4_sym/1/v" scale="1mV" color="#bc90a6" timeScale="1ms"/>
+            <Line id="pop0[4] seg 2: v" quantity="pop0/4/pyr_4_sym/2/v" scale="1mV" color="#3b8d0e" timeScale="1ms"/>
+            <Line id="pop0[4] seg 3: v" quantity="pop0/4/pyr_4_sym/3/v" scale="1mV" color="#860a7d" timeScale="1ms"/>
+            <Line id="pop0[4] seg 4: v" quantity="pop0/4/pyr_4_sym/4/v" scale="1mV" color="#b59a59" timeScale="1ms"/>
+            <Line id="pop0[4] seg 5: v" quantity="pop0/4/pyr_4_sym/5/v" scale="1mV" color="#d32851" timeScale="1ms"/>
+            <Line id="pop0[4] seg 6: v" quantity="pop0/4/pyr_4_sym/6/v" scale="1mV" color="#ce9fb6" timeScale="1ms"/>
+            <Line id="pop0[4] seg 7: v" quantity="pop0/4/pyr_4_sym/7/v" scale="1mV" color="#3b788b" timeScale="1ms"/>
+            <Line id="pop0[4] seg 8: v" quantity="pop0/4/pyr_4_sym/8/v" scale="1mV" color="#df8960" timeScale="1ms"/>
+        </Display>
+        
+        <OutputFile id="Volts_file__pop0" fileName="Sim_Recording.pop0.v.dat">
+            <OutputColumn id="v_pop0_0_pyr_4_sym_0_v" quantity="pop0/0/pyr_4_sym/0/v"/> 
+            <OutputColumn id="v_pop0_0_pyr_4_sym_1_v" quantity="pop0/0/pyr_4_sym/1/v"/> 
+            <OutputColumn id="v_pop0_0_pyr_4_sym_2_v" quantity="pop0/0/pyr_4_sym/2/v"/> 
+            <OutputColumn id="v_pop0_0_pyr_4_sym_3_v" quantity="pop0/0/pyr_4_sym/3/v"/> 
+            <OutputColumn id="v_pop0_0_pyr_4_sym_4_v" quantity="pop0/0/pyr_4_sym/4/v"/> 
+            <OutputColumn id="v_pop0_0_pyr_4_sym_5_v" quantity="pop0/0/pyr_4_sym/5/v"/> 
+            <OutputColumn id="v_pop0_0_pyr_4_sym_6_v" quantity="pop0/0/pyr_4_sym/6/v"/> 
+            <OutputColumn id="v_pop0_0_pyr_4_sym_7_v" quantity="pop0/0/pyr_4_sym/7/v"/> 
+            <OutputColumn id="v_pop0_0_pyr_4_sym_8_v" quantity="pop0/0/pyr_4_sym/8/v"/> 
+            <OutputColumn id="v_pop0_1_pyr_4_sym_0_v" quantity="pop0/1/pyr_4_sym/0/v"/> 
+            <OutputColumn id="v_pop0_1_pyr_4_sym_1_v" quantity="pop0/1/pyr_4_sym/1/v"/> 
+            <OutputColumn id="v_pop0_1_pyr_4_sym_2_v" quantity="pop0/1/pyr_4_sym/2/v"/> 
+            <OutputColumn id="v_pop0_1_pyr_4_sym_3_v" quantity="pop0/1/pyr_4_sym/3/v"/> 
+            <OutputColumn id="v_pop0_1_pyr_4_sym_4_v" quantity="pop0/1/pyr_4_sym/4/v"/> 
+            <OutputColumn id="v_pop0_1_pyr_4_sym_5_v" quantity="pop0/1/pyr_4_sym/5/v"/> 
+            <OutputColumn id="v_pop0_1_pyr_4_sym_6_v" quantity="pop0/1/pyr_4_sym/6/v"/> 
+            <OutputColumn id="v_pop0_1_pyr_4_sym_7_v" quantity="pop0/1/pyr_4_sym/7/v"/> 
+            <OutputColumn id="v_pop0_1_pyr_4_sym_8_v" quantity="pop0/1/pyr_4_sym/8/v"/> 
+            <OutputColumn id="v_pop0_2_pyr_4_sym_0_v" quantity="pop0/2/pyr_4_sym/0/v"/> 
+            <OutputColumn id="v_pop0_2_pyr_4_sym_1_v" quantity="pop0/2/pyr_4_sym/1/v"/> 
+            <OutputColumn id="v_pop0_2_pyr_4_sym_2_v" quantity="pop0/2/pyr_4_sym/2/v"/> 
+            <OutputColumn id="v_pop0_2_pyr_4_sym_3_v" quantity="pop0/2/pyr_4_sym/3/v"/> 
+            <OutputColumn id="v_pop0_2_pyr_4_sym_4_v" quantity="pop0/2/pyr_4_sym/4/v"/> 
+            <OutputColumn id="v_pop0_2_pyr_4_sym_5_v" quantity="pop0/2/pyr_4_sym/5/v"/> 
+            <OutputColumn id="v_pop0_2_pyr_4_sym_6_v" quantity="pop0/2/pyr_4_sym/6/v"/> 
+            <OutputColumn id="v_pop0_2_pyr_4_sym_7_v" quantity="pop0/2/pyr_4_sym/7/v"/> 
+            <OutputColumn id="v_pop0_2_pyr_4_sym_8_v" quantity="pop0/2/pyr_4_sym/8/v"/> 
+            <OutputColumn id="v_pop0_3_pyr_4_sym_0_v" quantity="pop0/3/pyr_4_sym/0/v"/> 
+            <OutputColumn id="v_pop0_3_pyr_4_sym_1_v" quantity="pop0/3/pyr_4_sym/1/v"/> 
+            <OutputColumn id="v_pop0_3_pyr_4_sym_2_v" quantity="pop0/3/pyr_4_sym/2/v"/> 
+            <OutputColumn id="v_pop0_3_pyr_4_sym_3_v" quantity="pop0/3/pyr_4_sym/3/v"/> 
+            <OutputColumn id="v_pop0_3_pyr_4_sym_4_v" quantity="pop0/3/pyr_4_sym/4/v"/> 
+            <OutputColumn id="v_pop0_3_pyr_4_sym_5_v" quantity="pop0/3/pyr_4_sym/5/v"/> 
+            <OutputColumn id="v_pop0_3_pyr_4_sym_6_v" quantity="pop0/3/pyr_4_sym/6/v"/> 
+            <OutputColumn id="v_pop0_3_pyr_4_sym_7_v" quantity="pop0/3/pyr_4_sym/7/v"/> 
+            <OutputColumn id="v_pop0_3_pyr_4_sym_8_v" quantity="pop0/3/pyr_4_sym/8/v"/> 
+            <OutputColumn id="v_pop0_4_pyr_4_sym_0_v" quantity="pop0/4/pyr_4_sym/0/v"/> 
+            <OutputColumn id="v_pop0_4_pyr_4_sym_1_v" quantity="pop0/4/pyr_4_sym/1/v"/> 
+            <OutputColumn id="v_pop0_4_pyr_4_sym_2_v" quantity="pop0/4/pyr_4_sym/2/v"/> 
+            <OutputColumn id="v_pop0_4_pyr_4_sym_3_v" quantity="pop0/4/pyr_4_sym/3/v"/> 
+            <OutputColumn id="v_pop0_4_pyr_4_sym_4_v" quantity="pop0/4/pyr_4_sym/4/v"/> 
+            <OutputColumn id="v_pop0_4_pyr_4_sym_5_v" quantity="pop0/4/pyr_4_sym/5/v"/> 
+            <OutputColumn id="v_pop0_4_pyr_4_sym_6_v" quantity="pop0/4/pyr_4_sym/6/v"/> 
+            <OutputColumn id="v_pop0_4_pyr_4_sym_7_v" quantity="pop0/4/pyr_4_sym/7/v"/> 
+            <OutputColumn id="v_pop0_4_pyr_4_sym_8_v" quantity="pop0/4/pyr_4_sym/8/v"/> 
+        </OutputFile>
+        
+    </Simulation>
+
+</Lems>

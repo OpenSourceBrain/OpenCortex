@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" 
+    id="iaf">
+    
+    <iafCell id="iaf" leakReversal="-65mV" thresh="-50mV"
+	     reset="-70mV" C="0.2nF" leakConductance="0.01uS"/>
+
+</neuroml>
