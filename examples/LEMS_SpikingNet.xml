@@ -14,6 +14,7 @@
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
     
+    <Include file="SpikingNet/RS.cell.nml"/>
     <Include file="SpikingNet.net.nml"/>
    
     <Simulation id="Sim_SpikingNet" length="1000ms" step="0.01ms" target="SpikingNet" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->

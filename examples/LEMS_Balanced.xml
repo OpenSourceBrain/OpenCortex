@@ -14,6 +14,16 @@
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
     
+    <Include file="Balanced/HH_464198958.cell.nml"/>
+    <Include file="Balanced/IM.channel.nml"/>
+    <Include file="Balanced/Kd.channel.nml"/>
+    <Include file="Balanced/Leak.channel.nml"/>
+    <Include file="Balanced/Na.channel.nml"/>
+    <Include file="Balanced/HH_471141261.cell.nml"/>
+    <Include file="Balanced/IM.channel.nml"/>
+    <Include file="Balanced/Kd.channel.nml"/>
+    <Include file="Balanced/Leak.channel.nml"/>
+    <Include file="Balanced/Na.channel.nml"/>
     <Include file="Balanced.net.nml"/>
    
     <Simulation id="Sim_Balanced" length="1000ms" step="0.025ms" target="Balanced" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->

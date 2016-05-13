@@ -14,6 +14,14 @@
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
     
+    <Include file="IClamps/RS.cell.nml"/>
+    <Include file="IClamps/pyr_4_sym_soma.cell.nml"/>
+    <Include file="IClamps/Ca_conc.nml"/>
+    <Include file="IClamps/Ca_pyr.channel.nml"/>
+    <Include file="IClamps/Kahp_pyr.channel.nml"/>
+    <Include file="IClamps/Kdr_pyr.channel.nml"/>
+    <Include file="IClamps/LeakConductance_pyr.channel.nml"/>
+    <Include file="IClamps/Na_pyr.channel.nml"/>
     <Include file="IClamps.net.nml"/>
    
     <Simulation id="Sim_IClamps" length="500ms" step="0.025ms" target="IClamps" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->

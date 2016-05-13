@@ -14,6 +14,23 @@
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
     
+    <Include file="Complex/RS.cell.nml"/>
+    <Include file="Complex/iaf.cell.nml"/>
+    <Include file="Complex/iafRef.cell.nml"/>
+    <Include file="Complex/pyr_4_sym_soma.cell.nml"/>
+    <Include file="Complex/Ca_conc.nml"/>
+    <Include file="Complex/Ca_pyr.channel.nml"/>
+    <Include file="Complex/Kahp_pyr.channel.nml"/>
+    <Include file="Complex/Kdr_pyr.channel.nml"/>
+    <Include file="Complex/LeakConductance_pyr.channel.nml"/>
+    <Include file="Complex/Na_pyr.channel.nml"/>
+    <Include file="Complex/pyr_4_sym.cell.nml"/>
+    <Include file="Complex/Ca_conc.nml"/>
+    <Include file="Complex/Ca_pyr.channel.nml"/>
+    <Include file="Complex/Kahp_pyr.channel.nml"/>
+    <Include file="Complex/Kdr_pyr.channel.nml"/>
+    <Include file="Complex/LeakConductance_pyr.channel.nml"/>
+    <Include file="Complex/Na_pyr.channel.nml"/>
     <Include file="Complex.net.nml"/>
    
     <Simulation id="Sim_Complex" length="500ms" step="0.025ms" target="Complex" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->

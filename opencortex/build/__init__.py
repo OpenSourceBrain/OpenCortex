@@ -14,9 +14,14 @@ from pyneuroml import pynml
 from pyneuroml.lems.LEMSSimulation import LEMSSimulation
 
 import random
-
 import sys
+import os
+import shutil
 
+all_cells = {}
+#all_included_on_cells = {}
+
+all_included_files = []
 
 def add_connection(projection, 
                    id, 
@@ -138,19 +143,37 @@ def _add_to_neuroml_doc(nml_doc, element):
         nml_doc.ComponentType.append(element)
         
     
+def _copy_to_dir_for_model(nml_doc,file_name):
+    
+    dir_for_model = nml_doc.id
+    if not os.path.isdir(dir_for_model):
+        os.mkdir(dir_for_model)
+    
+    shutil.copy(file_name, dir_for_model)
+    
     
 def add_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
     
+    nml2_doc_cell = pynml.read_neuroml2_file(cell_nml2_path, include_includes=False)
     
-    nml2_doc_orig = pynml.read_neuroml2_file(cell_nml2_path, include_includes=True)
-    
-    for cell in _get_cells_of_all_known_types(nml2_doc_orig):
+    for cell in _get_cells_of_all_known_types(nml2_doc_cell):
         if cell.id == cell_id:
-            _add_to_neuroml_doc(nml_doc, cell)
-    
-    #TODO: Just check for channels in that cell
-    for channel in _get_channels_of_all_known_types(nml2_doc_orig):
-        _add_to_neuroml_doc(nml_doc, channel)
+            all_cells[cell_id] = cell
+            
+            _copy_to_dir_for_model(nml_doc,cell_nml2_path)
+            new_file = '%s/%s.cell.nml'%(nml_doc.id,cell_id)
+            nml_doc.includes.append(neuroml.IncludeType(new_file)) 
+            all_included_files.append(new_file)
+            
+            for included in nml2_doc_cell.includes:
+                #Todo replace... quick & dirty...
+                old_loc = '%s/%s'%(os.path.dirname(os.path.abspath(cell_nml2_path)), included.href)
+                print old_loc
+                _copy_to_dir_for_model(nml_doc,old_loc)
+                new_loc = '%s/%s'%(nml_doc.id,included.href)
+                nml_doc.includes.append(neuroml.IncludeType(new_loc))
+                all_included_files.append(new_loc)
+
     
     
 def add_exp_two_syn(nml_doc, id, gbase, erev, tau_rise, tau_decay):
@@ -309,6 +332,8 @@ def generate_lems_simulation(nml_doc,
                              seed=12345):
                                  
     lems_file_name = "LEMS_%s.xml"%network.id
+    
+    include_extra_files.extend(all_included_files)
     
     pyneuroml.lems.generate_lems_file_for_neuroml("Sim_%s"%network.id, 
                                    nml_file_name, 
