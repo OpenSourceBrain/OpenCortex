@@ -1,3 +1,5 @@
+/examples/LEMS_SimpleNet_netpyne.py
+/examples/LEMS_SpikingNet_netpyne.py
 /examples/Balanced.net_pov.bat
 /examples/Balanced.net_pov.sh
 /examples/SpikingNet.net_cells.inc
