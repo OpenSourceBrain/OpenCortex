@@ -75,29 +75,101 @@
             <Line id="popExc[29]: v" quantity="popExc/29/HH_464198958/v" scale="1mV" color="#f0b378" timeScale="1ms"/>
             <Line id="popExc[30]: v" quantity="popExc/30/HH_464198958/v" scale="1mV" color="#deea95" timeScale="1ms"/>
             <Line id="popExc[31]: v" quantity="popExc/31/HH_464198958/v" scale="1mV" color="#c55566" timeScale="1ms"/>
+            <Line id="popExc[32]: v" quantity="popExc/32/HH_464198958/v" scale="1mV" color="#2dcaab" timeScale="1ms"/>
+            <Line id="popExc[33]: v" quantity="popExc/33/HH_464198958/v" scale="1mV" color="#1978ce" timeScale="1ms"/>
+            <Line id="popExc[34]: v" quantity="popExc/34/HH_464198958/v" scale="1mV" color="#6a1ecc" timeScale="1ms"/>
+            <Line id="popExc[35]: v" quantity="popExc/35/HH_464198958/v" scale="1mV" color="#e2b284" timeScale="1ms"/>
+            <Line id="popExc[36]: v" quantity="popExc/36/HH_464198958/v" scale="1mV" color="#93fd72" timeScale="1ms"/>
+            <Line id="popExc[37]: v" quantity="popExc/37/HH_464198958/v" scale="1mV" color="#bc90a6" timeScale="1ms"/>
+            <Line id="popExc[38]: v" quantity="popExc/38/HH_464198958/v" scale="1mV" color="#3b8d0e" timeScale="1ms"/>
+            <Line id="popExc[39]: v" quantity="popExc/39/HH_464198958/v" scale="1mV" color="#860a7d" timeScale="1ms"/>
+            <Line id="popExc[40]: v" quantity="popExc/40/HH_464198958/v" scale="1mV" color="#b59a59" timeScale="1ms"/>
+            <Line id="popExc[41]: v" quantity="popExc/41/HH_464198958/v" scale="1mV" color="#d32851" timeScale="1ms"/>
+            <Line id="popExc[42]: v" quantity="popExc/42/HH_464198958/v" scale="1mV" color="#ce9fb6" timeScale="1ms"/>
+            <Line id="popExc[43]: v" quantity="popExc/43/HH_464198958/v" scale="1mV" color="#3b788b" timeScale="1ms"/>
+            <Line id="popExc[44]: v" quantity="popExc/44/HH_464198958/v" scale="1mV" color="#df8960" timeScale="1ms"/>
+            <Line id="popExc[45]: v" quantity="popExc/45/HH_464198958/v" scale="1mV" color="#3764b5" timeScale="1ms"/>
+            <Line id="popExc[46]: v" quantity="popExc/46/HH_464198958/v" scale="1mV" color="#cd4944" timeScale="1ms"/>
+            <Line id="popExc[47]: v" quantity="popExc/47/HH_464198958/v" scale="1mV" color="#8e1a11" timeScale="1ms"/>
+            <Line id="popExc[48]: v" quantity="popExc/48/HH_464198958/v" scale="1mV" color="#2f9272" timeScale="1ms"/>
+            <Line id="popExc[49]: v" quantity="popExc/49/HH_464198958/v" scale="1mV" color="#96af0d" timeScale="1ms"/>
+            <Line id="popExc[50]: v" quantity="popExc/50/HH_464198958/v" scale="1mV" color="#84ab56" timeScale="1ms"/>
+            <Line id="popExc[51]: v" quantity="popExc/51/HH_464198958/v" scale="1mV" color="#f56ae7" timeScale="1ms"/>
+            <Line id="popExc[52]: v" quantity="popExc/52/HH_464198958/v" scale="1mV" color="#0aa250" timeScale="1ms"/>
+            <Line id="popExc[53]: v" quantity="popExc/53/HH_464198958/v" scale="1mV" color="#2a04f7" timeScale="1ms"/>
+            <Line id="popExc[54]: v" quantity="popExc/54/HH_464198958/v" scale="1mV" color="#fbb911" timeScale="1ms"/>
+            <Line id="popExc[55]: v" quantity="popExc/55/HH_464198958/v" scale="1mV" color="#d50b61" timeScale="1ms"/>
+            <Line id="popExc[56]: v" quantity="popExc/56/HH_464198958/v" scale="1mV" color="#267841" timeScale="1ms"/>
+            <Line id="popExc[57]: v" quantity="popExc/57/HH_464198958/v" scale="1mV" color="#3aa725" timeScale="1ms"/>
+            <Line id="popExc[58]: v" quantity="popExc/58/HH_464198958/v" scale="1mV" color="#8a04f7" timeScale="1ms"/>
+            <Line id="popExc[59]: v" quantity="popExc/59/HH_464198958/v" scale="1mV" color="#282fe5" timeScale="1ms"/>
+            <Line id="popExc[60]: v" quantity="popExc/60/HH_464198958/v" scale="1mV" color="#52e1fb" timeScale="1ms"/>
+            <Line id="popExc[61]: v" quantity="popExc/61/HH_464198958/v" scale="1mV" color="#0ca02f" timeScale="1ms"/>
+            <Line id="popExc[62]: v" quantity="popExc/62/HH_464198958/v" scale="1mV" color="#b6307b" timeScale="1ms"/>
+            <Line id="popExc[63]: v" quantity="popExc/63/HH_464198958/v" scale="1mV" color="#141cb0" timeScale="1ms"/>
+            <Line id="popExc[64]: v" quantity="popExc/64/HH_464198958/v" scale="1mV" color="#fe9e62" timeScale="1ms"/>
+            <Line id="popExc[65]: v" quantity="popExc/65/HH_464198958/v" scale="1mV" color="#ebaa77" timeScale="1ms"/>
+            <Line id="popExc[66]: v" quantity="popExc/66/HH_464198958/v" scale="1mV" color="#c9f0b0" timeScale="1ms"/>
+            <Line id="popExc[67]: v" quantity="popExc/67/HH_464198958/v" scale="1mV" color="#c5bc64" timeScale="1ms"/>
+            <Line id="popExc[68]: v" quantity="popExc/68/HH_464198958/v" scale="1mV" color="#5e2503" timeScale="1ms"/>
+            <Line id="popExc[69]: v" quantity="popExc/69/HH_464198958/v" scale="1mV" color="#adbfb0" timeScale="1ms"/>
+            <Line id="popExc[70]: v" quantity="popExc/70/HH_464198958/v" scale="1mV" color="#c2e1da" timeScale="1ms"/>
+            <Line id="popExc[71]: v" quantity="popExc/71/HH_464198958/v" scale="1mV" color="#7b1427" timeScale="1ms"/>
+            <Line id="popExc[72]: v" quantity="popExc/72/HH_464198958/v" scale="1mV" color="#0fc01b" timeScale="1ms"/>
+            <Line id="popExc[73]: v" quantity="popExc/73/HH_464198958/v" scale="1mV" color="#a04859" timeScale="1ms"/>
+            <Line id="popExc[74]: v" quantity="popExc/74/HH_464198958/v" scale="1mV" color="#53650f" timeScale="1ms"/>
+            <Line id="popExc[75]: v" quantity="popExc/75/HH_464198958/v" scale="1mV" color="#9c2ecc" timeScale="1ms"/>
+            <Line id="popExc[76]: v" quantity="popExc/76/HH_464198958/v" scale="1mV" color="#6bbb69" timeScale="1ms"/>
+            <Line id="popExc[77]: v" quantity="popExc/77/HH_464198958/v" scale="1mV" color="#f3d90e" timeScale="1ms"/>
+            <Line id="popExc[78]: v" quantity="popExc/78/HH_464198958/v" scale="1mV" color="#339bb4" timeScale="1ms"/>
+            <Line id="popExc[79]: v" quantity="popExc/79/HH_464198958/v" scale="1mV" color="#c4d3c5" timeScale="1ms"/>
         </Display>
         
         <Display id="DispPop__popInh" title="Membrane potentials of cells in popInh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popInh[0]: v" quantity="popInh/0/HH_471141261/v" scale="1mV" color="#2dcaab" timeScale="1ms"/>
-            <Line id="popInh[1]: v" quantity="popInh/1/HH_471141261/v" scale="1mV" color="#1978ce" timeScale="1ms"/>
-            <Line id="popInh[2]: v" quantity="popInh/2/HH_471141261/v" scale="1mV" color="#6a1ecc" timeScale="1ms"/>
-            <Line id="popInh[3]: v" quantity="popInh/3/HH_471141261/v" scale="1mV" color="#e2b284" timeScale="1ms"/>
-            <Line id="popInh[4]: v" quantity="popInh/4/HH_471141261/v" scale="1mV" color="#93fd72" timeScale="1ms"/>
-            <Line id="popInh[5]: v" quantity="popInh/5/HH_471141261/v" scale="1mV" color="#bc90a6" timeScale="1ms"/>
-            <Line id="popInh[6]: v" quantity="popInh/6/HH_471141261/v" scale="1mV" color="#3b8d0e" timeScale="1ms"/>
-            <Line id="popInh[7]: v" quantity="popInh/7/HH_471141261/v" scale="1mV" color="#860a7d" timeScale="1ms"/>
-            <Line id="popInh[8]: v" quantity="popInh/8/HH_471141261/v" scale="1mV" color="#b59a59" timeScale="1ms"/>
-            <Line id="popInh[9]: v" quantity="popInh/9/HH_471141261/v" scale="1mV" color="#d32851" timeScale="1ms"/>
-            <Line id="popInh[10]: v" quantity="popInh/10/HH_471141261/v" scale="1mV" color="#ce9fb6" timeScale="1ms"/>
-            <Line id="popInh[11]: v" quantity="popInh/11/HH_471141261/v" scale="1mV" color="#3b788b" timeScale="1ms"/>
-            <Line id="popInh[12]: v" quantity="popInh/12/HH_471141261/v" scale="1mV" color="#df8960" timeScale="1ms"/>
-            <Line id="popInh[13]: v" quantity="popInh/13/HH_471141261/v" scale="1mV" color="#3764b5" timeScale="1ms"/>
-            <Line id="popInh[14]: v" quantity="popInh/14/HH_471141261/v" scale="1mV" color="#cd4944" timeScale="1ms"/>
-            <Line id="popInh[15]: v" quantity="popInh/15/HH_471141261/v" scale="1mV" color="#8e1a11" timeScale="1ms"/>
+            <Line id="popInh[0]: v" quantity="popInh/0/HH_471141261/v" scale="1mV" color="#b2d4f3" timeScale="1ms"/>
+            <Line id="popInh[1]: v" quantity="popInh/1/HH_471141261/v" scale="1mV" color="#8e7ae9" timeScale="1ms"/>
+            <Line id="popInh[2]: v" quantity="popInh/2/HH_471141261/v" scale="1mV" color="#147de9" timeScale="1ms"/>
+            <Line id="popInh[3]: v" quantity="popInh/3/HH_471141261/v" scale="1mV" color="#2a3a46" timeScale="1ms"/>
+            <Line id="popInh[4]: v" quantity="popInh/4/HH_471141261/v" scale="1mV" color="#f79fca" timeScale="1ms"/>
+            <Line id="popInh[5]: v" quantity="popInh/5/HH_471141261/v" scale="1mV" color="#3b0b63" timeScale="1ms"/>
+            <Line id="popInh[6]: v" quantity="popInh/6/HH_471141261/v" scale="1mV" color="#29ddf4" timeScale="1ms"/>
+            <Line id="popInh[7]: v" quantity="popInh/7/HH_471141261/v" scale="1mV" color="#49cdbe" timeScale="1ms"/>
+            <Line id="popInh[8]: v" quantity="popInh/8/HH_471141261/v" scale="1mV" color="#8980bb" timeScale="1ms"/>
+            <Line id="popInh[9]: v" quantity="popInh/9/HH_471141261/v" scale="1mV" color="#850561" timeScale="1ms"/>
+            <Line id="popInh[10]: v" quantity="popInh/10/HH_471141261/v" scale="1mV" color="#00da5a" timeScale="1ms"/>
+            <Line id="popInh[11]: v" quantity="popInh/11/HH_471141261/v" scale="1mV" color="#00d0ba" timeScale="1ms"/>
+            <Line id="popInh[12]: v" quantity="popInh/12/HH_471141261/v" scale="1mV" color="#7efe36" timeScale="1ms"/>
+            <Line id="popInh[13]: v" quantity="popInh/13/HH_471141261/v" scale="1mV" color="#2f529f" timeScale="1ms"/>
+            <Line id="popInh[14]: v" quantity="popInh/14/HH_471141261/v" scale="1mV" color="#9b852c" timeScale="1ms"/>
+            <Line id="popInh[15]: v" quantity="popInh/15/HH_471141261/v" scale="1mV" color="#cc6812" timeScale="1ms"/>
+            <Line id="popInh[16]: v" quantity="popInh/16/HH_471141261/v" scale="1mV" color="#188b26" timeScale="1ms"/>
+            <Line id="popInh[17]: v" quantity="popInh/17/HH_471141261/v" scale="1mV" color="#8152a2" timeScale="1ms"/>
+            <Line id="popInh[18]: v" quantity="popInh/18/HH_471141261/v" scale="1mV" color="#67f8ab" timeScale="1ms"/>
+            <Line id="popInh[19]: v" quantity="popInh/19/HH_471141261/v" scale="1mV" color="#ca5b25" timeScale="1ms"/>
+            <Line id="popInh[20]: v" quantity="popInh/20/HH_471141261/v" scale="1mV" color="#f46d4e" timeScale="1ms"/>
+            <Line id="popInh[21]: v" quantity="popInh/21/HH_471141261/v" scale="1mV" color="#6aae0b" timeScale="1ms"/>
+            <Line id="popInh[22]: v" quantity="popInh/22/HH_471141261/v" scale="1mV" color="#3e46cc" timeScale="1ms"/>
+            <Line id="popInh[23]: v" quantity="popInh/23/HH_471141261/v" scale="1mV" color="#e0e3a1" timeScale="1ms"/>
+            <Line id="popInh[24]: v" quantity="popInh/24/HH_471141261/v" scale="1mV" color="#06fb8a" timeScale="1ms"/>
+            <Line id="popInh[25]: v" quantity="popInh/25/HH_471141261/v" scale="1mV" color="#549968" timeScale="1ms"/>
+            <Line id="popInh[26]: v" quantity="popInh/26/HH_471141261/v" scale="1mV" color="#650ffb" timeScale="1ms"/>
+            <Line id="popInh[27]: v" quantity="popInh/27/HH_471141261/v" scale="1mV" color="#2d9059" timeScale="1ms"/>
+            <Line id="popInh[28]: v" quantity="popInh/28/HH_471141261/v" scale="1mV" color="#ae1036" timeScale="1ms"/>
+            <Line id="popInh[29]: v" quantity="popInh/29/HH_471141261/v" scale="1mV" color="#84ad19" timeScale="1ms"/>
+            <Line id="popInh[30]: v" quantity="popInh/30/HH_471141261/v" scale="1mV" color="#3fba91" timeScale="1ms"/>
+            <Line id="popInh[31]: v" quantity="popInh/31/HH_471141261/v" scale="1mV" color="#69cacc" timeScale="1ms"/>
+            <Line id="popInh[32]: v" quantity="popInh/32/HH_471141261/v" scale="1mV" color="#b11f43" timeScale="1ms"/>
+            <Line id="popInh[33]: v" quantity="popInh/33/HH_471141261/v" scale="1mV" color="#5330d7" timeScale="1ms"/>
+            <Line id="popInh[34]: v" quantity="popInh/34/HH_471141261/v" scale="1mV" color="#11552d" timeScale="1ms"/>
+            <Line id="popInh[35]: v" quantity="popInh/35/HH_471141261/v" scale="1mV" color="#75e387" timeScale="1ms"/>
+            <Line id="popInh[36]: v" quantity="popInh/36/HH_471141261/v" scale="1mV" color="#31efbe" timeScale="1ms"/>
+            <Line id="popInh[37]: v" quantity="popInh/37/HH_471141261/v" scale="1mV" color="#9f0e56" timeScale="1ms"/>
+            <Line id="popInh[38]: v" quantity="popInh/38/HH_471141261/v" scale="1mV" color="#33af06" timeScale="1ms"/>
+            <Line id="popInh[39]: v" quantity="popInh/39/HH_471141261/v" scale="1mV" color="#22910c" timeScale="1ms"/>
         </Display>
         
         <Display id="DispPop__popBBP" title="Membrane potentials of cells in popBBP" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popBBP[0]: v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#2f9272" timeScale="1ms"/>
+            <Line id="popBBP[0]: v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#e4daa2" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Volts_file__popExc" fileName="Sim_Balanced.popExc.v.dat">
@@ -133,6 +205,54 @@
             <OutputColumn id="v_popExc_29_HH_464198958_v" quantity="popExc/29/HH_464198958/v"/> 
             <OutputColumn id="v_popExc_30_HH_464198958_v" quantity="popExc/30/HH_464198958/v"/> 
             <OutputColumn id="v_popExc_31_HH_464198958_v" quantity="popExc/31/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_32_HH_464198958_v" quantity="popExc/32/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_33_HH_464198958_v" quantity="popExc/33/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_34_HH_464198958_v" quantity="popExc/34/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_35_HH_464198958_v" quantity="popExc/35/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_36_HH_464198958_v" quantity="popExc/36/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_37_HH_464198958_v" quantity="popExc/37/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_38_HH_464198958_v" quantity="popExc/38/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_39_HH_464198958_v" quantity="popExc/39/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_40_HH_464198958_v" quantity="popExc/40/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_41_HH_464198958_v" quantity="popExc/41/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_42_HH_464198958_v" quantity="popExc/42/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_43_HH_464198958_v" quantity="popExc/43/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_44_HH_464198958_v" quantity="popExc/44/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_45_HH_464198958_v" quantity="popExc/45/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_46_HH_464198958_v" quantity="popExc/46/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_47_HH_464198958_v" quantity="popExc/47/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_48_HH_464198958_v" quantity="popExc/48/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_49_HH_464198958_v" quantity="popExc/49/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_50_HH_464198958_v" quantity="popExc/50/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_51_HH_464198958_v" quantity="popExc/51/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_52_HH_464198958_v" quantity="popExc/52/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_53_HH_464198958_v" quantity="popExc/53/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_54_HH_464198958_v" quantity="popExc/54/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_55_HH_464198958_v" quantity="popExc/55/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_56_HH_464198958_v" quantity="popExc/56/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_57_HH_464198958_v" quantity="popExc/57/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_58_HH_464198958_v" quantity="popExc/58/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_59_HH_464198958_v" quantity="popExc/59/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_60_HH_464198958_v" quantity="popExc/60/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_61_HH_464198958_v" quantity="popExc/61/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_62_HH_464198958_v" quantity="popExc/62/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_63_HH_464198958_v" quantity="popExc/63/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_64_HH_464198958_v" quantity="popExc/64/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_65_HH_464198958_v" quantity="popExc/65/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_66_HH_464198958_v" quantity="popExc/66/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_67_HH_464198958_v" quantity="popExc/67/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_68_HH_464198958_v" quantity="popExc/68/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_69_HH_464198958_v" quantity="popExc/69/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_70_HH_464198958_v" quantity="popExc/70/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_71_HH_464198958_v" quantity="popExc/71/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_72_HH_464198958_v" quantity="popExc/72/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_73_HH_464198958_v" quantity="popExc/73/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_74_HH_464198958_v" quantity="popExc/74/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_75_HH_464198958_v" quantity="popExc/75/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_76_HH_464198958_v" quantity="popExc/76/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_77_HH_464198958_v" quantity="popExc/77/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_78_HH_464198958_v" quantity="popExc/78/HH_464198958/v"/> 
+            <OutputColumn id="v_popExc_79_HH_464198958_v" quantity="popExc/79/HH_464198958/v"/> 
         </OutputFile>
         
         <OutputFile id="Volts_file__popInh" fileName="Sim_Balanced.popInh.v.dat">
@@ -152,6 +272,30 @@
             <OutputColumn id="v_popInh_13_HH_471141261_v" quantity="popInh/13/HH_471141261/v"/> 
             <OutputColumn id="v_popInh_14_HH_471141261_v" quantity="popInh/14/HH_471141261/v"/> 
             <OutputColumn id="v_popInh_15_HH_471141261_v" quantity="popInh/15/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_16_HH_471141261_v" quantity="popInh/16/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_17_HH_471141261_v" quantity="popInh/17/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_18_HH_471141261_v" quantity="popInh/18/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_19_HH_471141261_v" quantity="popInh/19/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_20_HH_471141261_v" quantity="popInh/20/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_21_HH_471141261_v" quantity="popInh/21/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_22_HH_471141261_v" quantity="popInh/22/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_23_HH_471141261_v" quantity="popInh/23/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_24_HH_471141261_v" quantity="popInh/24/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_25_HH_471141261_v" quantity="popInh/25/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_26_HH_471141261_v" quantity="popInh/26/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_27_HH_471141261_v" quantity="popInh/27/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_28_HH_471141261_v" quantity="popInh/28/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_29_HH_471141261_v" quantity="popInh/29/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_30_HH_471141261_v" quantity="popInh/30/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_31_HH_471141261_v" quantity="popInh/31/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_32_HH_471141261_v" quantity="popInh/32/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_33_HH_471141261_v" quantity="popInh/33/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_34_HH_471141261_v" quantity="popInh/34/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_35_HH_471141261_v" quantity="popInh/35/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_36_HH_471141261_v" quantity="popInh/36/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_37_HH_471141261_v" quantity="popInh/37/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_38_HH_471141261_v" quantity="popInh/38/HH_471141261/v"/> 
+            <OutputColumn id="v_popInh_39_HH_471141261_v" quantity="popInh/39/HH_471141261/v"/> 
         </OutputFile>
         
         <OutputFile id="Volts_file__popBBP" fileName="Sim_Balanced.popBBP.v.dat">
