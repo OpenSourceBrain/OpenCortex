@@ -39,3 +39,4 @@ build/lib*
 /examples/SpikingNet.net.svg
 /examples/test.py
 /examples/output.avi
+/examples/Balanced_x10_noConns.net.svg

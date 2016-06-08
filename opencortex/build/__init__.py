@@ -19,8 +19,6 @@ import os
 import shutil
 
 all_cells = {}
-#all_included_on_cells = {}
-
 all_included_files = []
 
 def add_connection(projection, 
@@ -95,14 +93,14 @@ def include_cell_prototype(nml_doc,cell_nml2_path):
 # Helper method which will be made redundant with a better generated Python API...
 def _get_cells_of_all_known_types(nml_doc):
     
-    all_cells = []
-    all_cells.extend(nml_doc.cells)
-    all_cells.extend(nml_doc.izhikevich_cells)
-    all_cells.extend(nml_doc.izhikevich2007_cells)
-    all_cells.extend(nml_doc.iaf_cells)
-    all_cells.extend(nml_doc.iaf_ref_cells)
+    all_cells_known = []
+    all_cells_known.extend(nml_doc.cells)
+    all_cells_known.extend(nml_doc.izhikevich_cells)
+    all_cells_known.extend(nml_doc.izhikevich2007_cells)
+    all_cells_known.extend(nml_doc.iaf_cells)
+    all_cells_known.extend(nml_doc.iaf_ref_cells)
     
-    return all_cells
+    return all_cells_known
 
 # Helper method which will be made redundant with a better generated Python API...
 def _get_channels_of_all_known_types(nml_doc):
@@ -163,7 +161,8 @@ def add_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
             _copy_to_dir_for_model(nml_doc,cell_nml2_path)
             new_file = '%s/%s.cell.nml'%(nml_doc.id,cell_id)
             nml_doc.includes.append(neuroml.IncludeType(new_file)) 
-            all_included_files.append(new_file)
+            if not new_file in all_included_files:
+                all_included_files.append(new_file)
             
             for included in nml2_doc_cell.includes:
                 #Todo replace... quick & dirty...
@@ -172,9 +171,10 @@ def add_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
                 _copy_to_dir_for_model(nml_doc,old_loc)
                 new_loc = '%s/%s'%(nml_doc.id,included.href)
                 nml_doc.includes.append(neuroml.IncludeType(new_loc))
-                all_included_files.append(new_loc)
-
-    
+                if not new_loc in all_included_files:
+                    all_included_files.append(new_loc)
+                
+                
     
 def add_exp_two_syn(nml_doc, id, gbase, erev, tau_rise, tau_decay):
     # Define synapse
@@ -272,6 +272,9 @@ def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False
     
 
 def generate_network(reference, seed=1234):
+
+    del all_included_files[:]
+    all_cells.clear()
     
     nml_doc = neuroml.NeuroMLDocument(id='%s'%reference)
     
@@ -320,7 +323,7 @@ def generate_lems_simulation(nml_doc,
                              duration, 
                              dt, 
                              target_dir = '.',
-                             include_extra_files = [],
+                             include_extra_lems_files = [],
                              gen_plots_for_all_v = True,
                              plot_all_segments = False,
                              gen_plots_for_quantities = {},   #  Dict with displays vs lists of quantity paths
@@ -333,7 +336,7 @@ def generate_lems_simulation(nml_doc,
                                  
     lems_file_name = "LEMS_%s.xml"%network.id
     
-    include_extra_files.extend(all_included_files)
+    include_extra_lems_files.extend(all_included_files)
     
     pyneuroml.lems.generate_lems_file_for_neuroml("Sim_%s"%network.id, 
                                    nml_file_name, 
@@ -342,7 +345,7 @@ def generate_lems_simulation(nml_doc,
                                    dt, 
                                    lems_file_name,
                                    target_dir,
-                                   include_extra_files = include_extra_files,
+                                   include_extra_files = include_extra_lems_files,
                                    gen_plots_for_all_v = gen_plots_for_all_v,
                                    plot_all_segments = plot_all_segments,
                                    gen_plots_for_quantities = gen_plots_for_quantities, 
@@ -352,5 +355,7 @@ def generate_lems_simulation(nml_doc,
                                    gen_saves_for_only_populations = gen_saves_for_only_populations,
                                    gen_saves_for_quantities = gen_saves_for_quantities,
                                    seed=seed)
+                                   
+    del include_extra_lems_files[:]
 
     return lems_file_name

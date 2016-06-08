@@ -20,10 +20,6 @@
     <Include file="Balanced/Leak.channel.nml"/>
     <Include file="Balanced/Na.channel.nml"/>
     <Include file="Balanced/HH_471141261.cell.nml"/>
-    <Include file="Balanced/IM.channel.nml"/>
-    <Include file="Balanced/Kd.channel.nml"/>
-    <Include file="Balanced/Leak.channel.nml"/>
-    <Include file="Balanced/Na.channel.nml"/>
     <Include file="Balanced/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml"/>
     <Include file="Balanced/pas.channel.nml"/>
     <Include file="Balanced/Ih.channel.nml"/>

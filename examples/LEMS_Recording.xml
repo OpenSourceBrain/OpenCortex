@@ -24,12 +24,6 @@
     <Include file="Recording/LeakConductance_pyr.channel.nml"/>
     <Include file="Recording/Na_pyr.channel.nml"/>
     <Include file="Recording/pyr_4_sym.cell.nml"/>
-    <Include file="Recording/Ca_conc.nml"/>
-    <Include file="Recording/Ca_pyr.channel.nml"/>
-    <Include file="Recording/Kahp_pyr.channel.nml"/>
-    <Include file="Recording/Kdr_pyr.channel.nml"/>
-    <Include file="Recording/LeakConductance_pyr.channel.nml"/>
-    <Include file="Recording/Na_pyr.channel.nml"/>
     <Include file="Recording.net.nml"/>
    
     <Simulation id="Sim_Recording" length="500ms" step="0.005ms" target="Recording" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
