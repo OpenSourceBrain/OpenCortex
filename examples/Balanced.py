@@ -22,6 +22,9 @@ def generate(reference = "Balanced",
              scalez=1,
              connections=True):
 
+    num_exc = scale_pop_size(80,scalePops)
+    num_inh = scale_pop_size(40,scalePops)
+    
     nml_doc, network = oc.generate_network(reference)
 
     oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/HH_464198958.cell.nml','HH_464198958')
@@ -58,14 +61,14 @@ def generate(reference = "Balanced",
     popExc = oc.add_population_in_rectangular_region(network,
                                                   'popExc',
                                                   'HH_464198958',
-                                                  scale_pop_size(80,scalePops),
+                                                  num_exc,
                                                   xs,ys,zs,
                                                   xDim,yDim,zDim)
 
     popInh = oc.add_population_in_rectangular_region(network,
                                                   'popInh',
                                                   'HH_471141261',
-                                                  scale_pop_size(40,scalePops),
+                                                  num_inh,
                                                   xs,ys,zs,
                                                   xDim,yDim,zDim)
     if num_bbp == 1:
@@ -85,28 +88,34 @@ def generate(reference = "Balanced",
 
     #####   Projections
 
+    total_conns = 0
     if connections:
-        oc.add_probabilistic_projection(network, "proj0",
+        proj = oc.add_probabilistic_projection(network, "proj0",
                                         popExc, popExc,
                                         synAmpa1.id, 0.3)
+        total_conns += len(proj.connection_wds)
 
-        oc.add_probabilistic_projection(network, "proj1",
+        proj = oc.add_probabilistic_projection(network, "proj1",
                                         popExc, popInh,
                                         synAmpa1.id, 0.5)
+        total_conns += len(proj.connection_wds)
 
-        oc.add_probabilistic_projection(network, "proj3",
+        proj = oc.add_probabilistic_projection(network, "proj3",
                                         popInh, popExc,
                                         synGaba1.id, 0.7)
+        total_conns += len(proj.connection_wds)
 
-        oc.add_probabilistic_projection(network, "proj4",
+        proj = oc.add_probabilistic_projection(network, "proj4",
                                         popInh, popInh,
                                         synGaba1.id, 0.5)
+        total_conns += len(proj.connection_wds)
 
 
 
-        oc.add_probabilistic_projection(network, "proj5",
+        proj = oc.add_probabilistic_projection(network, "proj5",
                                         popExc, popBBP,
                                         synAmpa1.id, 0.5)
+        total_conns += len(proj.connection_wds)
 
     #####   Inputs
 
@@ -116,7 +125,12 @@ def generate(reference = "Balanced",
 
 
 
-    #####   Save NeuroML and LEMS Simulation files               
+    #####   Save NeuroML and LEMS Simulation files      
+    
+    if num_bbp != 1:
+        new_reference = 'Balanced_%scells_%sconns'%(num_bbp+num_exc+num_inh,total_conns)
+        network.id = new_reference
+        nml_doc.id = new_reference
 
     nml_file_name = '%s.net.nml'%network.id
     oc.save_network(nml_doc, nml_file_name, validate=True)
@@ -132,16 +146,14 @@ if __name__ == '__main__':
     
     if '-all' in sys.argv:
         generate()
-        generate("Balanced_x10_noConns",
-             num_bbp =10,
-             scalePops = 10,
+        generate(num_bbp =10,
+             scalePops = 5,
              scalex=2,
              scalez=2,
              connections=False)
-             
-        generate("Balanced_x10",
-             num_bbp =10,
-             scalePops = 10,
+        
+        generate(num_bbp =10,
+             scalePops = 5,
              scalex=2,
              scalez=2)
     else:

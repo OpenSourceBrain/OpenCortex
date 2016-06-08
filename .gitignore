@@ -36,7 +36,6 @@ examples/*definition.py
 OpenCortex.egg-info
 dist
 build/lib*
-/examples/SpikingNet.net.svg
 /examples/test.py
 /examples/output.avi
-/examples/Balanced_x10_noConns.net.svg
+/examples/*.svg
