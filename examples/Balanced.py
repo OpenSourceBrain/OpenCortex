@@ -20,7 +20,8 @@ def generate(reference = "Balanced",
              scalex=1,
              scaley=1,
              scalez=1,
-             connections=True):
+             connections=True,
+             format='xml'):
 
     num_exc = scale_pop_size(80,scalePops)
     num_inh = scale_pop_size(40,scalePops)
@@ -132,14 +133,21 @@ def generate(reference = "Balanced",
         network.id = new_reference
         nml_doc.id = new_reference
 
-    nml_file_name = '%s.net.nml'%network.id
-    oc.save_network(nml_doc, nml_file_name, validate=True)
+    nml_file_name = '%s.net.%s'%(network.id,'nml.h5' if format == 'hdf5' else 'nml')
+    oc.save_network(nml_doc, 
+                    nml_file_name, 
+                    validate=(format=='xml'),
+                    format = format)
 
-    oc.generate_lems_simulation(nml_doc, network, 
+    if format=='xml':
+        lems_file_name = oc.generate_lems_simulation(nml_doc, network, 
                                 nml_file_name, 
                                 duration =      1000, 
                                 dt =            0.025)
+    else:
+        lems_file_name = None
                                 
+    return nml_doc, nml_file_name, lems_file_name
                                
 
 if __name__ == '__main__':
