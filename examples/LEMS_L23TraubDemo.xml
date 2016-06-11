@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.1.12 (libNeuroML v0.2.15)
+        This LEMS file has been automatically generated using PyNeuroML v0.1.13 (libNeuroML v0.2.17)
 
      -->
     
@@ -30,20 +30,12 @@
     <Include file="L23TraubDemo/nap.channel.nml"/>
     <Include file="L23TraubDemo/pas.channel.nml"/>
     <Include file="L23TraubDemo/SupBasket.cell.nml"/>
-    <Include file="L23TraubDemo/ar__m00_25.channel.nml"/>
     <Include file="L23TraubDemo/cad__beta0_02__phi260000.nml"/>
     <Include file="L23TraubDemo/cad__beta0_05__phi520000.nml"/>
-    <Include file="L23TraubDemo/cal.channel.nml"/>
-    <Include file="L23TraubDemo/cat.channel.nml"/>
-    <Include file="L23TraubDemo/k2.channel.nml"/>
-    <Include file="L23TraubDemo/ka.channel.nml"/>
     <Include file="L23TraubDemo/kahp_slower.channel.nml"/>
     <Include file="L23TraubDemo/kc_fast.channel.nml"/>
     <Include file="L23TraubDemo/kdr_fs.channel.nml"/>
-    <Include file="L23TraubDemo/km.channel.nml"/>
     <Include file="L23TraubDemo/naf2__a0__b0__c0__d0__fastNa_shiftmin2_5.channel.nml"/>
-    <Include file="L23TraubDemo/nap.channel.nml"/>
-    <Include file="L23TraubDemo/pas.channel.nml"/>
     <Include file="L23TraubDemo.net.nml"/>
    
     <Simulation id="Sim_L23TraubDemo" length="300ms" step="0.025ms" target="L23TraubDemo" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->

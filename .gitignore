@@ -1,3 +1,4 @@
+/examples/Test.net.nml
 /examples/LEMS_SimpleNet_netpyne.py
 /examples/LEMS_SpikingNet_netpyne.py
 /examples/Balanced.net_pov.bat
@@ -35,6 +36,6 @@ examples/*definition.py
 OpenCortex.egg-info
 dist
 build/lib*
-/examples/SpikingNet.net.svg
 /examples/test.py
 /examples/output.avi
+/examples/*.svg
