@@ -39,3 +39,4 @@ build/lib*
 /examples/test.py
 /examples/output.avi
 /examples/*.svg
+/examples/Balanced_2410cells_2632766conns.net.nml.h5

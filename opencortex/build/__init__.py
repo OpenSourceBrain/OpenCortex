@@ -271,7 +271,7 @@ def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False
     return input_list
     
 
-def generate_network(reference, seed=1234):
+def generate_network(reference, seed=1234, temperature='32degC'):
 
     del all_included_files[:]
     all_cells.clear()
@@ -283,7 +283,7 @@ def generate_network(reference, seed=1234):
     nml_doc.properties.append(neuroml.Property("Python random seed",seed))
     
     # Create network
-    network = neuroml.Network(id='%s'%reference)
+    network = neuroml.Network(id='%s'%reference, type='networkWithTemperature', temperature=temperature)
     nml_doc.networks.append(network)
 
     opencortex.print_comment_v("Created NeuroMLDocument containing a network with id: %s"%reference)
