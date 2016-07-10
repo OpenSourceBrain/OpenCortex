@@ -735,7 +735,6 @@ def extract_seg_ids(cell_object,
     segment_id_array=[]
     segment_group_array={}
     cell_segment_array=[]
-    print("Now printing segment ids")
     for segment in cell_object.morphology.segments:
         segment_id_array.append(segment.id)   
         segment_name_and_id=[]
@@ -1087,7 +1086,37 @@ def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False
     return input_list
 ########################################################################################################    
 
-### here a new function add_advanced_inputs_to_population will be placed 
+def add_advanced_inputs_to_population(net, id, population, input_comp_id, all_cells=False, only_cells=None):
+    #TODO
+    if all_cells and only_cells is not None:
+        opencortex.print_comment_v("Error! Method opencortex.build.%s() called with both arguments all_cells and only_cells set!"%sys._getframe().f_code.co_name)
+        exit(-1)
+        
+    cell_ids = []
+    
+    if all_cells:
+        cell_ids = range(population.size)
+    if only_cells is not None:
+        if only_cells == []:
+            return
+        cell_ids = only_cells
+        
+    input_list = neuroml.InputList(id=id,
+                         component=input_comp_id,
+                         populations=population.id)
+    count = 0
+    for cell_id in cell_ids:
+        input = neuroml.Input(id=count, 
+                      target="../%s/%i/%s"%(population.id, cell_id, population.component), 
+                      destination="synapses",segment_id="%d"%target_points[target_point,0],fraction_along="%f"%target_points[target_point,1])  
+        input_list.input.append(input)
+        count+=1
+        
+                         
+    net.input_lists.append(input_list)
+    
+    return input_list
+
 
 
 
@@ -1183,3 +1212,23 @@ def generate_lems_simulation(nml_doc,
     del include_extra_lems_files[:]
 
     return lems_file_name
+    
+def simulate_network(lems_file_name,
+                     simulator,
+                     max_memory='400M',
+                     nogui=True,
+                     load_saved_data=False,
+                     plot=False,
+                     verbose=True):
+                     
+    
+    if simulator=="jNeuroML":
+       results = pynml.run_lems_with_jneuroml(lems_file_name,max_memory=max_memory,nogui=nogui,load_saved_data=load_saved_data,plot=plot,verbose=verbose)
+    if simulator=="jNeuroML_NEURON":
+       results = pynml.run_lems_with_jneuroml_neuron(lems_file_name,max_memory=max_memory, nogui=nogui, load_saved_data=load_saved_data, plot=plot,verbose=verbose)
+    
+    
+    
+    
+        
+

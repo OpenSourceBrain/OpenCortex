@@ -219,7 +219,7 @@ def build_projection(net,
 
 #######################################################################################################################################
 
-def build_connectivity(net,pop_objects,path_to_cells,conn_file_name,extra_params=None):
+def build_connectivity(net,pop_objects,path_to_cells,full_path_to_conn_summary,extra_params=None):
 
     final_synapse_list=[]
     
@@ -243,7 +243,7 @@ def build_connectivity(net,pop_objects,path_to_cells,conn_file_name,extra_params
                     
                     if preCellObject['Size'] !=0 and postCellObject['Size'] !=0:
                        
-                       proj_summary=read_connectivity(prePop,postPop,os.path.join(path_to_cells,conn_file_name) )
+                       proj_summary=read_connectivity(prePop,postPop,full_path_to_conn_summary)
                        
                        if proj_summary !=[]:
                        
@@ -351,6 +351,8 @@ def build_connectivity(net,pop_objects,path_to_cells,conn_file_name,extra_params
                               
                               
     final_synapse_list=np.unique(final_synapse_list)
+    
+    final_synapse_list=list(final_synapse_list)
                           
     return final_synapse_list, final_proj_array
     
