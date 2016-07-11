@@ -476,20 +476,121 @@ def read_connectivity(pre_pop,
     return proj_summary
         
 ################################################################################################################################################################    
+def build_inputs(nml_doc,net,pop_params,input_params,path_to_nml2=None):     
 
-def build_inputs(nml_doc,net,pop_params,input_params,pathToSynapses):                          
+    '''
+    a wrapper method that calls appropriate methods to build inputs to the NeuroML2 network. Input arguments:
+    
+    nml_doc - a libNeuroML doc object;
+    
+    net - a libNeuroML net object;
+    
+    pop_params - a dictionary that stores population parameters in the format returned by the method add_populations_in_layers;
+    
+    input_params -a dictionary that specifies input parameters for any given cell model. The format can be checked by the method check_inputs. Dictionary values must
+    
+    be of type 'list' and can thus define multiple input groups on any given cell type. Examples where lists contain only one input group but differ in other parameters:
+    
+    Example 1: input_params={'TCR':[{'InputType':'GeneratePoissonTrains',
+                  'Layer':'Thalamus',
+                  'TrainType':'transient',
+                  'Synapse':'Syn_AMPA_L6NT_TCR',
+                  'AverageRateList':[0.05],
+                  'DurationList':[200.0],
+                  'DelayList':[20.0],
+                  'FractionToTarget':1.0,
+                  'LocationSpecific':False,
+                  'TargetRegions':[{'XVector':[2,12],'YVector':[3,5],'ZVector':[0,5]}],
+                  'TargetDict':{'dendrite_group':1000 }       }]              }     
+                  
+    Example 2: input_params={'TCR':[{'InputType':'PulseGenerators',
+                     'Layer':'Thalamus',
+                     'AmplitudeList':[20.0,-20.0],
+                     'DurationList':[100.0,50.0],
+                     'DelayList':[50.0,200.0],
+                     'FractionToTarget':1.0,
+                     'LocationSpecific':False,
+                     'TargetDict':{'dendrite_group':2 }       }]              }                            ;
+    
+    path_to_nml2 - dir where NeuroML2 files are found.                                   '''
+                                   
+    input_list_array_final=[]        
                         
     for cell_model in input_params.keys():
+    
+        cell_nml_file = '%s.cell.nml'%cell_model
+                           
+        if path_to_nml2 != None:
+                       
+           document_cell = neuroml.loaders.NeuroMLLoader.load(os.path.join(path_to_nml2,cell_nml_file))
+                          
+        else:
+                       
+           document_cell=neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
+                              
+        cellObject=document_cell.cells[0]
     
         for input_group_ind in range(0,len(input_params[cell_model])):
         
             input_group_params=input_params[cell_model][input_group_ind]
-        
+            
             layer=input_group_params['Layer'] 
+        
+            input_group_tag="%s_in_%s_InputGroup%d"%(cell_model,layer,input_group_ind)
+            
+            list_of_input_ids=[]
+            
+            if input_group_params['InputType']=='GeneratePoissonTrains':
+            
+               if input_group_params['TrainType']=='transient':
+               
+                  for input_index in range(0,len(input_group_params['AverageRateList']) ):
+                  
+                      tpfs=oc_build.add_transient_poisson_firing_synapse(nml_doc=nml_doc, 
+                                                                id=input_group_tag+"_TransPoiSyn%d"%input_index, 
+                                                                average_rate="%f Hz"%input_group_params['AverageRateList'][input_index],
+                                                                delay="%f ms"%input_group_params['DelayList'][input_index],
+                                                                duration="%f ms"%input_group_params['DurationList'][input_index], 
+                                                                synapse_id=input_group_params['Synapse'])
+                                                                
+                      list_of_input_ids.append(tpfs.id)
+                  
+                
+               if input_group_params['TrainType']=='persistent':
+               
+                  for input_index in range(0,len(input_group_params['AverageRateList']) ):
+                       
+                      pfs=oc_build.add_poisson_firing_synapse(nml_doc=nml_doc, 
+                                                     id=input_group_tag+"_PoiSyn%d"%input_index, 
+                                                     average_rate="%f Hz"%input_group_params['AverageRateList'][input_index], 
+                                                     synapse_id=input_group_params['Synapse'])
+                                                     
+                      list_of_input_ids.append(pfs.id)
+                      
+               
+            if input_group_params['InputType']=='PulseGenerators':
+            
+               for input_index in range(0,len(input_group_params['AmplitudeList']) ):
+               
+                   pg=oc_build.add_pulse_generator(nml_doc=nml_doc, 
+                                          id=input_group_tag+"_Pulse%d"%input_index, 
+                                          delay="%f ms"%input_group_params['DelayList'][input_index],
+                                          duration="%f ms"%input_group_params['DurationList'][input_index], 
+                                          amplitude="%f pA"%input_group_params['AmplitudeList'][input_index])
+                                          
+                   list_of_input_ids.append(pg.id)
+            
+            target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
+                              
+            segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                              
+            subset_dict=input_group_params['TargetDict']
             
             popID=cell_model+"_"+layer
             
             cell_positions=pop_params[cell_model][layer]['Positions']
+            
+            pop=pop_params[cell_model][layer]['PopObj']
             
             pop_size=pop_params[cell_model][layer]['Size']
             
@@ -497,21 +598,30 @@ def build_inputs(nml_doc,net,pop_params,input_params,pathToSynapses):
             
             if not input_group_params['LocationSpecific']:
              
-               target_cell_ids=get_target_cells(pop_size,fraction_to_target)
+               target_cell_ids=oc_build.get_target_cells(pop_size,fraction_to_target)
                
             else:
             
                list_of_regions=input_group_params['TargetRegions']
             
-               target_cell_ids=get_target_cells(pop_size,fraction_to_target,cell_positions, list_of_regions)
+               target_cell_ids=oc_build.get_target_cells(pop_size,fraction_to_target,cell_positions, list_of_regions)
                
             if target_cell_ids != []:
             
-               for cell_id in target_cell_ids:
-                   
-                   ###TODO
-                   pass
-                                   
+               input_list_array=oc_build.add_advanced_inputs_to_population(net=net, 
+                                                                           id=input_group_tag, 
+                                                                           population=pop, 
+                                                                           input_comp_id_list=list_of_input_ids,
+                                                                           seg_length_dict=segLengthDict,
+                                                                           subset_dict=subset_dict,
+                                                                           only_cells=target_cell_ids)
+                                                                              
+                                                                              
+               input_list_array_final.append(input_list_array)
+                  
+                  
+    return input_list_array_final              
+
 ####################################################################################################################################################################    
     
 def replace_network_components(net_file_name,path_to_net,replace_specifics):
@@ -867,12 +977,62 @@ def check_inputs(input_params,popDict,pathToNML2):
                     ####################### TODO       
                     if test_key=='PulseGenerators':
                     
-                       pass
+                       try:
+                          test_amplitudes=input_group_params['AmplitudeList']
+                          if not isinstance(test_amplitudes,list):
+                             print("TypeError in input parameters: the value of the key 'AmplitudeList' must be of type 'list'.")
+                             print("The current type is %s"%type(test_amplitudes))
+                             error_counter+=1
+                          else:
+                             for r in range(0,len(test_amplitudes)):
+                                 if not isinstance(test_amplitudes[r],float):
+                                    print("TypeError in input parameters: the list values of the key 'AverageRateList' must be of type 'float'.")
+                                    print(" The current type is %s"%type(test_amplitudes[r]) )
+                                    error_counter+=1
+                                      
+                       except KeyError:
+                              print("KeyError in input parameters: the key 'AmplitudeList' is not in the keys of input parameters")
+                              error_counter+=1
+                                   
+                       try:
+                          test_delays=input_group_params['DelayList']
+                                      
+                          if not isinstance(test_delays,list):
+                             print("TypeError in input parameters: the value of the key 'DelayList' must be of type 'list'.")
+                             print("The current type is %s"%type(test_delays))
+                             error_counter+=1
+                          else:
+                             for r in range(0,len(test_delays)):
+                                 if not isinstance(test_delays[r],float):
+                                    print("TypeError in input parameters: the list values of the key 'DelayList' must be of type 'float'.")
+                                    print("The current type is %s"%type(test_delays[r]) )
+                                    error_counter+=1
+                                         
+                       except KeyError:
+                              print("KeyError in input parameters: the key 'DelayList' is not in the keys of input parameters")
+                              error_counter+=1
+                                   
+                       try:
+                          test_durations=input_group_params['DurationList']
+                          if not isinstance(test_durations,list):
+                             print("TypeError in input parameters: the value of the key 'DurationList' must be of type 'list'.")
+                             print("The current type is %s"%type(test_durations) )
+                             error_counter+=1
+                          else:
+                             for r in range(0,len(test_durations)):
+                                 if not isinstance(test_durations[r],float):
+                                    print("TypeError in input parameters: the list values of the key 'DurationList' must be of type 'float'.")
+                                    print("The current type is %s"%type(test_durations[r]) )
+                                    error_counter+=1
+                                      
+                       except KeyError:
+                              print("KeyError in input parameters: the key 'DurationList' is not in the keys of input parameters")
+                              error_counter+=1
                           
                     
                except KeyError:
-                 print("KeyError in input parameters: the key 'InputType' is not in input parameters")
-                 error_counter+=1
+                      print("KeyError in input parameters: the key 'InputType' is not in input parameters")
+                      error_counter+=1
                  
                  
                try: 
@@ -994,25 +1154,12 @@ def check_inputs(input_params,popDict,pathToNML2):
                   print("KeyError in input parameters: the key 'LocationSpecific' is not in input parameters")
                   error_counter+=1
                  
-           
-           
-if __name__=="__main__":
-
-    popDict={'TCR':[(4,'Thalamus')]}
-
-    input_params={'TCR':[{'InputType':'GeneratePoissonTrains',
-                  'Layer':'Thalamus',
-                  'TrainType':'transient',
-                  'Synapse':'Syn_AMPA_L6NT_TCR',
-                  'AverageRateList':[0.05],
-                  'DurationList':[200.0],
-                  'DelayList':[20.0],
-                  'FractionToTarget':1.0,
-                  'LocationSpecific':True,
-                  'TargetRegions':[{'XVector':[2,12],'YVector':[3,5],'ZVector':[0,5]}],
-                  'TargetDict':{'dendrite_group':1000 }       }]              }
-              
-              
-    check_inputs(input_params,popDict,"../../NeuroML2/prototypes/Thalamocortical/")
-
+    if error_counter==0:
+    
+       return True
+       
+    else:
+    
+       return False       
+#########################################################################################################################################           
     

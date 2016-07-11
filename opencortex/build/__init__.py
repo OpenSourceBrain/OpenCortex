@@ -675,7 +675,7 @@ def get_target_cells(pop_size,
                      
                          region_specific_targets_per_cell_group.append(cell)
                                                                         
-    target_cells=random.sample(region_specific_targets_per_cell_group,int(round(fraction_to_target*len(region_specific_targets_per_cell_group))))
+       target_cells=random.sample(region_specific_targets_per_cell_group,int(round(fraction_to_target*len(region_specific_targets_per_cell_group))))
                                                                    
 
     return target_cells
@@ -1086,8 +1086,27 @@ def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False
     return input_list
 ########################################################################################################    
 
-def add_advanced_inputs_to_population(net, id, population, input_comp_id, all_cells=False, only_cells=None):
-    #TODO
+def add_advanced_inputs_to_population(net, id, population, input_comp_id_list, seg_length_dict,subset_dict, all_cells=False, only_cells=None):
+
+    ''' This method distributes the poisson input synapses on the specific segment groups of target cells. Input arguments to this method:
+    
+    net- libNeuroML network object;
+    
+    id - unique string that tags the input group created by the method;
+    
+    population - libNeuroML population object;
+    
+    input_comp_id_list - a list of poisson synapse ids that vary in average firing rate and/or temporal properties. All of these synapse components are mapped on the same
+    membrane point on the target segment of a given cell.
+    
+    seg_length_dict - a dictionary whose keys are the ids of target segment groups and the values are the segment length dictionaries in the format returned by make_target_dict(); 
+    
+    subset_dict - a dictionary whose keys are the ids of target segment groups and the corresponding dictionary values define the desired number of synaptic connections per target    segment group per each postsynaptic cell;
+    
+    all_cells - default value is set to False; if all_cells==True then all cells in a given population will receive the inputs;
+    
+    only_cells - optional variable which stores the list of ids of specific target cells; cannot be set together with all_cells. '''
+    
     if all_cells and only_cells is not None:
         opencortex.print_comment_v("Error! Method opencortex.build.%s() called with both arguments all_cells and only_cells set!"%sys._getframe().f_code.co_name)
         exit(-1)
@@ -1101,24 +1120,43 @@ def add_advanced_inputs_to_population(net, id, population, input_comp_id, all_ce
             return
         cell_ids = only_cells
         
-    input_list = neuroml.InputList(id=id,
-                         component=input_comp_id,
-                         populations=population.id)
-    count = 0
-    for cell_id in cell_ids:
-        input = neuroml.Input(id=count, 
-                      target="../%s/%i/%s"%(population.id, cell_id, population.component), 
-                      destination="synapses",segment_id="%d"%target_points[target_point,0],fraction_along="%f"%target_points[target_point,1])  
-        input_list.input.append(input)
-        count+=1
+   
+    input_list_array=[]
         
-                         
-    net.input_lists.append(input_list)
+        
+    for input_index in range(0,len(input_comp_id_list) ):
     
-    return input_list
-
-
-
+        input_list = neuroml.InputList(id=id+"_%d"%input_index,
+                                       component=input_comp_id_list[input_index],
+                                       populations=population.id)
+                                       
+                                       
+        input_list_array.append(input_list)
+    
+    count = 0
+        
+    for cell_id in cell_ids:
+            
+        target_seg_array, target_fractions=get_target_segments(seg_length_dict,subset_dict)
+        
+        for target_point in range(0,len(target_seg_array)):
+        
+            for input_index in range(0,len(input_list_array ) ):
+            
+                input = neuroml.Input(id=count, 
+                                      target="../%s/%i/%s"%(population.id, cell_id, population.component), 
+                                      destination="synapses",segment_id="%d"%target_seg_array[target_point],fraction_along="%f"%target_fractions[target_point])
+                                        
+                input_list_array[input_index].input.append(input)
+                count+=1
+                
+    for input_index in range(0,len(input_list_array) ):
+        
+        net.input_lists.append(input_list_array[input_index])
+        
+        
+    return input_list_array
+    
 
 #######################################################################################################
 def generate_network(reference, seed=1234, temperature='32degC'):
