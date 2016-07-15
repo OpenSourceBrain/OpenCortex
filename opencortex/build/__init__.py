@@ -206,8 +206,8 @@ def add_chem_projection(net,
            pop2_cell_ids.remove(i)
            
         if pop2_cell_ids != []:
-        
-           if pop2_size >= total_given:
+           
+           if len(pop2_cell_ids) >= total_given:
               ##### get unique set of cells
               pop2_cells=random.sample(pop2_cell_ids,total_given)
            
@@ -244,7 +244,9 @@ def add_chem_projection(net,
                   pre_cell_id=j
                       
                   post_cell_id=i  
-                         
+               
+               syn_counter=0
+                        
                for synapse_id in synapse_list:
             
                    delay=0
@@ -261,7 +263,7 @@ def add_chem_projection(net,
                           if synapseComp in synapse_id:
                              weight=weights_dict[synapseComp]
                      
-                   add_connection(proj_array[synapse_id], 
+                   add_connection(proj_array[syn_counter], 
                                   count, 
                                   presynaptic_population, 
                                   pre_cell_id, 
@@ -272,14 +274,18 @@ def add_chem_projection(net,
                                   delay = delay,
                                   weight = weight,
                                   post_fraction=fraction_along)
+                    
+                                  
+                   syn_counter+=1               
+                     
                count+=1
                
                
     if count !=0:   
                    
-       for synapse_id in synapse_list:
+       for synapse_ind in range(0,len(synapse_list)):
     
-           net.projections.append(proj_array[synapse_id])
+           net.projections.append(proj_array[synapse_ind])
 
     return proj_array  
     
@@ -365,7 +371,7 @@ def add_elect_projection(net,
            
         if pop2_cell_ids !=[]:
         
-           if pop2_size >= total:
+           if len(pop2_cell_ids) >= total:
         
               pop2_cells=random.sample(pop2_cell_ids,total)
            
@@ -402,10 +408,12 @@ def add_elect_projection(net,
                      pre_cell_id=j
                       
                      post_cell_id=i  
+                     
+                  syn_counter=0   
                          
                   for synapse_id in synapse_list:
                    
-                      add_elect_connection(proj_array[synapse_id], 
+                      add_elect_connection(proj_array[syn_counter], 
                                            count, 
                                            presynaptic_population, 
                                            pre_cell_id, 
@@ -416,13 +424,16 @@ def add_elect_projection(net,
                                            synapse_id,
                                            pre_fraction=0.5,
                                            post_fraction=fraction_along)
+                                           
+                      syn_counter+=1                      
+                                           
                   count+=1
                   
     if count !=0:
                    
-       for synapse_id in synapse_list:
+       for synapse_ind in range(0,len(synapse_list)):
     
-           net.electrical_projections.append(proj_array[synapse_id])
+           net.electrical_projections.append(proj_array[synapse_ind])
 
     return proj_array   
                        
@@ -525,7 +536,7 @@ def add_chem_spatial_projection(net,
            
         if pop2_cell_ids !=[]:
         
-           if pop2_size >= total_given:
+           if len(pop2_cell_ids) >= total_given:
         
               pop2_cells=random.sample(pop2_cell_ids,total_given)
            
@@ -574,6 +585,8 @@ def add_chem_spatial_projection(net,
                      pre_cell_id=j
                       
                      post_cell_id=i
+                     
+                  syn_counter=0
                                 
                   for synapse_id in synapse_list:
                   
@@ -592,7 +605,7 @@ def add_chem_spatial_projection(net,
                                 weight=weights_dict[synapseComp]
                        
                         
-                      add_connection(proj_array[synapse_id], 
+                      add_connection(proj_array[syn_counter], 
                                      count, 
                                      presynaptic_population, 
                                      pre_cell_id, 
@@ -603,6 +616,10 @@ def add_chem_spatial_projection(net,
                                      delay = delay,
                                      weight = weight,
                                      post_fraction=fraction_along)
+                                     
+                                     
+                      syn_counter+=1
+                                     
                   count+=1
                      
                if conn_counter==total_given:
@@ -610,9 +627,9 @@ def add_chem_spatial_projection(net,
                
     if count !=0:
                    
-       for synapse_id in synapseList:
+       for synapse_ind in range(0,len(synapseList)):
     
-           net.projections.append(proj_array[synapse_id])
+           net.projections.append(proj_array[synapse_ind])
 
     return proj_array               
 
@@ -920,7 +937,82 @@ def _copy_to_dir_for_model(nml_doc,file_name):
     
     shutil.copy(file_name, dir_for_model)
     
+##########################################################################################   
+def copy_nml2_source(dir_to_project_nml2,
+                      primary_nml2_dir,
+                      electrical_synapse_tags,
+                      chemical_synapse_tags,
+                      extra_channel_tags=[]):
+                              
+    full_path_to_synapses=os.path.join(dir_to_project_nml2,"synapses")
     
+    if not os.path.exists(full_path_to_synapses):
+    
+       os.makedirs(full_path_to_synapses)
+       
+    full_path_to_gap_junctions=os.path.join(dir_to_project_nml2,"gapJunctions")
+    
+    if not os.path.exists(full_path_to_gap_junctions):
+    
+       os.makedirs(full_path_to_gap_junctions)
+       
+    full_path_to_channels=os.path.join(dir_to_project_nml2,"channels")
+    
+    if not os.path.exists(full_path_to_channels):
+    
+       os.makedirs(full_path_to_channels)
+       
+    full_path_to_cells=os.path.join(dir_to_project_nml2,"cells")
+   
+    if not os.path.exists(full_path_to_cells):
+   
+       os.makedirs(full_path_to_cells)
+      
+    src_files=os.listdir(primary_nml2_dir)
+   
+    for file_name in src_files:
+   
+       full_file_name = os.path.join(primary_nml2_dir,file_name)
+   
+       if '.cell.nml' in file_name:
+        
+          shutil.copy(full_file_name,full_path_to_cells)
+          
+          continue
+          
+       for elect_tag in electrical_synapse_tags:
+       
+           if elect_tag in file_name:
+           
+              shutil.copy(full_file_name,full_path_to_gap_junctions)
+              
+              continue
+              
+       for chem_tag in chemical_synapse_tags:
+       
+           if chem_tag in file_name:
+           
+              shutil.copy(full_file_name,full_path_to_synapses)
+              
+              continue
+              
+       if '.channel.nml' in file_name:
+       
+          shutil.copy(full_file_name,full_path_to_channels)
+          
+          continue
+       
+       if extra_channel_tags !=[]:  
+       
+          for channel_tag in extra_channel_tags:
+       
+              if channel_tag in file_name:
+           
+                 shutil.copy(full_file_name,full_path_to_channels)
+              
+                 
+                 
+#########################################################################################
 def add_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
     
     nml2_doc_cell = pynml.read_neuroml2_file(cell_nml2_path, include_includes=False)
@@ -936,24 +1028,118 @@ def add_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
                 all_included_files.append(new_file)
             
             for included in nml2_doc_cell.includes:
-                #Todo replace... quick & dirty...
-                old_loc = '%s/%s'%(os.path.dirname(os.path.abspath(cell_nml2_path)), included.href)
-                print old_loc
+                
+                if '../channels/' in included.href:
+                
+                   path_included=included.href.split("/")
+                   
+                   channel_file=path_included[-1]
+                   
+                   old_loc='../../channels/%s'%channel_file
+                   
+                elif '..\channels\'' in included.href:
+                
+                   path_included=included.href.split("\"")
+                   
+                   channel_file=path_included[-1]
+                   
+                   old_loc="..\..\channels\%s'"%channel_file
+                
+                else:
+                
+                   channel_file=included.href
+                
+                   old_loc = '%s/%s'%(os.path.dirname(os.path.abspath(cell_nml2_path)), channel_file)
+                
                 _copy_to_dir_for_model(nml_doc,old_loc)
-                new_loc = '%s/%s'%(nml_doc.id,included.href)
+                new_loc = '%s/%s'%(nml_doc.id,channel_file)
                 nml_doc.includes.append(neuroml.IncludeType(new_loc))
                 if not new_loc in all_included_files:
                     all_included_files.append(new_loc)
-                
-#########################################
-def add_synapses(nml_doc,nml2_path,synapse_list):
-    
-   for synapse in synapse_list: 
-       _copy_to_dir_for_model(nml_doc,nml2_path+"%s.synapse.nml"%synapse)
-       new_file = '%s/%s.synapse.nml'%(nml_doc.id,synapse)
-       nml_doc.includes.append(neuroml.IncludeType(new_file)) 
-            
 
+#######################################################################################################################################                    
+def remove_component_dirs(dir_to_project_nml2,
+                          list_of_cell_ids,
+                          extra_channel_tags=None):
+                            
+    list_of_cell_file_names=[]
+    
+    for cell_id in list_of_cell_ids:
+    
+        list_of_cell_file_names.append(cell_id+".cell.nml")
+           
+    for cell_file_name in list_of_cell_file_names:
+
+        full_path_to_cell=os.path.join(dir_to_project_nml2,cell_file_name)
+    
+        nml2_doc_cell=pynml.read_neuroml2_file(full_path_to_cell,include_includes=False)
+        
+        for included in nml2_doc_cell.includes:
+        
+            if '.channel.nml' in included.href:
+               
+               if '../channels/' in included.href:
+                  
+                  split_href=included.href.split("/")
+                     
+                  included.href=split_href[-1]
+                     
+                  continue
+                  
+               if '..\channels\'' in included.href:
+               
+                  split_href=included.href.split("\'")
+                  
+                  included.href=split_href[-1]
+                  
+                  continue
+                     
+            else:
+            
+               if extra_channel_tags != None:
+               
+                  for channel_tag in included.href:
+                  
+                         if channel_tag in included.href:
+                      
+                            if '../channels/' in included.href:
+                  
+                               split_href=included.href.split("/")
+                     
+                               included.href=split_href[-1]
+                     
+                               break
+                  
+                            if '..\channels\'' in included.href:
+               
+                               split_href=included.href.split("\'")
+                  
+                               included.href=split_href[-1]
+                  
+                               break
+           
+        pynml.write_neuroml2_file(nml2_doc_cell,full_path_to_cell)    
+                                 
+                      
+#######################################################################################################################################
+def add_synapses(nml_doc,nml2_path,synapse_list,synapse_tag=True):
+
+    for synapse in synapse_list: 
+   
+        if synapse_tag:
+       
+           _copy_to_dir_for_model(nml_doc,os.path.join(nml2_path,"%s.synapse.nml"%synapse))
+          
+           new_file = '%s/%s.synapse.nml'%(nml_doc.id,synapse)
+          
+        else:
+       
+           _copy_to_dir_for_model(nml_doc,os.path.join(nml2_path,"%s.nml"%synapse))
+          
+           new_file = '%s/%s.nml'%(nml_doc.id,synapse)
+          
+        nml_doc.includes.append(neuroml.IncludeType(new_file)) 
+            
 #########################################
                     
     

@@ -1,0 +1,33 @@
+
+############ Format:
+
+# PreCellGroup   PostCellGroup      [SynapseList]                                   NumPerPostCell   LocOnPostCell
+
+
+#  1 From CG3D_L23PyrRS
+
+CG3D_L23PyrRS    CG3D_L23PyrRS      [Syn_AMPA_SupPyr_SupPyr,Syn_NMDA_SupPyr_SupPyr]         50      basal_obl_dends
+CG3D_L23PyrRS    CG3D_L23PyrFRB     [Syn_AMPA_SupPyr_SupPyr,Syn_NMDA_SupPyr_SupPyr]         50      basal_obl_dends
+
+CG3D_L23PyrRS    CG3D_SupBask       [Syn_AMPA_SupPyr_SupFS,Syn_NMDA_RSPyr_SupFS]            90      mid_tip_dends
+CG3D_L23PyrRS    CG3D_SupAxAx       [Syn_AMPA_SupPyr_SupFS,Syn_NMDA_RSPyr_SupFS]            90      mid_tip_dends
+CG3D_L23PyrRS    CG3D_SupLTS        [Syn_AMPA_SupPyr_SupLTS,Syn_NMDA_RSPyr_SupLTS]          90      mid_tip_dends
+
+CG3D_L23PyrRS    CG3D_L4SpinStell   [Syn_AMPA_SupPyr_L4SS,Syn_NMDA_SupPyr_L4SS]             3       mid_tip_dends
+
+CG3D_L23PyrRS    CG3D_L5TuftIB      [Syn_AMPA_SupPyr_L5Pyr,Syn_NMDA_SupPyr_L5Pyr]           60      apic_shaft
+CG3D_L23PyrRS    CG3D_L5TuftRS      [Syn_AMPA_SupPyr_L5Pyr,Syn_NMDA_SupPyr_L5Pyr]           60      apic_shaft
+
+CG3D_L23PyrRS    CG3D_DeepBask      [Syn_AMPA_SupPyr_DeepFS,Syn_NMDA_SupPyr_DeepFS]         30      mid_tip_dends
+CG3D_L23PyrRS    CG3D_DeepAxAx      [Syn_AMPA_SupPyr_DeepFS,Syn_NMDA_SupPyr_DeepFS]         30      mid_tip_dends
+CG3D_L23PyrRS    CG3D_DeepLTS       [Syn_AMPA_SupPyr_DeepLTS,Syn_NMDA_RSPyr_DeepLTS]        30      mid_tip_dends
+
+CG3D_L23PyrRS    CG3D_L6NonTuftRS   [Syn_AMPA_SupPyr_L6NT,Syn_NMDA_SupPyr_L6NT]             3       apical_dend
+
+                                                              # Half value in appendix. This is num per each tgt, the src conns will add 2.22 to the avg per axon
+                                                                                                    # Should these be prox_axon?
+CG3D_L23PyrRS    CG3D_L23PyrRS      [Syn_Elect_SupPyr_SupPyr]                               0.72    axon_group
+CG3D_L23PyrRS    CG3D_L23PyrFRB     [Syn_Elect_SupPyr_SupPyr]                               0.375   axon_group
+
+
+

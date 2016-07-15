@@ -40,8 +40,9 @@ def add_populations_in_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSo
    
    net - libNeuroML network object;
                     
-   popDict - a dictionary whose keys are unique cell model ids; each key entry stores a list of tuples of size and Layer index; 
-   these layer-specifying strings make up the keys() of boundaryDict;
+   popDict - a dictionary whose keys are unique cell population ids; each key entry stores a tuple of three elements: population size, Layer tag and cell model id; 
+   
+   layer tags (of type string) must make up the keys() of boundaryDict;
     
    boundaryDict have layer pointers as keys; each entry stores the left and right bound of the layer in the list format , e.g. [L3_min, L3_max]
    
@@ -49,31 +50,35 @@ def add_populations_in_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSo
    
    y_vector - a vector that stores the left and right bounds of the cortical column along y dimension
    
-   storeSoma - specifies whether soma positions have to be stored in the output array (default is set to False).'''
+   storeSoma - specifies whether soma positions have to be stored in the output array (default is set to False).
+   
+   This method returns the dictionary; each key is a unique cell population id and the corresponding value is a dictionary
+   which refers to libNeuroML population object (key 'PopObj') and cell position array ('Positions') which by default is None.'''
     
    return_pops={}
-   for cellModel in popDict.keys():
+   
+   for cell_pop in popDict.keys():
 
-       # the same cell model is allowed to be distributed in multiple layers
-       for subset in range(0,len(popDict[cellModel])):
-           size, layer = popDict[cellModel][subset]
+       size, layer,cell_model = popDict[cell_pop]
     
-           if size>0:
-              return_pops[cellModel]={}
-              xl=x_vector[1]-x_vector[0]
-              yl=boundaryDict[layer][1]-boundaryDict[layer][0]
-              zl=z_vector[1]-z_vector[0]
+       if size>0:
+          return_pops[cell_pop]={}
+          xl=x_vector[1]-x_vector[0]
+          yl=boundaryDict[layer][1]-boundaryDict[layer][0]
+          zl=z_vector[1]-z_vector[0]
           
-              if storeSoma:
-                 pop, cellPositions=oc_build.add_population_in_rectangular_region(net,"%s_%s"%(cellModel,layer),cellModel,size,x_vector[0],boundaryDict[layer][0],z_vector[0],xl,yl,zl,storeSoma)
-              else:
-                 pop=oc_build.add_population_in_rectangular_region(net,"%s_%s"%(cellModel,layer),cellModel,size,x_vector[0],boundaryDict[layer][0],z_vector[0],xl,yl,zl,storeSoma)
-                 cellPositions=None
+          if storeSoma:
+          
+             pop, cellPositions=oc_build.add_population_in_rectangular_region(net,cell_pop,cell_model,size,x_vector[0],boundaryDict[layer][0],z_vector[0],xl,yl,zl,storeSoma)
+             
+          else:
+             pop=oc_build.add_population_in_rectangular_region(net,cell_pop,cell_model,size,x_vector[0],boundaryDict[layer][0],z_vector[0],xl,yl,zl,storeSoma)
+             
+             cellPositions=None
          
-              return_pops[cellModel][layer]={}
-              return_pops[cellModel][layer]['PopObj']=pop
-              return_pops[cellModel][layer]['Size']=size
-              return_pops[cellModel][layer]['Positions']=cellPositions
+          return_pops[cell_pop]={}
+          return_pops[cell_pop]['PopObj']=pop
+          return_pops[cell_pop]['Positions']=cellPositions
    
    return return_pops
           
@@ -132,7 +137,7 @@ def build_projection(net,
     if presynaptic_population.size==0 or postsynaptic_population.size==0:
        return None
     
-    proj_array={}
+    proj_array=[]
     syn_counter=0
     
     for synapse_id in synapse_list:
@@ -144,7 +149,7 @@ def build_projection(net,
                                                postsynaptic_population=postsynaptic_population.id)
                                                
            syn_counter+=1
-           proj_array[synapse_id]=proj
+           proj_array.append(proj)
            
         if proj_type=='Chem':
                                             
@@ -154,7 +159,7 @@ def build_projection(net,
                                      synapse=synapse_id)
                                      
            syn_counter+=1              
-           proj_array[synapse_id]=proj
+           proj_array.append(proj)
  
        
     if distance_dependent_rule==None:
@@ -219,7 +224,7 @@ def build_projection(net,
 
 #######################################################################################################################################
 
-def build_connectivity(net,pop_objects,path_to_cells,full_path_to_conn_summary,extra_params=None):
+def build_connectivity(net,pop_objects,path_to_cells,full_path_to_conn_summary,return_cached_dicts=True,extra_params=None):
 
     final_synapse_list=[]
     
@@ -231,130 +236,152 @@ def build_connectivity(net,pop_objects,path_to_cells,full_path_to_conn_summary,e
     
     for prePop in pop_objects.keys():
         
-        for subset_pre in pop_objects[prePop].keys():
-        
-            preCellObject=pop_objects[prePop][subset_pre]
+        preCellObject=pop_objects[prePop]
             
-            for postPop in pop_objects.keys():
+        for postPop in pop_objects.keys():
                 
-                for subset_post in pop_objects[postPop].keys():
-                
-                    postCellObject=pop_objects[postPop][subset_post]
+            postCellObject=pop_objects[postPop]
                     
-                    if preCellObject['Size'] !=0 and postCellObject['Size'] !=0:
+            if preCellObject['PopObj'].size !=0 and postCellObject['PopObj'].size !=0:
                        
-                       proj_summary=read_connectivity(prePop,postPop,full_path_to_conn_summary)
+               proj_summary=read_connectivity(prePop,postPop,full_path_to_conn_summary)
                        
-                       if proj_summary !=[]:
+               if proj_summary !=[]:
                        
-                          for proj_ind in range(0,len(proj_summary)):
+                  for proj_ind in range(0,len(proj_summary)):
                           
-                              projInfo=proj_summary[proj_ind]
+                      projInfo=proj_summary[proj_ind]
                           
-                              target_comp_groups=projInfo['LocOnPostCell']
+                      target_comp_groups=projInfo['LocOnPostCell']
                            
-                              if 'NumPerPostCell' in projInfo:
+                      if 'NumPerPostCell' in projInfo:
                     
-                                 targetingMode='convergent'
+                         targetingMode='convergent'
                        
-                                 mode_string='NumPerPostCell'
+                         mode_string='NumPerPostCell'
                               
-                              if 'NumPerPreCell' in projInfo:
+                      if 'NumPerPreCell' in projInfo:
                     
-                                 targetingMode='divergent'
+                         targetingMode='divergent'
                        
-                                 mode_string='NumPerPreCell'
+                         mode_string='NumPerPreCell'
                            
-                              if extra_params != None:
-                                 subset_dict, weights, delays, dist_par=parse_extra_params(extra_params,prePop,postPop,projInfo['Type'])
-                              else:
-                                 subset_dict=None
-                                 weights=None
-                                 delays=None 
-                                 dist_par=None   
+                      if extra_params != None:
+                      
+                         subset_dict, weights, delays, dist_par=parse_extra_params(extra_params,prePop,postPop,projInfo['Type'])
+                         
+                      else:
+                      
+                         subset_dict=None
+                         weights=None
+                         delays=None 
+                         dist_par=None   
                                  
-                              if subset_dict ==None:
-                                 subset_dict={}
+                      if subset_dict ==None:
+                         subset_dict={}
                                     
-                              if not isinstance(target_comp_groups,list):
-                                 subset_dict[target_comp_groups]=float(projInfo[mode_string])
-                                 target_comp_groups=[target_comp_groups]
+                      if not isinstance(target_comp_groups,list):
+                      
+                         subset_dict[target_comp_groups]=float(projInfo[mode_string])
+                         
+                         target_comp_groups=[target_comp_groups]
+                         
+                      cell_component=postCellObject['PopObj'].component
                                  
-                              if postPop not in cached_target_dict.keys():
+                      if cell_component not in cached_target_dict.keys():
                            
-                                 cell_nml_file = '%s.cell.nml'%postPop
+                         cell_nml_file = '%s.cell.nml'%cell_component
                            
-                                 if path_to_cells != None:
+                         if path_to_cells != None:
                        
-                                    document_cell = neuroml.loaders.NeuroMLLoader.load(os.path.join(path_to_cells,cell_nml_file))
+                            document_cell = neuroml.loaders.NeuroMLLoader.load(os.path.join(path_to_cells,cell_nml_file))
                           
-                                 else:
+                         else:
                        
-                                    document_cell=neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
+                            document_cell=neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
                               
-                                 cellObject=document_cell.cells[0]
+                         cellObject=document_cell.cells[0]
                               
-                                 target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=target_comp_groups,targeting_mode='segGroups')
+                         target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=target_comp_groups,targeting_mode='segGroups')
                               
-                                 segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
-                              
-                                 postTargetParams={'TargetDict':segLengthDict,'SubsetsOfConnections':subset_dict}
+                         segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
                                  
-                                 cached_target_dict[postPop]={}
+                         cached_target_dict[cell_component]={}
                                  
-                                 cached_target_dict[postPop]['CellObject']=cellObject
+                         cached_target_dict[cell_component]['CellObject']=cellObject
                               
-                                 cached_target_dict[postPop][projInfo['Type']]=postTargetParams
+                         cached_target_dict[cell_component]['TargetDict']=segLengthDict
                               
-                              else:
+                      else:
+                      
+                         target_groups_to_include=[]
+                         
+                         new_segment_groups=False
+                         
+                         segLengthDict={}
+                      
+                         for target_group in target_comp_groups:
                               
-                                 if projInfo['Type'] not in cached_target_dict[postPop].keys():
+                             if target_group not in cached_target_dict[cell_component]['TargetDict'].keys():
+                             
+                                target_groups_to_include.append(target_group)
+                                
+                                new_segment_groups=True
+                                
+                             else:
+                             
+                                segLengthDict[target_group]=cached_target_dict[cell_component]['TargetDict'][target_group]
+                                
+                         if new_segment_groups:
                                  
-                                    cellObject=cached_target_dict[postPop]['CellObject']
+                            cellObject=cached_target_dict[cell_component]['CellObject']
                                  
-                                    target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=target_comp_groups,targeting_mode='segGroups') 
+                            target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=target_groups_to_include,targeting_mode='segGroups') 
                                  
-                                    segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                            new_seg_length_dict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
                               
-                                    postTargetParams={'TargetDict':segLengthDict,'SubsetsOfConnections':subset_dict}
-                              
-                                    cached_target_dict[postPop][projInfo['Type']]=postTargetParams
+                            for new_target_group in new_seg_length_dict.keys():
+                            
+                                cached_target_dict[cell_component]['TargetDict'][new_target_group]=new_seg_length_dict[new_target_group]
+                                
+                                segLengthDict[new_target_group]=new_seg_length_dict[new_target_group]
                                     
-                                 else:
-                                 
-                                    segLengthDict=cached_target_dict[postPop][projInfo['Type']]['TargetDict']
-                       
-                                    subset_dict=cached_target_dict[postPop][projInfo['Type']]['SubsetsOfConnections']
-                              
-                              synapseList=projInfo['SynapseList']   
+                               
+                      synapseList=projInfo['SynapseList']   
                                                                            
-                              final_synapse_list.extend(projInfo['SynapseList'])
+                      final_synapse_list.extend(projInfo['SynapseList'])
                            
-                              compound_proj, proj_counter=build_projection(net=net, 
-                                                                           proj_counter=proj_counter,
-                                                                           proj_type=projInfo['Type'],
-                                                                           presynaptic_population=preCellObject['PopObj'], 
-                                                                           postsynaptic_population=postCellObject['PopObj'], 
-                                                                           synapse_list=synapseList,  
-                                                                           targeting_mode=targetingMode,
-                                                                           seg_length_dict=segLengthDict,
-                                                                           num_of_conn_dict=subset_dict,
-                                                                           distance_dependent_rule=dist_par,
-                                                                           pre_cell_positions=preCellObject['Positions'],
-                                                                           post_cell_positions=postCellObject['Positions'],
-                                                                           delays_dict=delays,
-                                                                           weights_dict=weights)
+                      compound_proj              =build_projection(net=net, 
+                                                                   proj_counter=proj_counter,
+                                                                   proj_type=projInfo['Type'],
+                                                                   presynaptic_population=preCellObject['PopObj'], 
+                                                                   postsynaptic_population=postCellObject['PopObj'], 
+                                                                   synapse_list=synapseList,  
+                                                                   targeting_mode=targetingMode,
+                                                                   seg_length_dict=segLengthDict,
+                                                                   num_of_conn_dict=subset_dict,
+                                                                   distance_dependent_rule=dist_par,
+                                                                   pre_cell_positions=preCellObject['Positions'],
+                                                                   post_cell_positions=postCellObject['Positions'],
+                                                                   delays_dict=delays,
+                                                                   weights_dict=weights)
                                                         
                                                         
-                              proj_counter+=1                      
-                              final_proj_array.extend(compound_proj)
+                      proj_counter+=1                      
+                      final_proj_array.extend(compound_proj)
                               
                               
     final_synapse_list=np.unique(final_synapse_list)
     
     final_synapse_list=list(final_synapse_list)
+    
+    if return_cached_dicts:
                           
-    return final_synapse_list, final_proj_array
+       return final_synapse_list, final_proj_array, cached_target_dict
+       
+    else:
+    
+       return final_synapse_list, final_proj_array
     
     
 ################################################################################################################################################################
@@ -398,6 +425,7 @@ def read_connectivity(pre_pop,
             if split_line[string_index]!='':
             
                extract_info.append(split_line[string_index])
+        
         counter=0    
           
         if pre_pop in extract_info[0] and post_pop in extract_info[1]:
@@ -466,9 +494,11 @@ def read_connectivity(pre_pop,
            
            if '\n' in extract_info[4]:
            
-              compartment=extract_info[4][0:-1]
+              proj_info['LocOnPostCell']=extract_info[4][0:-1]
+              
+           else:
            
-              proj_info['LocOnPostCell']=compartment
+              proj_info['LocOnPostCell']=extract_info[4]
                 
            proj_summary.append(proj_info)   
            
@@ -476,7 +506,7 @@ def read_connectivity(pre_pop,
     return proj_summary
         
 ################################################################################################################################################################    
-def build_inputs(nml_doc,net,pop_params,input_params,path_to_nml2=None):     
+def build_inputs(nml_doc,net,pop_params,input_params,cached_dicts=None,path_to_nml2=None):     
 
     '''
     a wrapper method that calls appropriate methods to build inputs to the NeuroML2 network. Input arguments:
@@ -492,7 +522,6 @@ def build_inputs(nml_doc,net,pop_params,input_params,path_to_nml2=None):
     be of type 'list' and can thus define multiple input groups on any given cell type. Examples where lists contain only one input group but differ in other parameters:
     
     Example 1: input_params={'TCR':[{'InputType':'GeneratePoissonTrains',
-                  'Layer':'Thalamus',
                   'TrainType':'transient',
                   'Synapse':'Syn_AMPA_L6NT_TCR',
                   'AverageRateList':[0.05],
@@ -504,7 +533,6 @@ def build_inputs(nml_doc,net,pop_params,input_params,path_to_nml2=None):
                   'TargetDict':{'dendrite_group':1000 }       }]              }     
                   
     Example 2: input_params={'TCR':[{'InputType':'PulseGenerators',
-                     'Layer':'Thalamus',
                      'AmplitudeList':[20.0,-20.0],
                      'DurationList':[100.0,50.0],
                      'DelayList':[50.0,200.0],
@@ -516,27 +544,19 @@ def build_inputs(nml_doc,net,pop_params,input_params,path_to_nml2=None):
                                    
     input_list_array_final=[]        
                         
-    for cell_model in input_params.keys():
+    input_synapse_list=[]                    
+                        
+    for cell_population in input_params.keys():
     
-        cell_nml_file = '%s.cell.nml'%cell_model
-                           
-        if path_to_nml2 != None:
-                       
-           document_cell = neuroml.loaders.NeuroMLLoader.load(os.path.join(path_to_nml2,cell_nml_file))
-                          
-        else:
-                       
-           document_cell=neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
-                              
-        cellObject=document_cell.cells[0]
+        pop=pop_params[cell_population]['PopObj']
+        
+        cell_component=pop.component
     
-        for input_group_ind in range(0,len(input_params[cell_model])):
+        for input_group_ind in range(0,len(input_params[cell_population])):
         
-            input_group_params=input_params[cell_model][input_group_ind]
-            
-            layer=input_group_params['Layer'] 
+            input_group_params=input_params[cell_population][input_group_ind]
         
-            input_group_tag="%s_in_%s_InputGroup%d"%(cell_model,layer,input_group_ind)
+            input_group_tag="%s_InputGroup%d"%(cell_population,input_group_ind)
             
             list_of_input_ids=[]
             
@@ -552,7 +572,8 @@ def build_inputs(nml_doc,net,pop_params,input_params,path_to_nml2=None):
                                                                 delay="%f ms"%input_group_params['DelayList'][input_index],
                                                                 duration="%f ms"%input_group_params['DurationList'][input_index], 
                                                                 synapse_id=input_group_params['Synapse'])
-                                                                
+                                
+                      input_synapse_list.append(input_group_params['Synapse'])                                          
                       list_of_input_ids.append(tpfs.id)
                   
                 
@@ -565,6 +586,8 @@ def build_inputs(nml_doc,net,pop_params,input_params,path_to_nml2=None):
                                                      average_rate="%f Hz"%input_group_params['AverageRateList'][input_index], 
                                                      synapse_id=input_group_params['Synapse'])
                                                      
+                                                     
+                      input_synapse_list.append(input_group_params['Synapse'])                           
                       list_of_input_ids.append(pfs.id)
                       
                
@@ -579,20 +602,84 @@ def build_inputs(nml_doc,net,pop_params,input_params,path_to_nml2=None):
                                           amplitude="%f pA"%input_group_params['AmplitudeList'][input_index])
                                           
                    list_of_input_ids.append(pg.id)
+                   
+            if cached_dicts !=None:
             
-            target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
+               segLengthDict={}
+               
+               if cell_component in cached_dicts.keys():
+            
+                  target_groups_to_include=[]
+                         
+                  new_segment_groups=False
+                     
+                  segLengthDict={}
+                      
+                  for target_group in input_group_params['TargetDict'].keys():
                               
-            segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                      if target_group not in cached_dicts[cell_component]['TargetDict'].keys():
+                             
+                         target_groups_to_include.append(target_group)
+                                
+                         new_segment_groups=True
+                                
+                      else:
+                             
+                         segLengthDict[target_group]=cached_dicts[cell_component]['TargetDict'][target_group]
+                                
+                  if new_segment_groups:
+                                 
+                     cellObject=cached_dicts[cell_component]['CellObject']
+                                 
+                     target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=target_groups_to_include,targeting_mode='segGroups') 
+                                 
+                     new_seg_length_dict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                              
+                     for new_target_group in new_seg_length_dict.keys():
+                            
+                         cached_dicts[cell_component]['TargetDict'][new_target_group]=new_seg_length_dict[new_target_group]
+                                
+                         segLengthDict[new_target_group]=new_seg_length_dict[new_target_group]
+                            
+               else:
+               
+                  cell_nml_file = '%s.cell.nml'%pop.component
+                           
+                  if path_to_nml2 != None:
+                       
+                     document_cell = neuroml.loaders.NeuroMLLoader.load(os.path.join(path_to_nml2,cell_nml_file))
+                          
+                  else:
+                       
+                     document_cell=neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
+                              
+                  cellObject=document_cell.cells[0]
+               
+                  target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
+                              
+                  segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                  
+                  cached_dicts[cell_component]={}
+                                 
+                  cached_dicts[cell_component]['CellObject']=cellObject
+                              
+                  cached_dicts[cell_component]['TargetDict']=segLengthDict
+                  
+            
+            else:
+            
+               target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
+                              
+               segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+               
                               
             subset_dict=input_group_params['TargetDict']
             
-            popID=cell_model+"_"+layer
+            popID=cell_population
             
-            cell_positions=pop_params[cell_model][layer]['Positions']
+            cell_positions=pop_params[cell_population]['Positions']
             
-            pop=pop_params[cell_model][layer]['PopObj']
-            
-            pop_size=pop_params[cell_model][layer]['Size']
+            pop_size=pop.size
             
             fraction_to_target=input_group_params['FractionToTarget']
             
@@ -615,12 +702,13 @@ def build_inputs(nml_doc,net,pop_params,input_params,path_to_nml2=None):
                                                                            seg_length_dict=segLengthDict,
                                                                            subset_dict=subset_dict,
                                                                            only_cells=target_cell_ids)
-                                                                              
-                                                                              
+                                                                             
+                                                                                                                                   
                input_list_array_final.append(input_list_array)
-                  
-                  
-    return input_list_array_final              
+     
+    input_synapse_list=list(set(input_synapse_list))  
+    
+    return input_list_array_final, input_synapse_list  
 
 ####################################################################################################################################################################    
     
@@ -732,41 +820,125 @@ def parse_extra_params(extra_params,pre_pop,post_pop,proj_type):
     return subset_dict, weights, delays, distDependence
 
 ##############################################################################################################################
-def check_size_and_layer(cell_model,list_of_tuples):
+def check_includes_in_cells(dir_to_cells,
+                            list_of_cell_ids,
+                            extra_channel_tags=None):
+                            
+    passed=True
+    
+    list_of_cell_file_names=[]
+    
+    for cell_id in list_of_cell_ids:
+    
+        list_of_cell_file_names.append(cell_id+".cell.nml")
+    
+    all_src_files=os.listdir(dir_to_cells)
+    
+    target_files=list_of_cell_file_names
+    
+    for src_file in all_src_files:
+    
+        if src_file not in target_files:
+        
+           target_files.append(src_file)
+           
+    for cell_file_name in target_files:
+
+        full_path_to_cell=os.path.join(dir_to_cells,cell_file_name)
+    
+        if not os.path.exists(full_path_to_cell):
+    
+           passed=False
+           
+           opencortex.print_comment_v("Error: path %s does not exist; use method copy_nml2_source to copy nml2 files from the source directory to the appropriate NeuroML2 component directories."%full_path_to_cell)
+           
+           break
+           
+        else:
+        
+           nml2_doc_cell=pynml.read_neuroml2_file(full_path_to_cell,include_includes=False)
+        
+           for included in nml2_doc_cell.includes:
+        
+               if '.channel.nml' in included.href:
+               
+                  if ('../channels/' not in included.href) or ('..\channels\'' not in included.href):
+                  
+                     channel_dir=os.path.join("..","channels")
+                     
+                     included.href=os.path.join(channel_dir,included.href)
+                     
+                     continue
+                     
+               else:
+            
+                  if extra_channel_tags != None:
+               
+                     for channel_tag in included.href:
+                  
+                         if channel_tag in included.href:
+                      
+                            if ('../channels/' not in included.href) or ('..\channels\'' not in included.href):
+                  
+                               channel_dir=os.path.join("..","channels")
+                     
+                               included.href=os.path.join(channel_dir,included.href)
+                            
+                               break
+           
+           pynml.write_neuroml2_file(nml2_doc_cell,full_path_to_cell)    
+              
+    return passed
+########################################################################################################################################
+def check_pop_dict_and_layers(pop_dict,boundary_dict):
 
     error_counter=0
     
-    layers=[]
+    passed=False
     
-    sizes=[]
-    
-    if not isinstance(list_of_tuples,list):
-       print("TypeError in population parameters: the population dictionary value for the key '%s' must a list.")
-       print("The current type is %s"%(cell_model,type(list_of_tuples) ) )
-       error_counter+=1
-    else:
-       for tuple_var in range(0,len(list_of_tuples)):
-           if not isinstance(list_of_tuples[tuple_var],tuple):
-              print("TypeError in population parameters: the list values stored in the population dictionary must be tuples.")
-              print("The current type is %s"%(type(list_of_tuples[tuple_var])  ) )
+    for cell_population in pop_dict.keys():
+        
+        if not isinstance(pop_dict[cell_population],tuple):
+           print("TypeError in population parameters: the values stored in the population dictionary must be tuples.")
+           print("The current type is %s"%(type(pop_dict[cell_population])  ) )
+           error_counter+=1
+           
+        else:
+        
+           if not isinstance(pop_dict[cell_population][0],int):
+              print("TypeError in population parameters: the first element in tuples in the population dictionary must be of type 'int'")
+              print(" as it specifies the size of cell population. The current type of the first element is %s"%( type(pop_dict[cell_population][0] )  )  )
               error_counter+=1
+              
+           if not isinstance(pop_dict[cell_population][1],str):
+              print("TypeError in population parameters: the second element in tuples in the population dictionary must be of type 'string'")
+              print(" as it specifies the layer of cell population. The current type of the second element is %s"%( type(pop_dict[cell_population][1]) ) )
+              error_counter+=1
+              
            else:
-              if not isinstance(list_of_tuples[tuple_var][0],int):
-                 print("TypeError in population parameters: the first element in tuples inside the population dictionary must be a 'int'")
-                 print(" as it specifies the size of cell population. The current type of the first element is %s"%( type(list_of_tuples[tuple_var][0])  )  )
-                 error_counter+=1
-                 size=list_of_tuples[tuple_var][0]
-                 sizes.append(size) 
+           
+              try:
+              
+                 test_layer=boundary_dict[pop_dict[cell_population][1]]
                  
-              if not isinstance(list_of_tuples[tuple_var][1],str):
-                 print("TypeError in population parameters: the second element in tuples inside the population dictionary must be a 'string'")
-                 print(" as it specifies the layer of cell population. The current type of the second element is %s"%( type(list_of_tuples[tuple_var][1]) ) )
+              except KeyError:
+              
+                 print("KeyError in the layer boundary dictionary: cell population id '%s' is not in the keys of the layer boundary dictionary"%cell_population)
                  error_counter+=1
-              else:
-                 layer=list_of_tuples[tuple_var][1]
-                 layers.append(layer)
                  
-    return error_counter, sizes, layers
+                    
+           
+           if not isinstance(pop_dict[cell_population][2],str):
+              print("TypeError in population parameters: the third element in tuples in the population dictionary must be of type 'string'")
+              print(" as it specifies the cell model for a given population. The current type of the third element is %s"%( type(pp_dict[cell_population][2]) ) )
+              error_counter+=1
+           
+    if error_counter==0:
+    
+       passed=True       
+        
+           
+    return passed
     
  
 def check_synapse_location(synapse_id,pathToSynapses):
@@ -782,7 +954,6 @@ def check_synapse_location(synapse_id,pathToSynapses):
            
     return found  
     
-    
 def get_segment_groups(cell_id,path_to_cells):
    
     cell_nml_file =os.path.join(path_to_cells,'%s.cell.nml'%cell_id)
@@ -795,34 +966,28 @@ def get_segment_groups(cell_id,path_to_cells):
         
     return segment_groups
     
-    
 def check_segment_group(segment_groups,target_segment_group):
     segment_group_exist=False
     if target_segment_group in segment_groups:
        segment_group_exist=True
     return segment_group_exist
 
-def check_inputs(input_params,popDict,pathToNML2):
+def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
     
     error_counter=0
     
     for cell_receiver in input_params.keys():
     
         try:
-           test_key=popDict[cell_receiver]
+           test_cell_component=popDict[cell_receiver]
            
-           error_increment, sizes, layers =check_size_and_layer(cell_receiver,test_key)
+           segment_groups=get_segment_groups(test_cell_component[2],path_to_cells)
            
-           segment_groups=get_segment_groups(cell_receiver,pathToNML2)
-           
-           error_counter+=error_increment
-           
-           cell_type=cell_receiver
+           cell_type=test_cell_component[2]
            
         except KeyError:
-           print("KeyError in input parameters: cell type '%s' specified is not in the keys of population dictionary"%cell_receiver)
+           print("KeyError in input parameters: cell population id '%s' is not in the keys of population dictionary"%cell_receiver)
            error_counter+=1
-           layers=None
            cell_type=None
            
         if not isinstance(input_params[cell_receiver],list):
@@ -855,8 +1020,6 @@ def check_inputs(input_params,popDict,pathToNML2):
                     error_counter+=1
                     
                  else:
-                 
-                 
                  
                     if test_key=="GeneratePoissonTrains":
                     
@@ -948,13 +1111,10 @@ def check_inputs(input_params,popDict,pathToNML2):
                                    except KeyError:
                                       print("KeyError in input parameters: the key 'DurationList' is not in the keys of input parameters")
                                       error_counter+=1
-                                      
-                                      
-                          
+                                     
                        except KeyError:
                           print("KeyError in input parameters: the key 'TrainType' is not in the keys of input parameters")
                           error_counter+=1
-                          
                           
                        try:
                           test_synapse=input_group_params['Synapse']
@@ -965,16 +1125,14 @@ def check_inputs(input_params,popDict,pathToNML2):
                              error_counter+=1
                              
                           else:
-                             found=check_synapse_location(test_synapse,pathToNML2)
+                             found=check_synapse_location(test_synapse,path_to_synapses)
                              if not found:
-                                print("ValueError in input parameters: the value '%s' of the key 'Synapse' is not found in %s"%(test_synapse,pathToNML2))
+                                print("ValueError in input parameters: the value '%s' of the key 'Synapse' is not found in %s"%(test_synapse,path_to_cells))
                                 error_counter+=1
                        except KeyError:
                            print("KeyError in input parameters: the key 'Synapse' is not in the keys of input parameters")   
                            error_counter+=1
                            
-                           
-                    ####################### TODO       
                     if test_key=='PulseGenerators':
                     
                        try:
@@ -1033,28 +1191,7 @@ def check_inputs(input_params,popDict,pathToNML2):
                except KeyError:
                       print("KeyError in input parameters: the key 'InputType' is not in input parameters")
                       error_counter+=1
-                 
-                 
-               try: 
-               
-                 test_key=input_group_params['Layer']
-                 
-                 if not isinstance(test_key,str):
-                 
-                    print("TypeError in input parameters: the value of the key 'Layer' must be of type 'string'. The current type is %s"%type(test_key) )
-                    
-                    error_counter+=1 
-                    
-                 if layers !=None:
-                    if not test_key in layers:
-                       print("ValueError in input parameters: the population dictionary does not specify the cell type '%s' in the layer '%s'"%(cell_receiver,test_key) )
-                       error_counter+=1
-                       
-               except KeyError:
-                 print("KeyError: the key 'Layer' is not in input parameters")
-                 error_counter+=1 
-                 
-                 
+             
                try:
                
                  test_key=input_group_params['TargetDict']
