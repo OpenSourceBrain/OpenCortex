@@ -224,7 +224,14 @@ def build_projection(net,
 
 #######################################################################################################################################
 
-def build_connectivity(net,pop_objects,path_to_cells,full_path_to_conn_summary,return_cached_dicts=True,extra_params=None):
+def build_connectivity(net,
+                       pop_objects,
+                       path_to_cells,
+                       full_path_to_conn_summary,
+                       return_cached_dicts=True,
+                       synaptic_scaling_params=None,
+                       synaptic_delay_params=None,
+                       distance_dependence_params=None):
 
     final_synapse_list=[]
     
@@ -245,7 +252,7 @@ def build_connectivity(net,pop_objects,path_to_cells,full_path_to_conn_summary,r
             if preCellObject['PopObj'].size !=0 and postCellObject['PopObj'].size !=0:
                        
                proj_summary=read_connectivity(prePop,postPop,full_path_to_conn_summary)
-                       
+               
                if proj_summary !=[]:
                        
                   for proj_ind in range(0,len(proj_summary)):
@@ -253,6 +260,10 @@ def build_connectivity(net,pop_objects,path_to_cells,full_path_to_conn_summary,r
                       projInfo=proj_summary[proj_ind]
                           
                       target_comp_groups=projInfo['LocOnPostCell']
+                      
+                      synapseList=projInfo['SynapseList']   
+                                                                           
+                      final_synapse_list.extend(projInfo['SynapseList'])
                            
                       if 'NumPerPostCell' in projInfo:
                     
@@ -266,26 +277,37 @@ def build_connectivity(net,pop_objects,path_to_cells,full_path_to_conn_summary,r
                        
                          mode_string='NumPerPreCell'
                            
-                      if extra_params != None:
+                      if synaptic_scaling_params != None:
                       
-                         subset_dict, weights, delays, dist_par=parse_extra_params(extra_params,prePop,postPop,projInfo['Type'])
+                         weights=parse_weights(synaptic_scaling_params,postPop,synapseList)
+                         
+                      else:
+                         
+                         weights=None
+                         
+                      if synaptic_delay_params != None:
+                      
+                         delays=parse_delays(synaptic_delay_params,postPop,synapseList)
+                         
+                      else:
+                        
+                         delays=None
+                          
+                      if distance_dependence_params != None:
+                      
+                         dist_par=parse_distance_dependent_rule(distance_dependence_params,prePop,postPop)
                          
                       else:
                       
-                         subset_dict=None
-                         weights=None
-                         delays=None 
-                         dist_par=None   
-                                 
-                      if subset_dict ==None:
-                         subset_dict={}
+                         dist_par=None
+                         
+                      ### assumes one target segment group per given projection in the format of netConnLists   ### 
+                      subset_dict={}
                                     
-                      if not isinstance(target_comp_groups,list):
-                      
-                         subset_dict[target_comp_groups]=float(projInfo[mode_string])
+                      subset_dict[target_comp_groups]=float(projInfo[mode_string])
                          
-                         target_comp_groups=[target_comp_groups]
-                         
+                      target_comp_groups=[target_comp_groups]
+                      #############################################################################################
                       cell_component=postCellObject['PopObj'].component
                                  
                       if cell_component not in cached_target_dict.keys():
@@ -345,11 +367,6 @@ def build_connectivity(net,pop_objects,path_to_cells,full_path_to_conn_summary,r
                                 cached_target_dict[cell_component]['TargetDict'][new_target_group]=new_seg_length_dict[new_target_group]
                                 
                                 segLengthDict[new_target_group]=new_seg_length_dict[new_target_group]
-                                    
-                               
-                      synapseList=projInfo['SynapseList']   
-                                                                           
-                      final_synapse_list.extend(projInfo['SynapseList'])
                            
                       compound_proj              =build_projection(net=net, 
                                                                    proj_counter=proj_counter,
@@ -790,34 +807,145 @@ def replace_network_components(net_file_name,path_to_net,replace_specifics):
         print projDict
         
 ##############################################################################################################################################
-def parse_extra_params(extra_params,pre_pop,post_pop,proj_type):
+def parse_distance_dependence_params(distance_dependence_params,pre_pop,post_pop):
 
-    subset_dict=None
-    weights=None
-    delays=None
-    distDependence=None
-    for params_set in range(0,len(extra_params)):
-        if extra_params[params_set]['pre']==pre_pop and extra_params[params_set]['post']==post_pop:
-           if 'subsetDict' in extra_params[params_set].keys():
-              if proj_type in extra_params[params_set]['subsetDict'].keys():
-                 subset_dict=extra_params[params_set]['subsetDict'][proj_type]
-           if 'DistDependConn' in extra_params[params_set].keys():
-              distDependence=extra_params[params_set]['DistDependConn']
-           if 'weights' in extra_params[params_set].keys() and 'synComps' in extra_params[params_set].keys():
-              if isinstance(extra_params[params_set]['synComps'],list) and isinstance(extra_params[params_set]['weights'],list):
-                 if len(extra_params[params_set]['synComps'])==len(extra_params[params_set]['weights']):
-                    weights={}
-                    for syn_comp in range(0,len(extra_params[params_set]['synComps'])):
-                        weights[extra_params[params_set]['synComps'][syn_comp]]=extra_params[params_set]['weights'][syn_comp]
-           if 'delays' in extra_params[params_set].keys() and 'synComps' in extra_params[params_set].keys():
-              if isinstance(extra_params[params_set]['synComps'],list) and isinstance(extra_params[params_set]['delays'],list):
-                 if len(extra_params[params_set]['synComps'])==len(extra_params[params_set]['delays']):
-                    delays={}
-                    for syn_comp in range(0,len(extra_params[params_set]['synComps'])):
-                        delays[extra_params[params_set]['synComps'][syn_comp][syn_comp]]=extra_params[params_set]['delays'][syn_comp]
-                        
-                        
-    return subset_dict, weights, delays, distDependence
+    dist_rule=None
+
+    for distance_param in range(0,len(distance_dependence_params)):
+    
+        if distance_dependence_params[distance_param]['prePopID']==pre_pop and distance_dependence_params[distance_param]['postPopID']==post_pop:
+        
+           dist_rule=distance_dependence_params['DistDependConn']
+           
+           break
+           
+    return dist_rule
+
+def parse_delays(delays_params,post_pop,synapse_list):
+
+    delays={}
+    
+    for syn_ind in range(0,len(synapse_list)):
+    
+        for delay_param in range(0,len(delays_params)):
+        
+            if delays_params[ delay_param]['synComp']=='all':
+            
+               delays[synapse_list[syn_ind]]=float(delays_params[delay_param]['delay'])
+               
+            else:
+            
+               passed_synComp=False
+               
+               if delays_params[delay_param]['synComp'] in synapse_list[syn_ind]:
+               
+                  passed_synComp=True
+                  
+               passed_synEndsWith=False
+               
+               if delays_params[delay_param]['synEndsWith']==[]:
+               
+                  passed_synEndsWith=True
+                  
+               else:
+               
+                 for syn_end in delays_params[delay_param]['synEndsWith']:
+               
+                     if synapse_list[syn_ind].endswith(syn_end):
+                   
+                        passed_synEndsWith=True
+                      
+                        break
+                      
+               passed_targetCellGroup=False
+               
+               if delays_params[delay_param]['targetCellGroup']==[]:
+               
+                  passed_targetCellGroup=True
+                  
+               else:
+               
+                  for target_cell_group in delays_params[delay_param]['targetCellGroup']:
+               
+                      if target_cell_group in post_pop:
+                   
+                         passed_targetCellGroup=True
+                      
+                         break
+                      
+               if passed_synComp and passed_synEndsWith and passed_targetCellGroup:
+               
+                  delays[synapse_list[syn_ind]]=float(delays_params[delay_param]['delay'])
+               
+    
+    if delays.keys()==[]:
+       
+       delays=None
+          
+    return delays
+    
+def parse_weights(weights_params,post_pop,synapse_list):
+
+    weights={}
+    
+    for syn_ind in range(0,len(synapse_list)):
+    
+        for weight_param in range(0,len(weights_params)):
+        
+            if weights_params[weight_param]['synComp']=='all':
+            
+               weights[synapse_list[syn_ind]]=float(weights_params[weight_param]['weight'])
+               
+            else:
+            
+               passed_synComp=False
+               
+               if weights_params[weight_param]['synComp'] in synapse_list[syn_ind]:
+               
+                  passed_synComp=True
+                  
+               passed_synEndsWith=False
+               
+               if weights_params[weight_param]['synEndsWith']==[]:
+               
+                  passed_synEndsWith=True
+                  
+               else:
+               
+                  for syn_end in weights_params[weight_param]['synEndsWith']:
+               
+                      if synapse_list[syn_ind].endswith(syn_end):
+                   
+                         passed_synEndsWith=True
+                      
+                         break
+                      
+               passed_targetCellGroup=False
+               
+               if weights_params[weight_param]['targetCellGroup']==[]:
+
+                  passed_targetCellGroup=True
+                  
+               else:
+               
+                  for target_cell_group in weights_params[weight_param]['targetCellGroup']:
+                
+                      if target_cell_group in post_pop:
+                   
+                         passed_targetCellGroup=True
+                      
+                         break
+                      
+               if passed_synComp and passed_synEndsWith and passed_targetCellGroup:
+               
+                  weights[synapse_list[syn_ind]]=float(weights_params[weight_param]['weight'])
+               
+    
+    if weights.keys()==[]:
+       
+       weights=None
+          
+    return weights
 
 ##############################################################################################################################
 def check_includes_in_cells(dir_to_cells,
@@ -971,7 +1099,196 @@ def check_segment_group(segment_groups,target_segment_group):
     if target_segment_group in segment_groups:
        segment_group_exist=True
     return segment_group_exist
+    
+    
+def check_weight_params(weight_params):
 
+    error_counter=0
+    
+    if not isinstance(weight_params,list):
+    
+       print("TypeError in weight parameters: weight parameters must be of type 'list'. The current type is '%s'."%(type(weight_params)))
+       
+       error_counter+=1
+       
+    else:
+    
+       for weight_param in range(0,len(weight_params)):
+       
+           if not isinstance(weight_params[weight_param],dict):
+             
+              print("TypeError in weight parameters: list elements in weight parameters must be of type 'dict'. The current type is '%s'."%(type(weight_params[weight_param])))
+              
+              error_counter+=1
+              
+           else:
+           
+              try:
+              
+                 test_weight_field=weight_params[weight_param]['weight']
+                 
+              except KeyError:
+                 
+                 print("KeyError in weight parameters: the key 'weight' is not in the keys of weight parameter dictionary.")
+                 
+                 error_counter+=1
+                 
+              try:
+              
+                 test_syn_comp_field=weight_params[weight_param]['synComp']
+                 
+                 if not isinstance(test_syn_comp_field,str):
+                 
+                    print("TypeError in weight parameters: the value of the key 'synComp' must be of type 'str'. The current type is '%s'."%(type(test_syn_comp_field)))
+                    
+                    error_counter+=1
+                    
+                 else:
+                 
+                    if test_syn_comp_field != 'all':
+                    
+                       try:
+              
+                         test_syn_ends_with_field=weight_params[weight_param]['synEndsWith']
+                 
+                         if not isinstance(test_syn_ends_with_field,list):
+                 
+                            print("TypeError in weight parameters: the value of the key 'synEndsWith' must be of type 'list'.")
+                            print("The current type is '%s'."%(type(test_syn_ends_with_field)))
+                 
+                            error_counter+=1
+                    
+                       except KeyError:
+              
+                         print("KeyError in weight parameters: the key 'synEndsWith' is not in the keys of weight parameter dictionary.")
+                 
+                         error_counter+=1
+                 
+                       try:
+              
+                         test_target_cell_group=weight_params[weight_param]['targetCellGroup']
+                 
+                         if not isinstance(test_target_cell_group,list):
+                 
+                            print("TypeError in weight parameters: the value of the key 'targetCellGroup' must be of type 'list'.")
+                            print("The current type is '%s'."%(type(test_target_cell_group)))
+                    
+                            error_counter+=1
+                    
+                       except KeyError:
+              
+                         print("KeyError in weight parameters: the key 'targetCellGroup' is not in the keys of weight parameter dictionary.")
+                 
+                         error_counter+=1
+               
+              except KeyError:
+                 
+                 print("KeyError in weight parameters: the key 'synComp' is not in the keys of weight parameter dictionary.")
+                    
+                 error_counter+=1
+                 
+    if error_counter==0:
+    
+       return True
+       
+    else:
+    
+       return False              
+     
+def check_delay_params(delay_params):
+
+    error_counter=0
+    
+    if not isinstance(delay_params,list):
+    
+       print("TypeError in delay parameters: delay parameters must be of type 'list'. The current type is '%s'."%(type(delay_params)))
+       
+       error_counter+=1
+       
+    else:
+    
+       for delay_param in range(0,len(delay_params)):
+       
+           if not isinstance(delay_params[delay_param],dict):
+             
+              print("TypeError in delay parameters: list elements in delay parameters must be of type 'dict'. The current type is '%s'."%(type(delay_params[delay_param])))
+              
+              error_counter+=1
+              
+           else:
+           
+              try:
+              
+                 test_weight_field=delay_params[delay_param]['delay']
+                 
+              except KeyError:
+                 
+                 print("KeyError in delay parameters: the key 'delay' is not in the keys of delay parameter dictionary.")
+                 
+                 error_counter+=1
+                 
+              try:
+              
+                 test_syn_comp_field=delay_params[delay_param]['synComp']
+                 
+                 if not isinstance(test_syn_comp_field,str):
+                 
+                    print("TypeError in delay parameters: the value of the key 'synComp' must be of type 'str'. The current type is '%s'."%(type(test_syn_comp_field)))
+                    
+                    error_counter+=1
+                    
+                 else:
+                 
+                    if test_syn_comp_field != 'all':
+                    
+                       try:
+              
+                         test_syn_ends_with_field=delay_params[delay_param]['synEndsWith']
+                 
+                         if not isinstance(test_syn_ends_with_field,list):
+                 
+                            print("TypeError in delay parameters: the value of the key 'synEndsWith' must be of type 'list'.")
+                            print("The current type is '%s'."%(type(test_syn_ends_with_field)))
+                 
+                            error_counter+=1
+                    
+                       except KeyError:
+              
+                         print("KeyError in delay parameters: the key 'synEndsWith' is not in the keys of delay parameter dictionary.")
+                 
+                         error_counter+=1
+                 
+                       try:
+              
+                         test_target_cell_group=delay_params[delay_param]['targetCellGroup']
+                 
+                         if not isinstance(test_target_cell_group,list):
+                 
+                            print("TypeError in delay parameters: the value of the key 'targetCellGroup' must be of type 'list'.")
+                            print("The current type is '%s'."%(type(test_target_cell_group)))
+                    
+                            error_counter+=1
+                    
+                       except KeyError:
+              
+                         print("KeyError in delay parameters: the key 'targetCellGroup' is not in the keys of delay parameter dictionary.")
+                 
+                         error_counter+=1
+               
+              except KeyError:
+                 
+                 print("KeyError in delay parameters: the key 'synComp' is not in the keys of delay parameter dictionary.")
+                    
+                 error_counter+=1
+                 
+    if error_counter==0:
+    
+       return True
+       
+    else:
+    
+       return False              
+       
 def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
     
     error_counter=0

@@ -740,8 +740,6 @@ def get_seg_lengths(cell_object,
  
     return cumulative_length_dist, segment_list
 ############################################################################################################################
-
-
 def extract_seg_ids(cell_object,
                     target_compartment_array,
                     targeting_mode):
@@ -943,7 +941,7 @@ def copy_nml2_source(dir_to_project_nml2,
                       electrical_synapse_tags,
                       chemical_synapse_tags,
                       extra_channel_tags=[]):
-                              
+    
     full_path_to_synapses=os.path.join(dir_to_project_nml2,"synapses")
     
     if not os.path.exists(full_path_to_synapses):
@@ -967,7 +965,15 @@ def copy_nml2_source(dir_to_project_nml2,
     if not os.path.exists(full_path_to_cells):
    
        os.makedirs(full_path_to_cells)
-      
+       
+    opencortex.print_comment_v("Will be copying cell component files from %s to %s"%(primary_nml2_dir,full_path_to_cells) )
+    
+    opencortex.print_comment_v("Will be copying channel component files from %s to %s"%(primary_nml2_dir,full_path_to_channels) )
+     
+    opencortex.print_comment_v("Will be copying synapse component files from %s to %s"%(primary_nml2_dir,full_path_to_synapses) )
+    
+    opencortex.print_comment_v("Will be copying gap junction component files from %s to %s"%(primary_nml2_dir,full_path_to_gap_junctions))
+     
     src_files=os.listdir(primary_nml2_dir)
    
     for file_name in src_files:
@@ -1118,9 +1124,8 @@ def remove_component_dirs(dir_to_project_nml2,
                   
                                break
            
-        pynml.write_neuroml2_file(nml2_doc_cell,full_path_to_cell)    
+        pynml.write_neuroml2_file(nml2_doc_cell,full_path_to_cell)  
                                  
-                      
 #######################################################################################################################################
 def add_synapses(nml_doc,nml2_path,synapse_list,synapse_tag=True):
 
