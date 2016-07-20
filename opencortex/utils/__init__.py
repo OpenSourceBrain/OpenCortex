@@ -80,6 +80,8 @@ def add_populations_in_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSo
           return_pops[cell_pop]['PopObj']=pop
           return_pops[cell_pop]['Positions']=cellPositions
    
+   opencortex.print_comment_v("This is a final list of cell population ids: %s"%return_pops.keys())
+   
    return return_pops
           
 
@@ -522,8 +524,72 @@ def read_connectivity(pre_pop,
        
     return proj_summary
         
-################################################################################################################################################################    
-def build_inputs(nml_doc,net,pop_params,input_params,cached_dicts=None,path_to_nml2=None):     
+################################################################################################################################################################   
+def check_cached_dicts(cell_component,cached_dicts,input_group_params,path_to_nml2=None):
+
+    segLengthDict={}
+               
+    if cell_component in cached_dicts.keys():
+            
+       target_groups_to_include=[]
+                         
+       new_segment_groups=False
+                     
+       segLengthDict={}
+                      
+       for target_group in input_group_params['TargetDict'].keys():
+                              
+           if target_group not in cached_dicts[cell_component]['TargetDict'].keys():
+                             
+               target_groups_to_include.append(target_group)
+                                
+               new_segment_groups=True
+                                
+           else:
+                             
+               segLengthDict[target_group]=cached_dicts[cell_component]['TargetDict'][target_group]
+                                
+           if new_segment_groups:
+                                 
+              cellObject=cached_dicts[cell_component]['CellObject']
+                                 
+              target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=target_groups_to_include,targeting_mode='segGroups') 
+                                 
+              new_seg_length_dict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                              
+              for new_target_group in new_seg_length_dict.keys():
+                            
+                  cached_dicts[cell_component]['TargetDict'][new_target_group]=new_seg_length_dict[new_target_group]
+                                
+                  segLengthDict[new_target_group]=new_seg_length_dict[new_target_group]
+                            
+    else:
+               
+       cell_nml_file = '%s.cell.nml'%pop.component
+                           
+       if path_to_nml2 != None:
+                       
+          document_cell = neuroml.loaders.NeuroMLLoader.load(os.path.join(path_to_nml2,cell_nml_file))
+                          
+       else:
+                       
+          document_cell=neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
+                              
+       cellObject=document_cell.cells[0]
+               
+       target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
+                              
+       segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                  
+       cached_dicts[cell_component]={}
+                                 
+       cached_dicts[cell_component]['CellObject']=cellObject
+                              
+       cached_dicts[cell_component]['TargetDict']=segLengthDict
+                  
+    return segLengthDict, cached_dicts
+##################################################################################################################################################################
+def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,path_to_cells=None,path_to_synapses=None):     
 
     '''
     a wrapper method that calls appropriate methods to build inputs to the NeuroML2 network. Input arguments:
@@ -532,13 +598,14 @@ def build_inputs(nml_doc,net,pop_params,input_params,cached_dicts=None,path_to_n
     
     net - a libNeuroML net object;
     
-    pop_params - a dictionary that stores population parameters in the format returned by the method add_populations_in_layers;
+    population_params - a dictionary that stores population parameters in the format returned by the method add_populations_in_layers;
     
     input_params -a dictionary that specifies input parameters for any given cell model. The format can be checked by the method check_inputs. Dictionary values must
     
     be of type 'list' and can thus define multiple input groups on any given cell type. Examples where lists contain only one input group but differ in other parameters:
     
     Example 1: input_params={'TCR':[{'InputType':'GeneratePoissonTrains',
+                  'InputName':'TransPoiInputs',
                   'TrainType':'transient',
                   'Synapse':'Syn_AMPA_L6NT_TCR',
                   'AverageRateList':[0.05],
@@ -550,14 +617,42 @@ def build_inputs(nml_doc,net,pop_params,input_params,cached_dicts=None,path_to_n
                   'TargetDict':{'dendrite_group':1000 }       }]              }     
                   
     Example 2: input_params={'TCR':[{'InputType':'PulseGenerators',
+                     'InputName':'PulseGenerator0',
+                     'Noise':False,
                      'AmplitudeList':[20.0,-20.0],
                      'DurationList':[100.0,50.0],
                      'DelayList':[50.0,200.0],
                      'FractionToTarget':1.0,
                      'LocationSpecific':False,
-                     'TargetDict':{'dendrite_group':2 }       }]              }                            ;
+                     'TargetDict':{'dendrite_group':2 }       }]              }   
+                     
+    Example 3: input_params={'CG3D_L23PyrRS':[{'InputType':'PulseGenerators',
+                             'InputName':'PulseGenerator0',
+                             'Noise':True,
+                             'SmallestAmplitudeList':[5.0E-5],
+                             'LargestAmplitudeList':[1.0E-4],
+                             'DurationList':[20000.0],
+                             'DelayList':[0.0],
+                             'TimeUnits':'ms',
+                             'AmplitudeUnits':'uA',
+                             'FractionToTarget':1.0,
+                             'LocationSpecific':False,
+                             'UniqueTargetSegmentID':0,
+                             'UniqueFractionAlong':0.5  }]             }                            ;
     
     path_to_nml2 - dir where NeuroML2 files are found.                                   '''
+    
+    passed_inputs=check_inputs(input_params,population_params,path_to_cells,path_to_synapses)
+    
+    if passed_inputs:
+    
+       opencortex.print_comment_v("Input parameters were specified correctly.")
+       
+    else:
+    
+      opencortex.print_comment_v("Input parameters were specified incorrectly; execution will terminate.")
+      
+      quit()
                                    
     input_list_array_final=[]        
                         
@@ -565,7 +660,7 @@ def build_inputs(nml_doc,net,pop_params,input_params,cached_dicts=None,path_to_n
                         
     for cell_population in input_params.keys():
     
-        pop=pop_params[cell_population]['PopObj']
+        pop=population_params[cell_population]['PopObj']
         
         cell_component=pop.component
     
@@ -573,128 +668,11 @@ def build_inputs(nml_doc,net,pop_params,input_params,cached_dicts=None,path_to_n
         
             input_group_params=input_params[cell_population][input_group_ind]
         
-            input_group_tag="%s_InputGroup%d"%(cell_population,input_group_ind)
-            
-            list_of_input_ids=[]
-            
-            if input_group_params['InputType']=='GeneratePoissonTrains':
-            
-               if input_group_params['TrainType']=='transient':
-               
-                  for input_index in range(0,len(input_group_params['AverageRateList']) ):
-                  
-                      tpfs=oc_build.add_transient_poisson_firing_synapse(nml_doc=nml_doc, 
-                                                                id=input_group_tag+"_TransPoiSyn%d"%input_index, 
-                                                                average_rate="%f Hz"%input_group_params['AverageRateList'][input_index],
-                                                                delay="%f ms"%input_group_params['DelayList'][input_index],
-                                                                duration="%f ms"%input_group_params['DurationList'][input_index], 
-                                                                synapse_id=input_group_params['Synapse'])
-                                
-                      input_synapse_list.append(input_group_params['Synapse'])                                          
-                      list_of_input_ids.append(tpfs.id)
-                  
-                
-               if input_group_params['TrainType']=='persistent':
-               
-                  for input_index in range(0,len(input_group_params['AverageRateList']) ):
-                       
-                      pfs=oc_build.add_poisson_firing_synapse(nml_doc=nml_doc, 
-                                                     id=input_group_tag+"_PoiSyn%d"%input_index, 
-                                                     average_rate="%f Hz"%input_group_params['AverageRateList'][input_index], 
-                                                     synapse_id=input_group_params['Synapse'])
-                                                     
-                                                     
-                      input_synapse_list.append(input_group_params['Synapse'])                           
-                      list_of_input_ids.append(pfs.id)
-                      
-               
-            if input_group_params['InputType']=='PulseGenerators':
-            
-               for input_index in range(0,len(input_group_params['AmplitudeList']) ):
-               
-                   pg=oc_build.add_pulse_generator(nml_doc=nml_doc, 
-                                          id=input_group_tag+"_Pulse%d"%input_index, 
-                                          delay="%f ms"%input_group_params['DelayList'][input_index],
-                                          duration="%f ms"%input_group_params['DurationList'][input_index], 
-                                          amplitude="%f pA"%input_group_params['AmplitudeList'][input_index])
-                                          
-                   list_of_input_ids.append(pg.id)
-                   
-            if cached_dicts !=None:
-            
-               segLengthDict={}
-               
-               if cell_component in cached_dicts.keys():
-            
-                  target_groups_to_include=[]
-                         
-                  new_segment_groups=False
-                     
-                  segLengthDict={}
-                      
-                  for target_group in input_group_params['TargetDict'].keys():
-                              
-                      if target_group not in cached_dicts[cell_component]['TargetDict'].keys():
-                             
-                         target_groups_to_include.append(target_group)
-                                
-                         new_segment_groups=True
-                                
-                      else:
-                             
-                         segLengthDict[target_group]=cached_dicts[cell_component]['TargetDict'][target_group]
-                                
-                  if new_segment_groups:
-                                 
-                     cellObject=cached_dicts[cell_component]['CellObject']
-                                 
-                     target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=target_groups_to_include,targeting_mode='segGroups') 
-                                 
-                     new_seg_length_dict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
-                              
-                     for new_target_group in new_seg_length_dict.keys():
-                            
-                         cached_dicts[cell_component]['TargetDict'][new_target_group]=new_seg_length_dict[new_target_group]
-                                
-                         segLengthDict[new_target_group]=new_seg_length_dict[new_target_group]
-                            
-               else:
-               
-                  cell_nml_file = '%s.cell.nml'%pop.component
-                           
-                  if path_to_nml2 != None:
-                       
-                     document_cell = neuroml.loaders.NeuroMLLoader.load(os.path.join(path_to_nml2,cell_nml_file))
-                          
-                  else:
-                       
-                     document_cell=neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
-                              
-                  cellObject=document_cell.cells[0]
-               
-                  target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
-                              
-                  segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
-                  
-                  cached_dicts[cell_component]={}
-                                 
-                  cached_dicts[cell_component]['CellObject']=cellObject
-                              
-                  cached_dicts[cell_component]['TargetDict']=segLengthDict
-                  
-            
-            else:
-            
-               target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
-                              
-               segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
-               
-                              
-            subset_dict=input_group_params['TargetDict']
+            input_group_tag=input_group_params['InputName']
             
             popID=cell_population
             
-            cell_positions=pop_params[cell_population]['Positions']
+            cell_positions=population_params[cell_population]['Positions']
             
             pop_size=pop.size
             
@@ -710,14 +688,126 @@ def build_inputs(nml_doc,net,pop_params,input_params,cached_dicts=None,path_to_n
             
                target_cell_ids=oc_build.get_target_cells(pop_size,fraction_to_target,cell_positions, list_of_regions)
                
-            if target_cell_ids != []:
+            if target_cell_ids !=[]:
+            
+               input_ids_final=[]
+               
+               condition1='TargetDict' in input_group_params.keys()
+               
+               condition2='UniversalTargetSegmentID' not in input_group_params.keys()
+               
+               condition3='UniversalFractionAlong' not in input_group_params.keys()
+               
+               if condition1 and condition2 and condition3:
+               
+                  subset_dict=input_group_params['TargetDict']
+                  
+                  target_segment=None
+                  
+                  fraction_along=None
+               
+                  if cached_dicts !=None:
+            
+                     segLengthDict, cached_dicts =check_cached_dicts(cell_component,cached_dicts,input_group_params,path_to_nml2=path_to_cells)
+              
+                  else:
+            
+                     target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
+                              
+                     segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                     
+               else:
+               
+                  target_segment=input_group_params['UniversalTargetSegmentID']
+                  
+                  fraction_along=input_group_params['UniversalFractionAlong']
+               
+                  segLengthDict=None
+                  
+                  subset_dict=None
+                  
+               if input_group_params['InputType']=='GeneratePoissonTrains':
+               
+                  list_of_input_ids=[]
+            
+                  if input_group_params['TrainType']=='transient':
+               
+                     for input_index in range(0,len(input_group_params['AverageRateList']) ):
+                  
+                         tpfs=oc_build.add_transient_poisson_firing_synapse(nml_doc=nml_doc, 
+                                                                id=input_group_tag+"_TransPoiSyn%d"%input_index, 
+                                                                average_rate="%f %s"%(input_group_params['AverageRateList'][input_index],input_group_params['RateUnits']),
+                                                                delay="%f %s"%(input_group_params['DelayList'][input_index],input_group_params['TimeUnits']),
+                                                                duration="%f %s"%(input_group_params['DurationList'][input_index],input_group_params['TimeUnits']), 
+                                                                synapse_id=input_group_params['Synapse'])
+                                
+                         input_synapse_list.append(input_group_params['Synapse'])                                          
+                         list_of_input_ids.append(tpfs.id)
+                         
+                  
+                  if input_group_params['TrainType']=='persistent':
+               
+                     for input_index in range(0,len(input_group_params['AverageRateList']) ):
+                       
+                         pfs=oc_build.add_poisson_firing_synapse(nml_doc=nml_doc, 
+                                                     id=input_group_tag+"_PoiSyn%d"%input_index, 
+                                                     average_rate="%f %s"%(input_group_params['AverageRateList'][input_index],input_group_params['RateUnits']), 
+                                                     synapse_id=input_group_params['Synapse'])
+                                                     
+                                                     
+                         input_synapse_list.append(input_group_params['Synapse'])                           
+                         list_of_input_ids.append(pfs.id)
+                         
+                         
+                  input_ids_final.append(list_of_input_ids)
+                      
+               if input_group_params['InputType']=='PulseGenerators':
+            
+                  if not input_group_params['Noise']:
+                  
+                     list_of_input_ids=[]
+               
+                     for input_index in range(0,len(input_group_params['AmplitudeList']) ):
+               
+                         pg=oc_build.add_pulse_generator(nml_doc=nml_doc, 
+                                          id=input_group_tag+"_Pulse%d"%input_index, 
+                                          delay="%f %s"%(input_group_params['DelayList'][input_index],input_group_params['TimeUnits']),
+                                          duration="%f %s"%(input_group_params['DurationList'][input_index],input_group_params['TimeUnits']), 
+                                          amplitude="%f %s"%(input_group_params['AmplitudeList'][input_index],input_group_params['AmplitudeUnits']) )
+                                          
+                         list_of_input_ids.append(pg.id)
+                         
+                     input_ids_final.append(list_of_input_ids)
+                         
+                  else:
+                  
+                     for cell in target_cell_ids:
+                     
+                         list_of_input_ids=[]
+                     
+                         for input_index in range(0,len(input_group_params['SmallestAmplitudeList'])):
+                         
+                             random_amplitude=random.uniform(input_group_params['SmallestAmplitudeList'][input_index],input_group_params['LargestAmplitudeList'][input_index])
+               
+                             pg=oc_build.add_pulse_generator(nml_doc=nml_doc, 
+                                                             id=input_group_tag+"_Pulse%d_Cell%d"%(input_index,cell), 
+                                                             delay="%f %s"%(input_group_params['DelayList'][input_index],input_group_params['TimeUnits']),
+                                                             duration="%f %s"%(input_group_params['DurationList'][input_index],input_group_params['TimeUnits']), 
+                                                             amplitude="%f %s"%(random_amplitude,input_group_params['AmplitudeUnits']) )
+                                          
+                             list_of_input_ids.append(pg.id)
+                             
+                         input_ids_final.append(list_of_input_ids)
+                         
             
                input_list_array=oc_build.add_advanced_inputs_to_population(net=net, 
                                                                            id=input_group_tag, 
-                                                                           population=pop, 
-                                                                           input_comp_id_list=list_of_input_ids,
+                                                                           population=pop,
+                                                                           input_id_list=input_ids_final,
                                                                            seg_length_dict=segLengthDict,
                                                                            subset_dict=subset_dict,
+                                                                           universal_target_segment=target_segment,
+                                                                           universal_fraction_along=fraction_along,
                                                                            only_cells=target_cell_ids)
                                                                              
                                                                                                                                    
@@ -1073,7 +1163,15 @@ def check_synapse_location(synapse_id,pathToSynapses):
     
     found=False
     
-    src_files=os.listdir(pathToSynapses)
+    if pathToSynapses ==None:
+    
+       path="./"
+       
+    else:
+    
+       path=pathToSynapses
+    
+    src_files=os.listdir(path)
     
     for file_name in src_files:
         if synapse_id in file_name:
@@ -1083,11 +1181,21 @@ def check_synapse_location(synapse_id,pathToSynapses):
     return found  
     
 def get_segment_groups(cell_id,path_to_cells):
+
+    if path_to_cells !=None:
    
-    cell_nml_file =os.path.join(path_to_cells,'%s.cell.nml'%cell_id)
+       cell_nml_file =os.path.join(path_to_cells,'%s.cell.nml'%cell_id)
+       
+    else:
+    
+       cell_nml_file='%s.cell.nml'%cell_id
+       
     document_cell=neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
+    
     cell_object=document_cell.cells[0]
+    
     segment_groups=[]
+    
     for segment_group in cell_object.morphology.segment_groups:
         
         segment_groups.append(segment_group.id)
@@ -1298,18 +1406,19 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
         try:
            test_cell_component=popDict[cell_receiver]
            
-           segment_groups=get_segment_groups(test_cell_component[2],path_to_cells)
+           segment_groups=get_segment_groups(test_cell_component['PopObj'].component,path_to_cells)
            
-           cell_type=test_cell_component[2]
+           cell_type=test_cell_component['PopObj'].component
            
         except KeyError:
-           print("KeyError in input parameters: cell population id '%s' is not in the keys of population dictionary"%cell_receiver)
+           opencortex.print_comment_v("KeyError in input parameters: cell population id '%s' is not in the keys of population dictionary"%cell_receiver)
            error_counter+=1
            cell_type=None
            
         if not isinstance(input_params[cell_receiver],list):
        
-           print("TypeError in input parameters: the dictionary value for '%s' must be a list. The current type is %s"%(cell_receiver,type(input_params[cell_receiver])))
+           opencortex.print_comment_v("TypeError in input parameters: the dictionary value for '%s' must be a list."
+           " The current type is %s"%(cell_receiver,type(input_params[cell_receiver])))
            
            error_counter+=1
            
@@ -1325,14 +1434,14 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
                  
                  if not isinstance(test_key,str):
                  
-                    print("TypeError in input parameters: the value of the key 'InputType' must be of type 'string'.\ The current type is %s"%type(test_key) )
+                    opencortex.print_comment_v("TypeError in input parameters: the value of the key 'InputType' must be of type 'string'. The current type is %s"%type(test_key))
                     
                     error_counter+=1 
                     
-                    
                  if test_key not in ['GeneratePoissonTrains','PulseGenerators']:
                  
-                    print("ValueError in input parameters: the value of the key 'InputType' must be one of the following: 'GeneratePoissonTrains','PulseGenerators'")
+                    opencortex.print_comment_v("ValueError in input parameters: the value of the key 'InputType' must be one of the following: "   
+                    "'GeneratePoissonTrains','PulseGenerators'")
                     
                     error_counter+=1
                     
@@ -1344,14 +1453,18 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
                           test_train_type=input_group_params['TrainType']
                           
                           if not isinstance(test_train_type,str):
-                             print("TypeError in input parameters: the value of the key 'TrainType' must be of type 'string'. The current type is %s"%type(test_train_type))
+                          
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'TrainType' must be of type 'string'. "
+                             "The current type is %s"%type(test_train_type))
+                             
                              error_counter+=1
                           else:
                           
                              if test_train_type not in ['persistent','transient']:
                              
-                                print("ValueError in input parameters: the value of the key 'TrainType' when 'InputType' is 'GeneratePoissonTrains' must be one of the following:")
-                                print("'persistent' or 'transient'")
+                                opencortex.print_comment_v("ValueError in input parameters: the value of the key 'TrainType' when 'InputType' is 'GeneratePoissonTrains' must be"
+                                " one of the following: 'persistent' or 'transient'")
+                                
                                 error_counter+=1
                                 
                              else:
@@ -1359,190 +1472,481 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
                                 if test_train_type=="persistent":
                                 
                                    try:
+                                   
                                       test_rates=input_group_params['AverageRateList']
+                                      
                                       if not isinstance(test_rates,list):
-                                         print("TypeError in input parameters: the value of the key 'AverageRateList' must be of type 'list'.")
-                                         print(" The current type is %s"%type(test_rates) )
+                                      
+                                         opencortex.print_comment_v("TypeError in input parameters: the value of the key 'AverageRateList' must be of type 'list'."
+                                         " The current type is %s"%type(test_rates) )
+                                         
                                          error_counter+=1
+                                         
                                       else:
                                          for r in range(0,len(test_rates)):
+                                         
                                              if not isinstance(test_rates[r],float):
-                                                print("TypeError in input parameters: the list values of the key 'AverageRateList' must be of type 'float'.")
-                                                print("The current type is %s"%type(test_rates[r]))
+                                             
+                                                opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'AverageRateList' must be of type 'float'."
+                                                " The current type is %s"%type(test_rates[r]) )
+                                                
                                                 error_counter+=1
                                       
                                    except KeyError:
-                                      print("KeyError in input parameters: the key 'AverageRateList' is not in the keys of input parameters")
+                                   
+                                      opencortex.print_comment_v("KeyError in input parameters: the key 'AverageRateList' is not in the keys of input parameters.")
+                                      
                                       error_counter+=1
                                       
                                 if test_train_type=="transient":
                                 
                                    try:
-                                      test_rates=input_group_params['AverageRateList']
-                                      if not isinstance(test_rates,list):
-                                         print("TypeError in input parameters: the value of the key 'AverageRateList' must be of type 'list'.")
-                                         print("The current type is %s"%type(test_rates))
+                                   
+                                      test_time_units=input_group_params['TimeUnits']
+                                      
+                                      if not isinstance(test_time_units,str):
+                                      
+                                         opencortex.print_comment_v("TypeError in input parameters: the value of the key 'TimeUnits' must be of type 'str'."
+                                         " The current type is %s."%type(test_time_units)) 
+                                         
                                          error_counter+=1
+                                         
+                                   except KeyError:
+                                   
+                                      opencortex.print_comment_v("KeyError in input parameters: the key 'TimeUnits' is not in the keys of input parameters.")
+                                      
+                                      error_counter+=1
+                                
+                                
+                                   try:
+                                   
+                                      test_rates=input_group_params['AverageRateList']
+                                      
+                                      if not isinstance(test_rates,list):
+                                      
+                                         opencortex.print_comment_v("TypeError in input parameters: the value of the key 'AverageRateList' must be of type 'list'."
+                                         " The current type is %s."%type(test_rates) )
+                                         
+                                         error_counter+=1
+                                         
                                       else:
+                                      
                                          for r in range(0,len(test_rates)):
+                                         
                                              if not isinstance(test_rates[r],float):
-                                                print("TypeError in input parameters: the list values of the key 'AverageRateList' must be of type 'float'.")
-                                                print(" The current type is %s"%type(test_rates[r]) )
+                                             
+                                                opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'AverageRateList' must be of type 'float'."
+                                                " The current type is %s."%type(test_rates[r]) )
+                                                
                                                 error_counter+=1
                                       
                                    except KeyError:
-                                      print("KeyError in input parameters: the key 'AverageRateList' is not in the keys of input parameters")
+                                   
+                                      opencortex.print_comment_v("KeyError in input parameters: the key 'AverageRateList' is not in the keys of input parameters.")
+                                      
                                       error_counter+=1
                                    
                                    try:
+                                   
                                       test_rates=input_group_params['DelayList']
                                       
                                       if not isinstance(test_rates,list):
-                                         print("TypeError in input parameters: the value of the key 'DelayList' must be of type 'list'.")
-                                         print("The current type is %s"%type(test_rates))
+                                      
+                                         opencortex.print_comment_v("TypeError in input parameters: the value of the key 'DelayList' must be of type 'list'."
+                                         " The current type is %s."%type(test_rates) )
+                                         
                                          error_counter+=1
+                                         
                                       else:
+                                      
                                          for r in range(0,len(test_rates)):
+                                         
                                              if not isinstance(test_rates[r],float):
-                                                print("TypeError in input parameters: the list values of the key 'DelayList' must be of type 'float'.")
-                                                print("The current type is %s"%type(test_rates[r]) )
+                                             
+                                                opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'DelayList' must be of type 'float'."
+                                                " The current type is %s."%type(test_rates[r])  )
+                                                
                                                 error_counter+=1
                                          
                                    except KeyError:
-                                      print("KeyError in input parameters: the key 'DelayList' is not in the keys of input parameters")
+                                   
+                                      opencortex.print_comment_v("KeyError in input parameters: the key 'DelayList' is not in the keys of input parameters.")
+                                      
                                       error_counter+=1
                                    
                                    try:
+                                   
                                       test_rates=input_group_params['DurationList']
+                                      
                                       if not isinstance(test_rates,list):
-                                         print("TypeError in input parameters: the value of the key 'DurationList' must be of type 'list'.")
-                                         print("The current type is %s"%type(test_rates) )
+                                      
+                                         opencortex.print_comment_v("TypeError in input parameters: the value of the key 'DurationList' must be of type 'list'."
+                                         " The current type is %s."%type(test_rates) )
+                                         
                                          error_counter+=1
+                                         
                                       else:
+                                      
                                          for r in range(0,len(test_rates)):
+                                         
                                              if not isinstance(test_rates[r],float):
-                                                print("TypeError in input parameters: the list values of the key 'DurationList' must be of type 'float'.")
-                                                print("The current type is %s"%type(test_rates[r]) )
+                                             
+                                                opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'DurationList' must be of type 'float'."
+                                                " The current type is %s."%type(test_rates[r]) )
+                                                
                                                 error_counter+=1
                                       
                                    except KeyError:
-                                      print("KeyError in input parameters: the key 'DurationList' is not in the keys of input parameters")
+                                   
+                                      opencortex.print_comment_v("KeyError in input parameters: the key 'DurationList' is not in the keys of input parameters.")
+                                      
                                       error_counter+=1
                                      
                        except KeyError:
-                          print("KeyError in input parameters: the key 'TrainType' is not in the keys of input parameters")
+                       
+                          opencortex.print_comment_v("KeyError in input parameters: the key 'TrainType' is not in the keys of input parameters.")
+                          
                           error_counter+=1
                           
                        try:
+                       
+                          test_rate_units=input_group_params['RateUnits']
+                           
+                          if not isinstance(test_rate_units,str):
+                          
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'RateUnits' must be of type 'str'."
+                             "The current type is %s."%type(test_rate_units))
+                             
+                             error_counter+=1
+                             
+                       except KeyError:
+                       
+                              opencortex.print_comment_v("KeyError in input parametres: the key 'RateUnits' is not in the keys of inputs parameters.")
+                              
+                              error_counter+=1
+                           
+                       try:
+                       
                           test_synapse=input_group_params['Synapse']
                           
                           if not isinstance(test_synapse,str):
-                             print("TypeError in input parameters: the value of the key 'Synapse' must be of type 'string'.")
-                             print(" The current type is %s"%type(test_synapse))
+                          
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'Synapse' must be of type 'str'."
+                             " The current type is %s."%type(test_synapse) )
+                             
                              error_counter+=1
                              
                           else:
+                          
                              found=check_synapse_location(test_synapse,path_to_synapses)
+                             
                              if not found:
-                                print("ValueError in input parameters: the value '%s' of the key 'Synapse' is not found in %s"%(test_synapse,path_to_cells))
+                             
+                                opencortex.print_comment_v("ValueError in input parameters: the value '%s' of the key 'Synapse' is not found in %s"%(test_synapse,path_to_synapses))
+                                
                                 error_counter+=1
+                                
                        except KeyError:
-                           print("KeyError in input parameters: the key 'Synapse' is not in the keys of input parameters")   
+                       
+                           opencortex.print_comment_v("KeyError in input parameters: the key 'Synapse' is not in the keys of input parameters.")  
+                            
                            error_counter+=1
                            
                     if test_key=='PulseGenerators':
                     
                        try:
-                          test_amplitudes=input_group_params['AmplitudeList']
-                          if not isinstance(test_amplitudes,list):
-                             print("TypeError in input parameters: the value of the key 'AmplitudeList' must be of type 'list'.")
-                             print("The current type is %s"%type(test_amplitudes))
-                             error_counter+=1
-                          else:
-                             for r in range(0,len(test_amplitudes)):
-                                 if not isinstance(test_amplitudes[r],float):
-                                    print("TypeError in input parameters: the list values of the key 'AverageRateList' must be of type 'float'.")
-                                    print(" The current type is %s"%type(test_amplitudes[r]) )
-                                    error_counter+=1
-                                      
-                       except KeyError:
-                              print("KeyError in input parameters: the key 'AmplitudeList' is not in the keys of input parameters")
-                              error_counter+=1
                                    
+                          test_time_units=input_group_params['TimeUnits']
+                                      
+                          if not isinstance(test_time_units,str):
+                                      
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'TimeUnits' must be of type 'str'."
+                             " The current type is %s."%type(test_time_units)) 
+                                         
+                             error_counter+=1
+                                         
+                       except KeyError:
+                                   
+                          opencortex.print_comment_v("KeyError in input parameters: the key 'TimeUnits' is not in the keys of input parameters.")
+                                      
+                          error_counter+=1
+                    
+                       try:
+                       
+                          test_amplitude_units=input_group_params['AmplitudeUnits']
+                          
+                          if not isinstance(test_amplitude_units,str):
+                          
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'AmplitudeUnits' must be of type 'str'."
+                             " The current type is %s."%type(test_amplitude_units) )
+                             
+                             error_counter+=1
+                             
+                       except KeyError:
+                       
+                          opencortex.print_comment_v("KeyError in input parametres: the key 'AmplitudeUnits' is not in the keys of inputs parameters.")
+                          
+                          error_counter+=1
+                       
+                       try:
+                        
+                          test_noise=input_group_params['Noise']
+                          
+                          if not isinstance(test_noise,bool):
+                             
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'Noise' must be of type 'bool'."
+                             " The current type is %s."%type(test_noise) )
+                             
+                             error_counter+=1
+                             
+                          else:
+                          
+                             if test_noise:
+                             
+                                try:
+                                
+                                   test_smallest_amplitudes=input_group_params['SmallestAmplitudeList']
+                                  
+                                   if not isinstance(test_smallest_amplitudes,list):
+                                  
+                                      opencortex.print_comment_v("TypeError in input parameters: the value of the key 'SmallestAmplitudeList' must be of type 'list'."
+                                      " The current type is %s."%type(test_smallest_amplitudes))
+                             
+                                      error_counter+=1
+                                     
+                                except KeyError:
+                                 
+                                   opencortex.print_comment_v("KeyError in input parameters: the key 'SmallestAmplitudeList' is not in the keys of input parameters when "
+                                   "'Noise' is set to True.")
+                                  
+                                   error_counter+=1    
+                                  
+                                try:
+                                
+                                   test_largest_amplitudes=input_group_params['LargestAmplitudeList']
+                                   
+                                   if not isinstance(test_largest_amplitudes,list):
+                                   
+                                      opencortex.print_comment_v("TypeError in input parameters: the value of the key 'LargestAmplitudeList' must be of type 'list'."
+                                      " The current type is %s."%type(test_largest_amplitudes) )
+                                      
+                                      error_counter+=1
+                                      
+                                except KeyError:
+                                
+                                   opencortex.print_comment_v("KeyError in input parameters: the key 'LargestAmplitudeList' is not in the keys of input parameters when "
+                                   "'Noise' is set to True.")
+                                   
+                                   error_counter+=1
+                             
+                             else:
+                             
+                                try:
+                       
+                                   test_amplitudes=input_group_params['AmplitudeList']
+                          
+                                   if not isinstance(test_amplitudes,list):
+                          
+                                      opencortex.print_comment_v("TypeError in input parameters: the value of the key 'AmplitudeList' must be of type 'list'."
+                                      " The current type is %s."%type(test_amplitudes))
+                             
+                                      error_counter+=1
+                             
+                                   else:
+                          
+                                      for r in range(0,len(test_amplitudes)):
+                             
+                                          if not isinstance(test_amplitudes[r],float):
+                                 
+                                             opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'AverageRateList' must be of type 'float'."
+                                             " The current type is %s."%type(test_amplitudes[r]) )
+                                    
+                                             error_counter+=1
+                                      
+                                except KeyError:
+                       
+                                   opencortex.print_comment_v("KeyError in input parameters: the key 'AmplitudeList' is not in the keys of input parameters.")
+                              
+                                   error_counter+=1
+                          
+                       except KeyError:
+                       
+                          opencortex.print_comment_v("KeyError in input parameters: the key 'Noise' is not in the keys of input parameters.")
+                          
+                          error_counter+=1
+                                
                        try:
                           test_delays=input_group_params['DelayList']
                                       
                           if not isinstance(test_delays,list):
-                             print("TypeError in input parameters: the value of the key 'DelayList' must be of type 'list'.")
-                             print("The current type is %s"%type(test_delays))
+                          
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'DelayList' must be of type 'list'."
+                             " The current type is %s."%type(test_delays))
+                             
                              error_counter+=1
+                             
                           else:
+                          
                              for r in range(0,len(test_delays)):
+                             
                                  if not isinstance(test_delays[r],float):
-                                    print("TypeError in input parameters: the list values of the key 'DelayList' must be of type 'float'.")
-                                    print("The current type is %s"%type(test_delays[r]) )
+                                 
+                                    opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'DelayList' must be of type 'float'."
+                                    " The current type is %s."%type(test_delays[r]) )
+                                    
                                     error_counter+=1
                                          
                        except KeyError:
-                              print("KeyError in input parameters: the key 'DelayList' is not in the keys of input parameters")
+                       
+                              opencortex.print_comment_v("KeyError in input parameters: the key 'DelayList' is not in the keys of input parameters.")
+                             
                               error_counter+=1
                                    
                        try:
+                       
                           test_durations=input_group_params['DurationList']
+                          
                           if not isinstance(test_durations,list):
-                             print("TypeError in input parameters: the value of the key 'DurationList' must be of type 'list'.")
-                             print("The current type is %s"%type(test_durations) )
+                          
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'DurationList' must be of type 'list'."
+                             " The current type is %s."%type(test_durations) )
+                             
                              error_counter+=1
+                             
                           else:
+                          
                              for r in range(0,len(test_durations)):
+                             
                                  if not isinstance(test_durations[r],float):
-                                    print("TypeError in input parameters: the list values of the key 'DurationList' must be of type 'float'.")
-                                    print("The current type is %s"%type(test_durations[r]) )
+                                 
+                                    opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'DurationList' must be of type 'float'."
+                                    " The current type is %s."%type(test_durations[r]) )
+                                    
                                     error_counter+=1
                                       
                        except KeyError:
-                              print("KeyError in input parameters: the key 'DurationList' is not in the keys of input parameters")
+                       
+                              opencortex.print_comment_v("KeyError in input parameters: the key 'DurationList' is not in the keys of input parameters.")
+                              
                               error_counter+=1
                           
                     
                except KeyError:
-                      print("KeyError in input parameters: the key 'InputType' is not in input parameters")
+               
+                      opencortex.print_comment_v("KeyError in input parameters: the key 'InputType' is not in input parameters.")
+                      
                       error_counter+=1
              
                try:
                
-                 test_key=input_group_params['TargetDict']
-                 if not isinstance(test_key,dict):
-                    print("TypeError: the value of the key 'TargetDict' in input parameters must be of type 'dict'. The current type is %s"%type(test_key)  ) 
-                    error_counter+=1
-                 else:
-                    if cell_type != None:
-                    
-                       for target_segment_group in test_key.keys():
-                       
-                           if not check_segment_group(segment_groups,target_segment_group):
-                              print("ValueError: '%s' is not a segment group of the cell type '%s'"%(target_segment_group,cell_receiver) )
-                              error_counter+=1
-                           else:
-                              if not isinstance(test_key[target_segment_group],int):
-                                print("TypeError: the value of the key '%s' must be of type 'int'. The current type is %s"%(target_segment_group,type(test_key[target_segment_group])))
-                                error_counter+=1
+                  test_input_name=input_group_params['InputName']
+                  
+                  if not isinstance(test_input_name,str):
+                  
+                     opencortex.print_comment_v("TypeError in input parameters: the value of the key 'InputName' must be of type 'str'."
+                     
+                     "The current type is %s."%type(test_input_name))
+                     
+                     error_counter+=1
+                     
                except KeyError:
-                 print("KeyError: the key 'TargetDict' is not in input parameters")
-                 error_counter+=1
+               
+                      opencortex.print_comment_v("KeyError in input parameters: the key 'InputName' is not in input parameters.")   
+                         
+                      error_counter+=1
+                      
+               if ('UniversalTargetSegmentID' not in input_group_params.keys()) and ('UniversalFractionAlong' not in input_group_params.keys()):
+               
+                  try:
+               
+                     test_key=input_group_params['TargetDict']
+                 
+                     if not isinstance(test_key,dict):
+                 
+                        opencortex.print_comment_v("TypeError in input parameters: the value of the key 'TargetDict' in input parameters must be of type 'dict'."
+                        " The current type is %s."%type(test_key) ) 
+                    
+                        error_counter+=1
+                    
+                     else:
+                    
+                        if cell_type != None:
+                    
+                           for target_segment_group in test_key.keys():
+                       
+                               if not check_segment_group(segment_groups,target_segment_group):
+                           
+                                  opencortex.print_comment_v("ValueError in input parameters: '%s' is not a segment group of the cell type '%s'"%(target_segment_group,cell_receiver) )
+                              
+                                  error_counter+=1
+                              
+                               else:
+                           
+                                  if not isinstance(test_key[target_segment_group],int):
+                              
+                                     opencortex.print_comment_v("TypeError in input parameters: the value of the key '%s' must be of type 'int'."
+                                     " The current type is %s"%(target_segment_group,type(test_key[target_segment_group]) ) )
+                                
+                                     error_counter+=1
+                                
+                  except KeyError:
               
+                       opencortex.print_comment_v("KeyError in input parameters: the key 'TargetDict' is not in input parameters.")
+                 
+                       error_counter+=1
               
+               if 'TargetDict' in input_group_params.keys():
+               
+                  if 'UniversalTargetSegmentID' in input_group_params.keys():
+                  
+                     opencortex.print_comment_v("KeyError in input parameters: the key 'UniversalTargetSegmentID' cannot be specified together with the key 'TargetDict'.")
+                     
+                     error_counter+=1
+                  
+                  if 'UniversalFractionAlong' in input_group_params.keys():
+                  
+                     opencortex.print_comment_v("KeyError in input parameters: the key 'UniversalFractionAlong' cannot be specified together with the key 'TargetDict'.")
+                     
+                     error_counter+=1
+                 
+               else:
+               
+                  try:
+                  
+                     test_target_seg_id=input_group_params['UniversalTargetSegmentID']
+                     
+                  except KeyError:
+                  
+                     opencortex.print_comment_v("KeyError in input parameters: the key 'UniversalTargetSegmentID' must be specified when the key 'TargetDict' is not in "
+                     "input parameters.")
+                     
+                     error_counter+=1
+                     
+                  try:
+                   
+                     test_fraction_along=input_group_params['UniversalFractionAlong']
+                     
+                  except KeyError:
+                   
+                     opencortex.print_comment_v("KeyError in input parameters: the key 'UniversalFractionAlong' must be specified when the key 'TargetDict' is not in "
+                     "input parameters.")
+                     
+                     error_counter+=1
+               
                try:
                  
                  test_key=input_group_params['FractionToTarget']
                  
                  if not isinstance(test_key,float):
-                    print("TypeError: the value of the key 'FractionToTarget' must be of type 'float'. The current type is %s"%type(test_key) )
+                 
+                    opencortex.print_comment_v("TypeError: the value of the key 'FractionToTarget' must be of type 'float'. The current type is %s."%type(test_key) )
+                    
                     error_counter+=1
                     
                except KeyError:
                
-                 print("KeyError: the key 'FractionToTarget' is not in input parameters")
+                 opencortex.print_comment_v("KeyError: the key 'FractionToTarget' is not in input parameters.")
+                 
                  error_counter+=1
                
                  
@@ -1552,7 +1956,10 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
                  
                  
                  if not isinstance(test_key,bool):
-                    print("TypeError in input parameters: the value of the key 'LocationSpecific' must be of the type 'bool'. The current type is %s"%type(test_key) ) 
+                 
+                    opencortex.print_comment_v("TypeError in input parameters: the value of the key 'LocationSpecific' must be of the type 'bool'."
+                    " The current type is %s."%type(test_key) ) 
+                    
                     error_counter+=1
                     
                  else:
@@ -1565,47 +1972,72 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
                          
                          if not isinstance(test_region_key,list):
                          
-                            print("TypeError in input parameters: the value of the key 'TargetRegions' must be of the type 'list'. The current type is %s"%type(test_region_key) )
+                            opencortex.print_comment_v("TypeError in input parameters: the value of the key 'TargetRegions' must be of the type 'list'."
+                            " The current type is %s."%type(test_region_key) )
+                            
                             error_counter+=1
                             
                          else:
+                         
                             for region in range(0,len(test_region_key)):
                             
                                 if not isinstance(test_region_key[region],dict):
-                                   print("TypeError in input parameters: the list values of the key 'TargetRegions' must be of the type 'dict'.") 
-                                   print("The current type is %s"%type(test_region_key[region]) )
+                                
+                                   opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'TargetRegions' must be of the type 'dict'."
+                                   " The current type is %s."%type(test_region_key[region]) )
+                                   
                                    error_counter+=1
+                                   
                                 else:
+                                
                                     for dim_key in ['XVector','YVector','ZVector']:
                                      
                                         if dim_key not in test_region_key[region].keys():
-                                            print("ValueError in input parameters: the list values of the key 'TargetRegions' must be dictionaries with the following keys:")
-                                            print("'XVector', 'YVector', 'ZVector'")
+                                        
+                                            opencortex.print_comment_v("ValueError in input parameters: the list values of the key 'TargetRegions' must be dictionaries "
+                                            "with the following keys: 'XVector', 'YVector', 'ZVector'.")
+                                            
                                             error_counter+=1 
+                                            
                                         else:
+                                        
                                             if not isinstance(test_region_key[region][dim_key],list):
-                                               print("TypeError in input parametres: the 'X/Y/ZVector' must store the value of type 'list'.")
-                                               print("The current type is %s"%type(test_region_key[region][dim_key]))
+                                            
+                                               opencortex.print_comment_v("TypeError in input parametres: the 'X/Y/ZVector' must store the value of type 'list'."
+                                               " The current type is %s."%type(test_region_key[region][dim_key]) )
+                                               
                                                error_counter+=1
+                                               
                                             else:
+                                            
                                                if len(test_region_key[region][dim_key]) !=2:
-                                                  print("ValueError in input parameters: the lists stored by 'XVector', 'YVector' and 'ZVector' must contain two values")
+                                               
+                                                  opencortex.print_comment_v("ValueError in input parameters: the lists stored by 'XVector', 'YVector' and 'ZVector'"
+                                                  " must contain two values.")
+                                                  
                                                   error_counter+=1
+                                                  
                                                else:
+                                               
                                                   if (test_region_key[region][dim_key][0]-test_region_key[region][dim_key][1]) ==0:
-                                                     print("ValueError in input parameters: the lists stored by 'XVector', 'YVector' and 'ZVector' must contain two different values")
+                                                  
+                                                     opencortex.print_comment_v("ValueError in input parameters: the lists stored by 'XVector', 'YVector' and 'ZVector'"
+                                                     " must contain two different values.")
+                                                     
                                                      error_counter+=1
                          
                        except KeyError:
                          
-                         print("KeyError in input parameters: 'LocationSpecific' is True but the key 'TargetRegions' is not in input parameters")
+                         opencortex.print_comment_v("KeyError in input parameters: 'LocationSpecific' is True but the key 'TargetRegions' is not in input parameters.")
+                         
                          error_counter+=1
                          
                       
                     
                except KeyError:
               
-                  print("KeyError in input parameters: the key 'LocationSpecific' is not in input parameters")
+                  opencortex.print_comment_v("KeyError in input parameters: the key 'LocationSpecific' is not in input parameters.")
+                  
                   error_counter+=1
                  
     if error_counter==0:
