@@ -60,4 +60,9 @@ def generate(reference = "SimpleNet",
 
 if __name__ == '__main__':
     
+    import sys 
+    
+    if len(sys.argv)==2:
+        generate(scale=int(sys.argv[1]))
+    else:
         generate()
