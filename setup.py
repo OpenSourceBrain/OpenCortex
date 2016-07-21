@@ -10,6 +10,14 @@ setup(
     author_email='p.gleeson@gmail.com',
     packages = ['opencortex', 
                 'opencortex.build'],
+    package_data={
+        'opencortex': [
+            '../NeuroML2/prototypes/iaf/*',
+            '../NeuroML2/prototypes/izhikevich/*',
+            '../NeuroML2/prototypes/Thalamocortical/*',
+            '../NeuroML2/prototypes/BlueBrainProject_NMC/*',
+            '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/*',
+            '../NeuroML2/prototypes/acnet2/*']}, 
     url='https://github.com/OpenSourceBrain/OpenCortex',
     license='LICENSE.lesser',
     description='A framework for building cortical network models',

@@ -44,3 +44,4 @@ build/lib*
 /drawing.svg
 /examples/movies/balanced.avi
 /examples/movies/output.avi
+/opencortex/__init__$py.class

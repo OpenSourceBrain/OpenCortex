@@ -150,8 +150,10 @@ def _copy_to_dir_for_model(nml_doc,file_name):
     shutil.copy(file_name, dir_for_model)
     
     
-def add_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
+def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id):
     
+    cell_nml2_path = os.path.dirname(__file__)+"/../../NeuroML2/prototypes/"+cell_nml2_rel_path
+    print("Translated %s to %s"%(cell_nml2_rel_path,cell_nml2_path))
     nml2_doc_cell = pynml.read_neuroml2_file(cell_nml2_path, include_includes=False)
     
     for cell in _get_cells_of_all_known_types(nml2_doc_cell):
