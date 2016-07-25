@@ -44,9 +44,6 @@ def add_connection(projection,
                    pre_fraction=0.5,
                    post_fraction=0.5):
     
-                   
-                   
- 
     connection = neuroml.ConnectionWD(id=id, \
                             pre_cell_id="../%s/%i/%s"%(presynaptic_population.id, pre_cell_id, presynaptic_population.component), \
                             pre_segment_id=pre_seg_id, \
@@ -73,8 +70,6 @@ def add_elect_connection(projection,
                          pre_fraction=0.5,
                          post_fraction=0.5):
     
-                   
-                   
     connection =neuroml.ElectricalConnectionInstance(id=id,\
                                                      pre_cell="../%s/%i/%s"%(presynaptic_population.id, pre_cell_id, presynaptic_population.component),\
                                                      post_cell="../%s/%i/%s"%(postsynaptic_population.id, post_cell_id,postsynaptic_population.component),\
@@ -346,47 +341,62 @@ def add_elect_projection(net,
                      
     count=0
     
-    ############ some initial handling of the average number of electrical connections per post or pre cell as specified in netConnList;
-    
-    total=0
+    numberConnections={}
     
     for subset in subset_dict.keys():
-            
-        #num_of_GJs=np.random.binomial(pop2_size,subset_dict[subset]/pop2_size)
-                  
-        subset_dict[subset]=int(round(subset_dict[subset],0))
-            
-        total=subset_dict[subset]+total
         
-    #######################################################################################################################################
-        
-    
+        numberConnections[subset]=int(subset_dict[subset])
+      
     for i in range(0, pop1_size):
         
-        pop2_cell_ids=range(0,pop2_size)
+        total_conns=0
         
-        if pop1_id == pop2_id:
-           
-           pop2_cell_ids.remove(i)
-           
-        if pop2_cell_ids !=[]:
+        conn_subsets={}
+    
+        for subset in subset_dict.keys():
+            
+            if subset_dict[subset] != numberConnections[subset]:
+               
+               if random.random() < subset_dict[subset] - numberConnections[subset]:
+               
+                  conn_subsets[subset]=numberConnections[subset]+1
+                  
+               else:
+               
+                  conn_subsets[subset]=numberConnections[subset]
+                  
+            else:
+               
+               conn_subsets[subset]=numberConnections[subset]
+            
+            total_conns=total_conns+conn_subsets[subset]
+            
+        if total_conns != 0:    
         
-           if len(pop2_cell_ids) >= total:
+           pop2_cell_ids=range(0,pop2_size)
         
-              pop2_cells=random.sample(pop2_cell_ids,total)
+           if pop1_id == pop2_id:
            
-           else:
+              pop2_cell_ids.remove(i)
+           
+           if pop2_cell_ids !=[]:
         
-              pop2_cells=[]
+              if len(pop2_cell_ids) >= total_conns:
+        
+                  pop2_cells=random.sample(pop2_cell_ids,total_conns)
            
-              for value in range(0,total):
-                  cell_id=random.sample(pop2_cell_ids,1)
-                  pop2_cells.extend(cell_id)
-           ###### TODO : total condition might not be necessary ; only the first version while initial handling of the average number of electrical connections is not final
-           if total != 0:
+              else:
+        
+                  pop2_cells=[]
            
-              target_seg_array, target_fractions=get_target_segments(seg_target_dict,subset_dict)
-           
+                  for value in range(0,total_conns):
+              
+                      cell_id=random.sample(pop2_cell_ids,1)
+                  
+                      pop2_cells.extend(cell_id)
+                 
+              target_seg_array, target_fractions=get_target_segments(seg_target_dict,conn_subsets)
+                 
               for j in pop2_cells:
            
                   post_seg_id=target_seg_array[0]
@@ -412,7 +422,7 @@ def add_elect_projection(net,
                   syn_counter=0   
                          
                   for synapse_id in synapse_list:
-                   
+                         
                       add_elect_connection(proj_array[syn_counter], 
                                            count, 
                                            presynaptic_population, 
