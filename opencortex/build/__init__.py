@@ -143,8 +143,8 @@ def add_chem_projection(net,
     
     net - the network object created using libNeuroML API ( neuroml.Network() );
     
-    proj_array - dictionary which stores the projections of class neuroml.Projection; each projection has unique synapse component (e.g. AMPA , NMDA or GABA);
-    thus the keys of proj_array must be equal to the synapse ids in the synapse_list;
+    proj_array - list which stores the projections of class neuroml.Projection; each projection has unique synapse component (e.g. AMPA , NMDA or GABA);
+    thus for each projection the list position in the proj_array must be identical to the list position of the corresponding synapse id in the synapse_list;
     
     presynaptic_population - object corresponding to the presynaptic population in the network;
     
@@ -299,8 +299,8 @@ def add_elect_projection(net,
     
     net - the network object created using libNeuroML API ( neuroml.Network() );
     
-    proj_array - dictionary which stores the projections of class neuroml.Projection; each projection has unique gap junction component;
-    thus the keys of proj_array must be equal to the gap junction ids in the synapse_list;
+    proj_array - list which stores the projections of class neuroml.ElectricalProjection; each projection has unique gap junction component;
+    thus for each projection the list position in the proj_array must be identical to the list position of the corresponding gap junction id in the synapse_list;
     
     presynaptic_population - object corresponding to the presynaptic population in the network;
     
@@ -463,14 +463,15 @@ def add_chem_spatial_projection(net,
                                 post_cell_positions,
                                 delays_dict,
                                 weights_dict):
+                                
     
     '''This method adds the divergent distance-dependent chemical projection. The input arguments are as follows:
     
     
     net - the network object created using libNeuroML API ( neuroml.Network() );
     
-    proj_array - dictionary which stores the projections of class neuroml.Projection; each projection has unique synapse component (e.g. AMPA , NMDA or GABA);
-    thus the keys of proj_array must be equal to the synapse ids in the synapse_list;
+    proj_array - list which stores the projections of class neuroml.Projection; each projection has unique synapse component (e.g. AMPA , NMDA or GABA);
+    thus for each projection the list position in the proj_array must be identical to the list position of the corresponding synapse id in the synapse_list;
     
     presynaptic_population - object corresponding to the presynaptic population in the network;
     
@@ -533,7 +534,7 @@ def add_chem_spatial_projection(net,
        
        pop2_cell_positions=pre_cell_positions
                  
-    total_given=int( sum(subsets.values()) )
+    total_given=int( sum(subset_dict.values()))
     
     count=0
     for i in range(0, pop1_size):
@@ -545,20 +546,6 @@ def add_chem_spatial_projection(net,
            pop2_cell_ids.remove(i)
            
         if pop2_cell_ids !=[]:
-        
-           if len(pop2_cell_ids) >= total_given:
-        
-              pop2_cells=random.sample(pop2_cell_ids,total_given)
-           
-           else:
-        
-              pop2_cells=[]
-           
-              for value in range(0,total_given):
-           
-                  cell_id=random.sample(pop2_cell_ids,1)
-               
-                  pop2_cells.extend(cell_id)
     
            cell1_position=pop1_cell_positions[i]
         
@@ -566,7 +553,7 @@ def add_chem_spatial_projection(net,
         
            conn_counter=0
         
-           for j in pop2_cells:
+           for j in pop2_cell_ids:
         
                cell2_position=pop2_cell_positions[j]
         
@@ -643,7 +630,191 @@ def add_chem_spatial_projection(net,
 
     return proj_array               
 
+########################################################################################################################################################
+def add_elect_spatial_projection(net,
+                                 proj_array,
+                                 presynaptic_population,
+                                 postsynaptic_population,
+                                 targeting_mode,
+                                 synapse_list,
+                                 seg_target_dict,
+                                 subset_dict,
+                                 distance_rule,
+                                 pre_cell_positions,
+                                 post_cell_positions):
+    
+    '''This method adds the divergent or convergent electrical projection depending on the input argument targeting_mode. The input arguments are as follows:
+    
+    net - the network object created using libNeuroML API ( neuroml.Network() );
+    
+    proj_array - dictionary which stores the projections of class neuroml.ElectricalProjection; each projection has unique gap junction component;
+    thus for each projection the list position in the proj_array must be identical to the list position of the corresponding gap junction id in the synapse_list;
+    
+    presynaptic_population - object corresponding to the presynaptic population in the network;
+    
+    postsynaptic_population - object corresponding to the postsynaptic population in the network;
+    
+    targeting_mode - a string that specifies the targeting mode: 'convergent' or 'divergent';
+    
+    synapse_list - the list of gap junction (synapse) ids that correspond to the individual gap junction components on the physical contact;
+    these components will be mapped onto the same location of the target segment;
+    
+    seg_target_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
+    
+    subset_dict - a dictionary whose keys are the ids of target segment groups; interpretation of the corresponding dictionary values depends on the targeting mode:
+    
+    Case I, targeting mode = 'divergent' - the number of synaptic connections made by each presynaptic cell per given target segment group of postsynaptic cells;
+    
+    Case II, targeting mode = 'convergent' - the number of synaptic connections per target segment group per each postsynaptic cell;
+    
+    Note: the electrical connection is made only if distance-dependent probability is higher than some random number random.random(); thus, the actual numbers of connections made
+    
+    according to the distance-dependent rule might be smaller than the numbers of connections specified by subset_dict; subset_dict defines the upper bound for the 
+    
+    number of connections.
+    
+    distance_rule - string which defines the distance dependent rule of connectivity - soma to soma distance must be represented by the string character 'r';
+    
+    pre_cell_positions- array specifying the cell positions for the presynaptic population; the format is an array of [ x coordinate, y coordinate, z coordinate];
+    
+    post_cell_positions- array specifying the cell positions for the postsynaptic population; the format is an array of [ x coordinate, y coordinate, z coordinate];'''    
+    
+    if targeting_mode=='divergent':
+       
+       pop1_size=presynaptic_population.size
+       
+       pop1_id=presynaptic_population.id
+       
+       pop1_cell_positions=pre_cell_positions
+       
+       pop2_size=postsynaptic_population.size
+       
+       pop2_id=postsynaptic_population.size
+       
+       pop2_cell_positions=post_cell_positions
+       
+    if targeting_mode=='convergent':
+       
+       pop1_size=postsynaptic_population.size
+       
+       pop1_id=postsynaptic_population.id
+       
+       pop1_cell_positions=post_cell_positions
+       
+       pop2_size=presynaptic_population.size
+       
+       pop2_id=presynaptic_population.id
+       
+       pop2_cell_positions=pre_cell_positions
+                     
+    count=0
+    
+    numberConnections={}
+    
+    for subset in subset_dict.keys():
+        
+        numberConnections[subset]=int(subset_dict[subset])
+      
+    for i in range(0, pop1_size):
+        
+        total_conns=0
+        
+        conn_subsets={}
+    
+        for subset in subset_dict.keys():
+            
+            if subset_dict[subset] != numberConnections[subset]:
+               
+               if random.random() < subset_dict[subset] - numberConnections[subset]:
+               
+                  conn_subsets[subset]=numberConnections[subset]+1
+                  
+               else:
+               
+                  conn_subsets[subset]=numberConnections[subset]
+                  
+            else:
+               
+               conn_subsets[subset]=numberConnections[subset]
+            
+            total_conns=total_conns+conn_subsets[subset]
+            
+        if total_conns != 0:    
+        
+           pop2_cell_ids=range(0,pop2_size)
+        
+           if pop1_id == pop2_id:
+           
+              pop2_cell_ids.remove(i)
+           
+           if pop2_cell_ids !=[]:
+           
+              cell1_position=pop1_cell_positions[i]
+              
+              target_seg_array, target_fractions=get_target_segments(seg_target_dict,conn_subsets)
+              
+              conn_counter=0
+                 
+              for j in pop2_cell_ids:
+              
+                  cell2_position=pop2_cell_positions[j]
+        
+                  r=math.sqrt(sum([(a - b)**2 for a,b in zip(cell1_position,cell2_position)]))
+            
+                  if eval(distance_rule) >= 1 or random.random() < eval(distance_rule):
+                   
+                     conn_counter+=1
+           
+                     post_seg_id=target_seg_array[0]
+               
+                     del target_seg_array[0]
+               
+                     fraction_along=target_fractions[0]
+               
+                     del target_fractions[0]  
+                
+                     if targeting_mode=='divergent':
+                   
+                        pre_cell_id=i
+                      
+                        post_cell_id=j
+                      
+                     if targeting_mode=='convergent':
+                   
+                        spre_cell_id=j
+                      
+                        post_cell_id=i  
+                     
+                     syn_counter=0   
+                         
+                     for synapse_id in synapse_list:
+                         
+                         add_elect_connection(proj_array[syn_counter], 
+                                              count, 
+                                              presynaptic_population, 
+                                              pre_cell_id, 
+                                              0, 
+                                              postsynaptic_population, 
+                                              post_cell_id, 
+                                              post_seg_id,
+                                              synapse_id,
+                                              pre_fraction=0.5,
+                                              post_fraction=fraction_along)
+                                           
+                         syn_counter+=1                      
+                                           
+                     count+=1
+                      
+                  if conn_counter==total_conns:
+                     break
+                  
+    if count !=0:
+                   
+       for synapse_ind in range(0,len(synapse_list)):
+    
+           net.electrical_projections.append(proj_array[synapse_ind])
 
+    return proj_array   
 ############################################################################################################################
 def make_target_dict(cell_object,
                      target_segs):

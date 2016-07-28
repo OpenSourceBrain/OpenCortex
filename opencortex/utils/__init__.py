@@ -142,6 +142,8 @@ def build_projection(net,
     proj_array=[]
     syn_counter=0
     
+    synapse_list=list(set(synapse_list))
+    
     for synapse_id in synapse_list:
        
         if proj_type=='Elect':
@@ -819,82 +821,91 @@ def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,pa
 
 ####################################################################################################################################################################    
     
-def replace_network_components(net_file_name,path_to_net,replace_specifics):
-
-    ###TODO
+def replace_cell_types(net_file_name,
+                       path_to_net,
+                       new_net_file_name,
+                       cell_types_to_be_replaced,
+                       cell_types_replaced_by,
+                       dir_to_new_components,
+                       reduced_to_single_compartment=True,
+                       compartment_targeting_params=None):
 
     nml2_file_path=os.path.join(path_to_net,net_file_name+".net.nml")      
-                  
+    
     net_doc = pynml.read_neuroml2_file(nml2_file_path)
     
-    popParams=[]
+    if len(cell_types_to_be_replaced)==len(cell_types_replaced_by):
     
-    popPositions={}
-    
-    includeRefs=[]
-    
-    for include_counter in range(0,len(net_doc.includes)):
-    
-        include=net_doc.includes[include_counter]
-        includeRefs.append(include.href)
-    
-    for net_counter in range(0,len(net_doc.networks)):
-        net=net_doc.networks[net_counter]
-        for pop_counter in range(0,len(net.populations)):
-            popDict={}
-            pop=net.populations[pop_counter]
-            popDict['id']=pop.id
-            popDict['component']=pop.component
-            popDict['size']=pop.size
-            popDict['type']=pop.type
-            popParams.append(popDict)
-            cellPositions=[]
-            
-            for instance_counter in range(0,len(pop.instances)):
-                cell_location={}
-                instance=pop.instances[instance_counter]
-                print instance.id
-                cell_location['x']=instance.location.x
-                cell_location['y']=instance.location.y
-                cell_location['z']=instance.location.z
-                cellPositions.append(cell_location)
-                
-            popPositions[popDict['id']]=cellPositions
-            
-        print popParams
-        print popPositions
+       net_doc.includes=[]
+       
+       net=net_doc.networks[0]
+       
+       for cell_index in range(0,len(cell_types_replaced_by)):
         
-        projDict={}
-        
-        for proj_counter in range(0,len(net.projections)):
+           oc_build.add_cell_and_channels(net_doc, os.path.join(dir_to_new_components,"%s.cell.nml"%cell_types_replaced_by[cell_index]), cell_types_replaced_by[cell_index] )
+       
+           for pop_counter in range(0,len(net.populations) ):
+           
+               pop=net.populations[pop_counter]
+               
+               if pop.component==cell_types_to_be_replaced[cell_index]:
+               
+                  pop.component=cell_types_replaced_by[cell_index]
+                  
+               if cell_types_to_be_replaced[cell_index] in pop.id:
+               
+                  pop.id= pop.id.replace(cell_types_to_be_replaced[cell_index],cell_types_replaced_by[cell_index])
+                  
+           if hasattr(net, 'projections'):
+                  
+              for proj_counter in range(0,len(net.projections)):
             
-            connections=[]
-            
-            proj=net.projections[proj_counter]
-            print proj.id
-            for conn_counter in range(0,len(proj.connection_wds)):
-                connection_dict={}
-                connection=proj.connection_wds[conn_counter]
-                print connection.id
-                connection_dict['preCellId']=connection.pre_cell_id
-                connection_dict['postCellId']=connection.post_cell_id
-                if hasattr(connection,'post_segment_id'):
-                   connection_dict['postSegmentId']=connection.post_segment_id
-                if hasattr(connection,'pre_segment_id'):
-                   connection_dict['preSegmentId']=connection.pre_segment_id
-                if hasattr(connection,'pre_fraction_along'):
-                   connection_dict['preFractionAlong']=connection.pre_fraction_along
-                if hasattr(connection,'post_fraction_along'):
-                   connection_dict['postFractionAlong']=connection.post_fraction_along
-                if hasattr(connection,'delay'):
-                   connection_dict['delay']=connection.delay
-                if hasattr(connection,'weight'):
-                   connection_dict['weight']=connection.weight
-                connections.append(connection_dict)
-                
-            projDict[proj.id]=connections
-            
-        print projDict
+                  proj=net.projections[proj_counter]
+                  
+                  wd_indicator=False
+                  
+                  if hasattr(proj,'connection_wds'):
+                  
+                     connections=proj.connection_wds
+                     
+                     wd_indicator=True
+                  
+                  if hasattr(proj,'connections'):
+                  
+                     connections=proj.connections
+                  
+                  for conn_counter in range(0,len(connections)):
+                      
+                      connection=proj.connection_wds[conn_counter]
+                      
+                      if cell_types_to_be_replaced[cell_index] in connection.pre_cell_id or cell_types_to_be_replaced[cell_index] in connection.post_cell_id:
+                      
+                         #TODO
+                      
+                         if hasattr(connection,'post_segment_id'):
+                            
+                         if hasattr(connection,'pre_segment_id'):
+                       
+                         if hasattr(connection,'pre_fraction_along'):
+                   
+                         if hasattr(connection,'post_fraction_along'):
+                  
+                         if hasattr(connection,'delay'):
+                  
+                         if hasattr(connection,'weight'):
+                  
+                          
+       
+           
+           
+       
+       
+    else:
+    
+      opencortex.print_comment_v("Error: the number of cell types in the list cell_types_to_be_replaced is not equal to the number of new cell types in the list"
+      " cell_types_replaced_by.") 
+      
+      quit()
         
 ##############################################################################################################################################
 def parse_distance_dependence_params(distance_dependence_params,pre_pop,post_pop):
