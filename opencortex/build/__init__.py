@@ -133,7 +133,8 @@ def add_chem_projection(net,
                         postsynaptic_population,
                         targeting_mode,
                         synapse_list,
-                        seg_target_dict,
+                        pre_seg_target_dict,
+                        post_seg_target_dict,
                         subset_dict,
                         delays_dict=None,
                         weights_dict=None):
@@ -155,7 +156,9 @@ def add_chem_projection(net,
     synapse_list - the list of synapse ids that correspond to the individual receptor components on the physical synapse, e.g. the first element is
     the id of the AMPA synapse and the second element is the id of the NMDA synapse; these synapse components will be mapped onto the same location of the target segment;
     
-    seg_target_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
+    pre_seg_target_dict - a dictionary whose keys are the ids of presynaptic segment groups and the values are dictionaries in the format returned by make_target_dict();
+    
+    post_seg_target_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
     
     subset_dict - a dictionary whose keys are the ids of target segment groups; interpretation of the corresponding dictionary values depends on the targeting mode:
     
@@ -192,6 +195,17 @@ def add_chem_projection(net,
     
     count=0
     
+    ##### allows only one pre segment group per presynaptic population e.g. distal_axon
+    if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
+    
+       pre_subset_dict={}
+       
+       pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_given
+        
+    else:
+    
+       pre_subset_dict=None
+    
     for i in range(0, pop1_size):
     
         pop2_cell_ids=range(0,pop2_size)
@@ -216,17 +230,43 @@ def add_chem_projection(net,
                
                   pop2_cells.extend(cell_id)
         
-           target_seg_array, target_fractions=get_target_segments(seg_target_dict,subset_dict)
+           post_target_seg_array, post_target_fractions=get_target_segments(post_seg_target_dict,subset_dict)
+           
+           if pre_subset_dict !=None:
+           
+              pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+            
+           else:
+           
+               pre_target_seg_array=None
+               
+               pre_target_fractions=None  
         
            for j in pop2_cells:
         
-               post_seg_id=target_seg_array[0]
+               post_seg_id=post_target_seg_array[0]
             
-               del target_seg_array[0]
+               del post_target_seg_array[0]
             
-               fraction_along=target_fractions[0]
+               post_fraction_along=post_target_fractions[0]
             
-               del target_fractions[0]  
+               del post_target_fractions[0]  
+               
+               if pre_target_seg_array != None and pre_target_fractions != None:
+                
+                  pre_seg_id=pre_target_seg_array[0]
+            
+                  del pre_target_seg_array[0]
+            
+                  pre_fraction_along=pre_target_fractions[0]
+            
+                  del pre_target_fractions[0]
+                  
+               else:
+               
+                  pre_seg_id=0
+                  
+                  pre_fraction_along=0.5
                 
                if targeting_mode=='divergent':
                    
@@ -262,13 +302,14 @@ def add_chem_projection(net,
                                   count, 
                                   presynaptic_population, 
                                   pre_cell_id, 
-                                  0, 
+                                  pre_seg_id, 
                                   postsynaptic_population, 
                                   post_cell_id, 
                                   post_seg_id,
                                   delay = delay,
                                   weight = weight,
-                                  post_fraction=fraction_along)
+                                  pre_fraction=pre_fraction_along,
+                                  post_fraction=post_fraction_along)
                     
                                   
                    syn_counter+=1               
@@ -292,7 +333,8 @@ def add_elect_projection(net,
                          postsynaptic_population,
                          targeting_mode,
                          synapse_list,
-                         seg_target_dict,
+                         pre_seg_target_dict,
+                         post_seg_target_dict,
                          subset_dict):
     
     '''This method adds the divergent or convergent electrical projection depending on the input argument targeting_mode. The input arguments are as follows:
@@ -311,7 +353,9 @@ def add_elect_projection(net,
     synapse_list - the list of gap junction (synapse) ids that correspond to the individual gap junction components on the physical contact;
     these components will be mapped onto the same location of the target segment;
     
-    seg_target_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
+    pre_seg_target_dict - a dictionary whose keys are the ids of presynaptic segment groups and the values are dictionaries in the format returned by make_target_dict();
+    
+    post_seg_target_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
     
     subset_dict - a dictionary whose keys are the ids of target segment groups; interpretation of the corresponding dictionary values depends on the targeting mode:
     
@@ -373,6 +417,16 @@ def add_elect_projection(net,
             
         if total_conns != 0:    
         
+           if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
+    
+              pre_subset_dict={}
+       
+              pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_conns
+        
+           else:
+    
+              pre_subset_dict=None
+        
            pop2_cell_ids=range(0,pop2_size)
         
            if pop1_id == pop2_id:
@@ -395,17 +449,43 @@ def add_elect_projection(net,
                   
                       pop2_cells.extend(cell_id)
                  
-              target_seg_array, target_fractions=get_target_segments(seg_target_dict,conn_subsets)
+              post_target_seg_array, post_target_fractions=get_target_segments(post_seg_target_dict,conn_subsets)
+              
+              if pre_subset_dict !=None:
+           
+                 pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+            
+              else:
+           
+                 pre_target_seg_array=None
+               
+                 pre_target_fractions=None 
                  
               for j in pop2_cells:
            
-                  post_seg_id=target_seg_array[0]
+                  post_seg_id=post_target_seg_array[0]
                
-                  del target_seg_array[0]
+                  del post_target_seg_array[0]
                
-                  fraction_along=target_fractions[0]
+                  post_fraction_along=post_target_fractions[0]
                
-                  del target_fractions[0]  
+                  del post_target_fractions[0]  
+                  
+                  if pre_target_seg_array != None and pre_target_fractions != None:
+                
+                     pre_seg_id=pre_target_seg_array[0]
+            
+                     del pre_target_seg_array[0]
+            
+                     pre_fraction_along=pre_target_fractions[0]
+            
+                     del pre_target_fractions[0]
+                  
+                  else:
+               
+                     pre_seg_id=0
+                  
+                     pre_fraction_along=0.5
                 
                   if targeting_mode=='divergent':
                    
@@ -427,13 +507,13 @@ def add_elect_projection(net,
                                            count, 
                                            presynaptic_population, 
                                            pre_cell_id, 
-                                           0, 
+                                           pre_seg_id, 
                                            postsynaptic_population, 
                                            post_cell_id, 
                                            post_seg_id,
                                            synapse_id,
-                                           pre_fraction=0.5,
-                                           post_fraction=fraction_along)
+                                           pre_fraction=pre_fraction_along,
+                                           post_fraction=post_fraction_along)
                                            
                       syn_counter+=1                      
                                            
@@ -456,7 +536,8 @@ def add_chem_spatial_projection(net,
                                 postsynaptic_population,
                                 targeting_mode,
                                 synapse_list,
-                                seg_target_dict,
+                                pre_seg_target_dict,
+                                post_seg_target_dict,
                                 subset_dict,
                                 distance_rule,
                                 pre_cell_positions,
@@ -482,7 +563,9 @@ def add_chem_spatial_projection(net,
     synapse_list - the list of synapse ids that correspond to the individual receptor components on the physical synapse, e.g. the first element is
     the id of the AMPA synapse and the second element is the id of the NMDA synapse; these synapse components will be mapped onto the same location of the target segment;
     
-    seg_target_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
+    pre_seg_target_dict - a dictionary whose keys are the ids of presynaptic segment groups and the values are dictionaries in the format returned by make_target_dict();
+    
+    post_seg_target_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
     
     subset_dict - a dictionary whose keys are the ids of target segment groups; interpretation of the corresponding dictionary values depends on the targeting mode:
     
@@ -537,6 +620,17 @@ def add_chem_spatial_projection(net,
     total_given=int( sum(subset_dict.values()))
     
     count=0
+    
+    if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
+    
+       pre_subset_dict={}
+       
+       pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_given
+        
+    else:
+    
+       pre_subset_dict=None
+    
     for i in range(0, pop1_size):
     
         pop2_cell_ids=range(0,pop2_size)
@@ -549,7 +643,17 @@ def add_chem_spatial_projection(net,
     
            cell1_position=pop1_cell_positions[i]
         
-           target_seg_array,fractions_along=get_target_segments(seg_target_dict,subset_dict)
+           post_target_seg_array,post_fractions_along=get_target_segments(post_seg_target_dict,subset_dict)
+           
+           if pre_subset_dict !=None:
+           
+              pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+            
+           else:
+           
+              pre_target_seg_array=None
+               
+              pre_target_fractions=None 
         
            conn_counter=0
         
@@ -563,13 +667,29 @@ def add_chem_spatial_projection(net,
                   
                   conn_counter+=1
                      
-                  post_seg_id=target_seg_array[0]
+                  post_seg_id=post_target_seg_array[0]
                      
-                  del target_seg_array[0]
+                  del post_target_seg_array[0]
                      
-                  fraction_along=fractions_along[0]
+                  post_fraction_along=post_fractions_along[0]
                      
-                  del fractions_along[0]
+                  del post_fractions_along[0]
+                  
+                  if pre_target_seg_array != None and pre_target_fractions != None:
+                
+                     pre_seg_id=pre_target_seg_array[0]
+            
+                     del pre_target_seg_array[0]
+            
+                     pre_fraction_along=pre_target_fractions[0]
+            
+                     del pre_target_fractions[0]
+                  
+                  else:
+               
+                     pre_seg_id=0
+                  
+                     pre_fraction_along=0.5
                        
                   if targeting_mode=='divergent':
                    
@@ -606,13 +726,14 @@ def add_chem_spatial_projection(net,
                                      count, 
                                      presynaptic_population, 
                                      pre_cell_id, 
-                                     0, 
+                                     pre_seg_id, 
                                      postsynaptic_population, 
                                      post_cell_id, 
                                      post_seg_id,
                                      delay = delay,
                                      weight = weight,
-                                     post_fraction=fraction_along)
+                                     pre_fraction=pre_fraction_along,
+                                     post_fraction=post_fraction_along)
                                      
                                      
                       syn_counter+=1
@@ -637,7 +758,8 @@ def add_elect_spatial_projection(net,
                                  postsynaptic_population,
                                  targeting_mode,
                                  synapse_list,
-                                 seg_target_dict,
+                                 pre_seg_target_dict,
+                                 post_seg_target_dict,
                                  subset_dict,
                                  distance_rule,
                                  pre_cell_positions,
@@ -659,7 +781,9 @@ def add_elect_spatial_projection(net,
     synapse_list - the list of gap junction (synapse) ids that correspond to the individual gap junction components on the physical contact;
     these components will be mapped onto the same location of the target segment;
     
-    seg_target_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
+    pre_seg_target_dict - a dictionary whose keys are the ids of presynaptic segment groups and the values are dictionaries in the format returned by make_target_dict();
+    
+    post_seg_target_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
     
     subset_dict - a dictionary whose keys are the ids of target segment groups; interpretation of the corresponding dictionary values depends on the targeting mode:
     
@@ -739,7 +863,17 @@ def add_elect_spatial_projection(net,
             
             total_conns=total_conns+conn_subsets[subset]
             
-        if total_conns != 0:    
+        if total_conns != 0:  
+        
+           if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
+    
+              pre_subset_dict={}
+       
+              pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_conns
+        
+           else:
+    
+              pre_subset_dict=None  
         
            pop2_cell_ids=range(0,pop2_size)
         
@@ -751,7 +885,17 @@ def add_elect_spatial_projection(net,
            
               cell1_position=pop1_cell_positions[i]
               
-              target_seg_array, target_fractions=get_target_segments(seg_target_dict,conn_subsets)
+              post_target_seg_array, post_target_fractions=get_target_segments(post_seg_target_dict,conn_subsets)
+              
+              if pre_subset_dict !=None:
+           
+                 pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+            
+              else:
+           
+                 pre_target_seg_array=None
+               
+                 pre_target_fractions=None 
               
               conn_counter=0
                  
@@ -765,13 +909,29 @@ def add_elect_spatial_projection(net,
                    
                      conn_counter+=1
            
-                     post_seg_id=target_seg_array[0]
+                     post_seg_id=post_target_seg_array[0]
                
-                     del target_seg_array[0]
+                     del post_target_seg_array[0]
                
-                     fraction_along=target_fractions[0]
+                     fraction_along=post_target_fractions[0]
                
-                     del target_fractions[0]  
+                     del post_target_fractions[0]  
+                     
+                     if pre_target_seg_array != None and pre_target_fractions != None:
+                
+                        pre_seg_id=pre_target_seg_array[0]
+            
+                        del pre_target_seg_array[0]
+            
+                        pre_fraction_along=pre_target_fractions[0]
+            
+                        del pre_target_fractions[0]
+                  
+                     else:
+               
+                        pre_seg_id=0
+                  
+                        pre_fraction_along=0.5
                 
                      if targeting_mode=='divergent':
                    
@@ -793,13 +953,13 @@ def add_elect_spatial_projection(net,
                                               count, 
                                               presynaptic_population, 
                                               pre_cell_id, 
-                                              0, 
+                                              pre_seg_id, 
                                               postsynaptic_population, 
                                               post_cell_id, 
                                               post_seg_id,
                                               synapse_id,
-                                              pre_fraction=0.5,
-                                              post_fraction=fraction_along)
+                                              pre_fraction=pre_fraction_along,
+                                              post_fraction=post_fraction_along)
                                            
                          syn_counter+=1                      
                                            

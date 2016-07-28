@@ -94,7 +94,8 @@ def build_projection(net,
                      postsynaptic_population, 
                      synapse_list,  
                      targeting_mode,
-                     seg_length_dict,
+                     pre_seg_length_dict,
+                     post_seg_length_dict,
                      num_of_conn_dict,
                      distance_dependent_rule=None,
                      pre_cell_positions=None,
@@ -120,7 +121,9 @@ def build_projection(net,
     
     targeting_mode - specifies the type of projection: divergent or convergent;
     
-    seg_length_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
+    pre_seg_length_dict - a dictionary whose keys are the ids of presynaptic segment groups and the values are dictionaries in the format returned by make_target_dict();
+    
+    post_seg_length_dict - a dictionary whose keys are the ids of target segment groups and the values are dictionaries in the format returned by make_target_dict();
     
     num_of_conn_dict - a dictionary whose keys are the ids of target segment groups with the corresponding values of type 'int' specifying the number of connections per 
     tarrget segment group per each cell.
@@ -175,7 +178,8 @@ def build_projection(net,
                                                                 postsynaptic_population,
                                                                 targeting_mode,
                                                                 synapse_list,
-                                                                seg_length_dict,
+                                                                pre_seg_length_dict,
+                                                                post_seg_length_dict,
                                                                 num_of_conn_dict,
                                                                 delays_dict,
                                                                 weights_dict) 
@@ -187,7 +191,8 @@ def build_projection(net,
                                                                  postsynaptic_population,
                                                                  targeting_mode,
                                                                  synapse_list,
-                                                                 seg_length_dict,
+                                                                 pre_seg_length_dict,
+                                                                 post_seg_length_dict,
                                                                  num_of_conn_dict)
     else:
     
@@ -198,7 +203,8 @@ def build_projection(net,
                                                                         postsynaptic_population,
                                                                         targeting_mode,
                                                                         synapse_list,
-                                                                        seg_length_dict,
+                                                                        pre_seg_length_dict,
+                                                                        post_seg_length_dict,
                                                                         num_of_conn_dict,
                                                                         distance_dependent_rule,
                                                                         pre_cell_positions,
@@ -213,7 +219,8 @@ def build_projection(net,
                                                                          postsynaptic_population,
                                                                          targeting_mode,
                                                                          synapse_list,
-                                                                         seg_length_dict,
+                                                                         pre_seg_length_dict,
+                                                                         post_seg_length_dict,
                                                                          num_of_conn_dict,
                                                                          distance_dependent_rule,
                                                                          pre_cell_positions,
@@ -232,6 +239,7 @@ def build_connectivity(net,
                        pop_objects,
                        path_to_cells,
                        full_path_to_conn_summary,
+                       pre_segment_group_info=[],
                        return_cached_dicts=True,
                        synaptic_scaling_params=None,
                        synaptic_delay_params=None,
@@ -312,65 +320,43 @@ def build_connectivity(net,
                          
                       target_comp_groups=[target_comp_groups]
                       #############################################################################################
-                      cell_component=postCellObject['PopObj'].component
-                                 
-                      if cell_component not in cached_target_dict.keys():
-                           
-                         cell_nml_file = '%s.cell.nml'%cell_component
-                           
-                         if path_to_cells != None:
-                       
-                            document_cell = neuroml.loaders.NeuroMLLoader.load(os.path.join(path_to_cells,cell_nml_file))
-                          
+                      
+                      PostSegLengthDict, cached_target_dict =check_cached_dicts(postCellObject['PopObj'].component,
+                                                                                cached_target_dict,
+                                                                                target_comp_groups,
+                                                                                path_to_nml2=path_to_cells)  
+                      if pre_segment_group_info !=[]:
+                                                                                 
+                         passed_pre_seg_groups=check_pre_segment_groups(pre_segment_group_info)
+                      
+                         if not passed_pre_seg_groups:
+                      
+                            opencortex.print_comment_v("Error: the list pre_segment_group_info was not correctly specified. Execution will terminate.")
+                         
+                            quit()
+                         
                          else:
-                       
-                            document_cell=neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
-                              
-                         cellObject=document_cell.cells[0]
-                              
-                         target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=target_comp_groups,targeting_mode='segGroups')
-                              
-                         segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
-                                 
-                         cached_target_dict[cell_component]={}
-                                 
-                         cached_target_dict[cell_component]['CellObject']=cellObject
-                              
-                         cached_target_dict[cell_component]['TargetDict']=segLengthDict
-                              
+                      
+                            if len(pre_segment_group_info)==1:
+                         
+                               PreSegLengthDict, cached_target_dict =check_cached_dicts(preCellObject['PopObj'].component,
+                                                                                               cached_target_dict,
+                                                                                               pre_segment_group_info,
+                                                                                               path_to_nml2=path_to_cells)     
+                            if len(pre_segment_group_info) >1:
+                         
+                               for proj in range(0,len(pre_segment_group_info)):
+                            
+                                   if pre_segment_group_info[proj]['PrePop']==prePop and pre_segment_group_info[proj]['PostPop']==postPop:
+                                      
+                                      PreSegLengthDict, cached_target_dict =check_cached_dicts(preCellObject['PopObj'].component,
+                                                                                               cached_target_dict,
+                                                                                               [pre_segment_group_info[proj]['PreSegGroup']],
+                                                                                               path_to_nml2=path_to_cells)     
+                                                                          
                       else:
                       
-                         target_groups_to_include=[]
-                         
-                         new_segment_groups=False
-                         
-                         segLengthDict={}
-                      
-                         for target_group in target_comp_groups:
-                              
-                             if target_group not in cached_target_dict[cell_component]['TargetDict'].keys():
-                             
-                                target_groups_to_include.append(target_group)
-                                
-                                new_segment_groups=True
-                                
-                             else:
-                             
-                                segLengthDict[target_group]=cached_target_dict[cell_component]['TargetDict'][target_group]
-                                
-                         if new_segment_groups:
-                                 
-                            cellObject=cached_target_dict[cell_component]['CellObject']
-                                 
-                            target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=target_groups_to_include,targeting_mode='segGroups') 
-                                 
-                            new_seg_length_dict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
-                              
-                            for new_target_group in new_seg_length_dict.keys():
-                            
-                                cached_target_dict[cell_component]['TargetDict'][new_target_group]=new_seg_length_dict[new_target_group]
-                                
-                                segLengthDict[new_target_group]=new_seg_length_dict[new_target_group]
+                         PreSegLengthDict=None                                                              
                            
                       compound_proj              =build_projection(net=net, 
                                                                    proj_counter=proj_counter,
@@ -379,7 +365,8 @@ def build_connectivity(net,
                                                                    postsynaptic_population=postCellObject['PopObj'], 
                                                                    synapse_list=synapseList,  
                                                                    targeting_mode=targetingMode,
-                                                                   seg_length_dict=segLengthDict,
+                                                                   pre_seg_length_dict=PreSegLengthDict,
+                                                                   post_seg_length_dict=PostSegLengthDict,
                                                                    num_of_conn_dict=subset_dict,
                                                                    distance_dependent_rule=dist_par,
                                                                    pre_cell_positions=preCellObject['Positions'],
@@ -527,10 +514,10 @@ def read_connectivity(pre_pop,
     return proj_summary
         
 ################################################################################################################################################################   
-def check_cached_dicts(cell_component,cached_dicts,input_group_params,path_to_nml2=None):
+def check_cached_dicts(cell_component,cached_dicts,list_of_target_seg_groups,path_to_nml2=None):
 
     segLengthDict={}
-               
+    
     if cell_component in cached_dicts.keys():
             
        target_groups_to_include=[]
@@ -539,7 +526,7 @@ def check_cached_dicts(cell_component,cached_dicts,input_group_params,path_to_nm
                      
        segLengthDict={}
                       
-       for target_group in input_group_params['TargetDict'].keys():
+       for target_group in list_of_target_seg_groups:
                               
            if target_group not in cached_dicts[cell_component]['TargetDict'].keys():
                              
@@ -567,7 +554,7 @@ def check_cached_dicts(cell_component,cached_dicts,input_group_params,path_to_nm
                             
     else:
                
-       cell_nml_file = '%s.cell.nml'%pop.component
+       cell_nml_file = '%s.cell.nml'%cell_component
                            
        if path_to_nml2 != None:
                        
@@ -579,7 +566,7 @@ def check_cached_dicts(cell_component,cached_dicts,input_group_params,path_to_nm
                               
        cellObject=document_cell.cells[0]
                
-       target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
+       target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=list_of_target_seg_groups,targeting_mode='segGroups')
                               
        segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
                   
@@ -590,6 +577,72 @@ def check_cached_dicts(cell_component,cached_dicts,input_group_params,path_to_nm
        cached_dicts[cell_component]['TargetDict']=segLengthDict
                   
     return segLengthDict, cached_dicts
+    
+##################################################################################################################################################################
+def check_pre_segment_groups(pre_segment_group_info):
+
+    error_counter=0
+    
+    passed=False
+                              
+    if len(pre_segment_group_info)==1:
+    
+       if isinstance(pre_segment_group_info[0],str):
+                         
+          pre_segment_group_list=pre_segment_group_info[0]
+                            
+       else:
+                         
+          opencortex.print_comment_v("Error in build_connectivity: the list pre_segment_group_info has only one element but it is not of type 'str'."
+          " The current type is %s."%(type(pre_segment_group_info[0]) ) )
+          error_counter+=1
+                            
+    if len(pre_segment_group_info) >1:
+                         
+       for proj in range(0,len(pre_segment_group_info)):
+                            
+           if isinstance(pre_segment_group_info[proj], dict):
+                                
+               check_pre_seg='PreSegGroup' in pre_segment_group_info[proj].keys()
+                                   
+               check_pre_pop='PrePop' in pre_segment_group_info[proj].keys()
+                                   
+               check_post_pop='PostPop' in pre_se_segment_group_info[proj].keys()
+                                
+               if not check_pre_seg:
+                                      
+                  opencortex.print_comment_v("Error in build connectivity: the key 'PreSegGroup' is not in the dictionary keys inside pre_segment_group_info.")
+                  error_counter+=1
+                  
+               else:
+               
+                  if not isinstance(pre_segment_group_info[proj]['PreSegGroup'],str):
+                  
+                     opencortex.print_comment_v("Error in build connectivity: the value of the key 'PreSegGroup' in the dictionary keys inside pre_segment_group_info"
+                     " must be of type 'str'. Only one presynaptic segment group is allowed per projection.")
+                     error_counter+=1
+                                   
+               if not check_pre_pop:
+                                   
+                  opencortex.print_comment_v("Error in build connectivity: the key 'PrePop' is not in the dictionary keys inside pre_segment_group_info.")
+                  error_counter+=1
+                                      
+               if check_post_pop:
+                                   
+                  opencortex.print_comment_v("Error in build connectivity: the key 'PostPop' is not in the dictionary keys inside pre_segment_group_info.")
+                  error_counter+=1
+                                        
+           else:
+                                    
+               opencortex.print_comment_v("Error in build_connectivity: the list elements in the pre_segment_group_info must be dictionaries with fields"
+               " 'PreSegGroup', 'PrePop' and 'PostPop'.")
+               error_counter+=1
+                                                                                           
+    if error_counter==0:
+    
+       passed=True
+       
+    return passed
 ##################################################################################################################################################################
 def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,path_to_cells=None,path_to_synapses=None):     
 
@@ -665,7 +718,7 @@ def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,pa
         pop=population_params[cell_population]['PopObj']
         
         cell_component=pop.component
-    
+        
         for input_group_ind in range(0,len(input_params[cell_population])):
         
             input_group_params=input_params[cell_population][input_group_ind]
@@ -704,13 +757,15 @@ def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,pa
                
                   subset_dict=input_group_params['TargetDict']
                   
+                  target_group_list=subset_dict.keys()
+                  
                   target_segment=None
                   
                   fraction_along=None
                
                   if cached_dicts !=None:
             
-                     segLengthDict, cached_dicts =check_cached_dicts(cell_component,cached_dicts,input_group_params,path_to_nml2=path_to_cells)
+                     segLengthDict, cached_dicts =check_cached_dicts(cell_component,cached_dicts,target_group_list,path_to_nml2=path_to_cells)
               
                   else:
             
@@ -828,78 +883,225 @@ def replace_cell_types(net_file_name,
                        cell_types_replaced_by,
                        dir_to_new_components,
                        reduced_to_single_compartment=True,
-                       compartment_targeting_params=None):
+                       segment_group_specify=None):
 
     nml2_file_path=os.path.join(path_to_net,net_file_name+".net.nml")      
     
     net_doc = pynml.read_neuroml2_file(nml2_file_path)
     
-    if len(cell_types_to_be_replaced)==len(cell_types_replaced_by):
+    if (not reduced_to_single_compartment) and segment_group_specify != None:
     
-       net_doc.includes=[]
+       cached_target_dict={}
+    
+    if len(cell_types_to_be_replaced)==len(cell_types_replaced_by):
        
        net=net_doc.networks[0]
        
-       for cell_index in range(0,len(cell_types_replaced_by)):
-        
-           oc_build.add_cell_and_channels(net_doc, os.path.join(dir_to_new_components,"%s.cell.nml"%cell_types_replaced_by[cell_index]), cell_types_replaced_by[cell_index] )
+       old_to_new=[]
        
-           for pop_counter in range(0,len(net.populations) ):
+       all_old_components=[]
+       
+       for pop_counter in range(0,len(net.populations) ):
            
-               pop=net.populations[pop_counter]
+           pop=net.populations[pop_counter]
+           
+           all_old_components.append(pop.component)
+       
+           for cell_index in range(0,len(cell_types_replaced_by)):
                
                if pop.component==cell_types_to_be_replaced[cell_index]:
                
+                  conversion_dict={}
+                  
+                  conversion_dict['OldPopID']=pop.id
+                  
+                  conversion_dict['OldCellComponent']=pop.componet
+               
                   pop.component=cell_types_replaced_by[cell_index]
                   
-               if cell_types_to_be_replaced[cell_index] in pop.id:
+                  if cell_types_to_be_replaced[cell_index] in pop.id:
                
-                  pop.id= pop.id.replace(cell_types_to_be_replaced[cell_index],cell_types_replaced_by[cell_index])
-                  
-           if hasattr(net, 'projections'):
-                  
-              for proj_counter in range(0,len(net.projections)):
-            
-                  proj=net.projections[proj_counter]
-                  
-                  wd_indicator=False
-                  
-                  if hasattr(proj,'connection_wds'):
-                  
-                     connections=proj.connection_wds
+                     pop.id= pop.id.replace(cell_types_to_be_replaced[cell_index],cell_types_replaced_by[cell_index])
                      
-                     wd_indicator=True
+                  conversion_dict['NewPopID']=pop.id
+                 
+                  conversion_dict['NewCellComponent']=pop.component
                   
-                  if hasattr(proj,'connections'):
+                  old_to_new.append(conversion_dict)
                   
-                     connections=proj.connections
+       all_old_components=list(set(all_old_components))
+       
+       all_projections_final=[]
                   
-                  for conn_counter in range(0,len(connections)):
+       if hasattr(net, 'projections'):
+       
+          chemical_projections={}
+          
+          chemical_projections['Type']='Chem'
+          
+          chemical_projections['Projs']=net.projections
+          
+          all_projections_final.append(chemical_projections)
+          
+       if hasattr(net,'electrical_projections'):
+        
+          electrical_projections={}
+          
+          electrical_projections['Type']='Elect'
+          
+          electrical_projections['Projs']=net.electrical_projections
+          
+          all_projections_final.append(electrical_projections)
+          
+       for proj_group_index in range(0,len(all_projections_final) :
+       
+           proj_dict=all_projections_final[proj_group_index]
+           
+           projections=proj_dict['Projs']
+           
+           proj_type=proj_dict['Type']
+           
+           for proj_counter in range(0,len(net.projections)):
+           
+               proj=net.projections[proj_counter]
+              
+               replaced_pre_pop=False
+              
+               replaced_post_pop=False
+                  
+               for conversion_index in range(0,len(old_to_new) ):
+              
+                   conversion_params=old_to_new[conversion_index]
+                  
+                   if proj.presynaptic_population==conversion_params['OldPopID']:
                       
-                      connection=proj.connection_wds[conn_counter]
+                      replaced_pre_pop=True
+                     
+                      pre_pop_index=conversion_index
+                     
+                      if proj.presynaptic_population in proj.id:
+                     
+                         proj.id= proj.id.replace(proj.presynaptic_population,conversion_paraams['NewPopID'])
+                     
+                      proj.presynaptic_population=conversion_paraams['NewPopID']
+                      
+                   if proj.postsynaptic_population==conversion_params['OldPopID']:
+                      
+                      replaced_post_pop=True
+                     
+                      post_pop_index=conversion_index
+                     
+                      if proj.postsynaptic_population in proj.id:
+                     
+                         proj.id=proj.id.replace(proj.postsynaptic_population,conversion_params['NewPopID'])
+                     
+                      proj.postsynaptic_population=conversion_params['NewPopID']
+                      
+               pre_seg_length_dict=None
+               
+               pre_subset_dict=None
+               
+               post_seg_length_dict=False
+               
+               post_subset_dict=None
+                     
+               if (not reduced_to_single_compartment) and segment_group_specify !=None:
+               
+                   for index in range(0,len(segment_group_specify)):
+                  
+                       proj_info=segment_group_specify[index]
+               
+                       if proj.presynaptic_population==proj_info['PrePop'] and proj.postsynaptic_population==proj_info['PostPop'] and proj_info['Type']=proj_type:
+               
+                          pre_seg_length_dict, cached_target_dict =check_cached_dicts(conversion_params[pre_pop_index]['NewCellComponent'],
+                                                                                      cached_target_dict,
+                                                                                      [proj_info['PreSegGroup'] ],
+                                                                                      path_to_nml2=dir_to_new_components) 
+                                                                                      
+                          post_seg_length_dict, cached_target_dict =check_cached_dicts(conversion_params[post_pop_index]['NewCellComponent'],
+                                                                                      cached_target_dict,
+                                                                                      [proj_info['PostSegGroup'] ],
+                                                                                      path_to_nml2=dir_to_new_components) 
+                                                                                      
+                          pre_subset_dict={}
+                          
+                          post_subset_dict={}
+                          
+                          pre_subset_dict[proj_info['PreSegGroup']]=1
+                          
+                          post_subset_dict[proj_info['PostSegGroup']]=1
+                                                                                      
+                          break
+            
+               wd_indicator=False
+                  
+               if hasattr(proj,'connection_wds'):
+                  
+                  connections=proj.connection_wds
+                     
+                  wd_indicator=True
+                  
+               if hasattr(proj,'connections'):
+                  
+                  connections=proj.connections
+                  
+               if hasattr(proj,'electrical_connection_instances'):
+               
+                  conections=proj.electrical_connection_instances
+                  
+               if hasattr(proj,'electrical_connections'):
+               
+                  connections=proj.electrical_connections
+                  
+               for conn_counter in range(0,len(connections)):
+                      
+                   connection=connections[conn_counter]
+                   
+                   if replaced_post_pop:
                       
                       if cell_types_to_be_replaced[cell_index] in connection.pre_cell_id or cell_types_to_be_replaced[cell_index] in connection.post_cell_id:
                       
                          #TODO
                       
-                         if hasattr(connection,'post_segment_id'):
-                            
-                         if hasattr(connection,'pre_segment_id'):
-                       
-                         if hasattr(connection,'pre_fraction_along'):
-                   
-                         if hasattr(connection,'post_fraction_along'):
+                      if post_seg_length_dict != None and post_subset_dict != None:
                   
-                         if hasattr(connection,'delay'):
+                        post_target_seg_array, post_target_fractions=oc_build.get_target_segments(post_seg_length_dict,post_subset_dict)
+                        
+                        connection.post_segment_id=post_target_seg_array[0]
+                           
+                        connection.post_fraction_along=post_target_fractions[0]
+                      
+                      else:
+                     
+                        if reduced_to_single_compartment:
+                        
+                           connection.post_segment_id=0
+                           
+                           connection.post_fraction_along=0.5
+                           
+                   if replaced_pre_pop:
+                      
+                      if cell_types_to_be_replaced[cell_index] in connection.pre_cell_id or cell_types_to_be_replaced[cell_index] in connection.post_cell_id:
+                      
+                         #TODO
+                      
+                      if post_seg_length_dict != None and post_subset_dict != None:
                   
-                         if hasattr(connection,'weight'):
-                  
-                          
-       
-           
-           
-       
-       
+                        post_target_seg_array, post_target_fractions=oc_build.get_target_segments(post_seg_length_dict,post_subset_dict)
+                        
+                        connection.post_segment_id=post_target_seg_array[0]
+                           
+                        connection.post_fraction_along=post_target_fractions[0]
+                      
+                      else:
+                     
+                        if reduced_to_single_compartment:
+                        
+                           connection.post_segment_id=0
+                           
+                           connection.post_fraction_along=0.5
+                               
+    
     else:
     
       opencortex.print_comment_v("Error: the number of cell types in the list cell_types_to_be_replaced is not equal to the number of new cell types in the list"
