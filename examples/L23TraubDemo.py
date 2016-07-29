@@ -6,8 +6,8 @@ population_size1 = 2
 
 nml_doc, network = oc.generate_network("L23TraubDemo")
 
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/Thalamocortical/L23PyrRS.cell.nml','L23PyrRS')
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/Thalamocortical/SupBasket.cell.nml','SupBasket')
+oc.add_cell_and_channels(nml_doc, 'Thalamocortical/L23PyrRS.cell.nml','L23PyrRS')
+oc.add_cell_and_channels(nml_doc, 'Thalamocortical/SupBasket.cell.nml','SupBasket')
 
 pop_pre = oc.add_population_in_rectangular_region(network,
                                               'pop_pre',

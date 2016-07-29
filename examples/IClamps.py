@@ -3,8 +3,8 @@ import opencortex.build as oc
 
 nml_doc, network = oc.generate_network("IClamps")
 
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml', 'RS')
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml', 'pyr_4_sym_soma')
+oc.add_cell_and_channels(nml_doc, 'izhikevich/RS.cell.nml', 'RS')
+oc.add_cell_and_channels(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml', 'pyr_4_sym_soma')
 #oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
 
 popIzh = oc.add_single_cell_population(network,

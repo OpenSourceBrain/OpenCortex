@@ -40,3 +40,8 @@ build/lib*
 /examples/output.avi
 /examples/*.svg
 /examples/Balanced_2410cells_2632766conns.net.nml.h5
+/logo.png
+/drawing.svg
+/examples/movies/balanced.avi
+/examples/movies/output.avi
+/opencortex/__init__$py.class
