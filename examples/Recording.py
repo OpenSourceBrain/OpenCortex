@@ -10,10 +10,10 @@ nml_doc, network = oc.generate_network("Recording")
 
 #####   Cells
 
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml','RS')
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/iaf/iaf.cell.nml','iaf')
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/acnet2/pyr_4_sym_soma.cell.nml','pyr_4_sym_soma')
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/acnet2/pyr_4_sym.cell.nml','pyr_4_sym')
+oc.add_cell_and_channels(nml_doc, 'izhikevich/RS.cell.nml','RS')
+oc.add_cell_and_channels(nml_doc, 'iaf/iaf.cell.nml','iaf')
+oc.add_cell_and_channels(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml','pyr_4_sym_soma')
+oc.add_cell_and_channels(nml_doc, 'acnet2/pyr_4_sym.cell.nml','pyr_4_sym')
 
 xDim = 500
 yDim = 100

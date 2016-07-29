@@ -6,7 +6,7 @@ population_size1 = 10
 
 nml_doc, network = oc.generate_network("SpikingNet")
 
-oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/izhikevich/RS.cell.nml','RS')
+oc.add_cell_and_channels(nml_doc, 'izhikevich/RS.cell.nml','RS')
 
 pop_pre = oc.add_population_in_rectangular_region(network,
                                               'pop_pre',

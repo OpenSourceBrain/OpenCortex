@@ -28,9 +28,9 @@ def generate(reference = "Balanced",
     
     nml_doc, network = oc.generate_network(reference)
 
-    oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/HH_464198958.cell.nml','HH_464198958')
-    oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/HH_471141261.cell.nml','HH_471141261')
-    oc.add_cell_and_channels(nml_doc, '../NeuroML2/prototypes/BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
+    oc.add_cell_and_channels(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_464198958.cell.nml','HH_464198958')
+    oc.add_cell_and_channels(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_471141261.cell.nml','HH_471141261')
+    oc.add_cell_and_channels(nml_doc, 'BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
 
     xDim = 400*scalex
     yDim = 500*scaley
