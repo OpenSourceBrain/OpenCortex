@@ -953,7 +953,7 @@ def replace_cell_types(net_file_name,
           
           all_projections_final.append(electrical_projections)
           
-       for proj_group_index in range(0,len(all_projections_final) :
+       for proj_group_index in range(0,len(all_projections_final) ):
        
            proj_dict=all_projections_final[proj_group_index]
            
@@ -1011,7 +1011,7 @@ def replace_cell_types(net_file_name,
                   
                        proj_info=segment_group_specify[index]
                
-                       if proj.presynaptic_population==proj_info['PrePop'] and proj.postsynaptic_population==proj_info['PostPop'] and proj_info['Type']=proj_type:
+                       if proj.presynaptic_population==proj_info['PrePop'] and proj.postsynaptic_population==proj_info['PostPop'] and proj_info['Type']==proj_type:
                
                           pre_seg_length_dict, cached_target_dict =check_cached_dicts(conversion_params[pre_pop_index]['NewCellComponent'],
                                                                                       cached_target_dict,
@@ -1060,7 +1060,7 @@ def replace_cell_types(net_file_name,
                    if replaced_post_pop:
                       
                       if cell_types_to_be_replaced[cell_index] in connection.pre_cell_id or cell_types_to_be_replaced[cell_index] in connection.post_cell_id:
-                      
+                         pass
                          #TODO
                       
                       if post_seg_length_dict != None and post_subset_dict != None:
@@ -1082,7 +1082,7 @@ def replace_cell_types(net_file_name,
                    if replaced_pre_pop:
                       
                       if cell_types_to_be_replaced[cell_index] in connection.pre_cell_id or cell_types_to_be_replaced[cell_index] in connection.post_cell_id:
-                      
+                         pass
                          #TODO
                       
                       if post_seg_length_dict != None and post_subset_dict != None:

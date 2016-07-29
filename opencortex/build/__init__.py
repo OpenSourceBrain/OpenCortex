@@ -1313,7 +1313,6 @@ def copy_nml2_source(dir_to_project_nml2,
      
     opencortex.print_comment_v("Will be copying synapse component files from %s to %s"%(primary_nml2_dir,full_path_to_synapses) )
     
-<<<<<<< HEAD
     opencortex.print_comment_v("Will be copying gap junction component files from %s to %s"%(primary_nml2_dir,full_path_to_gap_junctions))
      
     src_files=os.listdir(primary_nml2_dir)
@@ -1361,14 +1360,19 @@ def copy_nml2_source(dir_to_project_nml2,
                  
                  
 #########################################################################################
-def add_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
-=======
-def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id):
->>>>>>> 4211f92113305e7d1e27c8da8537cb928a362473
+def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id,use_prototypes=True):
+
+    if use_prototypes:
+
+       cell_nml2_path = os.path.dirname(__file__)+"/../../NeuroML2/prototypes/"+cell_nml2_rel_path
+       
+       opencortex.print_comment_v("Translated %s to %s"%(cell_nml2_rel_path,cell_nml2_path))
+       
+    else:
     
-    cell_nml2_path = os.path.dirname(__file__)+"/../../NeuroML2/prototypes/"+cell_nml2_rel_path
-    print("Translated %s to %s"%(cell_nml2_rel_path,cell_nml2_path))
-    nml2_doc_cell = pynml.read_neuroml2_file(cell_nml2_path, include_includes=False)
+       cell_nml2_path = cell_nml2_rel_path
+        
+    nml2_doc_cell =  pynml.read_neuroml2_file(cell_nml2_path, include_includes=False)
     
     for cell in _get_cells_of_all_known_types(nml2_doc_cell):
         if cell.id == cell_id:
