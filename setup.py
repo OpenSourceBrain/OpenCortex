@@ -8,11 +8,7 @@ setup(
     version=version,
     author='Rokas Stanislovas and Padraig Gleeson',
     author_email='p.gleeson@gmail.com',
-    packages = ['opencortex', 
-<<<<<<< HEAD
-                
-               
-=======
+    packages = ['opencortex',
                 'opencortex.build'],
     package_data={
         'opencortex': [
@@ -22,7 +18,7 @@ setup(
             '../NeuroML2/prototypes/BlueBrainProject_NMC/*',
             '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/*',
             '../NeuroML2/prototypes/acnet2/*']}, 
->>>>>>> 4211f92113305e7d1e27c8da8537cb928a362473
+
     url='https://github.com/OpenSourceBrain/OpenCortex',
     license='LICENSE.lesser',
     description='A framework for building cortical network models',
