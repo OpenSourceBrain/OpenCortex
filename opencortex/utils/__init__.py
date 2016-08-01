@@ -244,12 +244,50 @@ def build_connectivity(net,
                        synaptic_scaling_params=None,
                        synaptic_delay_params=None,
                        distance_dependence_params=None):
+                       
+    '''This method calls the appropriate build and utils methods to build connectivity of the NeuroML2 cortical network. Input arguments are as follows:
+    
+    net- NeuroML2 network object;
+    
+    pop_objects - dictionary of population parameters in the format returned by the method add_populations_in_layers inside utils;
+    
+    path_to_cells - dir path to the folder where target NeuroML2 .cell.nml files are found;
+    
+    full_path_to_conn_sumary - full path to the file which stores the connectivity summary, e.g. file named netConnList in the current working dir, 
+    then this string must be "netConnList";
+    
+    pre_segment_group_info - input argument of type 'list' which specifies presynaptic segment groups; made to supplement connectivity summary of type netConnList 
+    in the Thalamocortical project; default value is []; alternatively it might have one value of type
+    'str' or several values of type 'dict'; in the latter case each dictionary should contain fields 'PrePop', 'PostPop' and 'PreSegGroup' which uniquely specifies one
+    presynaptic segment group per pair of cell populations.
+    
+    return_cached_dicts -  boolean-type argument which specifies whether build_connectivity returns the cached dictionary of cummulative distributions of segment lengths 
+    for all of the target segment groups. If return_cached_dicts is set to True the last output argument that is returned by build_connectivity is a cached target dictionary;
+    the cached target dictionary is specifically built by the method check_cached_dicts inside utils;
+    
+    synaptic_scaling_params - optional input argument, default value is None. Alternatively, it takes the format of
+    
+    [{'weight':2.0,'synComp':'all'}]                     or
+    
+    [{'weight':2.5,'synComp':'GABAA','synEndsWith':[],'targetCellGroup':[]},
+     {'weight':0.5,'synComp':'Syn_Elect_DeepPyr_DeepPyr','synEndsWith':[],'targetCellGroup':['CG3D_L5']} ]. Tailored for the NeuroML2 Thalamocortical project.
+     
+    synaptic_delay_params - optional input argument, default value is None. Alternatively ,it takes the format similar to the synaptic_scaling_params:
+    
+    [{'delay':0.05,'synComp':'all'}]                     or
+    
+    [{'delay':0.10,'synComp':'GABAA','synEndsWith':[],'targetCellGroup':[]},
+     {'delay':0.05,'synComp':'Syn_Elect_DeepPyr_DeepPyr','synEndsWith':[],'targetCellGroup':['CG3D_L5']} ]. Tailored for the NeuroML2 Thalamocortical project.
+    
+    distance_dependent_params - optional input argument, default value is None. Alternatively, it take the format of
+    
+    [{'PrePopID':'Pop1','PostPopID':'Pop2','DistDependConn':'- 17.45 + 18.36 / (math.exp((r-267.)/39.) +1)','Type':'Elect'}]. '''
 
     final_synapse_list=[]
     
     final_proj_array=[]
     
-    cached_target_dict={}
+    cached_target_dict={} 
     
     proj_counter=0
     
@@ -307,7 +345,7 @@ def build_connectivity(net,
                           
                       if distance_dependence_params != None:
                       
-                         dist_par=parse_distance_dependent_rule(distance_dependence_params,prePop,postPop)
+                         dist_par=parse_distance_dependent_rule(distance_dependence_params,prePop,postPop,projInfo['Type'])
                          
                       else:
                       
@@ -875,27 +913,60 @@ def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,pa
     return input_list_array_final, input_synapse_list  
 
 ####################################################################################################################################################################    
-    
 def replace_cell_types(net_file_name,
                        path_to_net,
-                       new_net_file_name,
+                       new_net_id,
                        cell_types_to_be_replaced,
                        cell_types_replaced_by,
                        dir_to_new_components,
+                       dir_to_old_components,
                        reduced_to_single_compartment=True,
-                       segment_group_specify=None):
-
-    nml2_file_path=os.path.join(path_to_net,net_file_name+".net.nml")      
-    
-    net_doc = pynml.read_neuroml2_file(nml2_file_path)
-    
-    if (not reduced_to_single_compartment) and segment_group_specify != None:
-    
-       cached_target_dict={}
+                       validate_nml2=True,
+                       specify_segment_groups=None,
+                       synapse_file_tags=None):
+   
     
     if len(cell_types_to_be_replaced)==len(cell_types_replaced_by):
+    
+       nml2_file_path=os.path.join(path_to_net,net_file_name+".net.nml")      
+    
+       net_doc = pynml.read_neuroml2_file(nml2_file_path)
+       
+       net_doc.id=new_net_id
+       
+       new_includes=[]
+       
+       if synapse_file_tags != None:
+       
+          for include_index in range(0,len(net_doc.includes)):
+          
+              found_synapse=False
+          
+              for synapse_tag in synapse_file_tags:
+              
+                  if synapse_tag in net_doc.includes[include_index].href:
+                  
+                     found_synapse=True
+                     
+                     break
+                     
+              if found_synapse:
+              
+                 new_includes.append(net_doc.includes[include_index] )
+                  
+       net_doc.includes=[]
+       
+       for syn_index in range(0,len(new_includes)):
+       
+           net_doc.includes.append(new_includes[syn_index])            
+    
+       if (not reduced_to_single_compartment) and specify_segment_groups != None:
+    
+          cached_target_dict={}
        
        net=net_doc.networks[0]
+       
+       net.id=new_net_id
        
        old_to_new=[]
        
@@ -915,7 +986,7 @@ def replace_cell_types(net_file_name,
                   
                   conversion_dict['OldPopID']=pop.id
                   
-                  conversion_dict['OldCellComponent']=pop.componet
+                  conversion_dict['OldCellComponent']=pop.component
                
                   pop.component=cell_types_replaced_by[cell_index]
                   
@@ -961,9 +1032,9 @@ def replace_cell_types(net_file_name,
            
            proj_type=proj_dict['Type']
            
-           for proj_counter in range(0,len(net.projections)):
+           for proj_counter in range(0,len(projections)):
            
-               proj=net.projections[proj_counter]
+               proj=projections[proj_counter]
               
                replaced_pre_pop=False
               
@@ -981,9 +1052,9 @@ def replace_cell_types(net_file_name,
                      
                       if proj.presynaptic_population in proj.id:
                      
-                         proj.id= proj.id.replace(proj.presynaptic_population,conversion_paraams['NewPopID'])
+                         proj.id= proj.id.replace(proj.presynaptic_population,conversion_params['NewPopID'])
                      
-                      proj.presynaptic_population=conversion_paraams['NewPopID']
+                      proj.presynaptic_population=conversion_params['NewPopID']
                       
                    if proj.postsynaptic_population==conversion_params['OldPopID']:
                       
@@ -1005,103 +1076,200 @@ def replace_cell_types(net_file_name,
                
                post_subset_dict=None
                      
-               if (not reduced_to_single_compartment) and segment_group_specify !=None:
+               if (not reduced_to_single_compartment) and specify_segment_groups !=None:
                
-                   for index in range(0,len(segment_group_specify)):
+                   if replaced_pre_pop and replaced_post_pop:
+               
+                      for index in range(0,len(specify_segment_groups)):
                   
-                       proj_info=segment_group_specify[index]
+                          proj_info=specify_segment_groups[index]
+                          
+                          check_pre_cell_type=old_to_new[pre_pop_index]['NewCellComponent']==proj_info['PreCellType']
+                          
+                          check_post_cell_type=old_to_new[post_pop_index]['NewCellComponent']==proj_info['PostCellType']
+                          
+                          check_proj_type=proj_info['Type']==proj_type
                
-                       if proj.presynaptic_population==proj_info['PrePop'] and proj.postsynaptic_population==proj_info['PostPop'] and proj_info['Type']==proj_type:
+                          if check_pre_cell_type and check_post_cell_type and check_proj_type:
                
-                          pre_seg_length_dict, cached_target_dict =check_cached_dicts(conversion_params[pre_pop_index]['NewCellComponent'],
-                                                                                      cached_target_dict,
-                                                                                      [proj_info['PreSegGroup'] ],
-                                                                                      path_to_nml2=dir_to_new_components) 
+                             pre_seg_length_dict, cached_target_dict =check_cached_dicts(old_to_new[pre_pop_index]['NewCellComponent'],
+                                                                                         cached_target_dict,
+                                                                                         [proj_info['PreSegGroup'] ],
+                                                                                         path_to_nml2=dir_to_new_components) 
                                                                                       
-                          post_seg_length_dict, cached_target_dict =check_cached_dicts(conversion_params[post_pop_index]['NewCellComponent'],
-                                                                                      cached_target_dict,
-                                                                                      [proj_info['PostSegGroup'] ],
-                                                                                      path_to_nml2=dir_to_new_components) 
+                             pre_subset_dict={}
+                          
+                             pre_subset_dict[proj_info['PreSegGroup']]=1
+                                                                                                                                    
+                             post_seg_length_dict, cached_target_dict =check_cached_dicts(old_to_new[post_pop_index]['NewCellComponent'],
+                                                                                          cached_target_dict,
+                                                                                          [proj_info['PostSegGroup'] ],
+                                                                                          path_to_nml2=dir_to_new_components) 
                                                                                       
-                          pre_subset_dict={}
+                             post_subset_dict={}
                           
-                          post_subset_dict={}
-                          
-                          pre_subset_dict[proj_info['PreSegGroup']]=1
-                          
-                          post_subset_dict[proj_info['PostSegGroup']]=1
+                             post_subset_dict[proj_info['PostSegGroup']]=1
                                                                                       
-                          break
-            
-               wd_indicator=False
+                             break
+               
                   
                if hasattr(proj,'connection_wds'):
+         
+                  if proj.connection_wds !=[]:
                   
-                  connections=proj.connection_wds
+                     connections=proj.connection_wds
+                  
+                     id_tag=True
+                  
+               elif  hasattr(proj,'connections'):
+               
+                  if proj.connections !=[]:
+                  
+                     connections=proj.connections
                      
-                  wd_indicator=True
-                  
-               if hasattr(proj,'connections'):
-                  
-                  connections=proj.connections
-                  
-               if hasattr(proj,'electrical_connection_instances'):
+                     id_tag=True
+                     
+               elif hasattr(proj,'electrical_connection_instances'):
                
-                  conections=proj.electrical_connection_instances
-                  
-               if hasattr(proj,'electrical_connections'):
+                  if proj.electrical_connection_instances !=[]:
                
-                  connections=proj.electrical_connections
+                     connections=proj.electrical_connection_instances
+                    
+                     id_tag=False
+                  
+               else:
+               
+                  if proj.electrical_connections !=[]:
+                  
+                     connections=proj.electrical_connections
+                  
+                     id_tag=False
                   
                for conn_counter in range(0,len(connections)):
                       
                    connection=connections[conn_counter]
                    
                    if replaced_post_pop:
+                   
+                      if id_tag:
+                         
+                         if old_to_new[post_pop_index]['OldCellComponent'] in connection.post_cell_id:
+                         
+                            connection.post_cell_id=connection.post_cell_id.replace(old_to_new[post_pop_index]['OldCellComponent'],old_to_new[post_pop_index]['NewCellComponent'])
+                         
+                         if old_to_new[post_pop_index]['OldPopID'] in connection.post_cell_id:
                       
-                      if cell_types_to_be_replaced[cell_index] in connection.pre_cell_id or cell_types_to_be_replaced[cell_index] in connection.post_cell_id:
-                         pass
-                         #TODO
+                            connection.post_cell_id=connection.post_cell_id.replace(old_to_new[post_pop_index]['OldPopID'],old_to_new[post_pop_index]['NewPopID'])
+                            
+                      else:
+                      
+                         if old_to_new[post_pop_index]['OldCellComponent'] in connection.post_cell:
+                         
+                            connection.post_cell=connection.post_cell.replace(old_to_new[post_pop_index]['OldCellComponent'],old_to_new[post_pop_index]['NewCellComponent'])
+                         
+                         if old_to_new[post_pop_index]['OldPopID'] in connection.post_cell:
+                      
+                            connection.post_cell=connection.post_cell.replace(old_to_new[post_pop_index]['OldPopID'],old_to_new[post_pop_index]['NewPopID'])
                       
                       if post_seg_length_dict != None and post_subset_dict != None:
                   
-                        post_target_seg_array, post_target_fractions=oc_build.get_target_segments(post_seg_length_dict,post_subset_dict)
+                         post_target_seg_array, post_target_fractions=oc_build.get_target_segments(post_seg_length_dict,post_subset_dict)
                         
-                        connection.post_segment_id=post_target_seg_array[0]
+                         connection.post_segment_id=post_target_seg_array[0]
                            
-                        connection.post_fraction_along=post_target_fractions[0]
+                         connection.post_fraction_along=post_target_fractions[0]
                       
                       else:
                      
-                        if reduced_to_single_compartment:
+                         if reduced_to_single_compartment:
                         
-                           connection.post_segment_id=0
+                            connection.post_segment_id=0
                            
-                           connection.post_fraction_along=0.5
+                            connection.post_fraction_along=0.5
                            
                    if replaced_pre_pop:
+                   
+                      if id_tag:
                       
-                      if cell_types_to_be_replaced[cell_index] in connection.pre_cell_id or cell_types_to_be_replaced[cell_index] in connection.post_cell_id:
-                         pass
-                         #TODO
+                         if old_to_new[pre_pop_index]['OldCellComponent'] in connection.pre_cell_id:
+                         
+                            connection.pre_cell_id=connection.pre_cell_id.replace(old_to_new[pre_pop_index]['OldCellComponent'],old_to_new[pre_pop_index]['NewCellComponent'])
+                         
+                         if old_to_new[pre_pop_index]['OldPopID'] in connection.pre_cell_id:
                       
-                      if post_seg_length_dict != None and post_subset_dict != None:
+                            connection.pre_cell_id=connection.pre_cell_id.replace(old_to_new[pre_pop_index]['OldPopID'],old_to_new[pre_pop_index]['NewPopID'])
+                      else:
+                      
+                         if old_to_new[pre_pop_index]['OldCellComponent'] in connection.pre_cell:
+                         
+                            connection.pre_cell=connection.pre_cell.replace(old_to_new[pre_pop_index]['OldCellComponent'],old_to_new[pre_pop_index]['NewCellComponent'])
+                         
+                         if old_to_new[pre_pop_index]['OldPopID'] in connection.pre_cell:
+                      
+                            connection.pre_cell=connection.pre_cell.replace(old_to_new[pre_pop_index]['OldPopID'],old_to_new[pre_pop_index]['NewPopID'])
+                      
+                      if pre_seg_length_dict != None and pre_subset_dict != None:
                   
-                        post_target_seg_array, post_target_fractions=oc_build.get_target_segments(post_seg_length_dict,post_subset_dict)
+                         pre_target_seg_array, pre_target_fractions=oc_build.get_target_segments(pre_seg_length_dict,pre_subset_dict)
                         
-                        connection.post_segment_id=post_target_seg_array[0]
+                         connection.pre_segment_id=pre_target_seg_array[0]
                            
-                        connection.post_fraction_along=post_target_fractions[0]
+                         connection.pre_fraction_along=pre_target_fractions[0]
                       
                       else:
                      
                         if reduced_to_single_compartment:
                         
-                           connection.post_segment_id=0
+                           connection.pre_segment_id=0
                            
-                           connection.post_fraction_along=0.5
+                           connection.pre_fraction_along=0.5
+                           
+       for input_list_index in range(0,len(net.input_lists)):
+       
+          input_list_obj=net.input_lists[input_list_index]
+          
+          for conversion_index in range(0,len(old_to_new) ):
+           
+              conversion_params=old_to_new[conversion_index]
+           
+              if conversion_params['OldPopID']==input_list_obj.populations:
+                 
+                 input_list_obj.populations=conversion_params['NewPopID']
+                   
+                 for input_index in range(0,len(input_list_obj.input)):
+                  
+                     input_obj=input_list_obj.input[input_index]
+                      
+                     if conversion_params['OldPopID'] in input_obj.target:
+                      
+                        input_obj.target=input_obj.target.replace(conversion_params['OldPopID'],conversion_params['NewPopID'])
+                         
+                     if conversion_params['OldCellComponent'] in input_obj.target:
+                      
+                        input_obj.target=input_obj.target.replace(conversion_params['OldCellComponent'],conversion_params['NewCellComponent'])
+                        
+                 break 
                                
+       new_components_final=[]
+                               
+       for changed_cell in range(0,len(old_to_new)):
     
+           cell_model=old_to_new[changed_cell]['NewCellComponent']
+    
+           new_components_final.append(cell_model)
+    
+           oc_build.add_cell_and_channels(net_doc, os.path.join(dir_to_new_components,"%s.cell.nml"%cell_model), cell_model, use_prototypes=False)
+        
+       for cell_model in all_old_components:
+        
+           if cell_model not in new_components_final:
+        
+              oc_build.add_cell_and_channels(net_doc, os.path.join(dir_to_old_components,"%s.cell.nml"%cell_model),cell_model, use_prototypes=False)
+              
+       nml_file_name="%s.net.nml"%new_net_id
+              
+       oc_build.save_network(net_doc, nml_file_name, validate=validate_nml2)
+             
     else:
     
       opencortex.print_comment_v("Error: the number of cell types in the list cell_types_to_be_replaced is not equal to the number of new cell types in the list"
@@ -1110,13 +1278,19 @@ def replace_cell_types(net_file_name,
       quit()
         
 ##############################################################################################################################################
-def parse_distance_dependence_params(distance_dependence_params,pre_pop,post_pop):
+def parse_distance_dependence_params(distance_dependence_params,pre_pop,post_pop,proj_type):
 
     dist_rule=None
 
     for distance_param in range(0,len(distance_dependence_params)):
     
-        if distance_dependence_params[distance_param]['prePopID']==pre_pop and distance_dependence_params[distance_param]['postPopID']==post_pop:
+        check_pre_pop=distance_dependence_params[distance_param]['PrePopID']==pre_pop
+        
+        check_post_pop=distance_dependence_params[distance_param]['PostPopID']==post_pop
+        
+        check_proj_type=distance_dependence_params[distance_param]['Type'] == proj_type
+    
+        if check_pre_pop and check_post_pop and check_proj_type:
         
            dist_rule=distance_dependence_params['DistDependConn']
            

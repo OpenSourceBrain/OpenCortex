@@ -1212,7 +1212,52 @@ def get_target_segments(seg_specifications,
     return target_segs_per_cell, target_fractions_along_per_cell
 
 ###########################################################################################################################
+def get_pre_and_post_segment_ids(proj):
+
+    '''This method extracts the lists of pre and post segment ids per given projection. Can be used when substituting the cell types from one NeuroML2 network to the other.
+    
+    return pre_segment_ids, post_segment_ids'''
+
+    pre_segment_ids=[]
+    
+    post_segment_ids=[]
+
+    if hasattr(proj,'connection_wds'):
+         
+       if proj.connection_wds !=[]:
+                  
+          connections=proj.connection_wds
+              
+    elif  hasattr(proj,'connections'):
+               
+       if proj.connections !=[]:
+                  
+          connections=proj.connections
+                     
+    elif hasattr(proj,'electrical_connection_instances'):
+               
+       if proj.electrical_connection_instances !=[]:
+               
+          connections=proj.electrical_connection_instances
+                  
+    else:
+               
+       if proj.electrical_connections !=[]:
+                  
+          connections=proj.electrical_connections
+                  
+    for conn_counter in range(0,len(connections)):
+                      
+        connection=connections[conn_counter]
         
+        pre_segment_ids.append(connection.pre_segment_id)
+        
+        post_segment_ids.append(connection.post_segment_id)
+        
+    return pre_segment_ids, post_segment_ids
+    
+##################################################################################################################################
+       
 def include_cell_prototype(nml_doc,cell_nml2_path):
     
     nml_doc.includes.append(neuroml.IncludeType(cell_nml2_path)) 
@@ -1278,10 +1323,14 @@ def _copy_to_dir_for_model(nml_doc,file_name):
     
 ##########################################################################################   
 def copy_nml2_source(dir_to_project_nml2,
-                      primary_nml2_dir,
-                      electrical_synapse_tags,
-                      chemical_synapse_tags,
-                      extra_channel_tags=[]):
+                     primary_nml2_dir,
+                     electrical_synapse_tags,
+                     chemical_synapse_tags,
+                     extra_channel_tags=[]):
+                      
+    '''This method copies the individual NeuroML2 model components from the primary source dir to corresponding component folders in the target dir: "synapses", "gapJunctions",
+    
+    "channels" and "cells" are created in the dir_to_project_nml2.'''
     
     full_path_to_synapses=os.path.join(dir_to_project_nml2,"synapses")
     
@@ -1357,8 +1406,6 @@ def copy_nml2_source(dir_to_project_nml2,
            
                  shutil.copy(full_file_name,full_path_to_channels)
               
-                 
-                 
 #########################################################################################
 def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id,use_prototypes=True):
 
@@ -1418,6 +1465,10 @@ def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id,use_prototypes=Tru
 def remove_component_dirs(dir_to_project_nml2,
                           list_of_cell_ids,
                           extra_channel_tags=None):
+                          
+    '''This method removes the sufolder strings of NeuroML2 component types (if they exist) from the 'includes' of each NeuroML2 cell in the target dir.
+    
+    Target directory is specified by the input argument dir_to_project_nml2.'''
                             
     list_of_cell_file_names=[]
     
