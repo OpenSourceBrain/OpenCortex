@@ -1113,6 +1113,8 @@ def extract_seg_ids(cell_object,
                
     
     target_segment_array={}
+    
+    found_target_groups=[]
 
     if targeting_mode=="segments":
        
@@ -1120,6 +1122,7 @@ def extract_seg_ids(cell_object,
            for target_segment in range(0,len(target_compartment_array)):
                if cell_segment_array[segment_counter][0]==target_compartment_array[target_segment]: 
                   target_segment_array[target_compartment_array[target_segment]]=[cell_segment_array[segment_counter][1]]
+                  found_target_groups.append(target_compartment_array[target_segment])
           
                           
     if targeting_mode=="segGroups":
@@ -1128,6 +1131,7 @@ def extract_seg_ids(cell_object,
            for target_group in range(0,len(target_compartment_array)):
                if target_compartment_array[target_group]==segment_group:
                   segment_target_array=[]
+                  found_target_groups.append(target_compartment_array[target_group])
                   if segment_group_array[segment_group]["segments"] !=[]:
                      for segment in segment_group_array[segment_group]["segments"]:
                          segment_target_array.append(segment)
@@ -1138,8 +1142,15 @@ def extract_seg_ids(cell_object,
                   target_segment_array[target_compartment_array[target_group]]=segment_target_array
           
     
-
-    return target_segment_array        
+    if len(found_target_groups) != len(target_compartment_array):
+     
+       groups_not_found=list(set(target_compartment_array)- set(found_target_groups) )
+       
+       opencortex.print_comment_v("Error: target segments or segment groups in %s are not found in %s. Execution will terminate."%(groups_not_found,cell_object.id) )
+       
+       quit()
+       
+    return target_segment_array       
 ######################################################################################
 def get_target_segments(seg_specifications,
                         subset_dict):
@@ -1623,7 +1634,7 @@ def add_population_in_rectangular_region(net, pop_id, cell_id, size, x_min, y_mi
     net.populations.append(pop)
     
     if storeSoma:
-       cellPositions=np.zeros([size,3])
+       cellPositions=[]
     
        
     for i in range(0, size) :
@@ -1634,10 +1645,12 @@ def add_population_in_rectangular_region(net, pop_id, cell_id, size, x_min, y_mi
             Y=y_min +(y_size)*random.random()
             Z=z_min +(z_size)*random.random()
             inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
-            if storeSoma==True:
-               cellPositions[i,0]=X
-               cellPositions[i,1]=Y
-               cellPositions[i,2]=Z
+            if storeSoma:
+               cell_position=[]
+               cell_position.append(X)
+               cell_position.append(Y)
+               cell_position.append(Z)
+               cellPositions.append(cell_position)
             
     
     if storeSoma:

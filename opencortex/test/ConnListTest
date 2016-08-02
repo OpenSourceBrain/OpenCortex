@@ -30,4 +30,264 @@ CG3D_L23PyrRS    CG3D_L23PyrRS      [Syn_Elect_SupPyr_SupPyr]                   
 CG3D_L23PyrRS    CG3D_L23PyrFRB     [Syn_Elect_SupPyr_SupPyr]                               0.375   axon_group
 
 
+#  2 From CG3D_L23PyrFRB
 
+CG3D_L23PyrFRB    CG3D_L23PyrRS     [Syn_AMPA_SupPyr_SupPyr,Syn_NMDA_SupPyr_SupPyr]         5       basal_obl_dends
+CG3D_L23PyrFRB    CG3D_L23PyrFRB    [Syn_AMPA_SupPyr_SupPyr,Syn_NMDA_SupPyr_SupPyr]         5       basal_obl_dends
+
+CG3D_L23PyrFRB    CG3D_SupBask      [Syn_AMPA_SupPyr_SupFS,Syn_NMDA_FRBPyr_SupFS]           5       mid_tip_dends
+CG3D_L23PyrFRB    CG3D_SupAxAx      [Syn_AMPA_SupPyr_SupFS,Syn_NMDA_FRBPyr_SupFS]           5       mid_tip_dends
+CG3D_L23PyrFRB    CG3D_SupLTS       [Syn_AMPA_SupPyr_SupLTS,Syn_NMDA_FRBPyr_SupLTS]         5       mid_tip_dends
+
+CG3D_L23PyrFRB    CG3D_L4SpinStell  [Syn_AMPA_SupPyr_L4SS,Syn_NMDA_SupPyr_L4SS]             1       mid_tip_dends
+
+CG3D_L23PyrFRB    CG3D_L5TuftIB     [Syn_AMPA_SupPyr_L5Pyr,Syn_NMDA_SupPyr_L5Pyr]           3       apic_shaft
+CG3D_L23PyrFRB    CG3D_L5TuftRS     [Syn_AMPA_SupPyr_L5Pyr,Syn_NMDA_SupPyr_L5Pyr]           3       apic_shaft
+
+CG3D_L23PyrFRB    CG3D_DeepBask     [Syn_AMPA_SupPyr_DeepFS,Syn_NMDA_SupPyr_DeepFS]         3       mid_tip_dends
+CG3D_L23PyrFRB    CG3D_DeepAxAx     [Syn_AMPA_SupPyr_DeepFS,Syn_NMDA_SupPyr_DeepFS]         3       mid_tip_dends
+CG3D_L23PyrFRB    CG3D_DeepLTS      [Syn_AMPA_SupPyr_DeepLTS,Syn_NMDA_FRBPyr_DeepLTS]       3       mid_tip_dends
+
+CG3D_L23PyrFRB    CG3D_L6NonTuftRS  [Syn_AMPA_SupPyr_L6NT,Syn_NMDA_SupPyr_L6NT]             1       apical_dend
+
+                                                                                                    # Should these be prox_axon?
+CG3D_L23PyrFRB    CG3D_L23PyrFRB    [Syn_Elect_SupPyr_SupPyr]                               0.08    axon_group
+
+
+#  3 From CG3D_SupBask
+
+CG3D_SupBask    CG3D_L23PyrRS       [Syn_GABAA_SupBask_SupPyr]                              20      prox_dends_soma
+CG3D_SupBask    CG3D_L23PyrFRB      [Syn_GABAA_SupBask_SupPyr]                              20      prox_dends_soma
+
+CG3D_SupBask    CG3D_SupBask        [Syn_GABAA_SupBask_SupBask]                             20      mid_tip_dends
+CG3D_SupBask    CG3D_SupAxAx        [Syn_GABAA_SupBask_SupAxAx]                             20      mid_tip_dends
+CG3D_SupBask    CG3D_SupLTS         [Syn_GABAA_SupBask_SupLTS]                              20      mid_tip_dends
+
+CG3D_SupBask    CG3D_L4SpinStell    [Syn_GABAA_SupBask_L4SS]                                20      prox_dends_soma
+
+                                                              # Half value in appendix. This is num per each tgt, the src conns will add 2.22 to the avg per axon
+CG3D_SupBask    CG3D_SupBask        [Syn_Elect_CortIN_CortIN]                               2.22    mid_tip_dends
+
+
+#  4 From CG3D_SupAxAx
+
+CG3D_SupAxAx    CG3D_L23PyrRS       [Syn_GABAA_SupAxAx_SupPyr]                              20      prox_axon
+CG3D_SupAxAx    CG3D_L23PyrFRB      [Syn_GABAA_SupAxAx_SupPyr]                              20      prox_axon
+
+CG3D_SupAxAx    CG3D_L4SpinStell    [Syn_GABAA_SupAxAx_L4SS]                                5       prox_axon
+
+CG3D_SupAxAx    CG3D_L5TuftIB       [Syn_GABAA_SupAxAx_DeepPyr]                             5       prox_axon
+CG3D_SupAxAx    CG3D_L5TuftRS       [Syn_GABAA_SupAxAx_DeepPyr]                             5       prox_axon
+
+CG3D_SupAxAx    CG3D_L6NonTuftRS    [Syn_GABAA_SupAxAx_DeepPyr]                             5       prox_axon
+
+
+#  5 From CG3D_SupLTS
+
+CG3D_SupLTS     CG3D_L23PyrRS       [Syn_GABAA_SupLTS_SupPyr]                               20      LTS_dends
+CG3D_SupLTS     CG3D_L23PyrFRB      [Syn_GABAA_SupLTS_SupPyr]                               20      LTS_dends
+
+CG3D_SupLTS     CG3D_SupBask        [Syn_GABAA_SupLTS_FS]                                   20      mid_dist_dends
+CG3D_SupLTS     CG3D_SupAxAx        [Syn_GABAA_SupLTS_FS]                                   20      mid_dist_dends
+CG3D_SupLTS     CG3D_SupLTS         [Syn_GABAA_SupLTS_LTS]                                  20      mid_dist_dends
+
+CG3D_SupLTS     CG3D_L4SpinStell    [Syn_GABAA_SupLTS_L4SS]                                 20      mid_dist_dends
+
+CG3D_SupLTS     CG3D_L5TuftIB       [Syn_GABAA_SupLTS_L5Pyr]                                20      dend_tips_shaft
+CG3D_SupLTS     CG3D_L5TuftRS       [Syn_GABAA_SupLTS_L5Pyr]                                20      dend_tips_shaft
+
+CG3D_SupLTS     CG3D_DeepBask       [Syn_GABAA_SupLTS_FS]                                   20      mid_tip_plus_dends
+CG3D_SupLTS     CG3D_DeepAxAx       [Syn_GABAA_SupLTS_FS]                                   20      mid_tip_plus_dends
+CG3D_SupLTS     CG3D_DeepLTS        [Syn_GABAA_SupLTS_LTS]                                  20      mid_tip_plus_dends
+
+CG3D_SupLTS     CG3D_L6NonTuftRS    [Syn_GABAA_SupLTS_L6NT]                                 20      LTS_dends
+
+
+CG3D_SupLTS     CG3D_SupLTS         [Syn_Elect_CortIN_CortIN]                               2.22    mid_tip_dends
+
+
+# 6 from L4 Spiny Stellate
+
+CG3D_L4SpinStell    CG3D_L23PyrRS       [Syn_AMPA_L4SS_Pyr,Syn_NMDA_L4SS_Pyr]               20      basal_dends
+CG3D_L4SpinStell    CG3D_L23PyrFRB      [Syn_AMPA_L4SS_Pyr,Syn_NMDA_L4SS_Pyr]               20      basal_dends
+
+CG3D_L4SpinStell    CG3D_SupBask        [Syn_AMPA_L4SS_IN,Syn_NMDA_L4SS_IN]                 20      mid_tip_dends
+CG3D_L4SpinStell    CG3D_SupAxAx        [Syn_AMPA_L4SS_IN,Syn_NMDA_L4SS_IN]                 20      mid_tip_dends
+CG3D_L4SpinStell    CG3D_SupLTS         [Syn_AMPA_L4SS_IN,Syn_NMDA_L4SS_IN]                 20      mid_tip_dends
+
+CG3D_L4SpinStell    CG3D_L4SpinStell    [Syn_AMPA_L4SS_L4SS,Syn_NMDA_L4SS_L4SS]             30      mid_tip_dends
+
+CG3D_L4SpinStell    CG3D_L5TuftIB       [Syn_AMPA_L4SS_Pyr,Syn_NMDA_L4SS_Pyr]               20      L4SS_dends
+CG3D_L4SpinStell    CG3D_L5TuftRS       [Syn_AMPA_L4SS_Pyr,Syn_NMDA_L4SS_Pyr]               20      L4SS_dends
+
+CG3D_L4SpinStell    CG3D_DeepBask       [Syn_AMPA_L4SS_IN,Syn_NMDA_L4SS_IN]                 20      mid_tip_dends
+CG3D_L4SpinStell    CG3D_DeepAxAx       [Syn_AMPA_L4SS_IN,Syn_NMDA_L4SS_IN]                 20      mid_tip_dends
+CG3D_L4SpinStell    CG3D_DeepLTS        [Syn_AMPA_L4SS_IN,Syn_NMDA_L4SS_IN]                 20      mid_tip_dends
+
+CG3D_L4SpinStell    CG3D_L6NonTuftRS    [Syn_AMPA_L4SS_Pyr,Syn_NMDA_L4SS_Pyr]               20      L4SS_dends
+
+                                                                                                    # Should these be prox_axon?
+CG3D_L4SpinStell    CG3D_L4SpinStell    [Syn_Elect_L4SS_L4SS]                               1       axon_group
+
+
+# 7 From L5 Tufted IB Pyr
+
+CG3D_L5TuftIB    CG3D_L23PyrRS          [Syn_AMPA_L5IB_SupPyr,Syn_NMDA_L5IB_SupPyr]         2       mid_apic_dends
+CG3D_L5TuftIB    CG3D_L23PyrFRB         [Syn_AMPA_L5IB_SupPyr,Syn_NMDA_L5IB_SupPyr]         2       mid_apic_dends
+
+CG3D_L5TuftIB    CG3D_SupBask           [Syn_AMPA_L5IB_SupFS,Syn_NMDA_L5IB_IN]              20      mid_tip_dends
+CG3D_L5TuftIB    CG3D_SupAxAx           [Syn_AMPA_L5IB_SupFS,Syn_NMDA_L5IB_IN]              20      mid_tip_dends
+CG3D_L5TuftIB    CG3D_SupLTS            [Syn_AMPA_L5IB_SupLTS,Syn_NMDA_L5IB_IN]             20      mid_tip_dends
+
+CG3D_L5TuftIB    CG3D_L4SpinStell       [Syn_AMPA_L5IB_L4SS,Syn_NMDA_L5IB_L4SS]             20      mid_tip_dends
+
+CG3D_L5TuftIB    CG3D_L5TuftIB          [Syn_AMPA_L5IB_L5Pyr,Syn_NMDA_L5IB_DeepPyr]         50      dends_no_tuft
+CG3D_L5TuftIB    CG3D_L5TuftRS          [Syn_AMPA_L5IB_L5Pyr,Syn_NMDA_L5IB_DeepPyr]         20      dends_no_tuft
+
+CG3D_L5TuftIB    CG3D_DeepBask          [Syn_AMPA_L5IB_DeepFS,Syn_NMDA_L5IB_IN]             20      mid_tip_dends
+CG3D_L5TuftIB    CG3D_DeepAxAx          [Syn_AMPA_L5IB_DeepFS,Syn_NMDA_L5IB_IN]             20      mid_tip_dends
+CG3D_L5TuftIB    CG3D_DeepLTS           [Syn_AMPA_L5IB_DeepLTS,Syn_NMDA_L5IB_IN]            20      mid_tip_dends
+
+CG3D_L5TuftIB    CG3D_L6NonTuftRS       [Syn_AMPA_L5IB_L6NT,Syn_NMDA_L5IB_DeepPyr]          20      L5Pyr_dends
+
+                                                                                                    # Should these be prox_axon?
+CG3D_L5TuftIB    CG3D_L5TuftIB          [Syn_Elect_DeepPyr_DeepPyr]                         0.4375  axon_group
+CG3D_L5TuftIB    CG3D_L5TuftRS          [Syn_Elect_DeepPyr_DeepPyr]                         0.05     axon_group
+
+
+
+# 8 From L5 Tufted RS Pyr
+
+CG3D_L5TuftRS    CG3D_L23PyrRS          [Syn_AMPA_L5RS_SupPyr,Syn_NMDA_L5RS_SupPyr]         2       mid_apic_dends
+CG3D_L5TuftRS    CG3D_L23PyrFRB         [Syn_AMPA_L5RS_SupPyr,Syn_NMDA_L5RS_SupPyr]         2       mid_apic_dends
+
+CG3D_L5TuftRS    CG3D_SupBask           [Syn_AMPA_L5RS_SupFS,Syn_NMDA_L5RS_SupIN]           20      mid_tip_dends
+CG3D_L5TuftRS    CG3D_SupAxAx           [Syn_AMPA_L5RS_SupFS,Syn_NMDA_L5RS_SupIN]           20      mid_tip_dends
+CG3D_L5TuftRS    CG3D_SupLTS            [Syn_AMPA_L5RS_SupLTS,Syn_NMDA_L5RS_SupIN]          20      mid_tip_dends
+
+CG3D_L5TuftRS    CG3D_L4SpinStell       [Syn_AMPA_L5RS_L4SS,Syn_NMDA_L5RS_L4SS]             20      mid_tip_dends
+
+CG3D_L5TuftRS    CG3D_L5TuftIB          [Syn_AMPA_L5RS_L5Pyr,Syn_NMDA_L5RS_DeepPyr]         20      dends_no_tuft
+CG3D_L5TuftRS    CG3D_L5TuftRS          [Syn_AMPA_L5RS_L5Pyr,Syn_NMDA_L5RS_DeepPyr]         10      dends_no_tuft
+
+CG3D_L5TuftRS    CG3D_DeepBask          [Syn_AMPA_L5RS_DeepFS,Syn_NMDA_L5RS_DeepIN]         20      mid_tip_dends
+CG3D_L5TuftRS    CG3D_DeepAxAx          [Syn_AMPA_L5RS_DeepFS,Syn_NMDA_L5RS_DeepIN]         20      mid_tip_dends
+CG3D_L5TuftRS    CG3D_DeepLTS           [Syn_AMPA_L5RS_DeepLTS,Syn_NMDA_L5RS_DeepIN]        20      mid_tip_dends
+
+CG3D_L5TuftRS    CG3D_L6NonTuftRS       [Syn_AMPA_L5RS_L6NT,Syn_NMDA_L5RS_DeepPyr]          20      L5Pyr_dends
+
+                                                                                                    # Should these be prox_axon?
+CG3D_L5TuftRS    CG3D_L5TuftRS          [Syn_Elect_DeepPyr_DeepPyr]                         1.75    axon_group
+
+
+# 9 From L6 Non Tufted Pyr
+
+CG3D_L6NonTuftRS    CG3D_L23PyrRS       [Syn_AMPA_L6NT_SupPyr,Syn_NMDA_L6NT_SupPyr]         10      L6Pyr_dends
+CG3D_L6NonTuftRS    CG3D_L23PyrFRB      [Syn_AMPA_L6NT_SupPyr,Syn_NMDA_L6NT_SupPyr]         10      L6Pyr_dends
+
+CG3D_L6NonTuftRS    CG3D_SupBask        [Syn_AMPA_L6NT_SupFS,Syn_NMDA_L6NT_SupFS]           10      mid_tip_dends
+CG3D_L6NonTuftRS    CG3D_SupAxAx        [Syn_AMPA_L6NT_SupFS,Syn_NMDA_L6NT_SupFS]           10      mid_tip_dends
+CG3D_L6NonTuftRS    CG3D_SupLTS         [Syn_AMPA_L6NT_SupLTS,Syn_NMDA_L6NT_SupLTS]         10      mid_tip_dends
+
+CG3D_L6NonTuftRS    CG3D_L4SpinStell    [Syn_AMPA_L6NT_L4SS,Syn_NMDA_L6NT_L4SS]             10      mid_tip_dends
+
+CG3D_L6NonTuftRS    CG3D_L5TuftIB       [Syn_AMPA_L6NT_L5Pyr,Syn_NMDA_L6NT_DeepPyr]         10      dends_no_tuft
+CG3D_L6NonTuftRS    CG3D_L5TuftRS       [Syn_AMPA_L6NT_L5Pyr,Syn_NMDA_L6NT_DeepPyr]         10      dends_no_tuft
+
+CG3D_L6NonTuftRS    CG3D_DeepBask       [Syn_AMPA_L6NT_DeepFS,Syn_NMDA_L6NT_DeepFS]         10      mid_tip_dends
+CG3D_L6NonTuftRS    CG3D_DeepAxAx       [Syn_AMPA_L6NT_DeepFS,Syn_NMDA_L6NT_DeepFS]         10      mid_tip_dends
+CG3D_L6NonTuftRS    CG3D_DeepLTS        [Syn_AMPA_L6NT_DeepLTS,Syn_NMDA_L6NT_DeepLTS]       10      mid_tip_dends
+
+CG3D_L6NonTuftRS    CG3D_L6NonTuftRS    [Syn_AMPA_L6NT_L6NT,Syn_NMDA_L6NT_DeepPyr]          20      L6Pyr_dends
+
+CG3D_L6NonTuftRS    CG3D_TCR            [Syn_AMPA_L6NT_TCR,Syn_NMDA_L6NT_TCR]               20      distal_dends
+CG3D_L6NonTuftRS    CG3D_nRT            [Syn_AMPA_L6NT_nRT,Syn_NMDA_L6NT_nRT]               20      proximal_dends
+
+                                                                                                    # Should these be prox_axon?
+CG3D_L6NonTuftRS    CG3D_L6NonTuftRS    [Syn_Elect_DeepPyr_DeepPyr]                         1       axon_group
+
+
+
+# 10 From Deep Basket
+
+CG3D_DeepBask       CG3D_L4SpinStell    [Syn_GABAA_DeepFS_L4SS]                             20      prox_dends_soma
+
+CG3D_DeepBask       CG3D_L5TuftIB       [Syn_GABAA_DeepBask_L5Pyr]                          20      DeepBask_dends
+CG3D_DeepBask       CG3D_L5TuftRS       [Syn_GABAA_DeepBask_L5Pyr]                          20      DeepBask_dends
+
+CG3D_DeepBask       CG3D_DeepBask       [Syn_GABAA_DeepBask_DeepFS]                         20      mid_tip_dends
+CG3D_DeepBask       CG3D_DeepAxAx       [Syn_GABAA_DeepBask_DeepFS]                         20      mid_tip_dends
+CG3D_DeepBask       CG3D_DeepLTS        [Syn_GABAA_DeepBask_DeepLTS]                        20      mid_tip_dends
+
+CG3D_DeepBask       CG3D_L6NonTuftRS    [Syn_GABAA_DeepBask_L6NT]                           20      DeepBask_dends
+
+                                                              # Half value in appendix. This is num per each tgt, the src conns will add 2.5 to the avg per axon
+CG3D_DeepBask       CG3D_DeepBask       [Syn_Elect_CortIN_CortIN]                           2.5     mid_tip_dends
+
+
+# 11 From Deep AxAx
+
+CG3D_DeepAxAx       CG3D_L23PyrRS       [Syn_GABAA_DeepAxAx_Pyr]                            5       prox_axon
+CG3D_DeepAxAx       CG3D_L23PyrFRB      [Syn_GABAA_DeepAxAx_Pyr]                            5       prox_axon
+
+CG3D_DeepAxAx       CG3D_L4SpinStell    [Syn_GABAA_DeepFS_L4SS]                             5       prox_axon
+
+CG3D_DeepAxAx       CG3D_L5TuftIB       [Syn_GABAA_DeepAxAx_Pyr]                            5       prox_axon
+CG3D_DeepAxAx       CG3D_L5TuftRS       [Syn_GABAA_DeepAxAx_Pyr]                            5       prox_axon
+
+CG3D_DeepAxAx       CG3D_L6NonTuftRS    [Syn_GABAA_DeepAxAx_Pyr]                            5       prox_axon
+
+
+# 12 From Deep LTS
+
+CG3D_DeepLTS        CG3D_L23PyrRS       [Syn_GABAA_DeepLTS_SupPyr]                          10      LTS_dends
+CG3D_DeepLTS        CG3D_L23PyrFRB      [Syn_GABAA_DeepLTS_SupPyr]                          10      LTS_dends
+
+CG3D_DeepLTS        CG3D_SupBask        [Syn_GABAA_DeepLTS_SupFS]                           10      mid_dist_dends
+CG3D_DeepLTS        CG3D_SupAxAx        [Syn_GABAA_DeepLTS_SupFS]                           10      mid_dist_dends
+CG3D_DeepLTS        CG3D_SupLTS         [Syn_GABAA_DeepLTS_SupLTS]                          10      mid_dist_dends
+
+CG3D_DeepLTS        CG3D_L4SpinStell    [Syn_GABAA_DeepLTS_L4SS]                            20      mid_dist_dends
+
+CG3D_DeepLTS        CG3D_L5TuftIB       [Syn_GABAA_DeepLTS_L5IB]                            20      dend_tips_shaft
+CG3D_DeepLTS        CG3D_L5TuftRS       [Syn_GABAA_DeepLTS_L5RS]                            20      dend_tips_shaft
+
+CG3D_DeepLTS        CG3D_DeepBask       [Syn_GABAA_DeepLTS_DeepFS]                          20      mid_tip_plus_dends
+CG3D_DeepLTS        CG3D_DeepAxAx       [Syn_GABAA_DeepLTS_DeepFS]                          20      mid_tip_plus_dends
+CG3D_DeepLTS        CG3D_DeepLTS        [Syn_GABAA_DeepLTS_DeepLTS]                         20      mid_tip_plus_dends
+
+CG3D_DeepLTS        CG3D_L6NonTuftRS    [Syn_GABAA_DeepLTS_L6NT]                            20      LTS_dends
+
+
+CG3D_DeepLTS       CG3D_DeepLTS         [Syn_Elect_CortIN_CortIN]                           2.5     mid_tip_dends
+
+
+# 13 From TCR
+
+                                                    ## TODO: add delays!!!!
+CG3D_TCR            CG3D_L23PyrRS       [Syn_AMPA_TCR_SupPyr,Syn_NMDA_TCR_SupPyr]           10      TCR_dends
+CG3D_TCR            CG3D_L23PyrFRB      [Syn_AMPA_TCR_SupPyr,Syn_NMDA_TCR_SupPyr]           10      TCR_dends
+
+CG3D_TCR            CG3D_SupBask        [Syn_AMPA_TCR_SupFS,Syn_NMDA_TCR_SupFS]             10      prox_mid_dends
+CG3D_TCR            CG3D_SupAxAx        [Syn_AMPA_TCR_SupFS,Syn_NMDA_TCR_SupFS]             10      prox_mid_dends
+
+CG3D_TCR            CG3D_L4SpinStell    [Syn_AMPA_TCR_L4SS,Syn_NMDA_TCR_L4SS]               20      dendrite_group
+
+CG3D_TCR            CG3D_L5TuftIB       [Syn_AMPA_TCR_L5Pyr,Syn_NMDA_TCR_L5Pyr]             10      tuft_plus
+CG3D_TCR            CG3D_L5TuftRS       [Syn_AMPA_TCR_L5Pyr,Syn_NMDA_TCR_L5Pyr]             10      tuft_plus
+
+CG3D_TCR            CG3D_DeepBask       [Syn_AMPA_TCR_DeepBask,Syn_NMDA_TCR_DeepBask]       20      prox_mid_dends
+CG3D_TCR            CG3D_DeepAxAx       [Syn_AMPA_TCR_DeepAxAx,Syn_NMDA_TCR_DeepAxAx]       10      prox_mid_dends
+
+CG3D_TCR            CG3D_L6NonTuftRS    [Syn_AMPA_TCR_L6NT,Syn_NMDA_TCR_L6NT]               10      TCR_dends
+
+CG3D_TCR            CG3D_nRT            [Syn_AMPA_TCR_nRT,Syn_NMDA_TCR_nRT]                 40      proximal_dends
+
+
+# 14 From nRT
+
+CG3D_nRT            CG3D_TCR            [Syn_GABAA_nRT_TCR_s,Syn_GABAA_nRT_TCR_s]           30      soma_prox_dends
+CG3D_nRT            CG3D_nRT            [Syn_GABAA_nRT_nRT_s,Syn_GABAA_nRT_nRT_s]           10      soma_dends
+
+
+CG3D_nRT            CG3D_nRT            [Syn_Elect_nRT_nRT]                                 2.5     dendrite_group

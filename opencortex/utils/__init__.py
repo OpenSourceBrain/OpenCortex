@@ -257,9 +257,9 @@ def build_connectivity(net,
     then this string must be "netConnList";
     
     pre_segment_group_info - input argument of type 'list' which specifies presynaptic segment groups; made to supplement connectivity summary of type netConnList 
-    in the Thalamocortical project; default value is []; alternatively it might have one value of type
-    'str' or several values of type 'dict'; in the latter case each dictionary should contain fields 'PrePop', 'PostPop' and 'PreSegGroup' which uniquely specifies one
-    presynaptic segment group per pair of cell populations.
+    in the Thalamocortical project; default value is []; alternatively it might have one value of type'dict' or several values of type 'dict'; in the former case, 
+    dict should contain the fields 'PreSegGroup' and 'ProjType';  in the latter case each dictionary should contain the fields 'PrePop', 'PostPop', 'PreSegGroup'
+    and 'ProjType', which uniquely specifies one presynaptic segment group per pair of cell populations per type of projection.
     
     return_cached_dicts -  boolean-type argument which specifies whether build_connectivity returns the cached dictionary of cummulative distributions of segment lengths 
     for all of the target segment groups. If return_cached_dicts is set to True the last output argument that is returned by build_connectivity is a cached target dictionary;
@@ -374,24 +374,55 @@ def build_connectivity(net,
                             quit()
                          
                          else:
-                      
+                            ############# this block is tailored for handling the connectivity summary in the format of netConnList in the Thalamocortical project.
                             if len(pre_segment_group_info)==1:
+                            
+                               if pre_segment_group_info[0]['ProjType']==projInfo['Type']:
                          
-                               PreSegLengthDict, cached_target_dict =check_cached_dicts(preCellObject['PopObj'].component,
-                                                                                               cached_target_dict,
-                                                                                               pre_segment_group_info,
-                                                                                               path_to_nml2=path_to_cells)     
+                                  PreSegLengthDict, cached_target_dict =check_cached_dicts(preCellObject['PopObj'].component,
+                                                                                           cached_target_dict,
+                                                                                           [pre_segment_group_info[0]['PreSegGroup']],
+                                                                                           path_to_nml2=path_to_cells)    
+                               else:
+                             
+                                  if projInfo['Type']=='Elect':
+                                  
+                                     PreSegLengthDict, cached_target_dict=check_cached_dicts(preCellObject['PopObj'].component,
+                                                                                             cached_target_dict,
+                                                                                             target_comp_groups,
+                                                                                             path_to_nml2=path_to_cells)  
+                                     
+                                  else:
+                                  
+                                     PreSegLengthDict=None
+                            ##############################################################                                                          
                             if len(pre_segment_group_info) >1:
+                            
+                               found_pre_segment_group=False
                          
                                for proj in range(0,len(pre_segment_group_info)):
+                               
+                                   check_pre_pop=pre_segment_group_info[proj]['PrePop']==prePop
+                                   
+                                   check_post_pop=pre_segment_group_info[proj]['PostPop']==postPop
+                                   
+                                   check_proj_type=pre_segment_group_info[proj]['ProjType'] == projInfo['Type']
                             
-                                   if pre_segment_group_info[proj]['PrePop']==prePop and pre_segment_group_info[proj]['PostPop']==postPop:
+                                   if check_pre_pop and check_post_pop and check_proj_type:
                                       
                                       PreSegLengthDict, cached_target_dict =check_cached_dicts(preCellObject['PopObj'].component,
                                                                                                cached_target_dict,
                                                                                                [pre_segment_group_info[proj]['PreSegGroup']],
-                                                                                               path_to_nml2=path_to_cells)     
-                                                                          
+                                                                                               path_to_nml2=path_to_cells) 
+                                                                                               
+                                      found_pre_segment_group=True
+                                      
+                                      break
+                                
+                                   
+                               if not found_pre_segment_group:
+                               
+                                  PreSegLengthDict=None                                                  
                       else:
                       
                          PreSegLengthDict=None                                                              
@@ -625,13 +656,33 @@ def check_pre_segment_groups(pre_segment_group_info):
                               
     if len(pre_segment_group_info)==1:
     
-       if isinstance(pre_segment_group_info[0],str):
-                         
-          pre_segment_group_list=pre_segment_group_info[0]
+       if isinstance(pre_segment_group_info[0],dict):
+          
+          check_pre_seg='PreSegGroup' in pre_segment_group_info[0].keys()
+                                   
+          check_proj_type='ProjType' in pre_segment_group_info[0].keys()     
+          
+          if not check_pre_seg:
+                                      
+             opencortex.print_comment_v("Error in build connectivity: the key 'PreSegGroup' is not in the dictionary keys inside pre_segment_group_info.")
+             error_counter+=1
+                  
+          else:
+               
+             if not isinstance(pre_segment_group_info[0]['PreSegGroup'],str):
+                  
+                opencortex.print_comment_v("Error in build connectivity: the value of the key 'PreSegGroup' in the dictionary keys inside pre_segment_group_info"
+                " must be of type 'str'. Only one presynaptic segment group is allowed per projection.")
+                error_counter+=1 
+                
+          if not check_proj_type:
+               
+             opencortex.print_comment_v("Error in build connectivity: the key 'ProjType' is not in the dictionary keys inside pre_segment_group_info.")
+             error_counter+=1
                             
        else:
                          
-          opencortex.print_comment_v("Error in build_connectivity: the list pre_segment_group_info has only one element but it is not of type 'str'."
+          opencortex.print_comment_v("Error in build_connectivity: the list pre_segment_group_info has only one element but it is not of type 'dict'."
           " The current type is %s."%(type(pre_segment_group_info[0]) ) )
           error_counter+=1
                             
@@ -645,7 +696,9 @@ def check_pre_segment_groups(pre_segment_group_info):
                                    
                check_pre_pop='PrePop' in pre_segment_group_info[proj].keys()
                                    
-               check_post_pop='PostPop' in pre_se_segment_group_info[proj].keys()
+               check_post_pop='PostPop' in pre_segment_group_info[proj].keys()
+               
+               check_proj_type='ProjType' in pre_segment_group_info[proj].keys()
                                 
                if not check_pre_seg:
                                       
@@ -665,15 +718,20 @@ def check_pre_segment_groups(pre_segment_group_info):
                   opencortex.print_comment_v("Error in build connectivity: the key 'PrePop' is not in the dictionary keys inside pre_segment_group_info.")
                   error_counter+=1
                                       
-               if check_post_pop:
+               if not check_post_pop:
                                    
                   opencortex.print_comment_v("Error in build connectivity: the key 'PostPop' is not in the dictionary keys inside pre_segment_group_info.")
+                  error_counter+=1
+                  
+               if not check_proj_type:
+               
+                  opencortex.print_comment_v("Error in build connectivity: the key 'ProjType' is not in the dictionary keys inside pre_segment_group_info.")
                   error_counter+=1
                                         
            else:
                                     
                opencortex.print_comment_v("Error in build_connectivity: the list elements in the pre_segment_group_info must be dictionaries with fields"
-               " 'PreSegGroup', 'PrePop' and 'PostPop'.")
+               " 'PreSegGroup', 'PrePop', 'PostPop' and 'ProjType'. The current type is %s."%(type(pre_segment_group_info[proj]) ))
                error_counter+=1
                                                                                            
     if error_counter==0:
