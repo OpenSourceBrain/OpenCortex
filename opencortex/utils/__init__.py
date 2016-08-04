@@ -585,6 +585,8 @@ def read_connectivity(pre_pop,
 ################################################################################################################################################################   
 def check_cached_dicts(cell_component,cached_dicts,list_of_target_seg_groups,path_to_nml2=None):
 
+    '''This method checks whether information is missing on target segment groups and updates the output dictionary with new information for the target cell component. '''
+
     segLengthDict={}
     
     if cell_component in cached_dicts.keys():
@@ -790,8 +792,12 @@ def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,pa
                              'LocationSpecific':False,
                              'UniqueTargetSegmentID':0,
                              'UniqueFractionAlong':0.5  }]             }                            ;
+                             
+    cached_dicts - optional argument, default value is set to None; otherwise should be the input variable that stores the dictionary in the format returned by check_cached_dicts;
     
-    path_to_nml2 - dir where NeuroML2 files are found.                                   '''
+    path_to_cells - dir where NeuroML2 cell files are found;
+    
+    path_to_synapses - dir where NeuroML2 synapse files are found.          '''
     
     passed_inputs=check_inputs(input_params,population_params,path_to_cells,path_to_synapses)
     
@@ -980,9 +986,12 @@ def replace_cell_types(net_file_name,
                        dir_to_old_components,
                        reduced_to_single_compartment=True,
                        validate_nml2=True,
-                       specify_segment_groups=None,
+                       return_synapses=False,
+                       connection_segment_groups=None,
+                       input_segment_groups=None,
                        synapse_file_tags=None):
    
+    '''This method substitutes the target cell types to a given NeuroML2 cortical network. '''
     
     if len(cell_types_to_be_replaced)==len(cell_types_replaced_by):
     
@@ -992,7 +1001,9 @@ def replace_cell_types(net_file_name,
        
        net_doc.id=new_net_id
        
-       new_includes=[]
+       include_synapses=[]
+       
+       list_of_synapses=[]
        
        if synapse_file_tags != None:
        
@@ -1010,15 +1021,17 @@ def replace_cell_types(net_file_name,
                      
               if found_synapse:
               
-                 new_includes.append(net_doc.includes[include_index] )
+                 include_synapses.append(net_doc.includes[include_index] )
+                 
+                 list_of_synapses.append(net_doc.includes[include_index].href)
                   
        net_doc.includes=[]
        
-       for syn_index in range(0,len(new_includes)):
+       for syn_index in range(0,len(include_synapses)):
        
-           net_doc.includes.append(new_includes[syn_index])            
+           net_doc.includes.append(include_synapses[syn_index])            
     
-       if (not reduced_to_single_compartment) and specify_segment_groups != None:
+       if (not reduced_to_single_compartment) and (connection_segment_groups != None or input_segment_groups != None):
     
           cached_target_dict={}
        
@@ -1130,17 +1143,17 @@ def replace_cell_types(net_file_name,
                
                pre_subset_dict=None
                
-               post_seg_length_dict=False
+               post_seg_length_dict=None
                
                post_subset_dict=None
                      
-               if (not reduced_to_single_compartment) and specify_segment_groups !=None:
+               if (not reduced_to_single_compartment) and connection_segment_groups !=None:
                
                    if replaced_pre_pop and replaced_post_pop:
                
-                      for index in range(0,len(specify_segment_groups)):
+                      for index in range(0,len(connection_segment_groups)):
                   
-                          proj_info=specify_segment_groups[index]
+                          proj_info=connection_segment_groups[index]
                           
                           check_pre_cell_type=old_to_new[pre_pop_index]['NewCellComponent']==proj_info['PreCellType']
                           
@@ -1232,16 +1245,28 @@ def replace_cell_types(net_file_name,
                       if post_seg_length_dict != None and post_subset_dict != None:
                   
                          post_target_seg_array, post_target_fractions=oc_build.get_target_segments(post_seg_length_dict,post_subset_dict)
+                         
+                         if id_tag:
                         
-                         connection.post_segment_id=post_target_seg_array[0]
+                            connection.post_segment_id=post_target_seg_array[0]
+                            
+                         else:
+                         
+                            connection.post_segment=post_target_seg_array[0]
                            
                          connection.post_fraction_along=post_target_fractions[0]
                       
                       else:
                      
                          if reduced_to_single_compartment:
+                         
+                            if id_tag:
                         
-                            connection.post_segment_id=0
+                               connection.post_segment_id=0
+                               
+                            else:
+                            
+                               connection.post_segment=0
                            
                             connection.post_fraction_along=0.5
                            
@@ -1269,8 +1294,14 @@ def replace_cell_types(net_file_name,
                       if pre_seg_length_dict != None and pre_subset_dict != None:
                   
                          pre_target_seg_array, pre_target_fractions=oc_build.get_target_segments(pre_seg_length_dict,pre_subset_dict)
+                         
+                         if id_tag:
                         
-                         connection.pre_segment_id=pre_target_seg_array[0]
+                            connection.pre_segment_id=pre_target_seg_array[0]
+                            
+                         else:
+                         
+                            connection.pre_segment=pre_target_seg_array[0]
                            
                          connection.pre_fraction_along=pre_target_fractions[0]
                       
@@ -1278,7 +1309,13 @@ def replace_cell_types(net_file_name,
                      
                         if reduced_to_single_compartment:
                         
-                           connection.pre_segment_id=0
+                           if id_tag:
+                        
+                              connection.pre_segment_id=0
+                              
+                           else:
+                           
+                              connection.pre_segment=0
                            
                            connection.pre_fraction_along=0.5
                            
@@ -1293,6 +1330,31 @@ def replace_cell_types(net_file_name,
               if conversion_params['OldPopID']==input_list_obj.populations:
                  
                  input_list_obj.populations=conversion_params['NewPopID']
+                 
+                 require_segment_groups=False
+                 
+                 if (not reduced_to_single_compartment) and input_segment_groups !=None:
+                    
+                    for index in range(0,len(input_segment_groups)):
+                  
+                        input_group_info=input_segment_groups[index]
+                          
+                        check_post_cell_type= conversion_params['NewCellComponent']== input_group_info['PostCellType']
+                        
+                        if check_post_cell_type:
+                           
+                           target_segment_dict, cached_target_dict =check_cached_dicts(conversion_params['NewCellComponent'],
+                                                                                       cached_target_dict,
+                                                                                       [input_group_info['PostSegGroup'] ],
+                                                                                       path_to_nml2=dir_to_new_components) 
+                                                                                      
+                           target_subset_dict={}
+                          
+                           target_subset_dict[input_group_info['PostSegGroup']]=1
+                           
+                           require_segment_groups=True
+                                                                                      
+                           break
                    
                  for input_index in range(0,len(input_list_obj.input)):
                   
@@ -1306,35 +1368,55 @@ def replace_cell_types(net_file_name,
                       
                         input_obj.target=input_obj.target.replace(conversion_params['OldCellComponent'],conversion_params['NewCellComponent'])
                         
+                     if require_segment_groups :
+                     
+                        if input_obj.segment_id != 0:
+                        
+                           target_seg_array, target_fractions=oc_build.get_target_segments(target_segment_dict,target_subset_dict)
+                        
+                           input_obj.segment_id= target_seg_array[0]
+                           
+                           input_obj.fraction_along= target_fractions[0]
+                     
+                     else:
+                        
+                        input_obj.segment_id=0
+                        
+                        input_obj.fraction_along=0.5
+               
+                        
                  break 
                                
-       new_components_final=[]
+       replaced_components_final=[]
                                
        for changed_cell in range(0,len(old_to_new)):
     
            cell_model=old_to_new[changed_cell]['NewCellComponent']
     
-           new_components_final.append(cell_model)
+           replaced_components_final.append(old_to_new[changed_cell]['OldCellComponent'] )
     
            oc_build.add_cell_and_channels(net_doc, os.path.join(dir_to_new_components,"%s.cell.nml"%cell_model), cell_model, use_prototypes=False)
         
        for cell_model in all_old_components:
         
-           if cell_model not in new_components_final:
+           if cell_model not in replaced_components_final:
         
               oc_build.add_cell_and_channels(net_doc, os.path.join(dir_to_old_components,"%s.cell.nml"%cell_model),cell_model, use_prototypes=False)
               
        nml_file_name="%s.net.nml"%new_net_id
               
        oc_build.save_network(net_doc, nml_file_name, validate=validate_nml2)
-             
+       
+       if return_synapses:
+         
+         return list_of_synapses
+       
     else:
     
       opencortex.print_comment_v("Error: the number of cell types in the list cell_types_to_be_replaced is not equal to the number of new cell types in the list"
       " cell_types_replaced_by.") 
       
       quit()
-        
 ##############################################################################################################################################
 def parse_distance_dependence_params(distance_dependence_params,pre_pop,post_pop,proj_type):
 
