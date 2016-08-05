@@ -1,7 +1,7 @@
 # Script for running automated tests on OSB using Travis-CI, see https://github.com/OpenSourceBrain/osb-model-validation
 
 target: ../LEMS_SpikingNet.xml
-engine: jNeuroML_NEURON
+engine: jNeuroML_NetPyNE
 mep: .test.spiking.nrn.mep
 experiments:
   pr0:
@@ -36,7 +36,7 @@ experiments:
         spike detection: 
           method: threshold
           threshold: -59.5
-        tolerance: 0
+        tolerance: 2.12e-5
   po1:
     observables:
       spike times:
