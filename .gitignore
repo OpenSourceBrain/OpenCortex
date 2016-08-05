@@ -32,6 +32,8 @@ examples/*pynn.py
 examples/*definition.py
 /examples/*.dat
 /examples/*.json
+examples/*.nrn
+examples/*netpyne.py
 
 OpenCortex.egg-info
 dist
@@ -45,3 +47,8 @@ build/lib*
 /examples/movies/balanced.avi
 /examples/movies/output.avi
 /opencortex/__init__$py.class
+/examples/npcellimport.py
+/examples/Balanced_120cells_7293conns.net.nml
+/examples/LEMS_Balanced_120cells_7293conns.xml
+/examples/Sim_SpikingNet.pop_post.v.dat.n
+/examples/Sim_SpikingNet.pop_pre.v.dat.n
