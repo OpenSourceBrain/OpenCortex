@@ -21,6 +21,7 @@ def generate(reference = "Balanced",
              scaley=1,
              scalez=1,
              connections=True,
+             global_delay = 0,
              format='xml'):
 
     num_exc = scale_pop_size(80,scalePops)
@@ -30,7 +31,9 @@ def generate(reference = "Balanced",
 
     oc.add_cell_and_channels(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_464198958.cell.nml','HH_464198958')
     oc.add_cell_and_channels(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_471141261.cell.nml','HH_471141261')
-    oc.add_cell_and_channels(nml_doc, 'BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
+    
+    if num_bbp>0:
+        oc.add_cell_and_channels(nml_doc, 'BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
 
     xDim = 400*scalex
     yDim = 500*scaley
@@ -77,7 +80,7 @@ def generate(reference = "Balanced",
                                              'popBBP',
                                              'cADpyr229_L23_PC_5ecbf9b163_0_0',
                                              z=200)
-    else:
+    elif num_bbp > 1:
 
         popBBP = oc.add_population_in_rectangular_region(network,
                                                       'popBBP',
@@ -93,29 +96,31 @@ def generate(reference = "Balanced",
     if connections:
         proj = oc.add_probabilistic_projection(network, "proj0",
                                         popExc, popExc,
-                                        synAmpa1.id, 0.3)
+                                        synAmpa1.id, 0.3, delay = global_delay)
         total_conns += len(proj.connection_wds)
 
         proj = oc.add_probabilistic_projection(network, "proj1",
                                         popExc, popInh,
-                                        synAmpa1.id, 0.5)
+                                        synAmpa1.id, 0.5, delay = global_delay)
         total_conns += len(proj.connection_wds)
 
         proj = oc.add_probabilistic_projection(network, "proj3",
                                         popInh, popExc,
-                                        synGaba1.id, 0.7)
+                                        synGaba1.id, 0.7, delay = global_delay)
         total_conns += len(proj.connection_wds)
 
         proj = oc.add_probabilistic_projection(network, "proj4",
                                         popInh, popInh,
-                                        synGaba1.id, 0.5)
+                                        synGaba1.id, 0.5, delay = global_delay)
         total_conns += len(proj.connection_wds)
 
 
 
-        proj = oc.add_probabilistic_projection(network, "proj5",
-                                        popExc, popBBP,
-                                        synAmpa1.id, 0.5)
+        if num_bbp>0:
+            proj = oc.add_probabilistic_projection(network, "proj5",
+                                            popExc, popBBP,
+                                            synAmpa1.id, 0.5, delay = global_delay)
+                                        
         total_conns += len(proj.connection_wds)
 
     #####   Inputs
@@ -164,5 +169,13 @@ if __name__ == '__main__':
              scalePops = 5,
              scalex=2,
              scalez=2)
+             
+    if '-test' in sys.argv:
+        
+        generate(num_bbp =0,
+             scalePops = 1,
+             scalex=2,
+             scalez=2,
+             global_delay = 2)
     else:
         generate()

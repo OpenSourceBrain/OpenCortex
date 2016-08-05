@@ -48,3 +48,7 @@ build/lib*
 /examples/movies/output.avi
 /opencortex/__init__$py.class
 /examples/npcellimport.py
+/examples/Balanced_120cells_7293conns.net.nml
+/examples/LEMS_Balanced_120cells_7293conns.xml
+/examples/Sim_SpikingNet.pop_post.v.dat.n
+/examples/Sim_SpikingNet.pop_pre.v.dat.n
