@@ -6,10 +6,12 @@ version = opencortex.__version__
 setup(
     name='OpenCortex',
     version=version,
-    author='Padraig Gleeson',
+    author='Rokas Stanislovas and Padraig Gleeson',
     author_email='p.gleeson@gmail.com',
-    packages = ['opencortex', 
-                'opencortex.build'],
+    packages = ['opencortex',
+                'opencortex.build',
+                'opencortex.test',
+                'opencortex.utils'],
     package_data={
         'opencortex': [
             '../NeuroML2/prototypes/iaf/*',
@@ -18,6 +20,7 @@ setup(
             '../NeuroML2/prototypes/BlueBrainProject_NMC/*',
             '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/*',
             '../NeuroML2/prototypes/acnet2/*']}, 
+
     url='https://github.com/OpenSourceBrain/OpenCortex',
     license='LICENSE.lesser',
     description='A framework for building cortical network models',
