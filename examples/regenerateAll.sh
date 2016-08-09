@@ -7,6 +7,7 @@ python SimpleNet.py
 python Deterministic.py
 python Recording.py
 python L23TraubDemo.py
+python ACNet.py
 
 python Balanced.py -all
 

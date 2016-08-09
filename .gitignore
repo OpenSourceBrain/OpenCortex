@@ -1,3 +1,5 @@
+/examples/LEMS_ACNet_4cells_4conns.xml
+/examples/ACNet_4cells_4conns.net.nml
 /examples/Test.net.nml
 /examples/LEMS_SimpleNet_netpyne.py
 /examples/LEMS_SpikingNet_netpyne.py
