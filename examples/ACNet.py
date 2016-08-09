@@ -72,16 +72,15 @@ def generate(reference = "ACNet",
     total_conns = 0
     if connections:
 
-        proj = oc.add_probabilistic_projection(network,
+        proj = oc.add_chem_projection0(network,
                                         "proj0",
                                         pop_pyr,
                                         pop_bask,
-                                        syn1.id,
-                                        global_conn_probability,
-                                        weight=1,
-                                        delay=global_delay)
+                                        targeting_mode='divergent',
+                                        synapse_list=[syn1.id],
+                                        number_conns_per_cell=1)
         if proj:                           
-            total_conns += len(proj.connection_wds)
+            total_conns += len(proj[0].connection_wds)
         
         
     if num_pyr != 48 or num_bask!=12:

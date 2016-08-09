@@ -33,6 +33,7 @@ script:
     - echo "Running non OMV tests..."
     - cd examples
     - ./regenerateAll.sh
+    - ls -alt
     - cd ../opencortex/test
     - nosetests -vs
     
