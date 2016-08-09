@@ -1626,39 +1626,475 @@ def add_single_cell_population(net, pop_id, cell_id, x=0, y=0, z=0, color=None):
     
     
 ##############################################################################################################################    
-def add_population_in_rectangular_region(net, pop_id, cell_id, size, x_min, y_min, z_min, x_size, y_size, z_size,storeSoma=False, color=None):
+def add_population_in_rectangular_region(net, 
+                                         pop_id, 
+                                         cell_id, 
+                                         size, 
+                                         x_min, 
+                                         y_min, 
+                                         z_min, 
+                                         x_size, 
+                                         y_size, 
+                                         z_size,
+                                         cell_bodies_overlap=True,
+                                         store_soma=False,
+                                         population_dictionary=None,
+                                         cell_diameter_dict=None,
+                                         color=None):
+                                         
+    '''Method which create a cell population in the  NeuroML2 network and distributes these cells in the rectangular region. Input arguments are as follows:
+    
+    net - reference to the libNeuroML network object;
+    
+    pop_id - population id;
+    
+    cell_id - cell component id;
+    
+    size - size of a population;
+    
+    x_min - lower x bound of a rectangular region;
+    
+    y_min - lower y bound of a rectangular region; 
+    
+    z_min - lower z bound of a rectangular region;
+    
+    x_size - width of a rectangular region along x axis;
+    
+    y_size - width of a rectangular region along y axis;
+    
+    z_size - width of a rectangular region along z axis; 
+    
+    cell_bodies_overlap -  boolean value which defines whether cell somata can overlap; default is set to True;
+    
+    store_soma -boolean value which specifies whether soma positions have to be stored in the output array; default is set to False;
+    
+    population_dictionary - optional argument in the format returned by add_populations_in_rectangular_layers; default value is None but it must be specified when cell_bodies_overlap
+    is set to False;
+    
+    cell_diameter_dict - optional argument in the format {'cell_id1': soma diameter of type 'float', 'cell_id2': soma diameter of type 'float'}; default is None but it must be
+    specified when cell_bodies_overlap is set to False.
+    
+    color - optional color, default is None.
+    
+    '''
     
     pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
+    
     if color is not None:
         pop.properties.append(Property("color",color))
-    net.populations.append(pop)
+        
+        
+    # If size == 0, don't add to document, but return placeholder object (with attribute size=0 & id)
+    if size>0:
+        net.populations.append(pop)
     
-    if storeSoma:
+    if store_soma:
+    
        cellPositions=[]
     
-       
-    for i in range(0, size) :
-            index = i
-            inst = neuroml.Instance(id=index)
-            pop.instances.append(inst)
-            X=x_min +(x_size)*random.random()
-            Y=y_min +(y_size)*random.random()
-            Z=z_min +(z_size)*random.random()
-            inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
-            if storeSoma:
-               cell_position=[]
-               cell_position.append(X)
-               cell_position.append(Y)
-               cell_position.append(Z)
-               cellPositions.append(cell_position)
-            
+    if (not cell_bodies_overlap) and (population_dictionary==None or cell_diameter_dict==None) :
     
-    if storeSoma:
-       return pop, cellPositions
+        opencortex.print_comment_v("Error! Method opencortex.build.%s() called with cell_bodies_overlap set to False but population_dictionary or cell_diameter_dict is None !" 
+        "Execution will terminate."%sys._getframe().f_code.co_name)
+        
+        quit()
+        
     else:
+    
+        cellPositions=[]
+       
+    for i in range(0, size):
+    
+        if cell_bodies_overlap:
+           
+           inst = neuroml.Instance(id=i)
+           pop.instances.append(inst)
+           X=x_min +(x_size)*random.random()
+           Y=y_min +(y_size)*random.random()
+           Z=z_min +(z_size)*random.random()
+           inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
+           
+           if store_soma:
+              cell_position=[]
+              cell_position.append(X)  
+              cell_position.append(Y)
+              cell_position.append(Z)
+              cellPositions.append(cell_position)
+             
+        else:
+        
+           cell_position_found=False
+           
+           while not cell_position_found:
+              
+              X=x_min +(x_size)*random.random()
+              Y=y_min +(y_size)*random.random()
+              Z=z_min +(z_size)*random.random()
+              
+              try_cell_position=[X,Y,Z]
+              
+              count_overlaps=0
+              
+              for cell_index in range(0,len(cellPositions) ):
+              
+                  cell_loc=cellPositions[cell_index]
+              
+                  if distance(try_cell_position,cell_loc) < (cell_diameter_dict[cell_id]+cell_diameter_dict[cell_id] )/2:
+                     
+                     count_overlaps+=1
+                     
+              for pop_id in population_dictionary.keys():
+              
+                  if population_dictionary[pop_id] != {}:
+              
+                     added_cell_positions=population_dictionary[pop_id]['Positions']
+                  
+                     cell_component=population_dictionary[pop_id]['PopObj'].component
+                  
+                     for cell_index in range(0,len(added_cell_positions)):
+                  
+                         cell_loc=added_cell_positions[cell_index]
+                      
+                         if distance(try_cell_position,cell_loc) < (cell_diameter_dict[cell_component]+cell_diameter_dict[cell_component] )/2 :
+                     
+                            count_overlaps+=1
+                         
+              if count_overlaps==0:
+              
+                 inst = neuroml.Instance(id=i)
+                 pop.instances.append(inst)
+                 inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
+           
+                 cellPositions.append(try_cell_position)
+                    
+                 cell_position_found=True  
+                 
+    if store_soma:
+    
+       return pop, cellPositions
+       
+    else:
+    
        return pop
+       
+######################################################################################################################################      
+def add_population_in_cylindrical_region(net, 
+                                         pop_id, 
+                                         cell_id, 
+                                         size, 
+                                         cyl_radius,
+                                         lower_bound_dim3,
+                                         upper_bound_dim3,
+                                         base_dim1='x',
+                                         base_dim2='z',
+                                         cell_bodies_overlap=True,
+                                         store_soma=False,
+                                         population_dictionary=None,
+                                         cell_diameter_dict=None,
+                                         num_of_polygon_sides=None,
+                                         positions_of_vertices=None,
+                                         constants_of_sides=None,
+                                         color=None):
+                                         
+    '''Method which create a cell population in the  NeuroML2 network and distributes these cells in the cylindrical region. Input arguments are as follows:
+    
+    net - reference to the libNeuroML network object;
+    
+    pop_id - population id;
+    
+    cell_id - cell component id;
+    
+    size - size of a population;
+    
+    cyl_radius - radius of a cylindrical column in which cells will be distributed;
+    
+    lower_bound_dim3 - lower bound of the cortical column height; 
+    
+    upper_bound_dim3 - upper bound of the cortical column height;
+    
+    base_dim1 - specifies which of the 'x', 'y' and 'z' axis corresponds to the first dimension of the transverse plane of the cortical column;
+    
+    base_dim2 - specifies which of the 'x', 'y' and 'z' axis corresponds to the second dimension of the transverse plane of the cortical column; 
+    
+    cell_bodies_overlap -  boolean value which defines whether cell somata can overlap; default is set to True;
+    
+    store_soma -boolean value which specifies whether soma positions have to be stored in the output array; default is set to False;
+    
+    population_dictionary - optional argument in the format returned by add_populations_in_rectangular_layers; default value is None but it must be specified when cell_bodies_overlap
+    is set to False;
+    
+    cell_diameter_dict - optional argument in the format {'cell_id1': soma diameter of type 'float', 'cell_id2': soma diameter of type 'float'}; default is None but it must be
+    specified when cell_bodies_overlap is set to False.
+    
+    num_of_polygon_sides - optional argument which specifies the number of sides of regular polygon which is inscribed in the cylindrical column of a given radius; default value
+     is   None, thus cylindrical but not polygonal shape is built.
+                                         
+    positions_of_vertices - optional argument which specifies the list of coordinates [dim1, dim2] of vertices of a regular polygon; must be specified if num_of_polygon_sides is not
+    None; automatic generation of this list is wrapped inside the utils method add_populations_in_cylindrical_layers(); 
+                                        
+    constants_of_sides - optional argument which specifies the list of y=ax +b coefficients [a, b] which define the lines between vertices of a regular polygon; 
+    if y= b for all values then list element should specify as [None, b]; if x= b for all values of y then list element should specify as [b, None]; 
+    Note that constants_of_sides must be specified if num_of_polygon_sides is not None; 
+    automatic generation of this list is wrapped inside the utils method add_populations_in_cylindrical_layers(); 
+    
+    color - optional color, default is None.
+    
+    '''
+    
+    pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
+    
+    if color is not None:
+        pop.properties.append(Property("color",color))
+        
+    net.populations.append(pop)
+    
+    if store_soma:
+    
+       cellPositions=[]
+       
+    if (num_of_polygon_sides !=None) and (positions_of_vertices ==None or constants_of_sides==None):
+    
+        opencortex.print_comment_v("Error! Method opencortex.build.%s() called with num_of_polygon_sides set to %d but positions_of_vertices or constants_of_sides "
+        "is None !. Execution will terminate."%num_of_polygon_sides,sys._getframe().f_code.co_name)
+        
+        quit()
+    
+    if (not cell_bodies_overlap) and (population_dictionary==None or cell_diameter_dict==None) :
+    
+        opencortex.print_comment_v("Error! Method opencortex.build.%s() called with cell_bodies_overlap set to False but population_dictionary or cell_diameter_dict is None !" 
+        "Execution will terminate."%sys._getframe().f_code.co_name)
+        
+        quit()
+        
+    else:
+    
+        cellPositions=[]
+    
+    all_dims=['x','y','z']
+    
+    for dim in all_dims:
+    
+        if dim !=base_dim1 or dim != base_dim2:
+        
+           all_dims.remove(dim)
+    
+    map_xyz={base_dim1:'dim1',base_dim2:'dim2',all_dims[0]:'dim3'}
+    
+    for i in range(0, size):
+    
+        if cell_bodies_overlap:
+        
+           dim_dict=find_constrained_cell_position(num_of_polygon_sides,cyl_radius,lower_bound_dim3,upper_bound_dim3,positions_of_vertices,constants_of_sides)
+           
+           X=dim_dict[map_xyz['x']]
+          
+           Y=dim_dict[map_xyz['y']]
+           
+           Z=dim_dict[map_xyz['z']]
+           
+           inst = neuroml.Instance(id=i)
+           pop.instances.append(inst)
+           
+           inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
+           
+           if store_soma:
+              
+              cell_position=[]
+              cell_position.append(X)  
+              cell_position.append(Y)
+              cell_position.append(Z)
+              cellPositions.append(cell_position)
+             
+        else:
+        
+           cell_position_found=False
+           
+           while not cell_position_found:
+           
+              dim_dict=find_constrained_cell_position(num_of_polygon_sides,cyl_radius,lower_bound_dim3,upper_bound_dim3,positions_of_vertices,constants_of_sides)
+              
+              X=dim_dict[map_xyz['x']]
+              
+              Y=dim_dict[map_xyz['y']]
+              
+              Z=dim_dict[map_xyz['z']]
+              
+              try_cell_position=[X,Y,Z]
+              
+              count_overlaps=0
+              
+              for cell_index in range(0,len(cellPositions) ):
+              
+                  cell_loc=cellPositions[cell_index]
+              
+                  if distance(try_cell_position,cell_loc) < (cell_diameter_dict[cell_id]+cell_diameter_dict[cell_id] )/2:
+                     
+                     count_overlaps+=1
+                     
+              for pop_id in population_dictionary.keys():
+              
+                  if population_dictionary[pop_id] != {}:
+              
+                     added_cell_positions=population_dictionary[pop_id]['Positions']
+                  
+                     cell_component=population_dictionary[pop_id]['PopObj'].component
+                  
+                     for cell_index in range(0,len(added_cell_positions)):
+                  
+                         cell_loc=added_cell_positions[cell_index]
+                      
+                         if distance(try_cell_position,cell_loc) < (cell_diameter_dict[cell_component]+cell_diameter_dict[cell_component] )/2:
+                     
+                            count_overlaps+=1
+                         
+              if count_overlaps==0:
+              
+                 inst = neuroml.Instance(id=i)
+                 pop.instances.append(inst)
+                 inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
+           
+                 cellPositions.append(try_cell_position)
+                    
+                 cell_position_found=True  
+                 
+    if store_soma:
+    
+       return pop, cellPositions
+       
+    else:
+    
+       return pop
+       
+############################################################################################################################## 
+def find_constrained_cell_position(num_of_polygon_sides,cyl_radius,lower_bound_dim3,upper_bound_dim3,positions_of_vertices,constants_of_sides):
 
-###############################################################################################
+    '''Method to find a constrained position of the cell; used inside the method add_population_in_cylindrical_region( *args) . '''
+
+    if num_of_polygon_sides ==None:
+ 
+       dim_dict={}
+        
+       dim1_val=cyl_radius*random.random()*math.cos(2*math.pi*random.random() )
+              
+       dim2_val=cyl_radius*random.random()*math.sin(2*math.pi*random.random() )
+              
+       dim3_val=lower_bound_dim3 + (upper_bound_dim3-lower_bound_dim3) * random.random()
+              
+       dim_dict={'dim1':dim1_val,'dim2':dim2_val,'dim3':dim3_val}
+              
+    else:
+           
+       found_constrained_cell_loc=False
+       
+       while not found_constrained_cell_loc:
+          
+             dim_dict={}
+                 
+             dim1_val=cyl_radius*random.random()*math.cos(2*math.pi*random.random() )
+              
+             dim2_val=cyl_radius*random.random()*math.sin(2*math.pi*random.random() )
+              
+             dim3_val=lower_bound_dim3 + (upper_bound_dim3-lower_bound_dim3) * random.random()
+             
+             test_point=[dim1_val,dim2_val]
+             
+             count_intersections=0
+                 
+             for side_index in range(0,len(constants_of_sides) ):
+                 
+                 if abs(positions_of_vertices[side_index][1] - positions_of_vertices[side_index-1][1]) > 0.0000001:
+            
+                    if test_point[1] < positions_of_vertices[side_index][1] and test_point[1] > positions_of_vertices[side_index-1][1]:
+                    
+                       opencortex.print_comment_v("Checking a point inside a regular polygon")
+                   
+                       if constants_of_sides[side_index][0] !=None and constants_of_sides[side_index][1]==None :
+                    
+                          if dim1_val <= constants_of_sides[side_index][0]:
+                       
+                             count_intersections+=1
+                    
+                       if constants_of_sides[side_index][0] != None and constants_of_sides[side_index][1] != None:
+                    
+                          if dim1_val <= (dim2_val - constants_of_sides[side_index][1]) / constants_of_sides[side_index][0]:
+                       
+                             count_intersections +=1
+                    
+                    if test_point[1] < positions_of_vertices[side_index-1][1] and test_point[1] > positions_of_vertices[side_index][1]:
+                    
+                       opencortex.print_comment_v("Checking a point inside a regular polygon")
+                   
+                       if constants_of_sides[side_index][0] !=None and constants_of_sides[side_index][1]==None :
+                    
+                          if dim1_val <= constants_of_sides[side_index][0]:
+                       
+                             count_intersections+=1
+                    
+                       if constants_of_sides[side_index][0] != None and constants_of_sides[side_index][1] != None:
+                    
+                          if dim1_val <= (dim2_val - constants_of_sides[side_index][1]) / constants_of_sides[side_index][0]:
+                       
+                             count_intersections +=1
+                       
+             if  count_intersections ==1 :
+                 
+                 dim_dict={'dim1':dim1_val,'dim2':dim2_val,'dim3':dim3_val}
+                
+                 opencortex.print_comment_v("Selected a cell locus inside regular polygon.")
+                    
+                 found_constrained_cell_loc=True
+
+    return dim_dict
+#############################################################################################################################  
+def distance(p, q):
+    
+    return math.sqrt(sum([(a - b)**2 for a,b in zip(p,q)]))
+       
+#############################################################################################################################
+    
+def get_soma_diameter(cell_name,cell_type=None,dir_to_cell=None):
+
+    '''Method to obtain a diameter of a cell soma. '''
+    
+    loaded_cell_array={}
+    
+    if dir_to_cell==None:
+    
+       cell_nml_file = '%s.cell.nml'%cell_name
+       
+    else:
+    
+       cell_nml_file=os.path.join(dir_to_cell,'%s.cell.nml'%cell_name)
+    
+    document_cell = neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
+    
+    if cell_type !=None:
+       if cell_type=="cell2CaPools":
+          cell_doc=document_cell.cell2_ca_poolses[0]
+    else:
+       loaded_cell_array[cell_name]=document_cell.cells[0]
+       
+    cell_diameter=0
+    
+    for segment in loaded_cell_array[cell_name].morphology.segments:
+        
+        if segment.id==0:
+           
+           proximal_diameter=segment.distal.diameter
+           distal_diameter=segment.proximal.diameter
+           
+           if proximal_diameter > distal_diameter:
+               
+              cell_diameter=proximal_diameter
+              
+           else:
+              cell_diameter=distal_diameter
+            
+           break  
+
+    return cell_diameter
+
+################################################################################################################################################
 
 def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False, only_cells=None):
     
@@ -1840,7 +2276,7 @@ def generate_network(reference, seed=1234, temperature='32degC'):
     return nml_doc, network
 
 
-def save_network(nml_doc, nml_file_name, validate=True, comment=True, format='xml'):
+def save_network(nml_doc, nml_file_name, validate=True, comment=True, format='xml',max_memory=None):
 
     info = "\n\nThis NeuroML 2 file was generated by OpenCortex v%s using: \n"%(opencortex.__version__)
     info += "    libNeuroML v%s\n"%(neuroml.__version__)
@@ -1859,9 +2295,10 @@ def save_network(nml_doc, nml_file_name, validate=True, comment=True, format='xm
     opencortex.print_comment_v("Saved NeuroML with id: %s to %s"%(nml_doc.id, nml_file_name))
     
     if validate:
+        
         from pyneuroml.pynml import validate_neuroml2
-
-        passed = validate_neuroml2(nml_file_name)
+        
+        passed = validate_neuroml2(nml_file_name,max_memory=max_memory)
         
         if passed:
             opencortex.print_comment_v("Generated NeuroML file is valid")

@@ -39,7 +39,7 @@ class TestUtilsMethods(unittest.TestCase):
               self.assertTrue( 'NumPerPostCell' in proj_info[proj_ind].keys() or 'NumPerPreCell' in proj_info[proj_ind].keys() )
               
 
-      def test_add_populations_in_layers(self): 
+      def test_add_populations_in_rectangular_layers(self): 
       
           network = neuroml.Network(id='Net0')
           popDict={}
@@ -54,11 +54,12 @@ class TestUtilsMethods(unittest.TestCase):
           xs = [0,500]
           zs = [0,500] 
           
-          pop_params=oc_utils.add_populations_in_layers(net=network,
-                                                        boundaryDict=boundaries,
-                                                        popDict=popDict,
-                                                        x_vector=xs,
-                                                        z_vector=zs)
+          pop_params=oc_utils.add_populations_in_rectangular_layers(net=network,
+                                                                    boundaryDict=boundaries,
+                                                                    popDict=popDict,
+                                                                    x_vector=xs,
+                                                                    z_vector=zs,
+                                                                    storeSoma=False)
           
           for cell_pop in popDict.keys():
           
@@ -94,14 +95,13 @@ class TestUtilsMethods(unittest.TestCase):
                   
           ###### check storing of soma positions
           
-          network.populations=[]
+          network = neuroml.Network(id='Net1')
           
-          pop_params=oc_utils.add_populations_in_layers(net=network,
-                                                        boundaryDict=boundaries,
-                                                        popDict=popDict,
-                                                        x_vector=xs,
-                                                        z_vector=zs,
-                                                        storeSoma=True)
+          pop_params=oc_utils.add_populations_in_rectangular_layers(net=network,
+                                                                    boundaryDict=boundaries,
+                                                                    popDict=popDict,
+                                                                    x_vector=xs,
+                                                                    z_vector=zs)
              
           for pop_index in range(0,len(network.populations)):
           
@@ -125,7 +125,84 @@ class TestUtilsMethods(unittest.TestCase):
                   
                   self.assertTrue(check_y)
                   
-                  self.assertTrue(check_z)  
+                  self.assertTrue(check_z) 
+                  
+          ###### check distances between somata
+          
+          network = neuroml.Network(id='Net1')
+          
+          cell_diameters={}
+          
+          for pop_id in popDict.keys():
+          
+              cell_diameter=oc.get_soma_diameter(popDict[pop_id][2])
+              
+              cell_diameters[popDict[pop_id][2]]=cell_diameter
+          
+          pop_params=oc_utils.add_populations_in_rectangular_layers(net=network,
+                                                                    boundaryDict=boundaries,
+                                                                    popDict=popDict,
+                                                                    x_vector=xs,
+                                                                    z_vector=zs,
+                                                                    cellBodiesOverlap=False,
+                                                                    cellDiameterArray=cell_diameters)
+             
+          for pop_index in range(0,len(network.populations)):
+          
+              pop=network.populations[pop_index]
+              
+              stored_cell_positions=pop_params[pop.id]['Positions']
+              
+              for cell_loc in range(0,len(pop.instances) ):
+              
+                  instance_case=pop.instances[cell_loc]
+                  
+                  location=instance_case.location
+                  
+                  check_x= abs(location.x-stored_cell_positions[cell_loc][0]) < 0.00000001  
+                  
+                  check_y= abs(location.y-stored_cell_positions[cell_loc][1]) < 0.00000001           
+                  
+                  check_z= abs(location.z-stored_cell_positions[cell_loc][2]) < 0.00000001   
+                  
+                  self.assertTrue(check_x)       
+                  
+                  self.assertTrue(check_y)
+                  
+                  self.assertTrue(check_z) 
+                  
+                  for cell_loc_inner in range(0,len(pop.instances) ):
+                  
+                      if cell_loc != cell_loc_inner:
+                      
+                         inner_instance_case=pop.instances[cell_loc]
+                  
+                         inner_location=inner_instance_case.location
+                         
+                         d=oc.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
+                         
+                         self.assertTrue( d < (cell_diameters[pop.component]+cell_diameters[pop.component] )/2 )
+                         
+                  for pop_index_inner in range(0,len(network.populations)):
+                  
+                      pop_inner=network.populations[pop_index_inner]
+                      
+                      if pop.id != pop_inner.id:
+                      
+                         for cell_loc_inner in range(0,len(pop_inner.instances) ):
+                  
+                             if cell_loc != cell_loc_inner:
+                      
+                                inner_instance_case=pop.instances[cell_loc]
+                  
+                                inner_location=inner_instance_case.location
+                         
+                                d=oc.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
+                         
+                                self.assertTrue( d < (cell_diameters[pop_inner.component]+cell_diameters[pop_inner.component] )/2 )
+                         
+                  
+          ######################################################################## 
                   
       def test_check_cached_dicts(self):
       
@@ -206,11 +283,11 @@ class TestUtilsMethods(unittest.TestCase):
           xs = [0,500]
           zs = [0,500] 
           
-          pop_params=oc_utils.add_populations_in_layers(net=network,
-                                                        boundaryDict=boundaries,
-                                                        popDict=popDict,
-                                                        x_vector=xs,
-                                                        z_vector=zs)
+          pop_params=oc_utils.add_populations_in_rectangular_layers(net=network,
+                                                                    boundaryDict=boundaries,
+                                                                    popDict=popDict,
+                                                                    x_vector=xs,
+                                                                    z_vector=zs)
           
           all_synapse_components,proj_array,cached_segment_dicts=oc_utils.build_connectivity(net=network,
                                                                                              pop_objects=pop_params,

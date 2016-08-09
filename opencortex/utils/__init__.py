@@ -34,7 +34,7 @@ import opencortex.build as oc_build
 
 ################################################################################    
     
-def add_populations_in_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSoma=False): 
+def add_populations_in_rectangular_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSoma=True,cellBodiesOverlap=True,cellDiameterArray=None): 
 
    '''This method distributes the cells in rectangular layers. The input arguments:
    
@@ -50,7 +50,11 @@ def add_populations_in_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSo
    
    y_vector - a vector that stores the left and right bounds of the cortical column along y dimension
    
-   storeSoma - specifies whether soma positions have to be stored in the output array (default is set to False).
+   storeSoma - specifies whether soma positions have to be stored in the output array (default is set to True).
+   
+   cellBodiesOverlap - boolean value which defines whether cell somata can overlap; default is set to True;
+   
+   cellDiameterArray - optional dictionary of cell model diameters required when cellBodiesOverlap is set to False;
    
    This method returns the dictionary; each key is a unique cell population id and the corresponding value is a dictionary
    which refers to libNeuroML population object (key 'PopObj') and cell position array ('Positions') which by default is None.'''
@@ -62,29 +66,206 @@ def add_populations_in_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSo
        size, layer,cell_model = popDict[cell_pop]
     
        if size>0:
+         
           return_pops[cell_pop]={}
+           
           xl=x_vector[1]-x_vector[0]
+          
           yl=boundaryDict[layer][1]-boundaryDict[layer][0]
+          
           zl=z_vector[1]-z_vector[0]
           
           if storeSoma:
           
-             pop, cellPositions=oc_build.add_population_in_rectangular_region(net,cell_pop,cell_model,size,x_vector[0],boundaryDict[layer][0],z_vector[0],xl,yl,zl,storeSoma)
-             
+             pop, cellPositions=oc_build.add_population_in_rectangular_region(net,
+                                                                              cell_pop,
+                                                                              cell_model,
+                                                                              size,
+                                                                              x_vector[0],
+                                                                              boundaryDict[layer][0],
+                                                                              z_vector[0],
+                                                                              xl,
+                                                                              yl,
+                                                                              zl,
+                                                                              cell_bodies_overlap=cellBodiesOverlap,
+                                                                              store_soma=storeSoma,
+                                                                              population_dictionary=return_pops,
+                                                                              cell_diameter_dict=cellDiameterArray)
+                                                                              
           else:
-             pop=oc_build.add_population_in_rectangular_region(net,cell_pop,cell_model,size,x_vector[0],boundaryDict[layer][0],z_vector[0],xl,yl,zl,storeSoma)
-             
+          
+             pop=oc_build.add_population_in_rectangular_region(net,
+                                                               cell_pop,
+                                                               cell_model,
+                                                               size,
+                                                               x_vector[0],
+                                                               boundaryDict[layer][0],
+                                                               z_vector[0],
+                                                               xl,
+                                                               yl,
+                                                               zl,
+                                                               cell_bodies_overlap=cellBodiesOverlap,
+                                                               store_soma=storeSoma,
+                                                               population_dictionary=return_pops,
+                                                               cell_diameter_dict=cellDiameterArray)
+                                                                              
              cellPositions=None
-         
-          return_pops[cell_pop]={}
+                                                                                
           return_pops[cell_pop]['PopObj']=pop
           return_pops[cell_pop]['Positions']=cellPositions
    
    opencortex.print_comment_v("This is a final list of cell population ids: %s"%return_pops.keys())
    
    return return_pops
-          
+   
+##################################################################################################################################################################   
+def add_populations_in_cylindrical_layers(net,boundaryDict,popDict,radiusOfCylinder,storeSoma=True,cellBodiesOverlap=True,cellDiameterArray=None,numOfSides=None): 
 
+   '''This method distributes the cells in cylindrical layers. The input arguments:
+   
+   net - libNeuroML network object;
+                    
+   popDict - a dictionary whose keys are unique cell population ids; each key entry stores a tuple of three elements: population size, Layer tag and cell model id; 
+   
+   layer tags (of type string) must make up the keys() of boundaryDict;
+    
+   boundaryDict have layer pointers as keys; each entry stores the left and right bound of the layer in the list format , e.g. [L3_min, L3_max]
+   
+   x_vector - a vector that stores the left and right bounds of the cortical column along x dimension
+   
+   y_vector - a vector that stores the left and right bounds of the cortical column along y dimension
+   
+   radiusOfCylinder - radius of cylindrical column in which cortical cells will be distributed.
+   
+   storeSoma - specifies whether soma positions have to be stored in the output array (default is set to True);
+   
+   cellBodiesOverlap - boolean value which defines whether cell somata can overlap; default is set to True;
+   
+   cellDiameterArray - optional dictionary of cell model diameters required when cellBodiesOverlap is set to False;
+   
+   numOfSides - optional argument which specifies the number of sides of regular polygon which is inscribed in the cylindrical column of a given radius; default value is None,
+   thus cylindrical but not polygonal shape is built.
+   
+   This method returns the dictionary; each key is a unique cell population id and the corresponding value is a dictionary
+   which refers to libNeuroML population object (key 'PopObj') and cell position array ('Positions') which by default is None.'''
+   
+   if numOfSides != None:
+   
+      if numOfSides >= 3: 
+         
+         vertex_array=[]
+         
+         xy_sides=[]
+         
+         angle_array=np.linspace(0, 2*math.pi*(1-(1.0 /numOfSides) ),numOfSides)
+         
+         for angle in angle_array:
+         
+             vertex=[]
+             
+             x=radiusOfCylinder*math.cos(angle)
+             
+             y=radiusOfCylinder*math.sin(angle)
+             
+             vertex.append(x)
+             
+             vertex.append(y)
+             
+             vertex_array.append(vertex)
+             
+         for v_ind in range(0,len(vertex_array)):
+         
+             v1=vertex_array[v_ind]
+             
+             v2=vertex_array[v_ind-1]
+             
+             if abs(v1[0] - v2[0]) > 0.00000001 and abs(v1[1] -v2[1]) > 0.00000001:
+             
+                A=np.array([[v1[0],1],[v2[0],1]])
+             
+                b=np.array([v1[1],v2[1]])
+             
+                xcyc=np.linalg.solve(A,b)
+             
+                xy_sides.append(list(xcyc))
+                
+             else:
+             
+                if abs(v1[0] - v2[0]) <= 0.00000001:
+                   
+                   xy_sides.append([v1[0], None] )
+                   
+                if abs(v1[1] -v2[1] ) <= 0.00000001:
+                
+                   xy_sides.append([None,v1[1]] )
+                   
+      else:
+      
+         opencortex.print_comment_v("Error! Method opencortex.build.%s() called with numOfSides set to %d but regular polygon must contain at least 3 vertices." 
+         "Execution will terminate."%sys._getframe().f_code.co_name,numOfSides)
+        
+         quit()
+   
+   else:
+   
+      vertex_array=None
+      
+      xy_sides=None
+      
+   return_pops={}
+   
+   for cell_pop in popDict.keys():
+
+       size, layer,cell_model = popDict[cell_pop]
+    
+       if size>0:
+       
+          return_pops[cell_pop]={}
+          
+          if storeSoma:
+          
+             pop, cellPositions=oc_build.add_population_in_cylindrical_region(net=net,
+                                                                              pop_id=cell_pop,
+                                                                              cell_id=cell_model,
+                                                                              size=size,
+                                                                              cyl_radius=radiusOfCylinder,
+                                                                              lower_bound_dim3=boundaryDict[layer][0],
+                                                                              upper_bound_dim3=boundaryDict[layer][1],
+                                                                              cell_bodies_overlap=cellBodiesOverlap,
+                                                                              store_soma=storeSoma,
+                                                                              population_dictionary=return_pops,
+                                                                              cell_diameter_dict=cellDiameterArray,
+                                                                              num_of_polygon_sides=numOfSides,
+                                                                              positions_of_vertices=vertex_array,
+                                                                              constants_of_sides=xy_sides)
+                                                                              
+          else:
+          
+             pop=oc_build.add_population_in_cylindrical_region(net=net,
+                                                               pop_id=cell_pop,
+                                                               cell_id=cell_model,
+                                                               size=size,
+                                                               cyl_radius=radiusOfCylinder,
+                                                               lower_bound_dim3=boundaryDict[layer][0],
+                                                               upper_bound_dim3=boundaryDict[layer][1],
+                                                               cell_bodies_overlap=cellBodiesOverlap,
+                                                               store_soma=storeSoma,
+                                                               population_dictionary=return_pops,
+                                                               cell_diameter_dict=cellDiameterArray,
+                                                               num_of_polygon_sides=numOfSides,
+                                                               positions_of_vertices=vertex_array,
+                                                               constants_of_sides=xy_sides)
+                                                               
+             
+             cellPositions=None                                                                 
+          
+          return_pops[cell_pop]['PopObj']=pop
+          return_pops[cell_pop]['Positions']=cellPositions
+   
+   opencortex.print_comment_v("This is a final list of cell population ids: %s"%return_pops.keys())
+   
+   return return_pops
+   
 ############################################################################################################################################################################
 
 def build_projection(net, 
