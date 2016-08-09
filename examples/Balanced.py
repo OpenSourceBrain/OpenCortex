@@ -21,6 +21,7 @@ def generate(reference = "Balanced",
              scaley=1,
              scalez=1,
              connections=True,
+             duration = 1000,
              global_delay = 0,
              format='xml'):
 
@@ -147,7 +148,7 @@ def generate(reference = "Balanced",
     if format=='xml':
         lems_file_name = oc.generate_lems_simulation(nml_doc, network, 
                                 nml_file_name, 
-                                duration =      1000, 
+                                duration =      duration, 
                                 dt =            0.025)
     else:
         lems_file_name = None
@@ -159,6 +160,7 @@ if __name__ == '__main__':
     
     if '-all' in sys.argv:
         generate()
+        
         generate(num_bbp =10,
              scalePops = 5,
              scalex=2,
@@ -169,8 +171,14 @@ if __name__ == '__main__':
              scalePops = 5,
              scalex=2,
              scalez=2)
+        
+        generate(num_bbp =0,
+             scalePops = 2,
+             scalex=2,
+             scalez=2,
+             duration = 100)
              
-    if '-test' in sys.argv:
+    elif '-test' in sys.argv:
         
         generate(num_bbp =0,
              scalePops = 1,
