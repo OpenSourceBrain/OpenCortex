@@ -231,7 +231,10 @@ def add_population_in_rectangular_region(net, pop_id, cell_id, size, x_min, y_mi
     pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
     if color is not None:
         pop.properties.append(Property("color",color))
-    net.populations.append(pop)
+    
+    # If size == 0, don't add to document, but return placeholder object (with attribute size=0 & id)
+    if size>0:
+        net.populations.append(pop)
 
     for i in range(0, size) :
             index = i

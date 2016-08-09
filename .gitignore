@@ -52,3 +52,11 @@ build/lib*
 /examples/LEMS_Balanced_120cells_7293conns.xml
 /examples/Sim_SpikingNet.pop_post.v.dat.n
 /examples/Sim_SpikingNet.pop_pre.v.dat.n
+/examples/L23TraubDemo_16cells_23conns.net.nml
+/examples/L23TraubDemo_2cells_0conns.net.nml
+/examples/LEMS_Balanced_240cells_29299conns.xml
+/examples/LEMS_L23TraubDemo_16cells_23conns.xml
+/examples/LEMS_L23TraubDemo_2cells_0conns.xml
+/examples/Sim_L23TraubDemo.pop_post.v.dat.n
+/examples/Sim_L23TraubDemo.pop_pre.v.dat.n
+/examples/Sim_L23TraubDemo_2cells_0conns.pop_pre.v.dat.n
