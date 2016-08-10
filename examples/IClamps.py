@@ -25,7 +25,7 @@ pgIzh = oc.add_pulse_generator(nml_doc,
                        id="pgIzh",
                        delay="100ms",
                        duration="300ms",
-                       amplitude="0.7nA")
+                       amplitude="0.5nA")
                                      
 pgHH = oc.add_pulse_generator(nml_doc,
                        id="pgHH",
@@ -65,5 +65,5 @@ oc.generate_lems_simulation(nml_doc,
                             network, 
                             nml_file_name, 
                             duration =      500, 
-                            dt =            0.025)
+                            dt =            0.005)
                                               

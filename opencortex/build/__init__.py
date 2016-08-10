@@ -1,12 +1,14 @@
-#####################
-### Subject to change without notice!!
-#####################
-##############################################################
-### Author : Rokas Stanislovas
+###############################################################
+### 
+### Note: OpenCortex is under active development, the API is subject to change without notice!!
+### 
+### Authors: Padraig Gleeson, Rokas Stanislovas
 ###
-### GSoC 2016 project: Cortical Networks
+### This software has been funded by the Wellcome Trust, as well as a GSoC 2016 project 
+### on Cortical Network develoment
 ###
 ##############################################################
+
 import opencortex
 import neuroml
 import pyneuroml
@@ -58,6 +60,7 @@ def add_connection(projection,
     
 
 #############################################################################################################################
+
 def add_elect_connection(projection, 
                          id, 
                          presynaptic_population, 
@@ -124,6 +127,42 @@ def add_probabilistic_projection(net,
     net.projections.append(proj)
 
     return proj
+
+###################################################################################################################################################################   
+
+def add_chem_projection0(net,
+                        prefix,
+                        presynaptic_population,
+                        postsynaptic_population,
+                        targeting_mode,
+                        synapse_list,
+                        number_conns_per_cell,
+                        pre_segment_groups=None,
+                        post_segment_groups=None,
+                        delays_dict=None,
+                        weights_dict=None):
+                            
+    
+    if presynaptic_population.size==0 or postsynaptic_population.size==0:
+        return None
+    
+    projections = []
+    
+    for synapse in synapse_list:
+
+        proj_id = "%s_%s_%s"%(prefix,presynaptic_population.id, postsynaptic_population.id) if len(synapse_list)==1 else \
+            "%s_%s_%s_%s"%(prefix,presynaptic_population.id, postsynaptic_population.id,synapse)
+        
+        proj = neuroml.Projection(id=proj_id, 
+                          presynaptic_population=presynaptic_population.id, 
+                          postsynaptic_population=postsynaptic_population.id, 
+                          synapse=synapse)
+                          
+        net.projections.append(proj)
+                            
+        projections.append(proj)
+        
+    return projections 
 
 ###################################################################################################################################################################   
 
@@ -974,7 +1013,8 @@ def add_elect_spatial_projection(net,
     
            net.electrical_projections.append(proj_array[synapse_ind])
 
-    return proj_array   
+    return proj_array  
+        
 ############################################################################################################################
 def make_target_dict(cell_object,
                      target_segs):
@@ -1682,6 +1722,7 @@ def add_population_in_rectangular_region(net,
     
     if color is not None:
         pop.properties.append(Property("color",color))
+
         
         
     # If size == 0, don't add to document, but return placeholder object (with attribute size=0 & id)
@@ -1770,7 +1811,7 @@ def add_population_in_rectangular_region(net,
                  cell_position_found=True  
                  
     if store_soma:
-    
+
        return pop, cellPositions
        
     else:
