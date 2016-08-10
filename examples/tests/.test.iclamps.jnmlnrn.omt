@@ -2,3 +2,27 @@
 
 target: ../LEMS_IClamps.xml
 engine: jNeuroML_NEURON
+mep: .test.iclamps.mep
+experiments:
+  izh:
+    observables:
+      spike times:
+        file: 
+          path: ../Sim_IClamps.popIzh.v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0
+  hh:
+    observables:
+      spike times:
+        file: 
+          path: ../Sim_IClamps.popHH.v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0
