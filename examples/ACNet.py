@@ -44,6 +44,14 @@ def generate(reference = "ACNet",
                              gbase="0.15e-9S", erev="0mV",
                              tau_rise="0.003s", tau_decay="0.0031s")
 
+    gaba_syn = oc.add_exp_two_syn(nml_doc, id="GABA_syn", 
+                             gbase="0.6e-9S", erev="-0.080V",
+                             tau_rise="0.005s", tau_decay="0.012s")
+
+    gaba_syn_inh = oc.add_exp_two_syn(nml_doc, id="GABA_syn_inh", 
+                             gbase="0S", erev="-0.080V",
+                             tau_rise="0.003s", tau_decay="0.008s")
+
     pfs = oc.add_poisson_firing_synapse(nml_doc, id="poissonFiringSyn",
                                        average_rate="30 Hz", synapse_id=ampa_syn.id)
 
@@ -72,7 +80,7 @@ def generate(reference = "ACNet",
         this_syn=ampa_syn_inh.id
         proj = oc.add_chem_projection0(nml_doc, 
                                         network,
-                                        "Proj_pyr_inh",
+                                        "Proj_pyr_bask",
                                         pop_pyr,
                                         pop_bask,
                                         targeting_mode='convergent',
@@ -80,6 +88,36 @@ def generate(reference = "ACNet",
                                         pre_segment_group = 'soma_group',
                                         post_segment_group = 'all',
                                         number_conns_per_cell=21,
+                                        delays_dict = {this_syn:global_delay})
+        if proj:                           
+            total_conns += len(proj[0].connection_wds)
+
+        this_syn=gaba_syn.id
+        proj = oc.add_chem_projection0(nml_doc, 
+                                        network,
+                                        "Proj_bask_pyr",
+                                        pop_bask,
+                                        pop_pyr,
+                                        targeting_mode='convergent',
+                                        synapse_list=[this_syn],
+                                        pre_segment_group = 'soma_group',
+                                        post_segment_group = 'all',
+                                        number_conns_per_cell=21,
+                                        delays_dict = {this_syn:global_delay})
+        if proj:                           
+            total_conns += len(proj[0].connection_wds)
+
+        this_syn=gaba_syn_inh.id
+        proj = oc.add_chem_projection0(nml_doc, 
+                                        network,
+                                        "Proj_bask_bask",
+                                        pop_bask,
+                                        pop_bask,
+                                        targeting_mode='convergent',
+                                        synapse_list=[this_syn],
+                                        pre_segment_group = 'soma_group',
+                                        post_segment_group = 'all',
+                                        number_conns_per_cell=5,
                                         delays_dict = {this_syn:global_delay})
         if proj:                           
             total_conns += len(proj[0].connection_wds)

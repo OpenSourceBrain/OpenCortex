@@ -36,6 +36,11 @@ examples/*definition.py
 /examples/*.json
 examples/*.nrn
 examples/*netpyne.py
+examples/*.pov
+examples/*.png
+examples/*.ini
+examples/LEMS_ACNet_*xml
+examples/ACNet_*nml
 
 OpenCortex.egg-info
 dist

@@ -49,7 +49,7 @@ def add_connection(projection,
                    post_fraction=0.5):
     
 
-    opencortex.print_comment_v("Adding single conn %s in proj %s: %s(%s:%s:%s) -> %s(%s:%s:%s), delay: %sms, weight: %s"%(id, projection.id, \
+    opencortex.print_comment("Adding single conn %s in proj %s: %s(%s:%s:%s) -> %s(%s:%s:%s), delay: %sms, weight: %s"%(id, projection.id, \
                               presynaptic_population.id, pre_cell_id, pre_seg_id, pre_fraction,\
                               postsynaptic_population.id, post_cell_id, post_seg_id, post_fraction,
                               delay, weight))  
