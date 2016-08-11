@@ -430,7 +430,7 @@ def build_connectivity(net,
     
     net- NeuroML2 network object;
     
-    pop_objects - dictionary of population parameters in the format returned by the method add_populations_in_layers inside utils;
+    pop_objects - dictionary of population parameters in the format returned by the utils method add_populations_in_rectangular_layers() or add_populations_in_cylindrical_layers();
     
     path_to_cells - dir path to the folder where target NeuroML2 .cell.nml files are found;
     
@@ -640,8 +640,244 @@ def build_connectivity(net,
     else:
     
        return final_synapse_list, final_proj_array
+       
+
+###############################################################################################################################################################
+
+def build_probability_based_connectivity(net,
+                                         pop_params,
+                                         probability_matrix, 
+                                         synapse_matrix,
+                                         weight_matrix, 
+                                         delay_matrix,
+                                         tags_on_populations, 
+                                         std_weight_matrix=None,
+                                         std_delay_matrix=None):
+
+    ''''Method which build network projections based on the probability matrix which specifies the probabilities between given populations. Input arguments:
+    
+    net- NeuroML2 network object;
+    
+    pop_params - dictionary of population parameters in the format returned by the utils method add_populations_in_rectangular_layers() or
+    add_populations_in_cylindrical_layers();
+    
+    probability_matrix -  n by n array (list of lists or numpy array) which specifies the connection probabilities between the presynaptic and postsynaptic populations; 
+    the first index is for the target population (postsynaptic) and the second index is for the source population (presynaptic); can be 1 by 1 matrix , then probability 
+    is applied to  all pairs of populations; probability values must be of type 'float'; 
+    
+    synapse_matrix - n by n array (list of lists) which specifies the synapse components per projections; each element has be of the type 'list' because generically
+    physical projection can contain multiple synaptic components;
+    
+    weight_matrix - n by n array (list of lists or numpy array) which specifies the weight values for projections; each matrix element should be of type 'float' or if synaptic
+    components per given projection differ in weights, then a corresponding matrix element must be a list containing 'float' values;
+    
+    delay_matrix - n by n array (list of lists or numpy array) which specifies the delay values for projections; each matrix element should be of type 'float' or if synaptic
+    components per given projection differ in delays, then a corresponding matrix elment must be a list containing 'float' values;
+    
+    tags_on_populations - a list of n strings which tags the network populations; cannot have length larger than the number of populations; index of the population tag in 
+    tags_on_populations must correspond to the position of the matrix element in a standard way, e.g. 
+    
+    tags_on_populations= [ 'pop1', 'pop2' ], thus 'pop1' index is 0 and 'pop2' index is 1;
+     
+                                                    source population (presynaptic)
+    
+    target population (postsynaptic)               'pop1'                              'pop2'
+          
+                                           
+    'pop1'                                  (0,0) value in matrix             (0,1) value in matrix
     
     
+    'pop2'                                  (1,0) value in matrix              (1,1) value in matrix              . This applies to all matrices.
+    
+   
+    std_weight_matrix - optional matrix in the format weight_synapse which specifies the corresponding standard deviations of synaptic weights; default is set to None;
+    
+    std_delay_matrix - optional matrix in the format delay_synapse which specifies the corresponding standard deviations of synaptic delays; default is set to None.'''
+    
+    errors_found=0
+    
+    matrices_with_errors=[]
+    
+    passed_probs=check_matrix_size_and_type(matrix_of_params=probability_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+    
+    if not passed_probs:
+    
+       errors_found+=1
+       
+       matrices_with_errors.append('matrix of connection probabilities')
+    
+    passed_syns=check_matrix_size_and_type(matrix_of_params=synapse_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=str)
+    
+    if not passed_syns:
+    
+       errors_found+=1
+       
+       matrices_with_errors.append('matrix of synapse component ids')
+    
+    passed_weights=check_matrix_size_and_type(matrix_of_params=weight_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+    
+    if not passed_weights:
+    
+       errors_found+=1
+       
+       matrices_with_errors.append('matrix of mean values for synaptic weights')
+    
+    passed_delays=check_matrix_size_and_type(matrix_of_params=delay_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+    
+    if not passed_delays:
+    
+       errors_found+=1
+       
+       matrices_with_errors.append('matrix of mean values for synaptic delays')
+       
+    if std_weight_matrix != None:
+    
+       passed_std_weights=check_matrix_size_and_type(matrix_of_params=std_weight_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+       
+       if not passed_std_weights:
+       
+          errors_found+=1
+          
+          matrices_with_errors.append('matrix of standard deviations for synaptic weights')
+          
+    if std_delay_matrix != None:
+    
+       passed_std_delays=check_matrix_size_and_type(matrix_of_params=std_delay_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+       
+       if not passed_std_delays:
+       
+          errors_found+=1
+          
+          matrices_with_errors.append('matrix of standard deviations for synaptic delays')
+          
+    if errors_found==0:
+    
+       opencortex.print_comment_v("All of the connectivity matrices were specified correctly.")
+       
+    else:
+    
+       opencortex.print_comment_v("The connectivity matrices in %s were not specified correctly; execution will terminate."%matrices_with_errors)
+       
+       quit()
+    
+    proj_array=[]
+   
+    for pre_pop_id in pop_params.keys():
+    
+        for post_pop_id in pop_params.keys():
+        
+            found_pre_pop=False
+            
+            found_post_pop=False
+        
+            for tag_ind in range(0,len(tags_on_populations)):
+            
+                tag=tags_on_populations[tag_ind]
+                
+                if tag in pre_pop_id:
+                   
+                   column_index=tag_ind
+                   
+                   found_pre_pop=True
+                   
+                if tag in post_pop_id:
+                   
+                   row_index=tag_ind
+                   
+                   found_post_pop=True
+                   
+            if found_pre_pop and found_post_pop:
+            
+               pre_pop_obj=pop_params[pre_pop_id]['PopObj']
+               
+               post_pop_obj=pop_params[post_pop_id]['PopObj']
+               
+               ####################################################################
+               prob_val= parse_parameter_value(parameter_matrix=probability_matrix, 
+                                                row_ind=row_index, 
+                                                col_ind=column_index,
+                                                checks_passed=True)
+               #######################################################################                                  
+               if prob_val != 0 and pre_pop_obj.size != 0 and post_pop_obj.size != 0:
+               
+                  synapse_list= parse_parameter_value(parameter_matrix=synapse_matrix, 
+                                                   row_ind=row_index, 
+                                                   col_ind=column_index,
+                                                   checks_passed=True)
+                                                  
+                  if not isinstance(synapse_list, list):
+               
+                     synapse_list=[synapse_list]
+                  ##########################################################################  
+                  weight_list=parse_parameter_value(parameter_matrix=weight_matrix, 
+                                                 row_ind=row_index, 
+                                                 col_ind=column_index,
+                                                 checks_passed=True)
+                                                 
+                  ###########################################################################  
+                  delay_list=parse_parameter_value(parameter_matrix=delay_matrix, 
+                                                row_ind=row_index, 
+                                                col_ind=column_index,
+                                                checks_passed=True)
+                                                
+                  ############################################################################  
+                  if std_weight_matrix != None:
+               
+                     std_weight_list=parse_parameter_value(parameter_matrix=std_weight_matrix, 
+                                                        row_ind=row_index, 
+                                                        col_ind=column_index,
+                                                        checks_passed=True)
+               
+                  else:
+               
+                     std_weight_list=None
+                  #############################################################################   
+                  if std_delay_matrix != None:
+               
+                     std_delay_list=parse_parameter_value(parameter_matrix=std_delay_matrix, 
+                                                       row_ind=row_index, 
+                                                       col_ind=column_index,
+                                                       checks_passed=True)
+               
+                  else:
+               
+                     std_delay_list=None
+                  ###############################################################################
+               
+                  returned_projs=oc_build.add_probabilistic_projection_list(net=net,
+                                                                            presynaptic_population=pre_pop_obj, 
+                                                                            postsynaptic_population=post_pop_obj, 
+                                                                            synapse_list=synapse_list,  
+                                                                            connection_probability=prob_val,
+                                                                            delay=delay_list,
+                                                                            weight=weight_list,
+                                                                            std_delay=std_delay_list,
+                                                                            std_weight=std_weight_list)
+                                                                         
+                  if returned_projs != None:
+               
+                     opencortex.print_comment_v("Addded a projection between %s and %s"%(pre_pop_id,post_pop_id))
+                                                          
+                     proj_array.extend(returned_projs)
+            
+            else:
+            
+               if not found_pre_pop:
+            
+                  opencortex.print_comment_v("Error in build_probability_based_connectivity(): input argument tags_on_populations in build_probability_based_connectivity()"
+                  " does not contain a string tag for the population %s. Execution will terminate."%pre_pop_id) 
+                  
+                  quit()
+                  
+               if not found_post_pop:
+              
+                  opencortex.print_comment_v("Error in build_probability_based_connectivity(): input argument tags_on_populations in build_probability_based_connectivity()" 
+                  " does not contain a string tag for the population %s. Execution will terminate."%post_pop_id) 
+                  
+                  quit()
+              
+    return proj_array     
+      
 ################################################################################################################################################################
 
 def read_connectivity(pre_pop,
@@ -762,7 +998,126 @@ def read_connectivity(pre_pop,
            
        
     return proj_summary
+    
+###############################################################################################################################################################
+def parse_parameter_value(parameter_matrix, row_ind, col_ind, checks_passed=False):
+
+    '''Method to parse one of the connectivity parameters; by default assumes that checks are carried out by the method check_matrix_size_and_type().'''
+
+    if not checks_passed:
+    
+       return None
+      
+    else:
+    
+       if len(parameter_matrix)==1:
         
+          parameter_val=parameter_matrix[0]
+       
+       else: 
+       
+          parameter_val=parameter_matrix[row_ind][col_ind]
+    
+       if type(parameter_matrix).__module__ == np.__name__:
+    
+          parameter_val=parameter_matrix[row_ind][col_ind]
+      
+       return parameter_val
+    
+####################################################################################################################################################################
+def check_matrix_size_and_type(matrix_of_params, num_of_pop_tags,type_of_matrix):
+
+    '''Method to check whether the size and the type of the connection parameter matrix, corresponds to the number of tags provided for the list of populations.'''
+
+    passed=True
+
+    if isinstance(matrix_of_params, list) :
+    
+       if len(matrix_of_params)==1:
+       
+          if not isinstance(matrix_of_params[0],list):
+          
+             if not isinstance(matrix_of_params[0],type_of_matrix):
+          
+                opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list which contains one element but it is not of type %s;"
+                " the current type is %s."%(type_of_matrix,type(matrix_of_params[0]) ) )
+              
+                passed=False
+                
+          else:
+          
+             for component_index in range(0,len(matrix_of_params[0])):
+             
+                 if not isinstance(matrix_of_params[0][component_index],type_of_matrix):
+          
+                    opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list which contains a list but not all of its elements are of type %s;"
+                    " the current type is %s."%(type_of_matrix,type(matrix_of_params[0]) ) )
+              
+                    passed=False
+          
+       else:
+       
+          num_of_elements=0
+          
+          for row_ind in range(0,len(matrix_of_params) ):
+          
+              for col_ind in range(0,len(matrix_of_params[row_ind])):
+              
+                  if not isinstance(matrix_of_params[row_ind][col_ind],list):
+              
+                     if not isinstance(matrix_of_params[row_ind][col_ind],type_of_matrix):
+                  
+                        opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list of lists (matrix) but there is an element inside which is not"
+                        " of type %s; the current type is %s."%(type_of_matrix,type(matrix_of_params[0]) ) )
+              
+                        passed=False
+                        
+                  else:
+                  
+                     for component_index in range(0,len(matrix_of_params[row_ind][col_ind])):
+             
+                         if not isinstance(matrix_of_params[row_ind][col_ind][component_index],type_of_matrix):
+                         
+                            opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list of lists (matrix) but list elements inside are not" 
+                            "of type %s; the current type is %s."%(type_of_matrix,type(matrix_of_params[0]) ) )
+              
+                            passed=False
+                     
+              num_of_elements=num_of_elements +len(matrix_of_params[row_ind])
+              
+              if len(matrix_of_params[row_ind]) != num_of_pop_tags:
+               
+                 opencortex.print_comment_v("Error in check_matrix_size(): each list element of the argument matrix_of_params must have length = %d;"
+                 " the current length is %d."%(num_of_pop_tags,len(matrix_of_params[row_ind])))
+              
+                 passed=False
+              
+          if num_of_elements != num_of_pop_tags*num_of_pop_tags:
+          
+             opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list but not in the format of an %d by %d matrix."
+             %(num_of_pop_tags,num_of_pop_tags))
+              
+             passed=False
+          
+    elif type(matrix_of_params).__module__ == np.__name__:
+    
+         rows_cols=matrix_of_params.size
+         
+         if (rows_cols[0] != num_of_pop_tags or rows_cols[1] != num_of_pop_tags):
+         
+            opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a numpy array but not of size (%d, %d) (not a square matrix)."%num_of_pop_tags)
+            
+            passed=False
+            
+    else:
+    
+       opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params must be a list or numpy array; the current type is %s."
+       %type(matrix_of_params))
+       
+       passed=False
+    
+    return passed
+      
 ################################################################################################################################################################   
 def check_cached_dicts(cell_component,cached_dicts,list_of_target_seg_groups,path_to_nml2=None):
 

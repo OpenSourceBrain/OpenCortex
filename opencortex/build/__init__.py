@@ -86,8 +86,6 @@ def add_elect_connection(projection,
     
     
 ########################################################################################################################################        
-
-
 def add_probabilistic_projection(net, 
                                  prefix, 
                                  presynaptic_population, 
@@ -127,7 +125,171 @@ def add_probabilistic_projection(net,
     net.projections.append(proj)
 
     return proj
+    
+##############################################################################################################################################################       
+def add_probabilistic_projection_list(net,
+                                      presynaptic_population, 
+                                      postsynaptic_population, 
+                                      synapse_list,  
+                                      connection_probability,
+                                      delay = 0,
+                                      weight = 1,
+                                      std_delay=None,
+                                      std_weight=None):
+                                      
+    '''Modification of the method add_probabilistic_projection() to allow multiple synaptic components per physical projection;
+    specifically works for networks containing single-compartment neuronal models. This method also allows gaussian variation in synaptic weight and delay.'''
+    
+    if presynaptic_population.size==0 or postsynaptic_population.size==0:
+        return None
+        
+    proj_components={}
+    
+    for synapse_id in synapse_list:
 
+        proj = neuroml.Projection(id="%s_%s_%s"%(synapse_id,presynaptic_population.id, postsynaptic_population.id), 
+                                  presynaptic_population=presynaptic_population.id, 
+                                  postsynaptic_population=postsynaptic_population.id, 
+                                  synapse=synapse_id)
+                                  
+        proj_components[synapse_id]=proj
+
+    count = 0
+    
+    ######### check whether delay and weight varies with a synaptic component
+    
+    if isinstance(delay,list):
+    
+       if not len(delay)==len(synapse_list):
+       
+          opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument delay is a list but not of the same length as"
+          " argument synapse_list; execution will terminate.")
+          
+          quit()
+          
+    if isinstance(weight,list):
+    
+       if not len(weight)==len(synapse_list):
+       
+          opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument weight is a list but not of the same length as"
+          " argument synapse_list; execution will terminate.")
+          
+          quit()
+          
+    if std_delay !=None:
+    
+       if isinstance(std_delay,list):
+    
+          if not len(std_delay)==len(synapse_list):
+       
+             opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument std_delay is a list but not of the same length as"
+             " argument synapse_list; execution will terminate.")
+          
+             quit()
+             
+    if std_weight != None:
+    
+       if isinstance(std_weight,list):
+    
+          if not len(std_weight)==len(synapse_list):
+       
+             opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument std_weight is a list but not of the same length as"
+             " argument synapse_list; execution will terminate.")
+          
+             quit()
+       
+    for i in range(0, presynaptic_population.size):
+        for j in range(0, postsynaptic_population.size):
+            if i != j or presynaptic_population.id != postsynaptic_population.id:
+                
+                if connection_probability>= 1 or random.random() < connection_probability:
+                
+                   if not isinstance(delay,list):
+                
+                      if std_delay != None:
+                   
+                         del_val=random.gauss(delay, std_delay)
+                      
+                      else:
+                   
+                         del_val=delay
+                         
+                   if not isinstance(weight,list):
+                      
+                      if std_weight != None:
+                   
+                         w_val=random.gauss(weight,std_weight)
+                      
+                      else:
+                   
+                         w_val=weight
+                         
+                   syn_counter=0
+                
+                   for synapse_id in synapse_list:
+                   
+                       if isinstance(delay,list):
+                        
+                           if std_delay != None:
+                           
+                              if isinstance(std_delay,list):
+                   
+                                 del_val=random.gauss(delay[syn_counter], std_delay[syn_counter])
+                                 
+                              else:
+                              
+                                 del_val=random.gauss(delay[syn_counter], std_delay)
+                      
+                           else:
+                   
+                              del_val=delay[syn_counter]
+                              
+                       if isinstance(weight,list):
+                        
+                           if std_weight != None:
+                           
+                              if isinstance(std_weight,list):
+                           
+                                 w_val=random.gauss(weight[syn_counter],std_weight[syn_counter])
+                                 
+                              else:
+                              
+                                 w_val=random.gauss(weight[syn_counter],std_weight)
+                           
+                           else:
+                           
+                              w_val=weight[syn_counter]
+                    
+                       add_connection(proj_components[synapse_id], 
+                                      count, 
+                                      presynaptic_population, 
+                                      i, 
+                                      0, 
+                                      postsynaptic_population, 
+                                      j, 
+                                      0,
+                                      delay = del_val,
+                                      weight = w_val)
+                                       
+                       syn_counter+=1
+                         
+                   count+=1
+                    
+    return_proj_components=[]
+    
+    if count != 0:
+                    
+       for synapse_id in synapse_list:
+
+           net.projections.append(proj_components[synapse_id])
+        
+           return_proj_components.append(proj_components[synapse_id])
+           
+       return return_proj_components
+          
+    else:
+    
+       return None
 ###################################################################################################################################################################   
 
 def add_chem_projection0(net,
@@ -1186,7 +1348,8 @@ def extract_seg_ids(cell_object,
      
        groups_not_found=list(set(target_compartment_array)- set(found_target_groups) )
        
-       opencortex.print_comment_v("Error: target segments or segment groups in %s are not found in %s. Execution will terminate."%(groups_not_found,cell_object.id) )
+       opencortex.print_comment_v("Error in method opencortex.build.extract_seg_ids(): target segments or segment groups in %s are not found in %s. Execution will terminate."
+       %(groups_not_found,cell_object.id) )
        
        quit()
        

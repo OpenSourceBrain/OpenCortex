@@ -618,8 +618,220 @@ class TestNetConnectionMethods(unittest.TestCase):
           if len(proj_array[0].electrical_connection_instances)==0:
           
              self.assertEqual(len(network.electrical_projections),0)
+             
+    
+      def test_add_probabilistic_projection_list(self):
           
+          ######## Test 1 convergent
+          network = neuroml.Network(id='Net0')     
+          presynaptic_population = neuroml.Population(id="Pop0", component="L23PyrRS", type="populationList", size=50)
+          postsynaptic_population=neuroml.Population(id="Pop0", component="L23PyrFRB", type="populationList", size=50)
           
+          synapse_list=['Syn_1','Syn_2']
+            
+          returned_projs=oc.add_probabilistic_projection_list(net=network, 
+                                                              presynaptic_population=presynaptic_population, 
+                                                              postsynaptic_population=postsynaptic_population, 
+                                                              synapse_list=synapse_list,  
+                                                              connection_probability=0.5,
+                                                              delay=0.05,
+                                                              weight=2,
+                                                              std_delay=None,
+                                                              std_weight=None)
+          
+                                            
+          self.assertEqual(len(network.projections),2)
+          
+          self.assertEqual(len(network.projections[0].connection_wds), len(network.projections[1].connection_wds) )
+          
+          for proj_ind in range(0,len(network.projections) ):
+          
+              self.assertTrue( 'Syn_1' in network.projections[proj_ind].id or 'Syn_2' in network.projections[proj_ind].id )
+          
+              self.assertTrue( network.projections[proj_ind].synapse == 'Syn_1' or network.projections[proj_ind].synapse == 'Syn_2' )
+              
+              for conn_ind in range(0,len(network.projections[proj_ind].connection_wds)):
+              
+                  connection=network.projections[proj_ind].connection_wds[conn_ind]
+          
+                  self.assertTrue( str(0.05) in connection.delay)
+                  
+                  self.assertTrue( 2==connection.weight)
+          
+          ######## Test 2 convergent connection_probability =0
+          
+          network.projections=[]
+          
+          returned_projs=oc.add_probabilistic_projection_list(net=network, 
+                                                              presynaptic_population=presynaptic_population, 
+                                                              postsynaptic_population=postsynaptic_population, 
+                                                              synapse_list=synapse_list,  
+                                                              connection_probability=0,
+                                                              delay=0.05,
+                                                              weight=2,
+                                                              std_delay=None,
+                                                              std_weight=None)
+          
+                                            
+          self.assertEqual(len(network.projections),0)
+          
+          self.assertTrue( returned_projs == None)
+          
+          ######## Test 3 delay list:
+          
+          returned_projs=oc.add_probabilistic_projection_list(net=network, 
+                                                              presynaptic_population=presynaptic_population, 
+                                                              postsynaptic_population=postsynaptic_population, 
+                                                              synapse_list=synapse_list,  
+                                                              connection_probability=0.5,
+                                                              delay=[0.05,0.01],
+                                                              weight=2,
+                                                              std_delay=None,
+                                                              std_weight=None)
+          
+                                            
+          self.assertEqual(len(network.projections),2)
+          
+          self.assertEqual(len(network.projections[0].connection_wds), len(network.projections[1].connection_wds) )
+          
+          for proj_ind in range(0,len(network.projections) ):
+          
+              self.assertTrue( 'Syn_1' in network.projections[proj_ind].id or 'Syn_2' in network.projections[proj_ind].id )
+          
+              self.assertTrue( network.projections[proj_ind].synapse == 'Syn_1' or network.projections[proj_ind].synapse == 'Syn_2' )
+              
+              for conn_ind in range(0,len(network.projections[proj_ind].connection_wds)):
+              
+                  connection=network.projections[proj_ind].connection_wds[conn_ind]
+                  
+                  if 'Syn_1' in network.projections[proj_ind].id:
+          
+                     self.assertTrue( str(0.05) in connection.delay)
+                     
+                  if 'Syn_2' in network.projections[proj_ind].id:
+                  
+                     self.assertTrue( str(0.01) in connection.delay)
+                  
+                  self.assertTrue( 2==connection.weight)
+          
+          ######## Test 3 weight list:
+          
+          network.projections=[]
+          
+          returned_projs=oc.add_probabilistic_projection_list(net=network, 
+                                                              presynaptic_population=presynaptic_population, 
+                                                              postsynaptic_population=postsynaptic_population, 
+                                                              synapse_list=synapse_list,  
+                                                              connection_probability=0.5,
+                                                              delay=0.05,
+                                                              weight=[2,2.5],
+                                                              std_delay=None,
+                                                              std_weight=None)
+          
+                                            
+          self.assertEqual(len(network.projections),2)
+          
+          self.assertEqual(len(network.projections[0].connection_wds), len(network.projections[1].connection_wds) )
+          
+          for proj_ind in range(0,len(network.projections) ):
+          
+              self.assertTrue( 'Syn_1' in network.projections[proj_ind].id or 'Syn_2' in network.projections[proj_ind].id )
+          
+              self.assertTrue( network.projections[proj_ind].synapse == 'Syn_1' or network.projections[proj_ind].synapse == 'Syn_2' )
+              
+              for conn_ind in range(0,len(network.projections[proj_ind].connection_wds)):
+              
+                  connection=network.projections[proj_ind].connection_wds[conn_ind]
+                  
+                  if 'Syn_1' in network.projections[proj_ind].id:
+          
+                     self.assertTrue( 2==connection.weight )
+                     
+                  if 'Syn_2' in network.projections[proj_ind].id:
+                  
+                     self.assertTrue( 2.5==connection.weight )
+                  
+                  self.assertTrue( str(0.05) in connection.delay)
+          
+          ######## Test 3 std weight:
+          
+          network.projections=[]
+          
+          returned_projs=oc.add_probabilistic_projection_list(net=network, 
+                                                              presynaptic_population=presynaptic_population, 
+                                                              postsynaptic_population=postsynaptic_population, 
+                                                              synapse_list=synapse_list,  
+                                                              connection_probability=0.5,
+                                                              delay=0.05,
+                                                              weight=[2,2.5],
+                                                              std_delay=None,
+                                                              std_weight=0.3)
+          
+                                            
+          self.assertEqual(len(network.projections),2)
+          
+          self.assertEqual(len(network.projections[0].connection_wds), len(network.projections[1].connection_wds) )
+          
+          for proj_ind in range(0,len(network.projections) ):
+          
+              self.assertTrue( 'Syn_1' in network.projections[proj_ind].id or 'Syn_2' in network.projections[proj_ind].id )
+          
+              self.assertTrue( network.projections[proj_ind].synapse == 'Syn_1' or network.projections[proj_ind].synapse == 'Syn_2' )
+              
+              for conn_ind in range(0,len(network.projections[proj_ind].connection_wds)):
+              
+                  connection=network.projections[proj_ind].connection_wds[conn_ind]
+                  
+                  if 'Syn_1' in network.projections[proj_ind].id:
+          
+                     self.assertTrue( 2 != connection.weight or 2== connection.weight )
+                     
+                  if 'Syn_2' in network.projections[proj_ind].id:
+                  
+                     self.assertTrue( 2.5 != connection.weight or 2.5 ==connection.weight )
+                  
+                  self.assertTrue( str(0.05) in connection.delay)
+                  
+          ######## Test 4 std delay:
+          
+          network.projections=[]
+          
+          returned_projs=oc.add_probabilistic_projection_list(net=network, 
+                                                              presynaptic_population=presynaptic_population, 
+                                                              postsynaptic_population=postsynaptic_population, 
+                                                              synapse_list=synapse_list,  
+                                                              connection_probability=0.5,
+                                                              delay=[0.05,0.1],
+                                                              weight=[2,2.5],
+                                                              std_delay=[0.1,0.2],
+                                                              std_weight=None)
+          
+                                            
+          self.assertEqual(len(network.projections),2)
+          
+          self.assertEqual(len(network.projections[0].connection_wds), len(network.projections[1].connection_wds) )
+          
+          for proj_ind in range(0,len(network.projections) ):
+          
+              self.assertTrue( 'Syn_1' in network.projections[proj_ind].id or 'Syn_2' in network.projections[proj_ind].id )
+          
+              self.assertTrue( network.projections[proj_ind].synapse == 'Syn_1' or network.projections[proj_ind].synapse == 'Syn_2' )
+              
+              for conn_ind in range(0,len(network.projections[proj_ind].connection_wds)):
+              
+                  connection=network.projections[proj_ind].connection_wds[conn_ind]
+                  
+                  if 'Syn_1' in network.projections[proj_ind].id:
+          
+                     self.assertTrue(  2==connection.weight )
+                     
+                     self.assertTrue( str(0.05) in connection.delay or str(0.05) not in connection.delay)
+                     
+                  if 'Syn_2' in network.projections[proj_ind].id:
+                  
+                     self.assertTrue( 2.5 ==connection.weight )
+                  
+                     self.assertTrue( str(0.1) in connection.delay or str(0.1) not in connection.delay)
           
           
           
