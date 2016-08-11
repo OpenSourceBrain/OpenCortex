@@ -32,6 +32,8 @@ import operator
 all_cells = {}
 all_included_files = []
 
+cell_ids_vs_nml_docs = {}
+
     
 def add_connection(projection, 
                    id, 
@@ -45,6 +47,12 @@ def add_connection(projection,
                    weight,
                    pre_fraction=0.5,
                    post_fraction=0.5):
+    
+
+    opencortex.print_comment_v("Adding single conn %s in proj %s: %s(%s:%s:%s) -> %s(%s:%s:%s), delay: %sms, weight: %s"%(id, projection.id, \
+                              presynaptic_population.id, pre_cell_id, pre_seg_id, pre_fraction,\
+                              postsynaptic_population.id, post_cell_id, post_seg_id, post_fraction,
+                              delay, weight))  
     
     connection = neuroml.ConnectionWD(id=id, \
                             pre_cell_id="../%s/%i/%s"%(presynaptic_population.id, pre_cell_id, presynaptic_population.component), \
@@ -130,15 +138,16 @@ def add_probabilistic_projection(net,
 
 ###################################################################################################################################################################   
 
-def add_chem_projection0(net,
-                        prefix,
-                        presynaptic_population,
+def add_chem_projection0(nml_doc,
+                         net,
+                         prefix,
+                         presynaptic_population,
                         postsynaptic_population,
                         targeting_mode,
                         synapse_list,
                         number_conns_per_cell,
-                        pre_segment_groups=None,
-                        post_segment_groups=None,
+                        pre_segment_group,
+                        post_segment_group,
                         delays_dict=None,
                         weights_dict=None):
                             
@@ -148,19 +157,54 @@ def add_chem_projection0(net,
     
     projections = []
     
+    
+    pre_cell = cell_ids_vs_nml_docs[presynaptic_population.component].get_by_id(presynaptic_population.component)
+    post_cell = cell_ids_vs_nml_docs[postsynaptic_population.component].get_by_id(postsynaptic_population.component)
+
+
+    pre_segs = extract_seg_ids(pre_cell,
+                [pre_segment_group],
+                "segGroups")
+    post_segs = extract_seg_ids(post_cell,
+                [post_segment_group],
+                "segGroups")
+
+
+    pre_seg_target_dict = make_target_dict(pre_cell, pre_segs)
+    post_seg_target_dict = make_target_dict(post_cell, post_segs)
+    print pre_seg_target_dict, post_seg_target_dict
+    
     for synapse in synapse_list:
 
         proj_id = "%s_%s_%s"%(prefix,presynaptic_population.id, postsynaptic_population.id) if len(synapse_list)==1 else \
             "%s_%s_%s_%s"%(prefix,presynaptic_population.id, postsynaptic_population.id,synapse)
+        
+        opencortex.print_comment_v("Adding projection: %s: %s (%s) -> %s (%s)"%(proj_id,pre_cell.id,pre_segs,post_cell.id,post_segs))
         
         proj = neuroml.Projection(id=proj_id, 
                           presynaptic_population=presynaptic_population.id, 
                           postsynaptic_population=postsynaptic_population.id, 
                           synapse=synapse)
                           
-        net.projections.append(proj)
                             
         projections.append(proj)
+
+    subset_dict ={}#{'dendrite_group':number_conns_per_cell}
+    
+    subset_dict[post_segment_group] = number_conns_per_cell
+    
+    
+    add_chem_projection(net,
+                    projections,
+                    presynaptic_population,
+                    postsynaptic_population,
+                    targeting_mode,
+                    synapse_list,
+                    pre_seg_target_dict,
+                    post_seg_target_dict,
+                    subset_dict,
+                    delays_dict,
+                    weights_dict)
         
     return projections 
 
@@ -209,6 +253,7 @@ def add_chem_projection(net,
     
     weights_dict - optional dictionary that specifies the weights (in ms) for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}.'''    
     
+    opencortex.print_comment_v("Adding %s projection with %s conns: %s: %s -> %s, %s"%(targeting_mode, subset_dict, proj_array,presynaptic_population.id,postsynaptic_population.id,synapse_list))
     
     if targeting_mode=='divergent':
        
@@ -1511,6 +1556,12 @@ def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id,use_prototypes=Tru
                 nml_doc.includes.append(neuroml.IncludeType(new_loc))
                 if not new_loc in all_included_files:
                     all_included_files.append(new_loc)
+                    
+    
+    nml2_doc_cell_full =  pynml.read_neuroml2_file(cell_nml2_path, include_includes=True)
+    
+    cell_ids_vs_nml_docs[cell_id] = nml2_doc_cell_full
+    
 
 #######################################################################################################################################                    
 def remove_component_dirs(dir_to_project_nml2,
