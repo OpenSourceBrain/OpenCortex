@@ -112,5 +112,13 @@ if __name__ == '__main__':
                  num_bask=0,
                  duration = 50,
                  global_delay = 2)
+                 
+    if '-large' in sys.argv:
+        
+        generate(num_rs = 10,
+                 num_bask=10,
+                 duration = 50,
+                 global_delay = 2)
+                 
     else:
         generate(global_delay = 5)
