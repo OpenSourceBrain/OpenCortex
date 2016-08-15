@@ -411,6 +411,8 @@ def add_chem_projection(net,
     
     Case II, targeting mode = 'convergent' - the number of synaptic connections per target segment group per each postsynaptic cell;
     
+    alternatively, subset_dict can be a number that specifies the total number of synaptic connections (either divergent or convergent) irrespective of target segment groups.
+    
     delays_dict - optional dictionary that specifies the delays (in ms) for individual synapse components, e.g. {'NMDA':5.0} or {'AMPA':3.0,'NMDA':5};
     
     weights_dict - optional dictionary that specifies the weights (in ms) for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}.'''    
@@ -436,131 +438,187 @@ def add_chem_projection(net,
        pop2_size=presynaptic_population.size
        
        pop2_id=presynaptic_population.id
-                 
-    total_given=int(sum(subset_dict.values() ))
+    
+    if isinstance(subset_dict, dict):
+    
+       numberConnections={}
+    
+       for subset in subset_dict.keys():
+        
+           numberConnections[subset]=int(subset_dict[subset])
+           
+    if isinstance(subset_dict, int) or isinstance(subset_dict, float):
+    
+       numberConnections= int(subset_dict)
     
     count=0
     
-    ##### allows only one pre segment group per presynaptic population e.g. distal_axon
-    if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
-    
-       pre_subset_dict={}
-       
-       pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_given
-        
-    else:
-    
-       pre_subset_dict=None
-    
     for i in range(0, pop1_size):
     
-        pop2_cell_ids=range(0,pop2_size)
+        total_conns=0
         
-        if pop1_id == pop2_id:
-           
-           pop2_cell_ids.remove(i)
-           
-        if pop2_cell_ids != []:
-           
-           if len(pop2_cell_ids) >= total_given:
-              ##### get unique set of cells
-              pop2_cells=random.sample(pop2_cell_ids,total_given)
-           
-           else:
-              #### any cell might appear several times
-              pop2_cells=[]
-              
-              for value in range(0,total_given):
-           
-                  cell_id=random.sample(pop2_cell_ids,1)
+        if isinstance(subset_dict, dict):
+        
+           conn_subsets={}
+    
+           for subset in subset_dict.keys():
+            
+               if subset_dict[subset] != numberConnections[subset]:
                
-                  pop2_cells.extend(cell_id)
-        
-           post_target_seg_array, post_target_fractions=get_target_segments(post_seg_target_dict,subset_dict)
-           
-           if pre_subset_dict !=None:
-           
-              pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
-            
-           else:
-           
-               pre_target_seg_array=None
+                  if random.random() < subset_dict[subset] - numberConnections[subset]:
                
-               pre_target_fractions=None  
-        
-           for j in pop2_cells:
-        
-               post_seg_id=post_target_seg_array[0]
-            
-               del post_target_seg_array[0]
-            
-               post_fraction_along=post_target_fractions[0]
-            
-               del post_target_fractions[0]  
+                     conn_subsets[subset]=numberConnections[subset]+1
+                  
+                  else:
                
-               if pre_target_seg_array != None and pre_target_fractions != None:
-                
-                  pre_seg_id=pre_target_seg_array[0]
-            
-                  del pre_target_seg_array[0]
-            
-                  pre_fraction_along=pre_target_fractions[0]
-            
-                  del pre_target_fractions[0]
+                     conn_subsets[subset]=numberConnections[subset]
                   
                else:
                
-                  pre_seg_id=0
-                  
-                  pre_fraction_along=0.5
-                
-               if targeting_mode=='divergent':
-                   
-                  pre_cell_id=i
-                      
-                  post_cell_id=j
-                      
-               if targeting_mode=='convergent':
-                   
-                  pre_cell_id=j
-                      
-                  post_cell_id=i  
-               
-               syn_counter=0
-                        
-               for synapse_id in synapse_list:
+                  conn_subsets[subset]=numberConnections[subset]
             
-                   delay=0
+               total_conns=total_conns+conn_subsets[subset]
+        
+        if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+        
+           conn_subsets=0
+        
+           if subset_dict != numberConnections:
+               
+              if random.random() < subset_dict - numberConnections:
+               
+                 conn_subsets=numberConnections+1
+                  
+              else:
+               
+                 conn_subsets=numberConnections
+                  
+           else:
+               
+              conn_subsets=numberConnections
+            
+           total_conns=total_conns+conn_subsets
+           
+        if total_conns != 0:    
+        
+           ##### allows only one pre segment group per presynaptic population e.g. distal_axon
+           if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
+    
+              pre_subset_dict={}
+       
+              pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_conns
+        
+           else:
+    
+              pre_subset_dict=None
+    
+           pop2_cell_ids=range(0,pop2_size)
+        
+           if pop1_id == pop2_id:
+           
+              pop2_cell_ids.remove(i)
+           
+           if pop2_cell_ids != []:
+           
+              if len(pop2_cell_ids) >= total_conns:
+                 ##### get unique set of cells
+                 pop2_cells=random.sample(pop2_cell_ids,total_conns)
+           
+              else:
+                 #### any cell might appear several times
+                 pop2_cells=[]
+              
+                 for value in range(0,total_conns):
+           
+                     cell_id=random.sample(pop2_cell_ids,1)
+               
+                     pop2_cells.extend(cell_id)
+        
+              post_target_seg_array, post_target_fractions=get_target_segments(post_seg_target_dict,conn_subsets)
+           
+              if pre_subset_dict !=None:
+           
+                 pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+            
+              else:
+           
+                 pre_target_seg_array=None
+               
+                 pre_target_fractions=None  
+        
+              for j in pop2_cells:
+        
+                  post_seg_id=post_target_seg_array[0]
+            
+                  del post_target_seg_array[0]
+            
+                  post_fraction_along=post_target_fractions[0]
+            
+                  del post_target_fractions[0]  
+               
+                  if pre_target_seg_array != None and pre_target_fractions != None:
                 
-                   weight=1
+                     pre_seg_id=pre_target_seg_array[0]
+            
+                     del pre_target_seg_array[0]
+            
+                     pre_fraction_along=pre_target_fractions[0]
+            
+                     del pre_target_fractions[0]
+                  
+                  else:
+               
+                     pre_seg_id=0
+                  
+                     pre_fraction_along=0.5
                 
-                   if delays_dict !=None:
-                      for synapseComp in delays_dict.keys():
-                          if synapseComp in synapse_id:
-                             delay=delays_dict[synapseComp]
+                  if targeting_mode=='divergent':
+                   
+                     pre_cell_id=i
+                      
+                     post_cell_id=j
+                      
+                  if targeting_mode=='convergent':
+                   
+                     pre_cell_id=j
+                      
+                     post_cell_id=i  
+               
+                  syn_counter=0
+                        
+                  for synapse_id in synapse_list:
+            
+                      delay=0
+                
+                      weight=1
+                
+                      if delays_dict !=None:
+                         for synapseComp in delays_dict.keys():
+                             if synapseComp in synapse_id:
+                                delay=delays_dict[synapseComp]
                           
-                   if weights_dict !=None:
-                      for synapseComp in weights_dict.keys():
-                          if synapseComp in synapse_id:
-                             weight=weights_dict[synapseComp]
+                      if weights_dict !=None:
+                         for synapseComp in weights_dict.keys():
+                             if synapseComp in synapse_id:
+                                weight=weights_dict[synapseComp]
                      
-                   add_connection(proj_array[syn_counter], 
-                                  count, 
-                                  presynaptic_population, 
-                                  pre_cell_id, 
-                                  pre_seg_id, 
-                                  postsynaptic_population, 
-                                  post_cell_id, 
-                                  post_seg_id,
-                                  delay = delay,
-                                  weight = weight,
-                                  pre_fraction=pre_fraction_along,
-                                  post_fraction=post_fraction_along)
+                      add_connection(proj_array[syn_counter], 
+                                     count, 
+                                     presynaptic_population, 
+                                     pre_cell_id, 
+                                     pre_seg_id, 
+                                     postsynaptic_population, 
+                                     post_cell_id, 
+                                     post_seg_id,
+                                     delay = delay,
+                                     weight = weight,
+                                     pre_fraction=pre_fraction_along,
+                                     post_fraction=post_fraction_along)
                     
                                   
-                   syn_counter+=1               
+                      syn_counter+=1               
                      
-               count+=1
+                  count+=1
                
                
     if count !=0:   
@@ -607,7 +665,9 @@ def add_elect_projection(net,
     
     Case I, targeting mode = 'divergent' - the number of synaptic connections made by each presynaptic cell per given target segment group of postsynaptic cells;
     
-    Case II, targeting mode = 'convergent' - the number of synaptic connections per target segment group per each postsynaptic cell.'''    
+    Case II, targeting mode = 'convergent' - the number of synaptic connections per target segment group per each postsynaptic cell;
+    
+    alternatively, subset_dict can be a number that specifies the total number of synaptic connections (either divergent or convergent) irrespective of target segment groups.'''    
     
     if targeting_mode=='divergent':
        
@@ -631,36 +691,64 @@ def add_elect_projection(net,
                      
     count=0
     
-    numberConnections={}
+    if isinstance(subset_dict, dict):
     
-    for subset in subset_dict.keys():
+       numberConnections={}
+    
+       for subset in subset_dict.keys():
         
-        numberConnections[subset]=int(subset_dict[subset])
+           numberConnections[subset]=int(subset_dict[subset])
+           
+    if isinstance(subset_dict, int) or isinstance(subset_dict, float):
+    
+       numberConnections= int(subset_dict)
       
     for i in range(0, pop1_size):
         
         total_conns=0
         
-        conn_subsets={}
+        if isinstance(subset_dict, dict):
+        
+           conn_subsets={}
     
-        for subset in subset_dict.keys():
+           for subset in subset_dict.keys():
             
-            if subset_dict[subset] != numberConnections[subset]:
+               if subset_dict[subset] != numberConnections[subset]:
                
-               if random.random() < subset_dict[subset] - numberConnections[subset]:
+                  if random.random() < subset_dict[subset] - numberConnections[subset]:
                
-                  conn_subsets[subset]=numberConnections[subset]+1
+                     conn_subsets[subset]=numberConnections[subset]+1
+                  
+                  else:
+               
+                     conn_subsets[subset]=numberConnections[subset]
                   
                else:
                
                   conn_subsets[subset]=numberConnections[subset]
-                  
-            else:
+            
+               total_conns=total_conns+conn_subsets[subset]
+        
+        if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+        
+           conn_subsets=0
+        
+           if subset_dict != numberConnections:
                
-               conn_subsets[subset]=numberConnections[subset]
+              if random.random() < subset_dict - numberConnections:
+               
+                 conn_subsets=numberConnections+1
+                  
+              else:
+               
+                 conn_subsets=numberConnections
+                  
+           else:
+               
+              conn_subsets=numberConnections
             
-            total_conns=total_conns+conn_subsets[subset]
-            
+           total_conns=total_conns+conn_subsets
+           
         if total_conns != 0:    
         
            if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
@@ -819,6 +907,8 @@ def add_chem_spatial_projection(net,
     
     Case II, targeting mode = 'convergent' - the desired number of synaptic connections per target segment group per each postsynaptic cell;
     
+    alternatively, subset_dict can be a number that specifies the total number of synaptic connections (either divergent or convergent) irrespective of target segment groups.
+    
     Note: the chemical connection is made only if distance-dependent probability is higher than some random number random.random(); thus, the actual numbers of connections made
     
     according to the distance-dependent rule might be smaller than the numbers of connections specified by subset_dict; subset_dict defines the upper bound for the 
@@ -863,135 +953,191 @@ def add_chem_spatial_projection(net,
        
        pop2_cell_positions=pre_cell_positions
                  
-    total_given=int( sum(subset_dict.values()))
+    if isinstance(subset_dict, dict):
+    
+       numberConnections={}
+    
+       for subset in subset_dict.keys():
+        
+           numberConnections[subset]=int(subset_dict[subset])
+           
+    if isinstance(subset_dict, int) or isinstance(subset_dict, float):
+    
+       numberConnections= int(subset_dict)
     
     count=0
     
-    if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
-    
-       pre_subset_dict={}
-       
-       pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_given
-        
-    else:
-    
-       pre_subset_dict=None
-    
     for i in range(0, pop1_size):
     
-        pop2_cell_ids=range(0,pop2_size)
+        total_conns=0
         
-        if pop1_id == pop2_id:
-           
-           pop2_cell_ids.remove(i)
-           
-        if pop2_cell_ids !=[]:
+        if isinstance(subset_dict, dict):
+        
+           conn_subsets={}
     
-           cell1_position=pop1_cell_positions[i]
-        
-           post_target_seg_array,post_fractions_along=get_target_segments(post_seg_target_dict,subset_dict)
-           
-           if pre_subset_dict !=None:
-           
-              pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+           for subset in subset_dict.keys():
             
-           else:
-           
-              pre_target_seg_array=None
+               if subset_dict[subset] != numberConnections[subset]:
                
-              pre_target_fractions=None 
-        
-           conn_counter=0
-        
-           for j in pop2_cell_ids:
-        
-               cell2_position=pop2_cell_positions[j]
-        
-               r=math.sqrt(sum([(a - b)**2 for a,b in zip(cell1_position,cell2_position)]))
-            
-               if eval(distance_rule) >= 1 or random.random() < eval(distance_rule):
-                  
-                  conn_counter+=1
-                     
-                  post_seg_id=post_target_seg_array[0]
-                     
-                  del post_target_seg_array[0]
-                     
-                  post_fraction_along=post_fractions_along[0]
-                     
-                  del post_fractions_along[0]
-                  
-                  if pre_target_seg_array != None and pre_target_fractions != None:
-                
-                     pre_seg_id=pre_target_seg_array[0]
-            
-                     del pre_target_seg_array[0]
-            
-                     pre_fraction_along=pre_target_fractions[0]
-            
-                     del pre_target_fractions[0]
+                  if random.random() < subset_dict[subset] - numberConnections[subset]:
+               
+                     conn_subsets[subset]=numberConnections[subset]+1
                   
                   else:
                
-                     pre_seg_id=0
+                     conn_subsets[subset]=numberConnections[subset]
                   
-                     pre_fraction_along=0.5
-                       
-                  if targeting_mode=='divergent':
-                   
-                     pre_cell_id=i
-                      
-                     post_cell_id=j
-                      
-                  if targeting_mode=='convergent':
-                   
-                     pre_cell_id=j
-                      
-                     post_cell_id=i
+               else:
+               
+                  conn_subsets[subset]=numberConnections[subset]
+            
+               total_conns=total_conns+conn_subsets[subset]
+        
+        if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+        
+           conn_subsets=0
+        
+           if subset_dict != numberConnections:
+               
+              if random.random() < subset_dict - numberConnections:
+               
+                 conn_subsets=numberConnections+1
+                  
+              else:
+               
+                 conn_subsets=numberConnections
+                  
+           else:
+               
+              conn_subsets=numberConnections
+            
+           total_conns=total_conns+conn_subsets
+           
+        if total_conns != 0:    
+        
+           if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
+    
+              pre_subset_dict={}
+       
+              pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_conns
+        
+           else:
+    
+             pre_subset_dict=None
+    
+           pop2_cell_ids=range(0,pop2_size)
+        
+           if pop1_id == pop2_id:
+           
+              pop2_cell_ids.remove(i)
+           
+           if pop2_cell_ids !=[]:
+    
+              cell1_position=pop1_cell_positions[i]
+        
+              post_target_seg_array,post_fractions_along=get_target_segments(post_seg_target_dict,conn_subsets)
+           
+              if pre_subset_dict !=None:
+           
+                  pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+            
+              else:
+           
+                  pre_target_seg_array=None
+               
+                  pre_target_fractions=None 
+        
+              conn_counter=0
+        
+              for j in pop2_cell_ids:
+        
+                  cell2_position=pop2_cell_positions[j]
+        
+                  r=math.sqrt(sum([(a - b)**2 for a,b in zip(cell1_position,cell2_position)]))
+            
+                  if eval(distance_rule) >= 1 or random.random() < eval(distance_rule):
+                  
+                     conn_counter+=1
                      
-                  syn_counter=0
-                                
-                  for synapse_id in synapse_list:
+                     post_seg_id=post_target_seg_array[0]
+                     
+                     del post_target_seg_array[0]
+                     
+                     post_fraction_along=post_fractions_along[0]
+                     
+                     del post_fractions_along[0]
                   
-                      delay=0
+                     if pre_target_seg_array != None and pre_target_fractions != None:
+                
+                        pre_seg_id=pre_target_seg_array[0]
+            
+                        del pre_target_seg_array[0]
+            
+                        pre_fraction_along=pre_target_fractions[0]
+            
+                        del pre_target_fractions[0]
+                  
+                     else:
+               
+                        pre_seg_id=0
+                  
+                        pre_fraction_along=0.5
+                       
+                     if targeting_mode=='divergent':
+                   
+                        pre_cell_id=i
                       
-                      weight=1
+                        post_cell_id=j
                       
-                      if delays_dict !=None:
-                         for synapseComp in delays_dict.keys():
-                             if synapseComp in synapse_id:
-                                delay=delays_dict[synapseComp]
+                     if targeting_mode=='convergent':
+                   
+                        pre_cell_id=j
+                      
+                        post_cell_id=i
+                     
+                     syn_counter=0
                                 
-                      if weights_dict !=None:
-                         for synapseComp in weights_dict.keys():
-                             if synapseComp in synapse_id:
-                                weight=weights_dict[synapseComp]
+                     for synapse_id in synapse_list:
+                  
+                         delay=0
+                      
+                         weight=1
+                      
+                         if delays_dict !=None:
+                            for synapseComp in delays_dict.keys():
+                                if synapseComp in synapse_id:
+                                   delay=delays_dict[synapseComp]
+                                
+                         if weights_dict !=None:
+                            for synapseComp in weights_dict.keys():
+                                if synapseComp in synapse_id:
+                                   weight=weights_dict[synapseComp]
                        
                         
-                      add_connection(proj_array[syn_counter], 
-                                     count, 
-                                     presynaptic_population, 
-                                     pre_cell_id, 
-                                     pre_seg_id, 
-                                     postsynaptic_population, 
-                                     post_cell_id, 
-                                     post_seg_id,
-                                     delay = delay,
-                                     weight = weight,
-                                     pre_fraction=pre_fraction_along,
-                                     post_fraction=post_fraction_along)
+                         add_connection(proj_array[syn_counter], 
+                                        count, 
+                                        presynaptic_population, 
+                                        pre_cell_id, 
+                                        pre_seg_id, 
+                                        postsynaptic_population, 
+                                        post_cell_id, 
+                                        post_seg_id,
+                                        delay = delay,
+                                        weight = weight,
+                                        pre_fraction=pre_fraction_along,
+                                        post_fraction=post_fraction_along)
                                      
                                      
-                      syn_counter+=1
+                         syn_counter+=1
                                      
-                  count+=1
+                     count+=1
                      
-               if conn_counter==total_given:
-                  break
+                  if conn_counter==total_conns:
+                     break
                
     if count !=0:
                    
-       for synapse_ind in range(0,len(synapseList)):
+       for synapse_ind in range(0,len(synapse_list)):
     
            net.projections.append(proj_array[synapse_ind])
 
@@ -1037,6 +1183,8 @@ def add_elect_spatial_projection(net,
     
     Case II, targeting mode = 'convergent' - the number of synaptic connections per target segment group per each postsynaptic cell;
     
+    alternatively, subset_dict can be a number that specifies the total number of synaptic connections (either divergent or convergent) irrespective of target segment groups.
+    
     Note: the electrical connection is made only if distance-dependent probability is higher than some random number random.random(); thus, the actual numbers of connections made
     
     according to the distance-dependent rule might be smaller than the numbers of connections specified by subset_dict; subset_dict defines the upper bound for the 
@@ -1079,35 +1227,63 @@ def add_elect_spatial_projection(net,
                      
     count=0
     
-    numberConnections={}
+    if isinstance(subset_dict, dict):
     
-    for subset in subset_dict.keys():
+       numberConnections={}
+    
+       for subset in subset_dict.keys():
         
-        numberConnections[subset]=int(subset_dict[subset])
+           numberConnections[subset]=int(subset_dict[subset])
+           
+    if isinstance(subset_dict, int) or isinstance(subset_dict, float):
+    
+       numberConnections= int(subset_dict)
       
     for i in range(0, pop1_size):
         
         total_conns=0
         
-        conn_subsets={}
+        if isinstance(subset_dict, dict):
+        
+           conn_subsets={}
     
-        for subset in subset_dict.keys():
+           for subset in subset_dict.keys():
             
-            if subset_dict[subset] != numberConnections[subset]:
+               if subset_dict[subset] != numberConnections[subset]:
                
-               if random.random() < subset_dict[subset] - numberConnections[subset]:
+                  if random.random() < subset_dict[subset] - numberConnections[subset]:
                
-                  conn_subsets[subset]=numberConnections[subset]+1
+                     conn_subsets[subset]=numberConnections[subset]+1
+                  
+                  else:
+               
+                     conn_subsets[subset]=numberConnections[subset]
                   
                else:
                
                   conn_subsets[subset]=numberConnections[subset]
-                  
-            else:
-               
-               conn_subsets[subset]=numberConnections[subset]
             
-            total_conns=total_conns+conn_subsets[subset]
+               total_conns=total_conns+conn_subsets[subset]
+        
+        if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+        
+           conn_subsets=0
+        
+           if subset_dict != numberConnections:
+               
+              if random.random() < subset_dict - numberConnections:
+               
+                 conn_subsets=numberConnections+1
+                  
+              else:
+               
+                 conn_subsets=numberConnections
+                  
+           else:
+               
+              conn_subsets=numberConnections
+            
+           total_conns=total_conns+conn_subsets
             
         if total_conns != 0:  
         
@@ -1159,7 +1335,7 @@ def add_elect_spatial_projection(net,
                
                      del post_target_seg_array[0]
                
-                     fraction_along=post_target_fractions[0]
+                     post_fraction_along=post_target_fractions[0]
                
                      del post_target_fractions[0]  
                      
@@ -1187,7 +1363,7 @@ def add_elect_spatial_projection(net,
                       
                      if targeting_mode=='convergent':
                    
-                        spre_cell_id=j
+                        pre_cell_id=j
                       
                         post_cell_id=i  
                      
@@ -1242,9 +1418,8 @@ def make_target_dict(cell_object,
     
 ############################################################################################################################
 
-def get_target_cells(pop_size,
+def get_target_cells(population,
                      fraction_to_target,
-                     cell_positions=None,
                      list_of_xvectors=None,
                      list_of_yvectors=None,
                      list_of_zvectors=None):
@@ -1257,26 +1432,32 @@ def get_target_cells(pop_size,
     Similarly, the input variables list_of_yvectors and list_of_zvectors store the lists whose elements define the left and right margins of the target rectangular regions along
     the y and z dimensions, respectively.'''
     
-    if cell_positions==None:
+    if list_of_xvectors==None or list_of_yvectors==None or list_of_zvectors==None:
     
-       target_cells=random.sample(range(pop_size),int(round(fraction_to_target*pop_size)   )   )
+       target_cells=random.sample(range(population.size),int(round(fraction_to_target*population.size)   )   )
        
     else:
+    
+       cell_instances=population.instances
        
        region_specific_targets_per_cell_group=[]
        
        for region in range(0,len(list_of_xvectors)):
        
-           for cell in range(0,pop_size):
+           for cell in range(0,len(cell_instances)):
            
-               if (list_of_xvectors[region][0] <  cell_positions[cell,0]) and \
-                  (cell_positions[cell,0] < list_of_xvectors[region][1]):
+               cell_inst=cell_instances[cell]
                
-                   if (list_of_yvectors[region][0] <  cell_positions[cell,1]) and \
-                      (cell_positions[cell,1] <  list_of_yvectors[region][1]) :
+               location=cell_inst.location
+           
+               if (list_of_xvectors[region][0] <  location.x) and \
+                  (location.x < list_of_xvectors[region][1]):
+                   ########## assumes that the surface of the cortical column starts at the zero level and deeper layers are found at increasingly negative values
+                   if (list_of_yvectors[region][0] >  location.y) and \
+                      (location.y > list_of_yvectors[region][1]) :
                 
-                      if (list_of_zvectors[region][0] <  cell_positions[cell,2]) and \
-                         (cell_positions[cell,2] < list_of_zvectors[region][1]):
+                      if (list_of_zvectors[region][0] < location.z) and \
+                         (location.z < list_of_zvectors[region][1]):
                      
                          region_specific_targets_per_cell_group.append(cell)
                                                                         
@@ -1412,62 +1593,119 @@ def get_target_segments(seg_specifications,
     target_segs_per_cell=[]
     target_fractions_along_per_cell=[]
     
-    for target_group in subset_dict.keys():
+    if isinstance(subset_dict,dict):
+    
+       for target_group in subset_dict.keys():
    
-        no_per_target_group=subset_dict[target_group]
+           no_per_target_group=subset_dict[target_group]
         
-        if target_group in seg_specifications.keys():
+           if target_group in seg_specifications.keys():
         
-           target_segs_per_group=[]
+              target_segs_per_group=[]
            
-           target_fractions_along_per_group=[]
+              target_fractions_along_per_group=[]
            
-           cumulative_length_dist=seg_specifications[target_group]['LengthDist']
+              cumulative_length_dist=seg_specifications[target_group]['LengthDist']
            
-           segment_list=seg_specifications[target_group]['SegList']
-           not_selected=True
-           while not_selected:
+              segment_list=seg_specifications[target_group]['SegList']
+              
+              not_selected=True
+              
+              while not_selected:
            
-                 p=random.random()
+                    p=random.random()
                  
-                 loc=p*cumulative_length_dist[-1]
+                    loc=p*cumulative_length_dist[-1]
                  
-                 if len(segment_list)==len(cumulative_length_dist):
+                    if len(segment_list)==len(cumulative_length_dist):
                     
-                    for seg_index in range(0,len(segment_list)):
+                       for seg_index in range(0,len(segment_list)):
                     
-                        current_dist_value=cumulative_length_dist[seg_index]
+                           current_dist_value=cumulative_length_dist[seg_index]
                         
-                        if seg_index ==0:
+                           if seg_index ==0:
                            
-                           previous_dist_value=0
+                              previous_dist_value=0
                            
-                        else:
+                           else:
                         
-                           previous_dist_value=cumulative_length_dist[seg_index-1]
+                              previous_dist_value=cumulative_length_dist[seg_index-1]
                         
-                        if loc > previous_dist_value and loc <  current_dist_value:
+                           if loc > previous_dist_value and loc <  current_dist_value:
                         
-                           segment_length=current_dist_value-previous_dist_value
+                              segment_length=current_dist_value-previous_dist_value
                            
-                           length_within_seg=loc-previous_dist_value
+                              length_within_seg=loc-previous_dist_value
                            
-                           post_fraction_along=float(length_within_seg)/segment_length
+                              post_fraction_along=float(length_within_seg)/segment_length
                            
-                           target_segs_per_group.append(segment_list[seg_index])
+                              target_segs_per_group.append(segment_list[seg_index])
                            
-                           target_fractions_along_per_group.append(post_fraction_along)
+                              target_fractions_along_per_group.append(post_fraction_along)
                            
-                           break
+                              break
                            
-                 if len(target_segs_per_group)==no_per_target_group:
-                    not_selected=False
-                    break
+                    if len(target_segs_per_group)==no_per_target_group:
+                       not_selected=False
+                       break
                               
-           target_segs_per_cell.extend(target_segs_per_group)
+              target_segs_per_cell.extend(target_segs_per_group)
            
-           target_fractions_along_per_cell.extend(target_fractions_along_per_group)
-             
+              target_fractions_along_per_cell.extend(target_fractions_along_per_group)
+    
+    
+    if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+    
+       total_num_per_target_groups=int(subset_dict)
+       
+       not_selected=True
+       
+       while not_selected:
+       
+          random_target_group= random.sample(seg_specifications.keys(),1)[0]
+          
+          cumulative_length_dist=seg_specifications[random_target_group]['LengthDist']
+           
+          segment_list=seg_specifications[random_target_group]['SegList']
+          
+          p=random.random()
+                 
+          loc=p*cumulative_length_dist[-1]
+                 
+          if len(segment_list)==len(cumulative_length_dist):
+                    
+             for seg_index in range(0,len(segment_list)):
+                    
+                 current_dist_value=cumulative_length_dist[seg_index]
+                        
+                 if seg_index ==0:
+                           
+                    previous_dist_value=0
+                           
+                 else:
+                        
+                     previous_dist_value=cumulative_length_dist[seg_index-1]
+                        
+                 if loc > previous_dist_value and loc <  current_dist_value:
+                        
+                    segment_length=current_dist_value-previous_dist_value
+                           
+                    length_within_seg=loc-previous_dist_value
+                           
+                    post_fraction_along=float(length_within_seg)/segment_length
+                           
+                    target_segs_per_cell.append(segment_list[seg_index])
+                           
+                    target_fractions_along_per_cell.append(post_fraction_along)
+                           
+                    break
+                           
+          if len(target_segs_per_cell) == total_num_per_target_groups:
+          
+              not_selected=False
+              
+              break
+              
     return target_segs_per_cell, target_fractions_along_per_cell
 
 ###########################################################################################################################
@@ -2226,33 +2464,58 @@ def find_constrained_cell_position(num_of_polygon_sides,cyl_radius,lower_bound_d
     '''Method to find a constrained position of the cell; used inside the method add_population_in_cylindrical_region( *args) . '''
 
     if num_of_polygon_sides ==None:
+    
+      found_cell_inside_cylinder=False
+      
+      dim3_val=lower_bound_dim3 + (upper_bound_dim3-lower_bound_dim3) * random.random()
+      
+      while not found_cell_inside_cylinder:
  
-       dim_dict={}
-        
-       dim1_val=cyl_radius*random.random()*math.cos(2*math.pi*random.random() )
+            dim_dict={}
+       
+            dim1_min=-cyl_radius
+       
+            dim2_min=-cyl_radius
+       
+            dim1_val=dim1_min + (2*cyl_radius)*random.random()
+            
+            dim2_val=dim2_min + (2*cyl_radius)*random.random()
+            
+            test_point_inside_cylinder=[dim1_val,dim2_val]
+            
+            if distance(test_point_inside_cylinder,[0,0]) <= cyl_radius:
+            
+               dim_dict={'dim1':dim1_val,'dim2':dim2_val,'dim3':dim3_val}
               
-       dim2_val=cyl_radius*random.random()*math.sin(2*math.pi*random.random() )
-              
-       dim3_val=lower_bound_dim3 + (upper_bound_dim3-lower_bound_dim3) * random.random()
-              
-       dim_dict={'dim1':dim1_val,'dim2':dim2_val,'dim3':dim3_val}
-              
+               found_cell_inside_cylinder=True  
     else:
            
        found_constrained_cell_loc=False
        
        while not found_constrained_cell_loc:
-          
-             dim_dict={}
-                 
-             dim1_val=cyl_radius*random.random()*math.cos(2*math.pi*random.random() )
-              
-             dim2_val=cyl_radius*random.random()*math.sin(2*math.pi*random.random() )
-              
+       
+             found_cell_inside_cylinder=False
+             
              dim3_val=lower_bound_dim3 + (upper_bound_dim3-lower_bound_dim3) * random.random()
-             
-             test_point=[dim1_val,dim2_val]
-             
+          
+             while not found_cell_inside_cylinder:
+ 
+                   dim1_min=-cyl_radius
+       
+                   dim2_min=-cyl_radius
+       
+                   dim1_val=dim1_min + (2*cyl_radius)*random.random()
+            
+                   dim2_val=dim2_min + (2*cyl_radius)*random.random()
+            
+                   test_point_inside_cylinder=[dim1_val,dim2_val]
+            
+                   if distance(test_point_inside_cylinder,[0,0]) <= cyl_radius:
+            
+                      test_point=test_point_inside_cylinder
+              
+                      found_cell_inside_cylinder=True
+              
              count_intersections=0
                  
              for side_index in range(0,len(constants_of_sides) ):
@@ -2470,8 +2733,24 @@ def add_advanced_inputs_to_population(net,
         else:
         
            cell_index=0
+           
+        if subset_dict != None and seg_length_dict == None and universal_target_segment == None and universal_fraction_along == None:
+        
+           if None in subset_dict.keys() and len(subset_dict.keys() ) ==1:
+           
+              for target_point in range(0,subset_dict[None]):
+           
+                  for input_index in range(0,len(input_list_array_final[cell_index]) ):
+            
+                       input = neuroml.Input(id=input_counters_final[cell_index][input_index], 
+                                             target="../%s/%i/%s"%(population.id, cell_id, population.component), 
+                                             destination="synapses")
+                                        
+                       input_list_array_final[cell_index][input_index].input.append(input)
+                    
+                       input_counters_final[cell_index][input_index]+=1
     
-        if seg_length_dict!=None and subset_dict !=None and universal_target_segment==None and universal_fraction_along==None:
+        elif seg_length_dict!=None and subset_dict !=None and universal_target_segment==None and universal_fraction_along==None:
             
            target_seg_array, target_fractions=get_target_segments(seg_length_dict,subset_dict)
            
@@ -2510,7 +2789,7 @@ def add_advanced_inputs_to_population(net,
         
     return input_list_array_final
     
-#######################################################################################################
+#####################################################################################################################################################
 def generate_network(reference, seed=1234, temperature='32degC'):
 
     del all_included_files[:]
