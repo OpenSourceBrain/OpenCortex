@@ -34,7 +34,7 @@ import opencortex.build as oc_build
 
 ################################################################################    
     
-def add_populations_in_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSoma=False): 
+def add_populations_in_rectangular_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSoma=True,cellBodiesOverlap=True,cellDiameterArray=None): 
 
    '''This method distributes the cells in rectangular layers. The input arguments:
    
@@ -50,7 +50,11 @@ def add_populations_in_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSo
    
    y_vector - a vector that stores the left and right bounds of the cortical column along y dimension
    
-   storeSoma - specifies whether soma positions have to be stored in the output array (default is set to False).
+   storeSoma - specifies whether soma positions have to be stored in the output array (default is set to True).
+   
+   cellBodiesOverlap - boolean value which defines whether cell somata can overlap; default is set to True;
+   
+   cellDiameterArray - optional dictionary of cell model diameters required when cellBodiesOverlap is set to False;
    
    This method returns the dictionary; each key is a unique cell population id and the corresponding value is a dictionary
    which refers to libNeuroML population object (key 'PopObj') and cell position array ('Positions') which by default is None.'''
@@ -59,32 +63,215 @@ def add_populations_in_layers(net,boundaryDict,popDict,x_vector,z_vector,storeSo
    
    for cell_pop in popDict.keys():
 
-       size, layer,cell_model = popDict[cell_pop]
+       size, layer,cell_model,compartmentalization = popDict[cell_pop]
     
        if size>0:
+         
           return_pops[cell_pop]={}
+           
           xl=x_vector[1]-x_vector[0]
+          
           yl=boundaryDict[layer][1]-boundaryDict[layer][0]
+          
           zl=z_vector[1]-z_vector[0]
           
           if storeSoma:
           
-             pop, cellPositions=oc_build.add_population_in_rectangular_region(net,cell_pop,cell_model,size,x_vector[0],boundaryDict[layer][0],z_vector[0],xl,yl,zl,storeSoma)
-             
+             pop, cellPositions=oc_build.add_population_in_rectangular_region(net,
+                                                                              cell_pop,
+                                                                              cell_model,
+                                                                              size,
+                                                                              x_vector[0],
+                                                                              boundaryDict[layer][0],
+                                                                              z_vector[0],
+                                                                              xl,
+                                                                              yl,
+                                                                              zl,
+                                                                              cell_bodies_overlap=cellBodiesOverlap,
+                                                                              store_soma=storeSoma,
+                                                                              population_dictionary=return_pops,
+                                                                              cell_diameter_dict=cellDiameterArray)
+                                                                              
           else:
-             pop=oc_build.add_population_in_rectangular_region(net,cell_pop,cell_model,size,x_vector[0],boundaryDict[layer][0],z_vector[0],xl,yl,zl,storeSoma)
-             
+          
+             pop=oc_build.add_population_in_rectangular_region(net,
+                                                               cell_pop,
+                                                               cell_model,
+                                                               size,
+                                                               x_vector[0],
+                                                               boundaryDict[layer][0],
+                                                               z_vector[0],
+                                                               xl,
+                                                               yl,
+                                                               zl,
+                                                               cell_bodies_overlap=cellBodiesOverlap,
+                                                               store_soma=storeSoma,
+                                                               population_dictionary=return_pops,
+                                                               cell_diameter_dict=cellDiameterArray)
+                                                                              
              cellPositions=None
-         
-          return_pops[cell_pop]={}
+                                                                                
           return_pops[cell_pop]['PopObj']=pop
           return_pops[cell_pop]['Positions']=cellPositions
+          return_pops[cell_pop]['Compartments']=compartmentalization
    
    opencortex.print_comment_v("This is a final list of cell population ids: %s"%return_pops.keys())
    
    return return_pops
-          
+   
+##################################################################################################################################################################   
+def add_populations_in_cylindrical_layers(net,boundaryDict,popDict,radiusOfCylinder,storeSoma=True,cellBodiesOverlap=True,cellDiameterArray=None,numOfSides=None): 
 
+   '''This method distributes the cells in cylindrical layers. The input arguments:
+   
+   net - libNeuroML network object;
+                    
+   popDict - a dictionary whose keys are unique cell population ids; each key entry stores a tuple of three elements: population size, Layer tag and cell model id; 
+   
+   layer tags (of type string) must make up the keys() of boundaryDict;
+    
+   boundaryDict have layer pointers as keys; each entry stores the left and right bound of the layer in the list format , e.g. [L3_min, L3_max]
+   
+   x_vector - a vector that stores the left and right bounds of the cortical column along x dimension
+   
+   y_vector - a vector that stores the left and right bounds of the cortical column along y dimension
+   
+   radiusOfCylinder - radius of cylindrical column in which cortical cells will be distributed.
+   
+   storeSoma - specifies whether soma positions have to be stored in the output array (default is set to True);
+   
+   cellBodiesOverlap - boolean value which defines whether cell somata can overlap; default is set to True;
+   
+   cellDiameterArray - optional dictionary of cell model diameters required when cellBodiesOverlap is set to False;
+   
+   numOfSides - optional argument which specifies the number of sides of regular polygon which is inscribed in the cylindrical column of a given radius; default value is None,
+   thus cylindrical but not polygonal shape is built.
+   
+   This method returns the dictionary; each key is a unique cell population id and the corresponding value is a dictionary
+   which refers to libNeuroML population object (key 'PopObj') and cell position array ('Positions') which by default is None.'''
+   
+   if numOfSides != None:
+   
+      if numOfSides >= 3: 
+         
+         vertex_array=[]
+         
+         xy_sides=[]
+         
+         angle_array=np.linspace(0, 2*math.pi*(1-(1.0 /numOfSides) ),numOfSides)
+         
+         opencortex.print_comment_v("Generated the angles of the regular polygon with %d sides: %s"%(numOfSides,angle_array))
+         
+         for angle in angle_array:
+         
+             vertex=[]
+             
+             x=radiusOfCylinder*math.cos(angle)
+             
+             y=radiusOfCylinder*math.sin(angle)
+             
+             vertex.append(x)
+             
+             vertex.append(y)
+             
+             vertex_array.append(vertex)
+             
+         opencortex.print_comment_v("Generated the vertices of the regular polygon with %d sides: %s"%(numOfSides,vertex_array))
+           
+         for v_ind in range(0,len(vertex_array)):
+         
+             v1=vertex_array[v_ind]
+             
+             v2=vertex_array[v_ind-1]
+             
+             if abs(v1[0] - v2[0]) > 0.00000001 and abs(v1[1] -v2[1]) > 0.00000001:
+             
+                A=np.array([[v1[0],1],[v2[0],1]])
+             
+                b=np.array([v1[1],v2[1]])
+             
+                xcyc=np.linalg.solve(A,b)
+             
+                xy_sides.append(list(xcyc))
+                
+             else:
+             
+                if abs(v1[0] - v2[0]) <= 0.00000001:
+                   
+                   xy_sides.append([v1[0], None] )
+                   
+                if abs(v1[1] -v2[1] ) <= 0.00000001:
+                
+                   xy_sides.append([None,v1[1]] )
+                   
+      else:
+      
+         opencortex.print_comment_v("Error! Method opencortex.build.%s() called with numOfSides set to %d but regular polygon must contain at least 3 vertices." 
+         "Execution will terminate."%sys._getframe().f_code.co_name,numOfSides)
+        
+         quit()
+   
+   else:
+   
+      vertex_array=None
+      
+      xy_sides=None
+      
+   return_pops={}
+   
+   for cell_pop in popDict.keys():
+
+       size, layer,cell_model, compartmentalization = popDict[cell_pop]
+    
+       if size>0:
+       
+          return_pops[cell_pop]={}
+          
+          if storeSoma:
+          
+             pop, cellPositions=oc_build.add_population_in_cylindrical_region(net=net,
+                                                                              pop_id=cell_pop,
+                                                                              cell_id=cell_model,
+                                                                              size=size,
+                                                                              cyl_radius=radiusOfCylinder,
+                                                                              lower_bound_dim3=boundaryDict[layer][0],
+                                                                              upper_bound_dim3=boundaryDict[layer][1],
+                                                                              cell_bodies_overlap=cellBodiesOverlap,
+                                                                              store_soma=storeSoma,
+                                                                              population_dictionary=return_pops,
+                                                                              cell_diameter_dict=cellDiameterArray,
+                                                                              num_of_polygon_sides=numOfSides,
+                                                                              positions_of_vertices=vertex_array,
+                                                                              constants_of_sides=xy_sides)
+                                                                              
+          else:
+          
+             pop=oc_build.add_population_in_cylindrical_region(net=net,
+                                                               pop_id=cell_pop,
+                                                               cell_id=cell_model,
+                                                               size=size,
+                                                               cyl_radius=radiusOfCylinder,
+                                                               lower_bound_dim3=boundaryDict[layer][0],
+                                                               upper_bound_dim3=boundaryDict[layer][1],
+                                                               cell_bodies_overlap=cellBodiesOverlap,
+                                                               store_soma=storeSoma,
+                                                               population_dictionary=return_pops,
+                                                               cell_diameter_dict=cellDiameterArray,
+                                                               num_of_polygon_sides=numOfSides,
+                                                               positions_of_vertices=vertex_array,
+                                                               constants_of_sides=xy_sides)
+                                                               
+             
+             cellPositions=None                                                                 
+          
+          return_pops[cell_pop]['PopObj']=pop
+          return_pops[cell_pop]['Positions']=cellPositions
+          return_pops[cell_pop]['Compartments']=compartmentalization
+   
+   opencortex.print_comment_v("This is a final list of cell population ids: %s"%return_pops.keys())
+   
+   return return_pops
+   
 ############################################################################################################################################################################
 
 def build_projection(net, 
@@ -249,7 +436,7 @@ def build_connectivity(net,
     
     net- NeuroML2 network object;
     
-    pop_objects - dictionary of population parameters in the format returned by the method add_populations_in_layers inside utils;
+    pop_objects - dictionary of population parameters in the format returned by the utils method add_populations_in_rectangular_layers() or add_populations_in_cylindrical_layers();
     
     path_to_cells - dir path to the folder where target NeuroML2 .cell.nml files are found;
     
@@ -459,8 +646,254 @@ def build_connectivity(net,
     else:
     
        return final_synapse_list, final_proj_array
+       
+
+###############################################################################################################################################################
+
+def build_probability_based_connectivity(net,
+                                         pop_params,
+                                         probability_matrix, 
+                                         synapse_matrix,
+                                         weight_matrix, 
+                                         delay_matrix,
+                                         tags_on_populations, 
+                                         std_weight_matrix=None,
+                                         std_delay_matrix=None):
+
+    ''''Method which build network projections based on the probability matrix which specifies the probabilities between given populations. Input arguments:
+    
+    net- NeuroML2 network object;
+    
+    pop_params - dictionary of population parameters in the format returned by the utils method add_populations_in_rectangular_layers() or
+    add_populations_in_cylindrical_layers();
+    
+    probability_matrix -  n by n array (list of lists or numpy array) which specifies the connection probabilities between the presynaptic and postsynaptic populations; 
+    the first index is for the target population (postsynaptic) and the second index is for the source population (presynaptic); can be 1 by 1 matrix , then probability 
+    is applied to  all pairs of populations; probability values must be of type 'float'; 
+    
+    synapse_matrix - n by n array (list of lists) which specifies the synapse components per projections; each element has be of the type 'list' because generically
+    physical projection can contain multiple synaptic components;
+    
+    weight_matrix - n by n array (list of lists or numpy array) which specifies the weight values for projections; each matrix element should be of type 'float' or if synaptic
+    components per given projection differ in weights, then a corresponding matrix element must be a list containing 'float' values;
+    
+    delay_matrix - n by n array (list of lists or numpy array) which specifies the delay values for projections; each matrix element should be of type 'float' or if synaptic
+    components per given projection differ in delays, then a corresponding matrix elment must be a list containing 'float' values;
+    
+    tags_on_populations - a list of n strings which tags the network populations; cannot have length larger than the number of populations; index of the population tag in 
+    tags_on_populations must correspond to the position of the matrix element in a standard way, e.g. 
+    
+    tags_on_populations= [ 'pop1', 'pop2' ], thus 'pop1' index is 0 and 'pop2' index is 1;
+     
+                                                    source population (presynaptic)
+    
+    target population (postsynaptic)               'pop1'                              'pop2'
+          
+                                           
+    'pop1'                                  (0,0) value in matrix             (0,1) value in matrix
     
     
+    'pop2'                                  (1,0) value in matrix              (1,1) value in matrix              . This applies to all matrices.
+    
+   
+    std_weight_matrix - optional matrix in the format weight_synapse which specifies the corresponding standard deviations of synaptic weights; default is set to None;
+    
+    std_delay_matrix - optional matrix in the format delay_synapse which specifies the corresponding standard deviations of synaptic delays; default is set to None.'''
+    
+    errors_found=0
+    
+    matrices_with_errors=[]
+    
+    passed_probs=check_matrix_size_and_type(matrix_of_params=probability_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+    
+    if not passed_probs:
+    
+       errors_found+=1
+       
+       matrices_with_errors.append('matrix of connection probabilities')
+    
+    passed_syns=check_matrix_size_and_type(matrix_of_params=synapse_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=str)
+    
+    if not passed_syns:
+    
+       errors_found+=1
+       
+       matrices_with_errors.append('matrix of synapse component ids')
+    
+    passed_weights=check_matrix_size_and_type(matrix_of_params=weight_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+    
+    if not passed_weights:
+    
+       errors_found+=1
+       
+       matrices_with_errors.append('matrix of mean values for synaptic weights')
+    
+    passed_delays=check_matrix_size_and_type(matrix_of_params=delay_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+    
+    if not passed_delays:
+    
+       errors_found+=1
+       
+       matrices_with_errors.append('matrix of mean values for synaptic delays')
+       
+    if std_weight_matrix != None:
+    
+       passed_std_weights=check_matrix_size_and_type(matrix_of_params=std_weight_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+       
+       if not passed_std_weights:
+       
+          errors_found+=1
+          
+          matrices_with_errors.append('matrix of standard deviations for synaptic weights')
+          
+    if std_delay_matrix != None:
+    
+       passed_std_delays=check_matrix_size_and_type(matrix_of_params=std_delay_matrix,num_of_pop_tags=len(tags_on_populations),type_of_matrix=float)
+       
+       if not passed_std_delays:
+       
+          errors_found+=1
+          
+          matrices_with_errors.append('matrix of standard deviations for synaptic delays')
+          
+    if errors_found==0:
+    
+       opencortex.print_comment_v("All of the connectivity matrices were specified correctly.")
+       
+    else:
+    
+       opencortex.print_comment_v("The connectivity matrices in %s were not specified correctly; execution will terminate."%matrices_with_errors)
+       
+       quit()
+    
+    proj_array=[]
+   
+    for pre_pop_id in pop_params.keys():
+    
+        for post_pop_id in pop_params.keys():
+        
+            found_pre_pop=False
+            
+            found_post_pop=False
+        
+            for tag_ind in range(0,len(tags_on_populations)):
+            
+                tag=tags_on_populations[tag_ind]
+                
+                if tag in pre_pop_id:
+                   
+                   column_index=tag_ind
+                   
+                   found_pre_pop=True
+                   
+                if tag in post_pop_id:
+                   
+                   row_index=tag_ind
+                   
+                   found_post_pop=True
+                   
+            if found_pre_pop and found_post_pop:
+            
+               pre_pop_obj=pop_params[pre_pop_id]['PopObj']
+               
+               post_pop_obj=pop_params[post_pop_id]['PopObj']
+               
+               ####################################################################
+               prob_val= parse_parameter_value(parameter_matrix=probability_matrix, 
+                                               row_ind=row_index, 
+                                               col_ind=column_index,
+                                               checks_passed=True)
+                                                
+               synapse_list= parse_parameter_value(parameter_matrix=synapse_matrix, 
+                                                   row_ind=row_index, 
+                                                   col_ind=column_index,
+                                                   checks_passed=True) 
+              
+               #######################################################################                                  
+               if prob_val != 0 and pre_pop_obj.size != 0 and post_pop_obj.size != 0:
+               
+                 if synapse_list !=None:
+                  
+                    if not isinstance(synapse_list, list):
+               
+                       synapse_list=[synapse_list]
+                    ##########################################################################  
+                    weight_list=parse_parameter_value(parameter_matrix=weight_matrix, 
+                                                      row_ind=row_index, 
+                                                      col_ind=column_index,
+                                                      checks_passed=True)
+                                                  
+                    ###########################################################################  
+                    delay_list=parse_parameter_value(parameter_matrix=delay_matrix, 
+                                                    row_ind=row_index, 
+                                                    col_ind=column_index,
+                                                    checks_passed=True)
+                                                
+                    ############################################################################  
+                    if std_weight_matrix != None:
+               
+                       std_weight_list=parse_parameter_value(parameter_matrix=std_weight_matrix, 
+                                                             row_ind=row_index, 
+                                                             col_ind=column_index,
+                                                             checks_passed=True)
+               
+                    else:
+               
+                       std_weight_list=None
+                    #############################################################################   
+                    if std_delay_matrix != None:
+               
+                       std_delay_list=parse_parameter_value(parameter_matrix=std_delay_matrix, 
+                                                            row_ind=row_index, 
+                                                            col_ind=column_index,
+                                                            checks_passed=True)
+               
+                    else:
+               
+                       std_delay_list=None
+                    ###############################################################################
+               
+                    returned_projs=oc_build.add_probabilistic_projection_list(net=net,
+                                                                              presynaptic_population=pre_pop_obj, 
+                                                                              postsynaptic_population=post_pop_obj, 
+                                                                              synapse_list=synapse_list,  
+                                                                              connection_probability=prob_val,
+                                                                              delay=delay_list,
+                                                                              weight=weight_list,
+                                                                              std_delay=std_delay_list,
+                                                                              std_weight=std_weight_list)
+                                                                         
+                    if returned_projs != None:
+               
+                       opencortex.print_comment_v("Addded a projection between %s and %s"%(pre_pop_id,post_pop_id))
+                                                          
+                       proj_array.extend(returned_projs)
+                       
+                 else:
+                     
+                    opencortex.print_comment_v("Error in opencortex.utils.build_probability_based_connectivity(): connection probability is not equal to 0 but synapse list is None"
+                    " for the projection between presynaptic population id=%s and postsynaptic population id= %s. Execution will terminate."%(pre_pop_id,post_pop_id) )
+                     
+                    quit()
+            
+            else:
+            
+               if not found_pre_pop:
+            
+                  opencortex.print_comment_v("Error in build_probability_based_connectivity(): input argument tags_on_populations in build_probability_based_connectivity()"
+                  " does not contain a string tag for the population %s. Execution will terminate."%pre_pop_id) 
+                  
+                  quit()
+                  
+               if not found_post_pop:
+              
+                  opencortex.print_comment_v("Error in build_probability_based_connectivity(): input argument tags_on_populations in build_probability_based_connectivity()" 
+                  " does not contain a string tag for the population %s. Execution will terminate."%post_pop_id) 
+                  
+                  quit()
+              
+    return proj_array     
+      
 ################################################################################################################################################################
 
 def read_connectivity(pre_pop,
@@ -581,7 +1014,130 @@ def read_connectivity(pre_pop,
            
        
     return proj_summary
+    
+###############################################################################################################################################################
+def parse_parameter_value(parameter_matrix, row_ind, col_ind, checks_passed=False):
+
+    '''Method to parse one of the connectivity parameters; by default assumes that checks are carried out by the method check_matrix_size_and_type().'''
+
+    if not checks_passed:
+    
+       return None
+      
+    else:
+    
+       if len(parameter_matrix)==1:
         
+          parameter_val=parameter_matrix[0]
+       
+       else: 
+       
+          parameter_val=parameter_matrix[row_ind][col_ind]
+    
+       if type(parameter_matrix).__module__ == np.__name__:
+    
+          parameter_val=parameter_matrix[row_ind][col_ind]
+      
+       return parameter_val
+    
+####################################################################################################################################################################
+def check_matrix_size_and_type(matrix_of_params, num_of_pop_tags,type_of_matrix):
+
+    '''Method to check whether the size and the type of the connection parameter matrix, corresponds to the number of tags provided for the list of populations.'''
+
+    passed=True
+
+    if isinstance(matrix_of_params, list) :
+    
+       if len(matrix_of_params)==1:
+       
+          if matrix_of_params[0] != None:
+       
+             if (not isinstance(matrix_of_params[0],list)):
+          
+                if not isinstance(matrix_of_params[0],type_of_matrix):
+          
+                   opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list which contains one element but it is not of type %s;"
+                   " the current type is %s."%(type_of_matrix,type(matrix_of_params[0]) ) )
+              
+                   passed=False
+             
+             else:
+         
+                for component_index in range(0,len(matrix_of_params[0])):
+             
+                    if not isinstance(matrix_of_params[0][component_index],type_of_matrix):
+          
+                       opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list which contains a list but not all of its elements are of type %s;"
+                       " the current type is %s."%(type_of_matrix,type(matrix_of_params[0][component]) ) )
+              
+                       passed=False
+          
+       else:
+       
+          num_of_elements=0
+          
+          for row_ind in range(0,len(matrix_of_params) ):
+          
+              for col_ind in range(0,len(matrix_of_params[row_ind])):
+              
+                  if ( matrix_of_params[row_ind][col_ind] != None):
+                     
+                     if (not isinstance(matrix_of_params[row_ind][col_ind],list)):
+              
+                        if not isinstance(matrix_of_params[row_ind][col_ind],type_of_matrix):
+                  
+                           opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list of lists (matrix) but there is an element inside which is not"
+                           " of type %s; the current type is %s."%(type_of_matrix,type(matrix_of_params[row_ind][col_ind]) ) )
+                           
+                           passed=False
+                        
+                     else:
+                  
+                        for component_index in range(0,len(matrix_of_params[row_ind][col_ind])):
+             
+                            if not isinstance(matrix_of_params[row_ind][col_ind][component_index],type_of_matrix):
+                         
+                               opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list of lists (matrix) but list elements inside are not" 
+                               "of type %s; the current type is %s."%(type_of_matrix,type(matrix_of_params[row_ind][col_ind][component_index]) ) )
+              
+                               passed=False
+                                                   
+              num_of_elements=num_of_elements +len(matrix_of_params[row_ind])
+              
+              if len(matrix_of_params[row_ind]) != num_of_pop_tags:
+               
+                 opencortex.print_comment_v("Error in check_matrix_size(): each list element of the argument matrix_of_params must have length = %d;"
+                 " the current length is %d."%(num_of_pop_tags,len(matrix_of_params[row_ind])))
+              
+                 passed=False
+              
+          if num_of_elements != num_of_pop_tags*num_of_pop_tags:
+          
+             opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a list but not in the format of an %d by %d matrix."
+             %(num_of_pop_tags,num_of_pop_tags))
+              
+             passed=False
+          
+    elif type(matrix_of_params).__module__ == np.__name__:
+    
+         rows_cols=matrix_of_params.size
+         
+         if (rows_cols[0] != num_of_pop_tags or rows_cols[1] != num_of_pop_tags):
+         
+            opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params is a numpy array but not of size (%d, %d) (not a square matrix)."%num_of_pop_tags)
+            
+            passed=False
+            
+    else:
+    
+       opencortex.print_comment_v("Error in check_matrix_size(): argument matrix_of_params must be a list or numpy array; the current type is %s."
+       %type(matrix_of_params))
+       
+       passed=False
+    
+    return passed
+      
 ################################################################################################################################################################   
 def check_cached_dicts(cell_component,cached_dicts,list_of_target_seg_groups,path_to_nml2=None):
 
@@ -829,7 +1385,11 @@ def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,pa
             
             popID=cell_population
             
-            cell_positions=population_params[cell_population]['Positions']
+            for pop_index in range(0,len(net.populations)):
+            
+                if net.populations[pop_index].id == popID:
+                
+                   cell_instances=net.populations[pop_index].instances
             
             pop_size=pop.size
             
@@ -837,13 +1397,31 @@ def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,pa
             
             if not input_group_params['LocationSpecific']:
              
-               target_cell_ids=oc_build.get_target_cells(pop_size,fraction_to_target)
-               
+               target_cell_ids=oc_build.get_target_cells(population=pop,fraction_to_target=fraction_to_target)
+            
             else:
             
                list_of_regions=input_group_params['TargetRegions']
+               
+               x_list=[]
+               
+               y_list=[]
+               
+               z_list=[]
+               
+               for region_index in range(0,len(list_of_regions)):
+               
+                   x_list.append(list_of_regions[region_index]['XVector'])
+                   
+                   y_list.append(list_of_regions[region_index]['YVector'])
+                   
+                   z_list.append(list_of_regions[region_index]['ZVector'])
             
-               target_cell_ids=oc_build.get_target_cells(pop_size,fraction_to_target,cell_positions, list_of_regions)
+               target_cell_ids=oc_build.get_target_cells(population=pop,
+                                                         fraction_to_target=fraction_to_target, 
+                                                         list_of_xvectors=x_list,
+                                                         list_of_yvectors=y_list,
+                                                         list_of_zvectors=z_list)
                
             if target_cell_ids !=[]:
             
@@ -859,22 +1437,28 @@ def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,pa
                
                   subset_dict=input_group_params['TargetDict']
                   
-                  target_group_list=subset_dict.keys()
-                  
                   target_segment=None
                   
                   fraction_along=None
                
-                  if cached_dicts !=None:
-            
-                     segLengthDict, cached_dicts =check_cached_dicts(cell_component,cached_dicts,target_group_list,path_to_nml2=path_to_cells)
-              
-                  else:
-            
-                     target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
-                              
-                     segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                  if None not in input_group_params['TargetDict'].keys():
                      
+                     target_group_list=subset_dict.keys()
+               
+                     if cached_dicts !=None:
+            
+                        segLengthDict, cached_dicts =check_cached_dicts(cell_component,cached_dicts,target_group_list,path_to_nml2=path_to_cells)
+              
+                     else:
+            
+                        target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
+                              
+                        segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                        
+                  else:
+                  
+                     segLengthDict=None
+                       
                else:
                
                   target_segment=input_group_params['UniversalTargetSegmentID']
@@ -1644,39 +2228,63 @@ def check_pop_dict_and_layers(pop_dict,boundary_dict):
     for cell_population in pop_dict.keys():
         
         if not isinstance(pop_dict[cell_population],tuple):
+           
            print("TypeError in population parameters: the values stored in the population dictionary must be tuples.")
            print("The current type is %s"%(type(pop_dict[cell_population])  ) )
            error_counter+=1
            
         else:
         
-           if not isinstance(pop_dict[cell_population][0],int):
-              print("TypeError in population parameters: the first element in tuples in the population dictionary must be of type 'int'")
-              print(" as it specifies the size of cell population. The current type of the first element is %s"%( type(pop_dict[cell_population][0] )  )  )
-              error_counter+=1
-              
-           if not isinstance(pop_dict[cell_population][1],str):
-              print("TypeError in population parameters: the second element in tuples in the population dictionary must be of type 'string'")
-              print(" as it specifies the layer of cell population. The current type of the second element is %s"%( type(pop_dict[cell_population][1]) ) )
+           if len(pop_dict[cell_population]) != 4:
+           
+              print("ValueError in population parameters: tuples in the population dictionary must contain four elements in the following order and type: "
+              "population size ('int'), layer ('str'), cell type ('str') and compartmentalization type ('single' or 'multi').")
               error_counter+=1
               
            else:
-           
-              try:
+        
+              if not isinstance(pop_dict[cell_population][0],int):
               
-                 test_layer=boundary_dict[pop_dict[cell_population][1]]
-                 
-              except KeyError:
-              
-                 print("KeyError in the layer boundary dictionary: cell population id '%s' is not in the keys of the layer boundary dictionary"%cell_population)
+                 print("TypeError in population parameters: the first element in tuples in the population dictionary must be of type 'int'")
+                 print(" as it specifies the size of cell population. The current type of the first element is %s"%( type(pop_dict[cell_population][0] )  )  )
                  error_counter+=1
-                 
-                    
+              
+              if not isinstance(pop_dict[cell_population][1],str):
+              
+                 print("TypeError in population parameters: the second element in tuples in the population dictionary must be of type 'string'")
+                 print(" as it specifies the layer of cell population. The current type of the second element is %s"%( type(pop_dict[cell_population][1]) ) )
+                 error_counter+=1
+              
+              else:
            
-           if not isinstance(pop_dict[cell_population][2],str):
-              print("TypeError in population parameters: the third element in tuples in the population dictionary must be of type 'string'")
-              print(" as it specifies the cell model for a given population. The current type of the third element is %s"%( type(pp_dict[cell_population][2]) ) )
-              error_counter+=1
+                 try:
+              
+                   test_layer=boundary_dict[pop_dict[cell_population][1]]
+                 
+                 except KeyError:
+              
+                   print("KeyError in the layer boundary dictionary: cell population id '%s' is not in the keys of the layer boundary dictionary"%cell_population)
+                   error_counter+=1
+                 
+              if not isinstance(pop_dict[cell_population][2],str):
+              
+                 print("TypeError in population parameters: the third element in tuples in the population dictionary must be of type 'string'")
+                 print(" as it specifies the cell model for a given population. The current type of the third element is %s"%( type(pp_dict[cell_population][2]) ) )
+                 error_counter+=1
+              
+              if not isinstance(pop_dict[cell_population][3],str):
+              
+                 print("TypeError in population parameters: the fourth element in tuples in the population dictionary must be of type 'string'")
+                 print(" as it specifies the compartmentalization for a given cell type. The current type of the fourth element is %s"%( type(pp_dict[cell_population][2]) ) )
+                 error_counter+=1
+              
+              else:
+          
+                 if not (pop_dict[cell_population][3] =='single' or pop_dict[cell_population][3] =='multi'):
+                 
+                    print("ValueError in population parameters: the fourth element in tuples in the population dictionary must be equal to 'single' or 'multi'"
+                    " as it specifies the compartmentalization for a given cell type. The current type of the fourth element is %s")
+                    error_counter+=1
            
     if error_counter==0:
     
@@ -1690,21 +2298,12 @@ def check_synapse_location(synapse_id,pathToSynapses):
     
     found=False
     
-    if pathToSynapses ==None:
-    
-       path="./"
-       
-    else:
-    
-       path=pathToSynapses
-    
-    src_files=os.listdir(path)
+    src_files=os.listdir(pathToSynapses)
     
     for file_name in src_files:
         if synapse_id in file_name:
            found=True   
-           
-           
+     
     return found  
     
 def get_segment_groups(cell_id,path_to_cells):
@@ -1924,7 +2523,7 @@ def check_delay_params(delay_params):
     
        return False              
        
-def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
+def check_inputs(input_params,popDict,path_to_cells,path_to_synapses=None):
     
     error_counter=0
     
@@ -1933,13 +2532,22 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
         try:
            test_cell_component=popDict[cell_receiver]
            
-           segment_groups=get_segment_groups(test_cell_component['PopObj'].component,path_to_cells)
+           if test_cell_component['Compartments']=='single':
+             
+              cell_type=None
+              
+           if test_cell_component['Compartments']=='multi':
            
-           cell_type=test_cell_component['PopObj'].component
-           
+              segment_groups=get_segment_groups(test_cell_component['PopObj'].component,path_to_cells)
+              
+              cell_type=test_cell_component['PopObj'].component
+             
         except KeyError:
+           
            opencortex.print_comment_v("KeyError in input parameters: cell population id '%s' is not in the keys of population dictionary"%cell_receiver)
+           
            error_counter+=1
+           
            cell_type=None
            
         if not isinstance(input_params[cell_receiver],list):
@@ -2165,13 +2773,15 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
                              
                           else:
                           
-                             found=check_synapse_location(test_synapse,path_to_synapses)
+                             if path_to_synapses != None:
+                          
+                                found=check_synapse_location(test_synapse,path_to_synapses)
                              
-                             if not found:
+                                if not found:
                              
-                                opencortex.print_comment_v("ValueError in input parameters: the value '%s' of the key 'Synapse' is not found in %s"%(test_synapse,path_to_synapses))
+                                   opencortex.print_comment_v("ValueError in input parameters: the value '%s' of the key 'Synapse' is not found in %s"%(test_synapse,path_to_synapses))
                                 
-                                error_counter+=1
+                                   error_counter+=1
                                 
                        except KeyError:
                        
@@ -2530,7 +3140,7 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses):
                                         
                                             if not isinstance(test_region_key[region][dim_key],list):
                                             
-                                               opencortex.print_comment_v("TypeError in input parametres: the 'X/Y/ZVector' must store the value of type 'list'."
+                                               opencortex.print_comment_v("TypeError in input parameters: the 'X/Y/ZVector' must store the value of type 'list'."
                                                " The current type is %s."%type(test_region_key[region][dim_key]) )
                                                
                                                error_counter+=1

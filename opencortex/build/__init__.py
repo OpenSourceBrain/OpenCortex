@@ -94,8 +94,6 @@ def add_elect_connection(projection,
     
     
 ########################################################################################################################################        
-
-
 def add_probabilistic_projection(net, 
                                  prefix, 
                                  presynaptic_population, 
@@ -135,7 +133,171 @@ def add_probabilistic_projection(net,
     net.projections.append(proj)
 
     return proj
+    
+##############################################################################################################################################################       
+def add_probabilistic_projection_list(net,
+                                      presynaptic_population, 
+                                      postsynaptic_population, 
+                                      synapse_list,  
+                                      connection_probability,
+                                      delay = 0,
+                                      weight = 1,
+                                      std_delay=None,
+                                      std_weight=None):
+                                      
+    '''Modification of the method add_probabilistic_projection() to allow multiple synaptic components per physical projection;
+    specifically works for networks containing single-compartment neuronal models. This method also allows gaussian variation in synaptic weight and delay.'''
+    
+    if presynaptic_population.size==0 or postsynaptic_population.size==0:
+        return None
+        
+    proj_components={}
+    
+    for synapse_id in synapse_list:
 
+        proj = neuroml.Projection(id="%s_%s_%s"%(synapse_id,presynaptic_population.id, postsynaptic_population.id), 
+                                  presynaptic_population=presynaptic_population.id, 
+                                  postsynaptic_population=postsynaptic_population.id, 
+                                  synapse=synapse_id)
+                                  
+        proj_components[synapse_id]=proj
+
+    count = 0
+    
+    ######### check whether delay and weight varies with a synaptic component
+    
+    if isinstance(delay,list):
+    
+       if not len(delay)==len(synapse_list):
+       
+          opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument delay is a list but not of the same length as"
+          " argument synapse_list; execution will terminate.")
+          
+          quit()
+          
+    if isinstance(weight,list):
+    
+       if not len(weight)==len(synapse_list):
+       
+          opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument weight is a list but not of the same length as"
+          " argument synapse_list; execution will terminate.")
+          
+          quit()
+          
+    if std_delay !=None:
+    
+       if isinstance(std_delay,list):
+    
+          if not len(std_delay)==len(synapse_list):
+       
+             opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument std_delay is a list but not of the same length as"
+             " argument synapse_list; execution will terminate.")
+          
+             quit()
+             
+    if std_weight != None:
+    
+       if isinstance(std_weight,list):
+    
+          if not len(std_weight)==len(synapse_list):
+       
+             opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument std_weight is a list but not of the same length as"
+             " argument synapse_list; execution will terminate.")
+          
+             quit()
+       
+    for i in range(0, presynaptic_population.size):
+        for j in range(0, postsynaptic_population.size):
+            if i != j or presynaptic_population.id != postsynaptic_population.id:
+                
+                if connection_probability>= 1 or random.random() < connection_probability:
+                
+                   if not isinstance(delay,list):
+                
+                      if std_delay != None:
+                   
+                         del_val=random.gauss(delay, std_delay)
+                      
+                      else:
+                   
+                         del_val=delay
+                         
+                   if not isinstance(weight,list):
+                      
+                      if std_weight != None:
+                   
+                         w_val=random.gauss(weight,std_weight)
+                      
+                      else:
+                   
+                         w_val=weight
+                         
+                   syn_counter=0
+                
+                   for synapse_id in synapse_list:
+                   
+                       if isinstance(delay,list):
+                        
+                           if std_delay != None:
+                           
+                              if isinstance(std_delay,list):
+                   
+                                 del_val=random.gauss(delay[syn_counter], std_delay[syn_counter])
+                                 
+                              else:
+                              
+                                 del_val=random.gauss(delay[syn_counter], std_delay)
+                      
+                           else:
+                   
+                              del_val=delay[syn_counter]
+                              
+                       if isinstance(weight,list):
+                        
+                           if std_weight != None:
+                           
+                              if isinstance(std_weight,list):
+                           
+                                 w_val=random.gauss(weight[syn_counter],std_weight[syn_counter])
+                                 
+                              else:
+                              
+                                 w_val=random.gauss(weight[syn_counter],std_weight)
+                           
+                           else:
+                           
+                              w_val=weight[syn_counter]
+                    
+                       add_connection(proj_components[synapse_id], 
+                                      count, 
+                                      presynaptic_population, 
+                                      i, 
+                                      0, 
+                                      postsynaptic_population, 
+                                      j, 
+                                      0,
+                                      delay = del_val,
+                                      weight = w_val)
+                                       
+                       syn_counter+=1
+                         
+                   count+=1
+                    
+    return_proj_components=[]
+    
+    if count != 0:
+                    
+       for synapse_id in synapse_list:
+
+           net.projections.append(proj_components[synapse_id])
+        
+           return_proj_components.append(proj_components[synapse_id])
+           
+       return return_proj_components
+          
+    else:
+    
+       return None
 ###################################################################################################################################################################   
 
 def add_chem_projection0(nml_doc,
@@ -249,6 +411,8 @@ def add_chem_projection(net,
     
     Case II, targeting mode = 'convergent' - the number of synaptic connections per target segment group per each postsynaptic cell;
     
+    alternatively, subset_dict can be a number that specifies the total number of synaptic connections (either divergent or convergent) irrespective of target segment groups.
+    
     delays_dict - optional dictionary that specifies the delays (in ms) for individual synapse components, e.g. {'NMDA':5.0} or {'AMPA':3.0,'NMDA':5};
     
     weights_dict - optional dictionary that specifies the weights (in ms) for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}.'''    
@@ -274,131 +438,187 @@ def add_chem_projection(net,
        pop2_size=presynaptic_population.size
        
        pop2_id=presynaptic_population.id
-                 
-    total_given=int(sum(subset_dict.values() ))
+    
+    if isinstance(subset_dict, dict):
+    
+       numberConnections={}
+    
+       for subset in subset_dict.keys():
+        
+           numberConnections[subset]=int(subset_dict[subset])
+           
+    if isinstance(subset_dict, int) or isinstance(subset_dict, float):
+    
+       numberConnections= int(subset_dict)
     
     count=0
     
-    ##### allows only one pre segment group per presynaptic population e.g. distal_axon
-    if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
-    
-       pre_subset_dict={}
-       
-       pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_given
-        
-    else:
-    
-       pre_subset_dict=None
-    
     for i in range(0, pop1_size):
     
-        pop2_cell_ids=range(0,pop2_size)
+        total_conns=0
         
-        if pop1_id == pop2_id:
-           
-           pop2_cell_ids.remove(i)
-           
-        if pop2_cell_ids != []:
-           
-           if len(pop2_cell_ids) >= total_given:
-              ##### get unique set of cells
-              pop2_cells=random.sample(pop2_cell_ids,total_given)
-           
-           else:
-              #### any cell might appear several times
-              pop2_cells=[]
-              
-              for value in range(0,total_given):
-           
-                  cell_id=random.sample(pop2_cell_ids,1)
+        if isinstance(subset_dict, dict):
+        
+           conn_subsets={}
+    
+           for subset in subset_dict.keys():
+            
+               if subset_dict[subset] != numberConnections[subset]:
                
-                  pop2_cells.extend(cell_id)
-        
-           post_target_seg_array, post_target_fractions=get_target_segments(post_seg_target_dict,subset_dict)
-           
-           if pre_subset_dict !=None:
-           
-              pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
-            
-           else:
-           
-               pre_target_seg_array=None
+                  if random.random() < subset_dict[subset] - numberConnections[subset]:
                
-               pre_target_fractions=None  
-        
-           for j in pop2_cells:
-        
-               post_seg_id=post_target_seg_array[0]
-            
-               del post_target_seg_array[0]
-            
-               post_fraction_along=post_target_fractions[0]
-            
-               del post_target_fractions[0]  
+                     conn_subsets[subset]=numberConnections[subset]+1
+                  
+                  else:
                
-               if pre_target_seg_array != None and pre_target_fractions != None:
-                
-                  pre_seg_id=pre_target_seg_array[0]
-            
-                  del pre_target_seg_array[0]
-            
-                  pre_fraction_along=pre_target_fractions[0]
-            
-                  del pre_target_fractions[0]
+                     conn_subsets[subset]=numberConnections[subset]
                   
                else:
                
-                  pre_seg_id=0
-                  
-                  pre_fraction_along=0.5
-                
-               if targeting_mode=='divergent':
-                   
-                  pre_cell_id=i
-                      
-                  post_cell_id=j
-                      
-               if targeting_mode=='convergent':
-                   
-                  pre_cell_id=j
-                      
-                  post_cell_id=i  
-               
-               syn_counter=0
-                        
-               for synapse_id in synapse_list:
+                  conn_subsets[subset]=numberConnections[subset]
             
-                   delay=0
+               total_conns=total_conns+conn_subsets[subset]
+        
+        if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+        
+           conn_subsets=0
+        
+           if subset_dict != numberConnections:
+               
+              if random.random() < subset_dict - numberConnections:
+               
+                 conn_subsets=numberConnections+1
+                  
+              else:
+               
+                 conn_subsets=numberConnections
+                  
+           else:
+               
+              conn_subsets=numberConnections
+            
+           total_conns=total_conns+conn_subsets
+           
+        if total_conns != 0:    
+        
+           ##### allows only one pre segment group per presynaptic population e.g. distal_axon
+           if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
+    
+              pre_subset_dict={}
+       
+              pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_conns
+        
+           else:
+    
+              pre_subset_dict=None
+    
+           pop2_cell_ids=range(0,pop2_size)
+        
+           if pop1_id == pop2_id:
+           
+              pop2_cell_ids.remove(i)
+           
+           if pop2_cell_ids != []:
+           
+              if len(pop2_cell_ids) >= total_conns:
+                 ##### get unique set of cells
+                 pop2_cells=random.sample(pop2_cell_ids,total_conns)
+           
+              else:
+                 #### any cell might appear several times
+                 pop2_cells=[]
+              
+                 for value in range(0,total_conns):
+           
+                     cell_id=random.sample(pop2_cell_ids,1)
+               
+                     pop2_cells.extend(cell_id)
+        
+              post_target_seg_array, post_target_fractions=get_target_segments(post_seg_target_dict,conn_subsets)
+           
+              if pre_subset_dict !=None:
+           
+                 pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+            
+              else:
+           
+                 pre_target_seg_array=None
+               
+                 pre_target_fractions=None  
+        
+              for j in pop2_cells:
+        
+                  post_seg_id=post_target_seg_array[0]
+            
+                  del post_target_seg_array[0]
+            
+                  post_fraction_along=post_target_fractions[0]
+            
+                  del post_target_fractions[0]  
+               
+                  if pre_target_seg_array != None and pre_target_fractions != None:
                 
-                   weight=1
+                     pre_seg_id=pre_target_seg_array[0]
+            
+                     del pre_target_seg_array[0]
+            
+                     pre_fraction_along=pre_target_fractions[0]
+            
+                     del pre_target_fractions[0]
+                  
+                  else:
+               
+                     pre_seg_id=0
+                  
+                     pre_fraction_along=0.5
                 
-                   if delays_dict !=None:
-                      for synapseComp in delays_dict.keys():
-                          if synapseComp in synapse_id:
-                             delay=delays_dict[synapseComp]
+                  if targeting_mode=='divergent':
+                   
+                     pre_cell_id=i
+                      
+                     post_cell_id=j
+                      
+                  if targeting_mode=='convergent':
+                   
+                     pre_cell_id=j
+                      
+                     post_cell_id=i  
+               
+                  syn_counter=0
+                        
+                  for synapse_id in synapse_list:
+            
+                      delay=0
+                
+                      weight=1
+                
+                      if delays_dict !=None:
+                         for synapseComp in delays_dict.keys():
+                             if synapseComp in synapse_id:
+                                delay=delays_dict[synapseComp]
                           
-                   if weights_dict !=None:
-                      for synapseComp in weights_dict.keys():
-                          if synapseComp in synapse_id:
-                             weight=weights_dict[synapseComp]
+                      if weights_dict !=None:
+                         for synapseComp in weights_dict.keys():
+                             if synapseComp in synapse_id:
+                                weight=weights_dict[synapseComp]
                      
-                   add_connection(proj_array[syn_counter], 
-                                  count, 
-                                  presynaptic_population, 
-                                  pre_cell_id, 
-                                  pre_seg_id, 
-                                  postsynaptic_population, 
-                                  post_cell_id, 
-                                  post_seg_id,
-                                  delay = delay,
-                                  weight = weight,
-                                  pre_fraction=pre_fraction_along,
-                                  post_fraction=post_fraction_along)
+                      add_connection(proj_array[syn_counter], 
+                                     count, 
+                                     presynaptic_population, 
+                                     pre_cell_id, 
+                                     pre_seg_id, 
+                                     postsynaptic_population, 
+                                     post_cell_id, 
+                                     post_seg_id,
+                                     delay = delay,
+                                     weight = weight,
+                                     pre_fraction=pre_fraction_along,
+                                     post_fraction=post_fraction_along)
                     
                                   
-                   syn_counter+=1               
+                      syn_counter+=1               
                      
-               count+=1
+                  count+=1
                
                
     if count !=0:   
@@ -445,7 +665,9 @@ def add_elect_projection(net,
     
     Case I, targeting mode = 'divergent' - the number of synaptic connections made by each presynaptic cell per given target segment group of postsynaptic cells;
     
-    Case II, targeting mode = 'convergent' - the number of synaptic connections per target segment group per each postsynaptic cell.'''    
+    Case II, targeting mode = 'convergent' - the number of synaptic connections per target segment group per each postsynaptic cell;
+    
+    alternatively, subset_dict can be a number that specifies the total number of synaptic connections (either divergent or convergent) irrespective of target segment groups.'''    
     
     if targeting_mode=='divergent':
        
@@ -469,36 +691,64 @@ def add_elect_projection(net,
                      
     count=0
     
-    numberConnections={}
+    if isinstance(subset_dict, dict):
     
-    for subset in subset_dict.keys():
+       numberConnections={}
+    
+       for subset in subset_dict.keys():
         
-        numberConnections[subset]=int(subset_dict[subset])
+           numberConnections[subset]=int(subset_dict[subset])
+           
+    if isinstance(subset_dict, int) or isinstance(subset_dict, float):
+    
+       numberConnections= int(subset_dict)
       
     for i in range(0, pop1_size):
         
         total_conns=0
         
-        conn_subsets={}
+        if isinstance(subset_dict, dict):
+        
+           conn_subsets={}
     
-        for subset in subset_dict.keys():
+           for subset in subset_dict.keys():
             
-            if subset_dict[subset] != numberConnections[subset]:
+               if subset_dict[subset] != numberConnections[subset]:
                
-               if random.random() < subset_dict[subset] - numberConnections[subset]:
+                  if random.random() < subset_dict[subset] - numberConnections[subset]:
                
-                  conn_subsets[subset]=numberConnections[subset]+1
+                     conn_subsets[subset]=numberConnections[subset]+1
+                  
+                  else:
+               
+                     conn_subsets[subset]=numberConnections[subset]
                   
                else:
                
                   conn_subsets[subset]=numberConnections[subset]
-                  
-            else:
+            
+               total_conns=total_conns+conn_subsets[subset]
+        
+        if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+        
+           conn_subsets=0
+        
+           if subset_dict != numberConnections:
                
-               conn_subsets[subset]=numberConnections[subset]
+              if random.random() < subset_dict - numberConnections:
+               
+                 conn_subsets=numberConnections+1
+                  
+              else:
+               
+                 conn_subsets=numberConnections
+                  
+           else:
+               
+              conn_subsets=numberConnections
             
-            total_conns=total_conns+conn_subsets[subset]
-            
+           total_conns=total_conns+conn_subsets
+           
         if total_conns != 0:    
         
            if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
@@ -657,6 +907,8 @@ def add_chem_spatial_projection(net,
     
     Case II, targeting mode = 'convergent' - the desired number of synaptic connections per target segment group per each postsynaptic cell;
     
+    alternatively, subset_dict can be a number that specifies the total number of synaptic connections (either divergent or convergent) irrespective of target segment groups.
+    
     Note: the chemical connection is made only if distance-dependent probability is higher than some random number random.random(); thus, the actual numbers of connections made
     
     according to the distance-dependent rule might be smaller than the numbers of connections specified by subset_dict; subset_dict defines the upper bound for the 
@@ -701,135 +953,191 @@ def add_chem_spatial_projection(net,
        
        pop2_cell_positions=pre_cell_positions
                  
-    total_given=int( sum(subset_dict.values()))
+    if isinstance(subset_dict, dict):
+    
+       numberConnections={}
+    
+       for subset in subset_dict.keys():
+        
+           numberConnections[subset]=int(subset_dict[subset])
+           
+    if isinstance(subset_dict, int) or isinstance(subset_dict, float):
+    
+       numberConnections= int(subset_dict)
     
     count=0
     
-    if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
-    
-       pre_subset_dict={}
-       
-       pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_given
-        
-    else:
-    
-       pre_subset_dict=None
-    
     for i in range(0, pop1_size):
     
-        pop2_cell_ids=range(0,pop2_size)
+        total_conns=0
         
-        if pop1_id == pop2_id:
-           
-           pop2_cell_ids.remove(i)
-           
-        if pop2_cell_ids !=[]:
+        if isinstance(subset_dict, dict):
+        
+           conn_subsets={}
     
-           cell1_position=pop1_cell_positions[i]
-        
-           post_target_seg_array,post_fractions_along=get_target_segments(post_seg_target_dict,subset_dict)
-           
-           if pre_subset_dict !=None:
-           
-              pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+           for subset in subset_dict.keys():
             
-           else:
-           
-              pre_target_seg_array=None
+               if subset_dict[subset] != numberConnections[subset]:
                
-              pre_target_fractions=None 
-        
-           conn_counter=0
-        
-           for j in pop2_cell_ids:
-        
-               cell2_position=pop2_cell_positions[j]
-        
-               r=math.sqrt(sum([(a - b)**2 for a,b in zip(cell1_position,cell2_position)]))
-            
-               if eval(distance_rule) >= 1 or random.random() < eval(distance_rule):
-                  
-                  conn_counter+=1
-                     
-                  post_seg_id=post_target_seg_array[0]
-                     
-                  del post_target_seg_array[0]
-                     
-                  post_fraction_along=post_fractions_along[0]
-                     
-                  del post_fractions_along[0]
-                  
-                  if pre_target_seg_array != None and pre_target_fractions != None:
-                
-                     pre_seg_id=pre_target_seg_array[0]
-            
-                     del pre_target_seg_array[0]
-            
-                     pre_fraction_along=pre_target_fractions[0]
-            
-                     del pre_target_fractions[0]
+                  if random.random() < subset_dict[subset] - numberConnections[subset]:
+               
+                     conn_subsets[subset]=numberConnections[subset]+1
                   
                   else:
                
-                     pre_seg_id=0
+                     conn_subsets[subset]=numberConnections[subset]
                   
-                     pre_fraction_along=0.5
-                       
-                  if targeting_mode=='divergent':
-                   
-                     pre_cell_id=i
-                      
-                     post_cell_id=j
-                      
-                  if targeting_mode=='convergent':
-                   
-                     pre_cell_id=j
-                      
-                     post_cell_id=i
+               else:
+               
+                  conn_subsets[subset]=numberConnections[subset]
+            
+               total_conns=total_conns+conn_subsets[subset]
+        
+        if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+        
+           conn_subsets=0
+        
+           if subset_dict != numberConnections:
+               
+              if random.random() < subset_dict - numberConnections:
+               
+                 conn_subsets=numberConnections+1
+                  
+              else:
+               
+                 conn_subsets=numberConnections
+                  
+           else:
+               
+              conn_subsets=numberConnections
+            
+           total_conns=total_conns+conn_subsets
+           
+        if total_conns != 0:    
+        
+           if pre_seg_target_dict != None and len(pre_seg_target_dict.keys() )==1:
+    
+              pre_subset_dict={}
+       
+              pre_subset_dict[pre_seg_target_dict.keys()[0]]=total_conns
+        
+           else:
+    
+             pre_subset_dict=None
+    
+           pop2_cell_ids=range(0,pop2_size)
+        
+           if pop1_id == pop2_id:
+           
+              pop2_cell_ids.remove(i)
+           
+           if pop2_cell_ids !=[]:
+    
+              cell1_position=pop1_cell_positions[i]
+        
+              post_target_seg_array,post_fractions_along=get_target_segments(post_seg_target_dict,conn_subsets)
+           
+              if pre_subset_dict !=None:
+           
+                  pre_target_seg_array, pre_target_fractions=get_target_segments(pre_seg_target_dict,pre_subset_dict)
+            
+              else:
+           
+                  pre_target_seg_array=None
+               
+                  pre_target_fractions=None 
+        
+              conn_counter=0
+        
+              for j in pop2_cell_ids:
+        
+                  cell2_position=pop2_cell_positions[j]
+        
+                  r=math.sqrt(sum([(a - b)**2 for a,b in zip(cell1_position,cell2_position)]))
+            
+                  if eval(distance_rule) >= 1 or random.random() < eval(distance_rule):
+                  
+                     conn_counter+=1
                      
-                  syn_counter=0
-                                
-                  for synapse_id in synapse_list:
+                     post_seg_id=post_target_seg_array[0]
+                     
+                     del post_target_seg_array[0]
+                     
+                     post_fraction_along=post_fractions_along[0]
+                     
+                     del post_fractions_along[0]
                   
-                      delay=0
+                     if pre_target_seg_array != None and pre_target_fractions != None:
+                
+                        pre_seg_id=pre_target_seg_array[0]
+            
+                        del pre_target_seg_array[0]
+            
+                        pre_fraction_along=pre_target_fractions[0]
+            
+                        del pre_target_fractions[0]
+                  
+                     else:
+               
+                        pre_seg_id=0
+                  
+                        pre_fraction_along=0.5
+                       
+                     if targeting_mode=='divergent':
+                   
+                        pre_cell_id=i
                       
-                      weight=1
+                        post_cell_id=j
                       
-                      if delays_dict !=None:
-                         for synapseComp in delays_dict.keys():
-                             if synapseComp in synapse_id:
-                                delay=delays_dict[synapseComp]
+                     if targeting_mode=='convergent':
+                   
+                        pre_cell_id=j
+                      
+                        post_cell_id=i
+                     
+                     syn_counter=0
                                 
-                      if weights_dict !=None:
-                         for synapseComp in weights_dict.keys():
-                             if synapseComp in synapse_id:
-                                weight=weights_dict[synapseComp]
+                     for synapse_id in synapse_list:
+                  
+                         delay=0
+                      
+                         weight=1
+                      
+                         if delays_dict !=None:
+                            for synapseComp in delays_dict.keys():
+                                if synapseComp in synapse_id:
+                                   delay=delays_dict[synapseComp]
+                                
+                         if weights_dict !=None:
+                            for synapseComp in weights_dict.keys():
+                                if synapseComp in synapse_id:
+                                   weight=weights_dict[synapseComp]
                        
                         
-                      add_connection(proj_array[syn_counter], 
-                                     count, 
-                                     presynaptic_population, 
-                                     pre_cell_id, 
-                                     pre_seg_id, 
-                                     postsynaptic_population, 
-                                     post_cell_id, 
-                                     post_seg_id,
-                                     delay = delay,
-                                     weight = weight,
-                                     pre_fraction=pre_fraction_along,
-                                     post_fraction=post_fraction_along)
+                         add_connection(proj_array[syn_counter], 
+                                        count, 
+                                        presynaptic_population, 
+                                        pre_cell_id, 
+                                        pre_seg_id, 
+                                        postsynaptic_population, 
+                                        post_cell_id, 
+                                        post_seg_id,
+                                        delay = delay,
+                                        weight = weight,
+                                        pre_fraction=pre_fraction_along,
+                                        post_fraction=post_fraction_along)
                                      
                                      
-                      syn_counter+=1
+                         syn_counter+=1
                                      
-                  count+=1
+                     count+=1
                      
-               if conn_counter==total_given:
-                  break
+                  if conn_counter==total_conns:
+                     break
                
     if count !=0:
                    
-       for synapse_ind in range(0,len(synapseList)):
+       for synapse_ind in range(0,len(synapse_list)):
     
            net.projections.append(proj_array[synapse_ind])
 
@@ -875,6 +1183,8 @@ def add_elect_spatial_projection(net,
     
     Case II, targeting mode = 'convergent' - the number of synaptic connections per target segment group per each postsynaptic cell;
     
+    alternatively, subset_dict can be a number that specifies the total number of synaptic connections (either divergent or convergent) irrespective of target segment groups.
+    
     Note: the electrical connection is made only if distance-dependent probability is higher than some random number random.random(); thus, the actual numbers of connections made
     
     according to the distance-dependent rule might be smaller than the numbers of connections specified by subset_dict; subset_dict defines the upper bound for the 
@@ -917,35 +1227,63 @@ def add_elect_spatial_projection(net,
                      
     count=0
     
-    numberConnections={}
+    if isinstance(subset_dict, dict):
     
-    for subset in subset_dict.keys():
+       numberConnections={}
+    
+       for subset in subset_dict.keys():
         
-        numberConnections[subset]=int(subset_dict[subset])
+           numberConnections[subset]=int(subset_dict[subset])
+           
+    if isinstance(subset_dict, int) or isinstance(subset_dict, float):
+    
+       numberConnections= int(subset_dict)
       
     for i in range(0, pop1_size):
         
         total_conns=0
         
-        conn_subsets={}
+        if isinstance(subset_dict, dict):
+        
+           conn_subsets={}
     
-        for subset in subset_dict.keys():
+           for subset in subset_dict.keys():
             
-            if subset_dict[subset] != numberConnections[subset]:
+               if subset_dict[subset] != numberConnections[subset]:
                
-               if random.random() < subset_dict[subset] - numberConnections[subset]:
+                  if random.random() < subset_dict[subset] - numberConnections[subset]:
                
-                  conn_subsets[subset]=numberConnections[subset]+1
+                     conn_subsets[subset]=numberConnections[subset]+1
+                  
+                  else:
+               
+                     conn_subsets[subset]=numberConnections[subset]
                   
                else:
                
                   conn_subsets[subset]=numberConnections[subset]
-                  
-            else:
-               
-               conn_subsets[subset]=numberConnections[subset]
             
-            total_conns=total_conns+conn_subsets[subset]
+               total_conns=total_conns+conn_subsets[subset]
+        
+        if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+        
+           conn_subsets=0
+        
+           if subset_dict != numberConnections:
+               
+              if random.random() < subset_dict - numberConnections:
+               
+                 conn_subsets=numberConnections+1
+                  
+              else:
+               
+                 conn_subsets=numberConnections
+                  
+           else:
+               
+              conn_subsets=numberConnections
+            
+           total_conns=total_conns+conn_subsets
             
         if total_conns != 0:  
         
@@ -997,7 +1335,7 @@ def add_elect_spatial_projection(net,
                
                      del post_target_seg_array[0]
                
-                     fraction_along=post_target_fractions[0]
+                     post_fraction_along=post_target_fractions[0]
                
                      del post_target_fractions[0]  
                      
@@ -1025,7 +1363,7 @@ def add_elect_spatial_projection(net,
                       
                      if targeting_mode=='convergent':
                    
-                        spre_cell_id=j
+                        pre_cell_id=j
                       
                         post_cell_id=i  
                      
@@ -1080,9 +1418,8 @@ def make_target_dict(cell_object,
     
 ############################################################################################################################
 
-def get_target_cells(pop_size,
+def get_target_cells(population,
                      fraction_to_target,
-                     cell_positions=None,
                      list_of_xvectors=None,
                      list_of_yvectors=None,
                      list_of_zvectors=None):
@@ -1095,26 +1432,32 @@ def get_target_cells(pop_size,
     Similarly, the input variables list_of_yvectors and list_of_zvectors store the lists whose elements define the left and right margins of the target rectangular regions along
     the y and z dimensions, respectively.'''
     
-    if cell_positions==None:
+    if list_of_xvectors==None or list_of_yvectors==None or list_of_zvectors==None:
     
-       target_cells=random.sample(range(pop_size),int(round(fraction_to_target*pop_size)   )   )
+       target_cells=random.sample(range(population.size),int(round(fraction_to_target*population.size)   )   )
        
     else:
+    
+       cell_instances=population.instances
        
        region_specific_targets_per_cell_group=[]
        
        for region in range(0,len(list_of_xvectors)):
        
-           for cell in range(0,pop_size):
+           for cell in range(0,len(cell_instances)):
            
-               if (list_of_xvectors[region][0] <  cell_positions[cell,0]) and \
-                  (cell_positions[cell,0] < list_of_xvectors[region][1]):
+               cell_inst=cell_instances[cell]
                
-                   if (list_of_yvectors[region][0] <  cell_positions[cell,1]) and \
-                      (cell_positions[cell,1] <  list_of_yvectors[region][1]) :
+               location=cell_inst.location
+           
+               if (list_of_xvectors[region][0] <  location.x) and \
+                  (location.x < list_of_xvectors[region][1]):
+                   ########## assumes that the surface of the cortical column starts at the zero level and deeper layers are found at increasingly negative values
+                   if (list_of_yvectors[region][0] >  location.y) and \
+                      (location.y > list_of_yvectors[region][1]) :
                 
-                      if (list_of_zvectors[region][0] <  cell_positions[cell,2]) and \
-                         (cell_positions[cell,2] < list_of_zvectors[region][1]):
+                      if (list_of_zvectors[region][0] < location.z) and \
+                         (location.z < list_of_zvectors[region][1]):
                      
                          region_specific_targets_per_cell_group.append(cell)
                                                                         
@@ -1231,7 +1574,8 @@ def extract_seg_ids(cell_object,
      
        groups_not_found=list(set(target_compartment_array)- set(found_target_groups) )
        
-       opencortex.print_comment_v("Error: target segments or segment groups in %s are not found in %s. Execution will terminate."%(groups_not_found,cell_object.id) )
+       opencortex.print_comment_v("Error in method opencortex.build.extract_seg_ids(): target segments or segment groups in %s are not found in %s. Execution will terminate."
+       %(groups_not_found,cell_object.id) )
        
        quit()
        
@@ -1249,62 +1593,119 @@ def get_target_segments(seg_specifications,
     target_segs_per_cell=[]
     target_fractions_along_per_cell=[]
     
-    for target_group in subset_dict.keys():
+    if isinstance(subset_dict,dict):
+    
+       for target_group in subset_dict.keys():
    
-        no_per_target_group=subset_dict[target_group]
+           no_per_target_group=subset_dict[target_group]
         
-        if target_group in seg_specifications.keys():
+           if target_group in seg_specifications.keys():
         
-           target_segs_per_group=[]
+              target_segs_per_group=[]
            
-           target_fractions_along_per_group=[]
+              target_fractions_along_per_group=[]
            
-           cumulative_length_dist=seg_specifications[target_group]['LengthDist']
+              cumulative_length_dist=seg_specifications[target_group]['LengthDist']
            
-           segment_list=seg_specifications[target_group]['SegList']
-           not_selected=True
-           while not_selected:
+              segment_list=seg_specifications[target_group]['SegList']
+              
+              not_selected=True
+              
+              while not_selected:
            
-                 p=random.random()
+                    p=random.random()
                  
-                 loc=p*cumulative_length_dist[-1]
+                    loc=p*cumulative_length_dist[-1]
                  
-                 if len(segment_list)==len(cumulative_length_dist):
+                    if len(segment_list)==len(cumulative_length_dist):
                     
-                    for seg_index in range(0,len(segment_list)):
+                       for seg_index in range(0,len(segment_list)):
                     
-                        current_dist_value=cumulative_length_dist[seg_index]
+                           current_dist_value=cumulative_length_dist[seg_index]
                         
-                        if seg_index ==0:
+                           if seg_index ==0:
                            
-                           previous_dist_value=0
+                              previous_dist_value=0
                            
-                        else:
+                           else:
                         
-                           previous_dist_value=cumulative_length_dist[seg_index-1]
+                              previous_dist_value=cumulative_length_dist[seg_index-1]
                         
-                        if loc > previous_dist_value and loc <  current_dist_value:
+                           if loc > previous_dist_value and loc <  current_dist_value:
                         
-                           segment_length=current_dist_value-previous_dist_value
+                              segment_length=current_dist_value-previous_dist_value
                            
-                           length_within_seg=loc-previous_dist_value
+                              length_within_seg=loc-previous_dist_value
                            
-                           post_fraction_along=float(length_within_seg)/segment_length
+                              post_fraction_along=float(length_within_seg)/segment_length
                            
-                           target_segs_per_group.append(segment_list[seg_index])
+                              target_segs_per_group.append(segment_list[seg_index])
                            
-                           target_fractions_along_per_group.append(post_fraction_along)
+                              target_fractions_along_per_group.append(post_fraction_along)
                            
-                           break
+                              break
                            
-                 if len(target_segs_per_group)==no_per_target_group:
-                    not_selected=False
-                    break
+                    if len(target_segs_per_group)==no_per_target_group:
+                       not_selected=False
+                       break
                               
-           target_segs_per_cell.extend(target_segs_per_group)
+              target_segs_per_cell.extend(target_segs_per_group)
            
-           target_fractions_along_per_cell.extend(target_fractions_along_per_group)
-             
+              target_fractions_along_per_cell.extend(target_fractions_along_per_group)
+    
+    
+    if isinstance(subset_dict, float) or isinstance(subset_dict, int):
+    
+       total_num_per_target_groups=int(subset_dict)
+       
+       not_selected=True
+       
+       while not_selected:
+       
+          random_target_group= random.sample(seg_specifications.keys(),1)[0]
+          
+          cumulative_length_dist=seg_specifications[random_target_group]['LengthDist']
+           
+          segment_list=seg_specifications[random_target_group]['SegList']
+          
+          p=random.random()
+                 
+          loc=p*cumulative_length_dist[-1]
+                 
+          if len(segment_list)==len(cumulative_length_dist):
+                    
+             for seg_index in range(0,len(segment_list)):
+                    
+                 current_dist_value=cumulative_length_dist[seg_index]
+                        
+                 if seg_index ==0:
+                           
+                    previous_dist_value=0
+                           
+                 else:
+                        
+                     previous_dist_value=cumulative_length_dist[seg_index-1]
+                        
+                 if loc > previous_dist_value and loc <  current_dist_value:
+                        
+                    segment_length=current_dist_value-previous_dist_value
+                           
+                    length_within_seg=loc-previous_dist_value
+                           
+                    post_fraction_along=float(length_within_seg)/segment_length
+                           
+                    target_segs_per_cell.append(segment_list[seg_index])
+                           
+                    target_fractions_along_per_cell.append(post_fraction_along)
+                           
+                    break
+                           
+          if len(target_segs_per_cell) == total_num_per_target_groups:
+          
+              not_selected=False
+              
+              break
+              
     return target_segs_per_cell, target_fractions_along_per_cell
 
 ###########################################################################################################################
@@ -1717,41 +2118,501 @@ def add_single_cell_population(net, pop_id, cell_id, x=0, y=0, z=0, color=None):
     
     
 ##############################################################################################################################    
-def add_population_in_rectangular_region(net, pop_id, cell_id, size, x_min, y_min, z_min, x_size, y_size, z_size,storeSoma=False, color=None):
+def add_population_in_rectangular_region(net, 
+                                         pop_id, 
+                                         cell_id, 
+                                         size, 
+                                         x_min, 
+                                         y_min, 
+                                         z_min, 
+                                         x_size, 
+                                         y_size, 
+                                         z_size,
+                                         cell_bodies_overlap=True,
+                                         store_soma=False,
+                                         population_dictionary=None,
+                                         cell_diameter_dict=None,
+                                         color=None):
+                                         
+    '''Method which create a cell population in the  NeuroML2 network and distributes these cells in the rectangular region. Input arguments are as follows:
+    
+    net - reference to the libNeuroML network object;
+    
+    pop_id - population id;
+    
+    cell_id - cell component id;
+    
+    size - size of a population;
+    
+    x_min - lower x bound of a rectangular region;
+    
+    y_min - lower y bound of a rectangular region; 
+    
+    z_min - lower z bound of a rectangular region;
+    
+    x_size - width of a rectangular region along x axis;
+    
+    y_size - width of a rectangular region along y axis;
+    
+    z_size - width of a rectangular region along z axis; 
+    
+    cell_bodies_overlap -  boolean value which defines whether cell somata can overlap; default is set to True;
+    
+    store_soma -boolean value which specifies whether soma positions have to be stored in the output array; default is set to False;
+    
+    population_dictionary - optional argument in the format returned by add_populations_in_rectangular_layers; default value is None but it must be specified when cell_bodies_overlap
+    is set to False;
+    
+    cell_diameter_dict - optional argument in the format {'cell_id1': soma diameter of type 'float', 'cell_id2': soma diameter of type 'float'}; default is None but it must be
+    specified when cell_bodies_overlap is set to False.
+    
+    color - optional color, default is None.
+    
+    '''
     
     pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
+    
     if color is not None:
         pop.properties.append(Property("color",color))
 
-    if storeSoma:
-       cellPositions=[]
-    
+        
+        
     # If size == 0, don't add to document, but return placeholder object (with attribute size=0 & id)
     if size>0:
         net.populations.append(pop)
-
-    for i in range(0, size) :
-            index = i
-            inst = neuroml.Instance(id=index)
-            pop.instances.append(inst)
-            X=x_min +(x_size)*random.random()
-            Y=y_min +(y_size)*random.random()
-            Z=z_min +(z_size)*random.random()
-            inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
-            if storeSoma:
-               cell_position=[]
-               cell_position.append(X)
-               cell_position.append(Y)
-               cell_position.append(Z)
-               cellPositions.append(cell_position)
-            
     
-    if storeSoma:
-       return pop, cellPositions
+    if store_soma:
+    
+       cellPositions=[]
+    
+    if (not cell_bodies_overlap) and (population_dictionary==None or cell_diameter_dict==None) :
+    
+        opencortex.print_comment_v("Error! Method opencortex.build.%s() called with cell_bodies_overlap set to False but population_dictionary or cell_diameter_dict is None !" 
+        "Execution will terminate."%sys._getframe().f_code.co_name)
+        
+        quit()
+        
     else:
-       return pop
+    
+        cellPositions=[]
+       
+    for i in range(0, size):
+    
+        if cell_bodies_overlap:
+           
+           inst = neuroml.Instance(id=i)
+           pop.instances.append(inst)
+           X=x_min +(x_size)*random.random()
+           Y=y_min +(y_size)*random.random()
+           Z=z_min +(z_size)*random.random()
+           inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
+           
+           if store_soma:
+              cell_position=[]
+              cell_position.append(X)  
+              cell_position.append(Y)
+              cell_position.append(Z)
+              cellPositions.append(cell_position)
+             
+        else:
+        
+           cell_position_found=False
+           
+           while not cell_position_found:
+              
+              X=x_min +(x_size)*random.random()
+              Y=y_min +(y_size)*random.random()
+              Z=z_min +(z_size)*random.random()
+              
+              try_cell_position=[X,Y,Z]
+              
+              count_overlaps=0
+              
+              for cell_index in range(0,len(cellPositions) ):
+              
+                  cell_loc=cellPositions[cell_index]
+              
+                  if distance(try_cell_position,cell_loc) < (cell_diameter_dict[cell_id]+cell_diameter_dict[cell_id] )/2:
+                     
+                     count_overlaps+=1
+                     
+              for pop_id in population_dictionary.keys():
+              
+                  if population_dictionary[pop_id] != {}:
+              
+                     added_cell_positions=population_dictionary[pop_id]['Positions']
+                  
+                     cell_component=population_dictionary[pop_id]['PopObj'].component
+                  
+                     for cell_index in range(0,len(added_cell_positions)):
+                  
+                         cell_loc=added_cell_positions[cell_index]
+                      
+                         if distance(try_cell_position,cell_loc) < (cell_diameter_dict[cell_component]+cell_diameter_dict[cell_component] )/2 :
+                     
+                            count_overlaps+=1
+                         
+              if count_overlaps==0:
+              
+                 inst = neuroml.Instance(id=i)
+                 pop.instances.append(inst)
+                 inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
+           
+                 cellPositions.append(try_cell_position)
+                    
+                 cell_position_found=True  
+                 
+    if store_soma:
 
-###############################################################################################
+       return pop, cellPositions
+       
+    else:
+    
+       return pop
+       
+######################################################################################################################################      
+def add_population_in_cylindrical_region(net, 
+                                         pop_id, 
+                                         cell_id, 
+                                         size, 
+                                         cyl_radius,
+                                         lower_bound_dim3,
+                                         upper_bound_dim3,
+                                         base_dim1='x',
+                                         base_dim2='z',
+                                         cell_bodies_overlap=True,
+                                         store_soma=False,
+                                         population_dictionary=None,
+                                         cell_diameter_dict=None,
+                                         num_of_polygon_sides=None,
+                                         positions_of_vertices=None,
+                                         constants_of_sides=None,
+                                         color=None):
+                                         
+    '''Method which create a cell population in the  NeuroML2 network and distributes these cells in the cylindrical region. Input arguments are as follows:
+    
+    net - reference to the libNeuroML network object;
+    
+    pop_id - population id;
+    
+    cell_id - cell component id;
+    
+    size - size of a population;
+    
+    cyl_radius - radius of a cylindrical column in which cells will be distributed;
+    
+    lower_bound_dim3 - lower bound of the cortical column height; 
+    
+    upper_bound_dim3 - upper bound of the cortical column height;
+    
+    base_dim1 - specifies which of the 'x', 'y' and 'z' axis corresponds to the first dimension of the transverse plane of the cortical column;
+    
+    base_dim2 - specifies which of the 'x', 'y' and 'z' axis corresponds to the second dimension of the transverse plane of the cortical column; 
+    
+    cell_bodies_overlap -  boolean value which defines whether cell somata can overlap; default is set to True;
+    
+    store_soma -boolean value which specifies whether soma positions have to be stored in the output array; default is set to False;
+    
+    population_dictionary - optional argument in the format returned by add_populations_in_rectangular_layers; default value is None but it must be specified when cell_bodies_overlap
+    is set to False;
+    
+    cell_diameter_dict - optional argument in the format {'cell_id1': soma diameter of type 'float', 'cell_id2': soma diameter of type 'float'}; default is None but it must be
+    specified when cell_bodies_overlap is set to False.
+    
+    num_of_polygon_sides - optional argument which specifies the number of sides of regular polygon which is inscribed in the cylindrical column of a given radius; default value
+     is   None, thus cylindrical but not polygonal shape is built.
+                                         
+    positions_of_vertices - optional argument which specifies the list of coordinates [dim1, dim2] of vertices of a regular polygon; must be specified if num_of_polygon_sides is not
+    None; automatic generation of this list is wrapped inside the utils method add_populations_in_cylindrical_layers(); 
+                                        
+    constants_of_sides - optional argument which specifies the list of y=ax +b coefficients [a, b] which define the lines between vertices of a regular polygon; 
+    if y= b for all values then list element should specify as [None, b]; if x= b for all values of y then list element should specify as [b, None]; 
+    Note that constants_of_sides must be specified if num_of_polygon_sides is not None; 
+    automatic generation of this list is wrapped inside the utils method add_populations_in_cylindrical_layers(); 
+    
+    color - optional color, default is None.
+    
+    '''
+    
+    pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
+    
+    if color is not None:
+        pop.properties.append(Property("color",color))
+        
+    net.populations.append(pop)
+    
+    if store_soma:
+    
+       cellPositions=[]
+       
+    if (num_of_polygon_sides !=None) and (positions_of_vertices ==None or constants_of_sides==None):
+    
+        opencortex.print_comment_v("Error! Method opencortex.build.%s() called with num_of_polygon_sides set to %d but positions_of_vertices or constants_of_sides "
+        "is None !. Execution will terminate."%num_of_polygon_sides,sys._getframe().f_code.co_name)
+        
+        quit()
+    
+    if (not cell_bodies_overlap) and (population_dictionary==None or cell_diameter_dict==None) :
+    
+        opencortex.print_comment_v("Error! Method opencortex.build.%s() called with cell_bodies_overlap set to False but population_dictionary or cell_diameter_dict is None !" 
+        "Execution will terminate."%sys._getframe().f_code.co_name)
+        
+        quit()
+        
+    else:
+    
+        cellPositions=[]
+    
+    all_dims=['x','y','z']
+    
+    for dim in all_dims:
+    
+        if dim !=base_dim1 or dim != base_dim2:
+        
+           all_dims.remove(dim)
+    
+    map_xyz={base_dim1:'dim1',base_dim2:'dim2',all_dims[0]:'dim3'}
+    
+    for i in range(0, size):
+    
+        if cell_bodies_overlap:
+        
+           dim_dict=find_constrained_cell_position(num_of_polygon_sides,cyl_radius,lower_bound_dim3,upper_bound_dim3,positions_of_vertices,constants_of_sides)
+           
+           X=dim_dict[map_xyz['x']]
+          
+           Y=dim_dict[map_xyz['y']]
+           
+           Z=dim_dict[map_xyz['z']]
+           
+           inst = neuroml.Instance(id=i)
+           pop.instances.append(inst)
+           
+           inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
+           
+           if store_soma:
+              
+              cell_position=[]
+              cell_position.append(X)  
+              cell_position.append(Y)
+              cell_position.append(Z)
+              cellPositions.append(cell_position)
+             
+        else:
+        
+           cell_position_found=False
+           
+           while not cell_position_found:
+           
+              dim_dict=find_constrained_cell_position(num_of_polygon_sides,cyl_radius,lower_bound_dim3,upper_bound_dim3,positions_of_vertices,constants_of_sides)
+              
+              X=dim_dict[map_xyz['x']]
+              
+              Y=dim_dict[map_xyz['y']]
+              
+              Z=dim_dict[map_xyz['z']]
+              
+              try_cell_position=[X,Y,Z]
+              
+              count_overlaps=0
+              
+              for cell_index in range(0,len(cellPositions) ):
+              
+                  cell_loc=cellPositions[cell_index]
+              
+                  if distance(try_cell_position,cell_loc) < (cell_diameter_dict[cell_id]+cell_diameter_dict[cell_id] )/2:
+                     
+                     count_overlaps+=1
+                     
+              for pop_id in population_dictionary.keys():
+              
+                  if population_dictionary[pop_id] != {}:
+              
+                     added_cell_positions=population_dictionary[pop_id]['Positions']
+                  
+                     cell_component=population_dictionary[pop_id]['PopObj'].component
+                  
+                     for cell_index in range(0,len(added_cell_positions)):
+                  
+                         cell_loc=added_cell_positions[cell_index]
+                      
+                         if distance(try_cell_position,cell_loc) < (cell_diameter_dict[cell_component]+cell_diameter_dict[cell_component] )/2:
+                     
+                            count_overlaps+=1
+                         
+              if count_overlaps==0:
+              
+                 inst = neuroml.Instance(id=i)
+                 pop.instances.append(inst)
+                 inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z) )
+           
+                 cellPositions.append(try_cell_position)
+                    
+                 cell_position_found=True  
+                 
+    if store_soma:
+    
+       return pop, cellPositions
+       
+    else:
+    
+       return pop
+       
+############################################################################################################################## 
+def find_constrained_cell_position(num_of_polygon_sides,cyl_radius,lower_bound_dim3,upper_bound_dim3,positions_of_vertices,constants_of_sides):
+
+    '''Method to find a constrained position of the cell; used inside the method add_population_in_cylindrical_region( *args) . '''
+
+    if num_of_polygon_sides ==None:
+    
+      found_cell_inside_cylinder=False
+      
+      dim3_val=lower_bound_dim3 + (upper_bound_dim3-lower_bound_dim3) * random.random()
+      
+      while not found_cell_inside_cylinder:
+ 
+            dim_dict={}
+       
+            dim1_min=-cyl_radius
+       
+            dim2_min=-cyl_radius
+       
+            dim1_val=dim1_min + (2*cyl_radius)*random.random()
+            
+            dim2_val=dim2_min + (2*cyl_radius)*random.random()
+            
+            test_point_inside_cylinder=[dim1_val,dim2_val]
+            
+            if distance(test_point_inside_cylinder,[0,0]) <= cyl_radius:
+            
+               dim_dict={'dim1':dim1_val,'dim2':dim2_val,'dim3':dim3_val}
+              
+               found_cell_inside_cylinder=True  
+    else:
+           
+       found_constrained_cell_loc=False
+       
+       while not found_constrained_cell_loc:
+       
+             found_cell_inside_cylinder=False
+             
+             dim3_val=lower_bound_dim3 + (upper_bound_dim3-lower_bound_dim3) * random.random()
+          
+             while not found_cell_inside_cylinder:
+ 
+                   dim1_min=-cyl_radius
+       
+                   dim2_min=-cyl_radius
+       
+                   dim1_val=dim1_min + (2*cyl_radius)*random.random()
+            
+                   dim2_val=dim2_min + (2*cyl_radius)*random.random()
+            
+                   test_point_inside_cylinder=[dim1_val,dim2_val]
+            
+                   if distance(test_point_inside_cylinder,[0,0]) <= cyl_radius:
+            
+                      test_point=test_point_inside_cylinder
+              
+                      found_cell_inside_cylinder=True
+              
+             count_intersections=0
+                 
+             for side_index in range(0,len(constants_of_sides) ):
+                 
+                 if abs(positions_of_vertices[side_index][1] - positions_of_vertices[side_index-1][1]) > 0.0000001:
+            
+                    if test_point[1] < positions_of_vertices[side_index][1] and test_point[1] > positions_of_vertices[side_index-1][1]:
+                    
+                       opencortex.print_comment_v("Checking a point inside a regular polygon")
+                   
+                       if constants_of_sides[side_index][0] !=None and constants_of_sides[side_index][1]==None :
+                    
+                          if dim1_val <= constants_of_sides[side_index][0]:
+                       
+                             count_intersections+=1
+                    
+                       if constants_of_sides[side_index][0] != None and constants_of_sides[side_index][1] != None:
+                    
+                          if dim1_val <= (dim2_val - constants_of_sides[side_index][1]) / constants_of_sides[side_index][0]:
+                       
+                             count_intersections +=1
+                    
+                    if test_point[1] < positions_of_vertices[side_index-1][1] and test_point[1] > positions_of_vertices[side_index][1]:
+                    
+                       opencortex.print_comment_v("Checking a point inside a regular polygon")
+                   
+                       if constants_of_sides[side_index][0] !=None and constants_of_sides[side_index][1]==None :
+                    
+                          if dim1_val <= constants_of_sides[side_index][0]:
+                       
+                             count_intersections+=1
+                    
+                       if constants_of_sides[side_index][0] != None and constants_of_sides[side_index][1] != None:
+                    
+                          if dim1_val <= (dim2_val - constants_of_sides[side_index][1]) / constants_of_sides[side_index][0]:
+                       
+                             count_intersections +=1
+                       
+             if  count_intersections ==1 :
+                 
+                 dim_dict={'dim1':dim1_val,'dim2':dim2_val,'dim3':dim3_val}
+                
+                 opencortex.print_comment_v("Selected a cell locus inside regular polygon.")
+                    
+                 found_constrained_cell_loc=True
+
+    return dim_dict
+#############################################################################################################################  
+def distance(p, q):
+    
+    return math.sqrt(sum([(a - b)**2 for a,b in zip(p,q)]))
+       
+#############################################################################################################################
+    
+def get_soma_diameter(cell_name,cell_type=None,dir_to_cell=None):
+
+    '''Method to obtain a diameter of a cell soma. '''
+    
+    loaded_cell_array={}
+    
+    if dir_to_cell==None:
+    
+       cell_nml_file = '%s.cell.nml'%cell_name
+       
+    else:
+    
+       cell_nml_file=os.path.join(dir_to_cell,'%s.cell.nml'%cell_name)
+    
+    document_cell = neuroml.loaders.NeuroMLLoader.load(cell_nml_file)
+    
+    if cell_type !=None:
+       if cell_type=="cell2CaPools":
+          cell_doc=document_cell.cell2_ca_poolses[0]
+    else:
+       loaded_cell_array[cell_name]=document_cell.cells[0]
+       
+    cell_diameter=0
+    
+    for segment in loaded_cell_array[cell_name].morphology.segments:
+        
+        if segment.id==0:
+           
+           proximal_diameter=segment.distal.diameter
+           distal_diameter=segment.proximal.diameter
+           
+           if proximal_diameter > distal_diameter:
+               
+              cell_diameter=proximal_diameter
+              
+           else:
+              cell_diameter=distal_diameter
+            
+           break  
+
+    return cell_diameter
+
+################################################################################################################################################
 
 def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False, only_cells=None):
     
@@ -1872,8 +2733,24 @@ def add_advanced_inputs_to_population(net,
         else:
         
            cell_index=0
+           
+        if subset_dict != None and seg_length_dict == None and universal_target_segment == None and universal_fraction_along == None:
+        
+           if None in subset_dict.keys() and len(subset_dict.keys() ) ==1:
+           
+              for target_point in range(0,subset_dict[None]):
+           
+                  for input_index in range(0,len(input_list_array_final[cell_index]) ):
+            
+                       input = neuroml.Input(id=input_counters_final[cell_index][input_index], 
+                                             target="../%s/%i/%s"%(population.id, cell_id, population.component), 
+                                             destination="synapses")
+                                        
+                       input_list_array_final[cell_index][input_index].input.append(input)
+                    
+                       input_counters_final[cell_index][input_index]+=1
     
-        if seg_length_dict!=None and subset_dict !=None and universal_target_segment==None and universal_fraction_along==None:
+        elif seg_length_dict!=None and subset_dict !=None and universal_target_segment==None and universal_fraction_along==None:
             
            target_seg_array, target_fractions=get_target_segments(seg_length_dict,subset_dict)
            
@@ -1912,7 +2789,7 @@ def add_advanced_inputs_to_population(net,
         
     return input_list_array_final
     
-#######################################################################################################
+#####################################################################################################################################################
 def generate_network(reference, seed=1234, temperature='32degC'):
 
     del all_included_files[:]
@@ -1933,7 +2810,7 @@ def generate_network(reference, seed=1234, temperature='32degC'):
     return nml_doc, network
 
 
-def save_network(nml_doc, nml_file_name, validate=True, comment=True, format='xml'):
+def save_network(nml_doc, nml_file_name, validate=True, comment=True, format='xml',max_memory=None):
 
     info = "\n\nThis NeuroML 2 file was generated by OpenCortex v%s using: \n"%(opencortex.__version__)
     info += "    libNeuroML v%s\n"%(neuroml.__version__)
@@ -1952,9 +2829,10 @@ def save_network(nml_doc, nml_file_name, validate=True, comment=True, format='xm
     opencortex.print_comment_v("Saved NeuroML with id: %s to %s"%(nml_doc.id, nml_file_name))
     
     if validate:
+        
         from pyneuroml.pynml import validate_neuroml2
-
-        passed = validate_neuroml2(nml_file_name)
+        
+        passed = validate_neuroml2(nml_file_name,max_memory=max_memory)
         
         if passed:
             opencortex.print_comment_v("Generated NeuroML file is valid")
