@@ -991,7 +991,7 @@ class TestUtilsMethods(unittest.TestCase):
                  
                  self.assertTrue( duration_units=="ms" )
                  
-              if "DepCurr_L23FRB_spatial_Pulse0" == pulse_group.id:
+              if ("DepCurr_L23FRB_spatial" in pulse_group.id)  and ("Pulse0" in pulse_group.id):
               
                  CG3D_L23PyrFRB_spatial_pulses0.append(pulse_group.id)
                  
@@ -1007,7 +1007,7 @@ class TestUtilsMethods(unittest.TestCase):
                  
                  self.assertTrue( duration_units=="ms" )
                  
-              if "DepCurr_L23FRB_spatial_Pulse1" == pulse_group.id:
+              if ("DepCurr_L23FRB_spatial" in pulse_group.id) and ("Pulse1" in pulse_group.id):
               
                  CG3D_L23PyrFRB_spatial_pulses1.append(pulse_group.id)
                  
@@ -1119,7 +1119,8 @@ class TestUtilsMethods(unittest.TestCase):
                      
                      self.assertTrue(float(input_case.fraction_along) ==0.5)
               
-              if "DepCurr_L23FRB_spatial" in input_list_instance.id and "DepCurr_L23FRB_spatial_Pulse0" in input_list_instance.component:
+              if "DepCurr_L23FRB_spatial" in input_list_instance.id and ("DepCurr_L23FRB_spatial" in input_list_instance.component and \
+               "Pulse0" in input_list_instance.component):
               
                  CG3D_L23PyrFRB_spatial_pulse0_input_lists.append(input_list_instance.id)
                  
@@ -1133,7 +1134,8 @@ class TestUtilsMethods(unittest.TestCase):
                      
                      self.assertTrue(float(input_case.fraction_along) >=0 and float(input_case.fraction_along) <=1)
                      
-              if "DepCurr_L23FRB_spatial" in input_list_instance.id and "DepCurr_L23FRB_spatial_Pulse1" in input_list_instance.component:
+              if "DepCurr_L23FRB_spatial" in input_list_instance.id and ("DepCurr_L23FRB_spatial" in input_list_instance.component and \
+              'Pulse1' in input_list_instance.component):
               
                  CG3D_L23PyrFRB_spatial_pulse1_input_lists.append(input_list_instance.id)
                  

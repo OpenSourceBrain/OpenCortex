@@ -142,11 +142,14 @@ def add_probabilistic_projection_list(net,
                                       connection_probability,
                                       delay = 0,
                                       weight = 1,
+                                      presynaptic_population_list=True,
+                                      postsynaptic_population_list=True,
                                       std_delay=None,
                                       std_weight=None):
                                       
     '''Modification of the method add_probabilistic_projection() to allow multiple synaptic components per physical projection;
-    specifically works for networks containing single-compartment neuronal models. This method also allows gaussian variation in synaptic weight and delay.'''
+    specifically works for networks containing single-compartment neuronal models. This method also allows gaussian variation in synaptic weight and delay;
+    it also accepts populations that do not necessarily have the type attribute set to 'populationList' .'''
     
     if presynaptic_population.size==0 or postsynaptic_population.size==0:
         return None
@@ -267,18 +270,35 @@ def add_probabilistic_projection_list(net,
                            else:
                            
                               w_val=weight[syn_counter]
-                    
-                       add_connection(proj_components[synapse_id], 
-                                      count, 
-                                      presynaptic_population, 
-                                      i, 
-                                      0, 
-                                      postsynaptic_population, 
-                                      j, 
-                                      0,
-                                      delay = del_val,
-                                      weight = w_val)
-                                       
+                                      
+                       if presynaptic_population_list:
+                       
+                          pre_cell_string="../%s/%i/%s"%(presynaptic_population.id, i, presynaptic_population.component)    
+                          
+                       else:
+                       
+                          pre_cell_string="../%s[%i]"%(presynaptic_population.id, i)  
+                          
+                       if postsynaptic_population_list:
+                      
+                          post_cell_string="../%s/%i/%s"%(postsynaptic_population.id, j, postsynaptic_population.component)
+                         
+                       else:
+                      
+                          post_cell_string="../%s[%i]"%(postsynaptic_population.id, j)
+                                   
+                       connection = neuroml.ConnectionWD(id=count, \
+                            pre_cell_id=pre_cell_string, \
+                            pre_segment_id=0, \
+                            pre_fraction_along=0.5,
+                            post_cell_id=post_cell_string, \
+                            post_segment_id=0,
+                            post_fraction_along=0.5,
+                            delay = '%f ms'%del_val,
+                            weight = w_val)
+
+                       proj_components[synapse_id].connection_wds.append(connection)  
+                                     
                        syn_counter+=1
                          
                    count+=1
@@ -2102,6 +2122,16 @@ def add_pulse_generator(nml_doc, id, delay, duration, amplitude):
 
     return pg
     
+def add_spike_source_poisson(nml_doc, id, start, duration, rate):
+
+    ssp=neuroml.SpikeSourcePoisson(id=id,
+                                   start=start,
+                                   duration=duration,
+                                   rate=rate)
+                                   
+    nml_doc.SpikeSourcePoisson.append(ssp)
+   
+    return ssp
     
 def add_single_cell_population(net, pop_id, cell_id, x=0, y=0, z=0, color=None):
     
@@ -2179,7 +2209,7 @@ def add_population_in_rectangular_region(net,
         
     # If size == 0, don't add to document, but return placeholder object (with attribute size=0 & id)
     if size>0:
-        net.populations.append(pop)
+       net.populations.append(pop)
     
     if store_soma:
     
@@ -2339,7 +2369,9 @@ def add_population_in_cylindrical_region(net,
     if color is not None:
         pop.properties.append(Property("color",color))
         
-    net.populations.append(pop)
+    if size>0:
+       
+       net.populations.append(pop)
     
     if store_soma:
     
@@ -2663,7 +2695,7 @@ def add_advanced_inputs_to_population(net,
     
     id - unique string that tags the input group created by the method;
     
-    population - libNeuroML population object;
+    population - libNeuroML population object of a target population;
     
     input_id_list - this is a list that stores lists of poisson synapse ids or pulse generator ids; 
     if len(input_id_list)== (num of target cells) then each target cell, specified by only_cells or all_cells, has a unique list input components;
@@ -2789,6 +2821,181 @@ def add_advanced_inputs_to_population(net,
         
     return input_list_array_final
     
+#####################################################################################################################################################
+def add_projection_based_inputs(net, 
+                                id, 
+                                population, 
+                                input_id_list, 
+                                weight_list,
+                                synapse_id,
+                                seg_length_dict,
+                                subset_dict,
+                                universal_target_segment,
+                                universal_fraction_along, 
+                                all_cells=False, 
+                                only_cells=None):
+                                
+    
+    ''' This method builds input projections between the input components and target population. Input arguments to this method:
+    
+    net- libNeuroML network object;
+    
+    id - unique string that tags the input group created by the method;
+    
+    population - libNeuroML population object of a target population;
+    
+    input_id_list - this is a list that stores lists of instance ids of SpikeSourcePoisson component types;
+     
+    if len(input_id_list)== (num of target cells) then each target cell, specified by only_cells or all_cells, has a unique list input components;
+    if len(input_id_list != num, then add_advanced_inputs_to_population assumes that all cells share the same list of input components and thus uses input_id_list[0].
+    Note that all of the input components (e.g. differing in delays) per given list of input components are mapped on the same membrane point on the target segment of a given cell.
+    
+    weight_list - lists of connection weights for the input components specified by input_id_list; it must take the same format as input_id_list;
+    
+    synapse_id - unique synapse id for all input components specified in input_id_list;
+    
+    seg_length_dict - a dictionary whose keys are the ids of target segment groups and the values are the segment length dictionaries in the format returned by make_target_dict(); 
+    
+    subset_dict - a dictionary whose keys are the ids of target segment groups and the corresponding dictionary values define the desired number of synaptic connections per target    segment group per each postsynaptic cell;
+    
+    universal_target_segment - this should be set to None if subset_dict and seg_length_dict are used; alternatively, universal_target_segment specifies a single target segment on
+    all of the target cells for all input components; then seg_length_dict and subset_dict must be set to None.
+    
+    universal_fraction_along - this should be set to None if subset_dict and seg_length_dict are used; alternatively, universal_target_fraction specifies a single value of 
+    fraction along on all of the target segments for all target cells and all input components; then seg_length_dict and subset_dict must bet set to None;
+    
+    all_cells - default value is set to False; if all_cells==True then all cells in a given population will receive the inputs;
+    
+    only_cells - optional variable which stores the list of ids of specific target cells; cannot be set together with all_cells. '''
+    
+    if all_cells and only_cells is not None:
+        opencortex.print_comment_v("Error! Method opencortex.build.%s() called with both arguments all_cells and only_cells set!"%sys._getframe().f_code.co_name)
+        exit(-1)
+        
+    cell_ids = []
+    
+    if all_cells:
+        cell_ids = range(population.size)
+    if only_cells is not None:
+        if only_cells == []:
+            return
+        cell_ids = only_cells
+        
+    spike_source_pops_final=[]
+    
+    spike_source_projections_final=[]
+    
+    spike_source_counters_final=[]
+    
+    for input_cell in range(0,len(input_id_list) ):
+    
+        spike_source_pops=[]
+        
+        spike_source_projections=[]
+        
+        spike_source_counters=[]
+    
+        for input_index in range(0,len(input_id_list[input_cell]) ):
+        
+            spike_source_pop = neuroml.Population(id="Pop_"+id+"_%d_%d"%(input_cell,input_index), 
+                                                  component=input_id_list[input_cell][input_index], 
+                                                  size=1)
+                                     
+            net.populations.append(spike_source_pop)
+            
+            proj = neuroml.Projection(id="Proj_%s_%s"%(spike_source_pop.id, population.id), 
+                                     presynaptic_population=spike_source_pop.id, 
+                                     postsynaptic_population=population.id, 
+                                     synapse=synapse_id)
+            
+            spike_source_projections.append(proj)
+                                       
+            spike_source_pops.append(spike_source_pop)
+            
+            spike_source_counters.append(0)
+            
+        spike_source_pops_final.append(spike_source_pops)
+        
+        spike_source_counters_final.append(spike_source_counters)
+        
+        spike_source_projections_final.append(spike_source_projections)
+        
+    cell_counter=0
+        
+    for cell_id in cell_ids:
+    
+        if len(input_id_list)==len(cell_ids):
+               
+           cell_index=cell_counter
+           
+        else:
+        
+           cell_index=0
+           
+        if subset_dict != None and seg_length_dict == None and universal_target_segment == None and universal_fraction_along == None:
+        
+           if None in subset_dict.keys() and len(subset_dict.keys() ) ==1:
+           
+              for target_point in range(0,subset_dict[None]):
+           
+                  for input_index in range(0,len(spike_source_pops_final[cell_index]) ):
+            
+                       conn = neuroml.ConnectionWD(id=spike_source_counters_final[cell_index][input_index], \
+                                                   pre_cell_id="../%s[%s]"%(spike_source_pops_final[cell_index][input_index].id, 0), \
+                                                   post_cell_id="../%s/%i/%s"%(population.id, cell_id, population.component), \
+                                                   weight = weight_list[cell_index][input_index],
+                                                   delay="0 ms")
+                                        
+                       spike_source_projections_final[cell_index][input_index].connection_wds.append(conn)
+                    
+                       spike_source_counters_final[cell_index][input_index]+=1
+    
+        elif seg_length_dict!=None and subset_dict !=None and universal_target_segment==None and universal_fraction_along==None:
+            
+           target_seg_array, target_fractions=get_target_segments(seg_length_dict,subset_dict)
+           
+           for target_point in range(0,len(target_seg_array)):
+           
+               for input_index in range(0,len(spike_source_pops_final[cell_index]) ):
+                    
+                   conn = neuroml.ConnectionWD(id=spike_source_counters_final[cell_index][input_index], \
+                                               pre_cell_id="../%s[%s]"%(spike_source_pops_final[cell_index][input_index].id, 0), \
+                                               post_cell_id="../%s/%i/%s"%(population.id, cell_id, population.component), \
+                                               post_segment_id="%d"%target_seg_array[target_point],
+                                               post_fraction_along="%f"%target_fractions[target_point],
+                                               weight =weight_list[cell_index][input_index],
+                                               delay="0 ms") 
+                                        
+                   spike_source_projections_final[cell_index][input_index].connection_wds.append(conn)
+                    
+                   spike_source_counters_final[cell_index][input_index]+=1
+           
+        else:
+        
+           for input_index in range(0,len(spike_source_pops_final[cell_index])):
+                                     
+               conn = neuroml.ConnectionWD(id=spike_source_counters_final[cell_index][input_index], \
+                                               pre_cell_id="../%s[%s]"%(spike_source_pops_final[cell_index][input_index].id, 0), \
+                                               post_cell_id="../%s/%i/%s"%(population.id, cell_id, population.component), \
+                                               post_segment_id="%d"%universal_target_segment,
+                                               post_fraction_along="%f"%universal_fraction_along,
+                                               weight =weight_list[cell_index][input_index],
+                                               delay="0 ms") 
+                                        
+               spike_source_projections_final[cell_index][input_index].connection_wds.append(conn)
+                    
+               spike_source_counters_final[cell_index][input_index]+=1
+        
+        cell_counter+=1
+               
+    for input_cell in range(0,len(spike_source_projections_final)):
+                
+        for input_index in range(0,len(spike_source_projections_final[input_cell]) ):
+        
+            net.projections.append(spike_source_projections_final[input_cell][input_index])
+        
+        
+    return spike_source_pops_final
 #####################################################################################################################################################
 def generate_network(reference, seed=1234, temperature='32degC'):
 
