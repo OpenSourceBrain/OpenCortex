@@ -814,7 +814,7 @@ class TestUtilsMethods(unittest.TestCase):
                                                                     popDict=popDict,
                                                                     x_vector=xs,
                                                                     z_vector=zs)
-          
+                                                                    
           all_synapse_components,proj_array,cached_segment_dicts=oc_utils.build_connectivity(net=network,
                                                                                              pop_objects=pop_params,
                                                                                              path_to_cells=None,
@@ -825,6 +825,7 @@ class TestUtilsMethods(unittest.TestCase):
                                                                                                                        'synEndsWith':[],
                                                                                                                        'targetCellGroup':[]}],
                                                                                              synaptic_delay_params=[{'delay':0.05,'synComp':'all'}])    
+            
                                                                                              
           cell_nml_file = 'Test.cell.nml'
           
@@ -873,7 +874,7 @@ class TestUtilsMethods(unittest.TestCase):
                          'RateUnits':'Hz',
                          'FractionToTarget':1.0,
                          'LocationSpecific':False,
-                         'TargetDict':{'dendrite_group':100} }],
+                         'TargetDict':{'dendrite_group':100} } ],
                          
                          'CG3D_L23PyrFRB':[{'InputType':'GeneratePoissonTrains',
                          'InputName':"EctopicStimL23FRB",
@@ -913,7 +914,20 @@ class TestUtilsMethods(unittest.TestCase):
                          'AmplitudeUnits':'nA',
                          'FractionToTarget':1.0,
                          'LocationSpecific':False,
-                         'TargetDict': {None:100}   }] } 
+                         'TargetDict': {None:100}   },
+                         
+                        {'InputType':'GenerateSpikeSourcePoisson',
+                         'InputName':"SpikeSource",
+                         'AverageRateList':[8.0],
+                         'DurationList':[300.0],
+                         'DelayList':[0.0],
+                         'WeightList':[2.5],
+                         'Synapse':'exp_curr_syn_all',
+                         'RateUnits':'Hz',
+                         'TimeUnits':'ms',
+                         'FractionToTarget':1.0,
+                         'LocationSpecific':False,
+                         'TargetDict':{None:10} } ] } 
                          
           input_list_array_final, input_synapse_list=oc_utils.build_inputs(nml_doc=nml_doc,
                                                                            net=network,
@@ -927,6 +941,10 @@ class TestUtilsMethods(unittest.TestCase):
           
           CG3D_L23PyrRS_pulses=[]
           
+          CG3D_PointNeurons_spike_sources=[]
+          
+          CG3D_PointNeurons_spike_source_pops=[]
+          
           CG3D_PointNeurons_pulses=[]
           
           CG3D_L23PyrFRB_spatial_pulses0=[]
@@ -934,6 +952,8 @@ class TestUtilsMethods(unittest.TestCase):
           CG3D_L23PyrFRB_spatial_pulses1=[]
           
           CG3D_L23PyrRS_pulse_input_lists=[]
+          
+          CG3D_PointNeurons_spike_source_projections=[]
           
           CG3D_PointNeurons_pulse_input_lists=[]
           
@@ -946,6 +966,8 @@ class TestUtilsMethods(unittest.TestCase):
           G3D_L23PyrFRB_spatial_pulse0_input_list_instances=[]
           
           G3D_L23PyrFRB_spatial_pulse1_input_list_instances=[]
+          
+          CG3D_L23PyrRS_spike_source_proj_connections=[]
           
           CG3D_L23PyrRS_persistent_synapses=[]
           
@@ -1055,6 +1077,46 @@ class TestUtilsMethods(unittest.TestCase):
                  
                  self.assertTrue( rate_units == "Hz")
                  
+          for pop_index in range(0,len(network.populations)):
+          
+              pop=network.populations[pop_index]
+              
+              if "SpikeSource" in pop.component:
+              
+                 CG3D_PointNeurons_spike_source_pops.append(pop.id)
+                 
+          for spike_source_index in range(0,len(nml_doc.SpikeSourcePoisson)):
+          
+              spike_source_case=nml_doc.SpikeSourcePoisson[spike_source_index]
+              
+              if "SpikeSource" in spike_source_case.id:
+              
+                 CG3D_PointNeurons_spike_sources.append(spike_source_case.id)
+                 
+                 rate=float(spike_source_case.rate.split(" ")[0])
+              
+                 rate_units=spike_source_case.rate.split(" ")[1]
+                 
+                 self.assertTrue( rate == 8.0 )
+                 
+                 self.assertTrue( rate_units == "Hz")
+                 
+                 start=float(spike_source_case.start.split(" ")[0])
+              
+                 start_units=spike_source_case.start.split(" ")[1]
+                 
+                 self.assertTrue( start== 0.0     )
+                 
+                 self.assertTrue( start_units == "ms")
+                 
+                 duration=float(spike_source_case.duration.split(" ")[0])
+              
+                 duration_units=spike_source_case.duration.split(" ")[1]
+                 
+                 self.assertTrue( duration == 300.0    )
+                 
+                 self.assertTrue( duration_units == "ms" )
+                 
           for poisson_index in range(0,len(nml_doc.transient_poisson_firing_synapses)):
           
               poisson_synapse_case=nml_doc.transient_poisson_firing_synapses[poisson_index]
@@ -1086,6 +1148,25 @@ class TestUtilsMethods(unittest.TestCase):
                  self.assertTrue( duration_units == "ms")
                  
                  self.assertTrue( delay_units == "ms" )
+                 
+          for proj_index in range(0,len(network.projections)):
+          
+              proj=network.projections[proj_index]
+              
+              if (proj.presynaptic_population in CG3D_PointNeurons_spike_source_pops) and (proj.postsynaptic_population == 'CG3D_PointNeurons' ) \
+              and proj.synapse=='exp_curr_syn_all':
+              
+                 CG3D_PointNeurons_spike_source_projections.append(proj.id)
+                 
+                 self.assertTrue(len(proj.connection_wds),10)
+                 
+                 for conn_index in range(0,len(proj.connection_wds)):
+                 
+                     conn=proj.connection_wds[conn_index]
+                     
+                     self.assertEqual(conn.weight,2.5 )
+                     
+                     self.assertEqual( '../CG3D_PointNeurons/0/SingleCompartment', conn.post_cell_id)
                  
           for input_list_index in range(0,len(network.input_lists)):
           
@@ -1204,5 +1285,13 @@ class TestUtilsMethods(unittest.TestCase):
           self.assertEqual(len(set(CG3D_L23PyrFRB_transient_synapse_input_lists)), 1)
           ### testing whether 50 % of cells are targeted, see input params
           self.assertEqual(len(set(CG3D_L23PyrFRB_transient_synapse_input_list_instances)), 5)
+          
+          self.assertTrue(len(set(CG3D_PointNeurons_spike_sources)), 1)
+          
+          self.assertTrue(len(set(CG3D_PointNeurons_spike_source_pops)),len(set(CG3D_PointNeurons_spike_sources)) )
+          
+          self.assertTrue(len(set(CG3D_PointNeurons_spike_source_projections)),len(set(CG3D_PointNeurons_spike_sources)) )
+          
+          
                    
 

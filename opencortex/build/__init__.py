@@ -144,6 +144,7 @@ def add_probabilistic_projection_list(net,
                                       weight = 1,
                                       presynaptic_population_list=True,
                                       postsynaptic_population_list=True,
+                                      clipped_distributions=True,
                                       std_delay=None,
                                       std_weight=None):
                                       
@@ -218,8 +219,22 @@ def add_probabilistic_projection_list(net,
                    if not isinstance(delay,list):
                 
                       if std_delay != None:
+                      
+                         if clipped_distributions:
+                         
+                            found_positive_delay=False
+                            
+                            while not found_positive_delay:
+                            
+                              del_val=random.gauss(delay, std_delay)
+                              
+                              if del_val >=0:
+                              
+                                 found_positive_delay=True
+                         
+                         else:
                    
-                         del_val=random.gauss(delay, std_delay)
+                            del_val=random.gauss(delay, std_delay)
                       
                       else:
                    
@@ -228,8 +243,34 @@ def add_probabilistic_projection_list(net,
                    if not isinstance(weight,list):
                       
                       if std_weight != None:
+                      
+                         if clipped_distributions:
+                         
+                            found_signed_weight=False
+                            
+                            while not found_signed_weight:
+                            
+                               w_val=random.gauss(weight,std_weight)
+                               
+                               if weight >0:
+                               
+                                  if w_val >=0:
+                                   
+                                     found_signed_weight=True
+                                     
+                               elif weight <0:
+                               
+                                  if w_val <=0:
+                                  
+                                     found_signed_weight=True
+                                     
+                               else:
+                               
+                                  found_signed_weight=True
+                                  
+                         else:
                    
-                         w_val=random.gauss(weight,std_weight)
+                            w_val=random.gauss(weight,std_weight)
                       
                       else:
                    
@@ -245,11 +286,39 @@ def add_probabilistic_projection_list(net,
                            
                               if isinstance(std_delay,list):
                    
-                                 del_val=random.gauss(delay[syn_counter], std_delay[syn_counter])
+                                 if clipped_distributions:
+                         
+                                    found_positive_delay=False
+                            
+                                    while not found_positive_delay:
+                                       
+                                       del_val=random.gauss(delay[syn_counter], std_delay[syn_counter])
+                                       
+                                       if del_val >=0:
+                              
+                                          found_positive_delay=True
+                                          
+                                 else:
                                  
+                                    del_val=random.gauss(delay[syn_counter], std_delay[syn_counter])
+                  
                               else:
                               
-                                 del_val=random.gauss(delay[syn_counter], std_delay)
+                                 if clipped_distributions:
+                         
+                                    found_positive_delay=False
+                            
+                                    while not found_positive_delay:
+                              
+                                       del_val=random.gauss(delay[syn_counter], std_delay)
+                                       
+                                       if del_val >=0:
+                              
+                                          found_positive_delay=True
+                                          
+                                 else:
+                                  
+                                    del_val=random.gauss(delay[syn_counter], std_delay) 
                       
                            else:
                    
@@ -260,12 +329,64 @@ def add_probabilistic_projection_list(net,
                            if std_weight != None:
                            
                               if isinstance(std_weight,list):
+                              
+                                 if clipped_distributions:
+                         
+                                    found_signed_weight=False
+                            
+                                    while not found_signed_weight:
                            
-                                 w_val=random.gauss(weight[syn_counter],std_weight[syn_counter])
+                                       w_val=random.gauss(weight[syn_counter],std_weight[syn_counter])
+                                       
+                                       if weight[syn_counter] >0:
+                               
+                                          if w_val >=0:
+                                   
+                                             found_signed_weight=True
+                                      
+                                       elif weight[syn_counter] <0:
+                               
+                                          if w_val <=0:
+                                  
+                                             found_signed_weight=True
+                                     
+                                       else:
+                               
+                                          found_signed_weight=True
+                                          
+                                 else:
+                                 
+                                    w_val=random.gauss(weight[syn_counter],std_weight[syn_counter])
                                  
                               else:
                               
-                                 w_val=random.gauss(weight[syn_counter],std_weight)
+                                 if clipped_distributions:
+                         
+                                    found_signed_weight=False
+                            
+                                    while not found_signed_weight:
+                              
+                                       w_val=random.gauss(weight[syn_counter],std_weight)
+                                       
+                                       if weight[syn_counter] >0:
+                               
+                                          if w_val >=0:
+                                   
+                                             found_signed_weight=True
+                                      
+                                       elif weight[syn_counter] <0:
+                               
+                                          if w_val <=0:
+                                  
+                                             found_signed_weight=True
+                                     
+                                       else:
+                               
+                                          found_signed_weight=True
+                                          
+                                 else:
+                                 
+                                    w_val=random.gauss(weight[syn_counter],std_weight)
                            
                            else:
                            
