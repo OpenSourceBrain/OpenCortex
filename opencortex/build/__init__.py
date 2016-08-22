@@ -3020,7 +3020,7 @@ def add_projection_based_inputs(net,
         
             spike_source_pop = neuroml.Population(id="Pop_"+id+"_%d_%d"%(input_cell,input_index), 
                                                   component=input_id_list[input_cell][input_index], 
-                                                  size=1)
+                                                  size=population.size)
                                      
             net.populations.append(spike_source_pop)
             
@@ -3062,7 +3062,8 @@ def add_projection_based_inputs(net,
                   for input_index in range(0,len(spike_source_pops_final[cell_index]) ):
             
                        conn = neuroml.ConnectionWD(id=spike_source_counters_final[cell_index][input_index], \
-                                                   pre_cell_id="../%s[%s]"%(spike_source_pops_final[cell_index][input_index].id, 0), \
+                                                   pre_cell_id="../%s[%s]"%(spike_source_pops_final[cell_index][input_index].id,
+                                                   spike_source_counters_final[cell_index][input_index] ), \
                                                    post_cell_id="../%s/%i/%s"%(population.id, cell_id, population.component), \
                                                    weight = weight_list[cell_index][input_index],
                                                    delay="0 ms")
@@ -3080,7 +3081,8 @@ def add_projection_based_inputs(net,
                for input_index in range(0,len(spike_source_pops_final[cell_index]) ):
                     
                    conn = neuroml.ConnectionWD(id=spike_source_counters_final[cell_index][input_index], \
-                                               pre_cell_id="../%s[%s]"%(spike_source_pops_final[cell_index][input_index].id, 0), \
+                                               pre_cell_id="../%s[%s]"%(spike_source_pops_final[cell_index][input_index].id,
+                                               spike_source_counters_final[cell_index][input_index]), \
                                                post_cell_id="../%s/%i/%s"%(population.id, cell_id, population.component), \
                                                post_segment_id="%d"%target_seg_array[target_point],
                                                post_fraction_along="%f"%target_fractions[target_point],
@@ -3096,7 +3098,8 @@ def add_projection_based_inputs(net,
            for input_index in range(0,len(spike_source_pops_final[cell_index])):
                                      
                conn = neuroml.ConnectionWD(id=spike_source_counters_final[cell_index][input_index], \
-                                               pre_cell_id="../%s[%s]"%(spike_source_pops_final[cell_index][input_index].id, 0), \
+                                               pre_cell_id="../%s[%s]"%(spike_source_pops_final[cell_index][input_index].id, 
+                                               spike_source_counters_final[cell_index][input_index]), \
                                                post_cell_id="../%s/%i/%s"%(population.id, cell_id, population.component), \
                                                post_segment_id="%d"%universal_target_segment,
                                                post_fraction_along="%f"%universal_fraction_along,
