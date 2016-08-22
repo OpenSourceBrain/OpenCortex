@@ -1371,190 +1371,226 @@ def build_inputs(nml_doc,net,population_params,input_params,cached_dicts=None,pa
                         
     input_synapse_list=[]                    
                         
-    for cell_population in input_params.keys():
+    for cell_tag in input_params.keys():
     
-        pop=population_params[cell_population]['PopObj']
+        for cell_population in population_params.keys():
         
-        cell_component=pop.component
+             if cell_tag in cell_population:
+    
+                pop=population_params[cell_population]['PopObj']
         
-        for input_group_ind in range(0,len(input_params[cell_population])):
+                cell_component=pop.component
         
-            input_group_params=input_params[cell_population][input_group_ind]
+                for input_group_ind in range(0,len(input_params[cell_tag])):
         
-            input_group_tag=input_group_params['InputName']
+                    input_group_params=input_params[cell_tag][input_group_ind]
+        
+                    input_group_tag=input_group_params['InputName']+"_TO_"+pop.id
             
-            popID=cell_population
+                    popID=cell_population
+                   
+                    fraction_to_target=input_group_params['FractionToTarget']
             
-            for pop_index in range(0,len(net.populations)):
-            
-                if net.populations[pop_index].id == popID:
-                
-                   cell_instances=net.populations[pop_index].instances
-            
-            pop_size=pop.size
-            
-            fraction_to_target=input_group_params['FractionToTarget']
-            
-            if not input_group_params['LocationSpecific']:
+                    if not input_group_params['LocationSpecific']:
              
-               target_cell_ids=oc_build.get_target_cells(population=pop,fraction_to_target=fraction_to_target)
+                       target_cell_ids=oc_build.get_target_cells(population=pop,fraction_to_target=fraction_to_target)
             
-            else:
+                    else:
             
-               list_of_regions=input_group_params['TargetRegions']
+                       list_of_regions=input_group_params['TargetRegions']
                
-               x_list=[]
+                       x_list=[]
                
-               y_list=[]
+                       y_list=[]
                
-               z_list=[]
+                       z_list=[]
                
-               for region_index in range(0,len(list_of_regions)):
+                       for region_index in range(0,len(list_of_regions)):
                
-                   x_list.append(list_of_regions[region_index]['XVector'])
+                           x_list.append(list_of_regions[region_index]['XVector'])
                    
-                   y_list.append(list_of_regions[region_index]['YVector'])
+                           y_list.append(list_of_regions[region_index]['YVector'])
                    
-                   z_list.append(list_of_regions[region_index]['ZVector'])
+                           z_list.append(list_of_regions[region_index]['ZVector'])
             
-               target_cell_ids=oc_build.get_target_cells(population=pop,
-                                                         fraction_to_target=fraction_to_target, 
-                                                         list_of_xvectors=x_list,
-                                                         list_of_yvectors=y_list,
-                                                         list_of_zvectors=z_list)
+                       target_cell_ids=oc_build.get_target_cells(population=pop,
+                                                                fraction_to_target=fraction_to_target, 
+                                                                list_of_xvectors=x_list,
+                                                                list_of_yvectors=y_list,
+                                                                list_of_zvectors=z_list)
                
-            if target_cell_ids !=[]:
+                    if target_cell_ids !=[]:
             
-               input_ids_final=[]
-               
-               condition1='TargetDict' in input_group_params.keys()
-               
-               condition2='UniversalTargetSegmentID' not in input_group_params.keys()
-               
-               condition3='UniversalFractionAlong' not in input_group_params.keys()
-               
-               if condition1 and condition2 and condition3:
-               
-                  subset_dict=input_group_params['TargetDict']
-                  
-                  target_segment=None
-                  
-                  fraction_along=None
-               
-                  if None not in input_group_params['TargetDict'].keys():
-                     
-                     target_group_list=subset_dict.keys()
-               
-                     if cached_dicts !=None:
-            
-                        segLengthDict, cached_dicts =check_cached_dicts(cell_component,cached_dicts,target_group_list,path_to_nml2=path_to_cells)
-              
-                     else:
-            
-                        target_segments=oc_build.extract_seg_ids(cell_object=cellObject,target_compartment_array=input_group_params['TargetDict'].keys(),targeting_mode='segGroups')
-                              
-                        segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
-                        
-                  else:
-                  
-                     segLengthDict=None
+                       input_ids_final=[]
                        
-               else:
+                       weight_list_final=[]
+                       
+                       condition1='TargetDict' in input_group_params.keys()
                
-                  target_segment=input_group_params['UniversalTargetSegmentID']
-                  
-                  fraction_along=input_group_params['UniversalFractionAlong']
+                       condition2='UniversalTargetSegmentID' not in input_group_params.keys()
                
-                  segLengthDict=None
-                  
-                  subset_dict=None
-                  
-               if input_group_params['InputType']=='GeneratePoissonTrains':
+                       condition3='UniversalFractionAlong' not in input_group_params.keys()
                
-                  list_of_input_ids=[]
+                       if condition1 and condition2 and condition3:
+               
+                          subset_dict=input_group_params['TargetDict']
+                  
+                          target_segment=None
+                  
+                          fraction_along=None
+                
+                          if None not in input_group_params['TargetDict'].keys():
+                     
+                             target_group_list=subset_dict.keys()
+               
+                             if cached_dicts !=None:
             
-                  if input_group_params['TrainType']=='transient':
-               
-                     for input_index in range(0,len(input_group_params['AverageRateList']) ):
+                                segLengthDict, cached_dicts =check_cached_dicts(cell_component,cached_dicts,target_group_list,path_to_nml2=path_to_cells)
+              
+                             else:
+            
+                                target_segments=oc_build.extract_seg_ids(cell_object=cellObject,
+                                                                       target_compartment_array=input_group_params['TargetDict'].keys(),
+                                                                       targeting_mode='segGroups')
+                              
+                                segLengthDict=oc_build.make_target_dict(cell_object=cellObject,target_segs=target_segments) 
+                        
+                          else:
                   
-                         tpfs=oc_build.add_transient_poisson_firing_synapse(nml_doc=nml_doc, 
+                             segLengthDict=None
+                       
+                       else:
+               
+                          target_segment=input_group_params['UniversalTargetSegmentID']
+                  
+                          fraction_along=input_group_params['UniversalFractionAlong']
+               
+                          segLengthDict=None
+                  
+                          subset_dict=None
+                  
+                       if input_group_params['InputType']=='GeneratePoissonTrains':
+               
+                          list_of_input_ids=[]
+            
+                          if input_group_params['TrainType']=='transient':
+               
+                             for input_index in range(0,len(input_group_params['AverageRateList']) ):
+                  
+                                 tpfs=oc_build.add_transient_poisson_firing_synapse(nml_doc=nml_doc, 
                                                                 id=input_group_tag+"_TransPoiSyn%d"%input_index, 
                                                                 average_rate="%f %s"%(input_group_params['AverageRateList'][input_index],input_group_params['RateUnits']),
                                                                 delay="%f %s"%(input_group_params['DelayList'][input_index],input_group_params['TimeUnits']),
                                                                 duration="%f %s"%(input_group_params['DurationList'][input_index],input_group_params['TimeUnits']), 
                                                                 synapse_id=input_group_params['Synapse'])
                                 
-                         input_synapse_list.append(input_group_params['Synapse'])                                          
-                         list_of_input_ids.append(tpfs.id)
+                                 input_synapse_list.append(input_group_params['Synapse'])                                          
+                                 list_of_input_ids.append(tpfs.id)
                          
-                  
-                  if input_group_params['TrainType']=='persistent':
+                          if input_group_params['TrainType']=='persistent':
                
-                     for input_index in range(0,len(input_group_params['AverageRateList']) ):
+                             for input_index in range(0,len(input_group_params['AverageRateList']) ):
                        
-                         pfs=oc_build.add_poisson_firing_synapse(nml_doc=nml_doc, 
+                                 pfs=oc_build.add_poisson_firing_synapse(nml_doc=nml_doc, 
                                                      id=input_group_tag+"_PoiSyn%d"%input_index, 
                                                      average_rate="%f %s"%(input_group_params['AverageRateList'][input_index],input_group_params['RateUnits']), 
                                                      synapse_id=input_group_params['Synapse'])
                                                      
-                                                     
-                         input_synapse_list.append(input_group_params['Synapse'])                           
-                         list_of_input_ids.append(pfs.id)
+                                 input_synapse_list.append(input_group_params['Synapse'])                           
+                                 list_of_input_ids.append(pfs.id)
                          
-                         
-                  input_ids_final.append(list_of_input_ids)
+                          input_ids_final.append(list_of_input_ids)
                       
-               if input_group_params['InputType']=='PulseGenerators':
+                       if input_group_params['InputType']=='PulseGenerators':
             
-                  if not input_group_params['Noise']:
+                          if not input_group_params['Noise']:
                   
-                     list_of_input_ids=[]
+                             list_of_input_ids=[]
                
-                     for input_index in range(0,len(input_group_params['AmplitudeList']) ):
+                             for input_index in range(0,len(input_group_params['AmplitudeList']) ):
                
-                         pg=oc_build.add_pulse_generator(nml_doc=nml_doc, 
+                                 pg=oc_build.add_pulse_generator(nml_doc=nml_doc, 
                                           id=input_group_tag+"_Pulse%d"%input_index, 
                                           delay="%f %s"%(input_group_params['DelayList'][input_index],input_group_params['TimeUnits']),
                                           duration="%f %s"%(input_group_params['DurationList'][input_index],input_group_params['TimeUnits']), 
                                           amplitude="%f %s"%(input_group_params['AmplitudeList'][input_index],input_group_params['AmplitudeUnits']) )
                                           
-                         list_of_input_ids.append(pg.id)
+                                 list_of_input_ids.append(pg.id)
                          
-                     input_ids_final.append(list_of_input_ids)
+                             input_ids_final.append(list_of_input_ids)
                          
-                  else:
+                          else:
                   
-                     for cell in target_cell_ids:
+                             for cell in target_cell_ids:
                      
-                         list_of_input_ids=[]
+                                 list_of_input_ids=[]
                      
-                         for input_index in range(0,len(input_group_params['SmallestAmplitudeList'])):
+                                 for input_index in range(0,len(input_group_params['SmallestAmplitudeList'])):
                          
-                             random_amplitude=random.uniform(input_group_params['SmallestAmplitudeList'][input_index],input_group_params['LargestAmplitudeList'][input_index])
+                                     random_amplitude=random.uniform(input_group_params['SmallestAmplitudeList'][input_index],input_group_params['LargestAmplitudeList'][input_index])
                
-                             pg=oc_build.add_pulse_generator(nml_doc=nml_doc, 
+                                     pg=oc_build.add_pulse_generator(nml_doc=nml_doc, 
                                                              id=input_group_tag+"_Pulse%d_Cell%d"%(input_index,cell), 
                                                              delay="%f %s"%(input_group_params['DelayList'][input_index],input_group_params['TimeUnits']),
                                                              duration="%f %s"%(input_group_params['DurationList'][input_index],input_group_params['TimeUnits']), 
                                                              amplitude="%f %s"%(random_amplitude,input_group_params['AmplitudeUnits']) )
                                           
-                             list_of_input_ids.append(pg.id)
+                                     list_of_input_ids.append(pg.id)
                              
-                         input_ids_final.append(list_of_input_ids)
+                                 input_ids_final.append(list_of_input_ids)
                          
+                       if input_group_params['InputType']=='GenerateSpikeSourcePoisson':
+               
+                          list_of_input_ids=[]     
+                  
+                          weight_list=[] 
+                  
+                          for input_index in range(0,len(input_group_params['AverageRateList']) ):
+                  
+                              ssp=oc_build.add_spike_source_poisson(nml_doc=nml_doc, 
+                                                            id=input_group_tag+"_SpSourcePoi%d"%input_index, 
+                                                            start="%f %s"%(input_group_params['DelayList'][input_index],input_group_params['TimeUnits']),
+                                                            duration="%f %s"%(input_group_params['DurationList'][input_index],input_group_params['TimeUnits']),
+                                                            rate="%f %s"%(input_group_params['AverageRateList'][input_index],input_group_params['RateUnits']))
+                      
+                              input_synapse_list.append(input_group_params['Synapse'])
+                                          
+                              list_of_input_ids.append(ssp.id)
+                      
+                              weight_list.append(input_group_params['WeightList'][input_index])
+                      
+                          input_ids_final.append(list_of_input_ids)
+                  
+                          weight_list_final.append(weight_list)
+                      
+                       if input_group_params['InputType']=='GeneratePoissonTrains' or input_group_params['InputType']=='PulseGenerators':
             
-               input_list_array=oc_build.add_advanced_inputs_to_population(net=net, 
-                                                                           id=input_group_tag, 
-                                                                           population=pop,
-                                                                           input_id_list=input_ids_final,
-                                                                           seg_length_dict=segLengthDict,
-                                                                           subset_dict=subset_dict,
-                                                                           universal_target_segment=target_segment,
-                                                                           universal_fraction_along=fraction_along,
-                                                                           only_cells=target_cell_ids)
+                          input_list_array=oc_build.add_advanced_inputs_to_population(net=net, 
+                                                                              id=input_group_tag, 
+                                                                              population=pop,
+                                                                              input_id_list=input_ids_final,
+                                                                              seg_length_dict=segLengthDict,
+                                                                              subset_dict=subset_dict,
+                                                                              universal_target_segment=target_segment,
+                                                                              universal_fraction_along=fraction_along,
+                                                                              only_cells=target_cell_ids)
+                                                                           
+                       if input_group_params['InputType']=='GenerateSpikeSourcePoisson':
+                                                                      
+                          input_list_array=oc_build.add_projection_based_inputs(net=net,
+                                                                       id=input_group_tag,
+                                                                       population=pop,
+                                                                       input_id_list=input_ids_final,
+                                                                       weight_list=weight_list_final,
+                                                                       synapse_id=input_group_params['Synapse'],
+                                                                       seg_length_dict=segLengthDict,
+                                                                       subset_dict=subset_dict,
+                                                                       universal_target_segment=target_segment,
+                                                                       universal_fraction_along=fraction_along,
+                                                                       only_cells=target_cell_ids)
                                                                              
                                                                                                                                    
-               input_list_array_final.append(input_list_array)
+                       input_list_array_final.append(input_list_array)
      
     input_synapse_list=list(set(input_synapse_list))  
     
@@ -2529,20 +2565,29 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses=None):
     
     for cell_receiver in input_params.keys():
     
-        try:
-           test_cell_component=popDict[cell_receiver]
-           
-           if test_cell_component['Compartments']=='single':
-             
-              cell_type=None
+        found_target_pop=False
+    
+        for pop_id in popDict.keys():
+        
+            if cell_receiver in pop_id:
               
-           if test_cell_component['Compartments']=='multi':
+               test_cell_component=popDict[pop_id]
            
-              segment_groups=get_segment_groups(test_cell_component['PopObj'].component,path_to_cells)
-              
-              cell_type=test_cell_component['PopObj'].component
+               if test_cell_component['Compartments']=='single':
              
-        except KeyError:
+                  cell_type=None
+              
+               if test_cell_component['Compartments']=='multi':
+           
+                  segment_groups=get_segment_groups(test_cell_component['PopObj'].component,path_to_cells)
+              
+                  cell_type=test_cell_component['PopObj'].component
+                 
+               found_target_pop=True
+               
+               break
+             
+        if not found_target_pop:
            
            opencortex.print_comment_v("KeyError in input parameters: cell population id '%s' is not in the keys of population dictionary"%cell_receiver)
            
@@ -2573,10 +2618,10 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses=None):
                     
                     error_counter+=1 
                     
-                 if test_key not in ['GeneratePoissonTrains','PulseGenerators']:
+                 if test_key not in ['GeneratePoissonTrains','PulseGenerators','GenerateSpikeSourcePoisson']:
                  
                     opencortex.print_comment_v("ValueError in input parameters: the value of the key 'InputType' must be one of the following: "   
-                    "'GeneratePoissonTrains','PulseGenerators'")
+                    "'GeneratePoissonTrains','PulseGenerators', 'GenerateSpikeSourcePoisson'")
                     
                     error_counter+=1
                     
@@ -2743,6 +2788,183 @@ def check_inputs(input_params,popDict,path_to_cells,path_to_synapses=None):
                           
                           error_counter+=1
                           
+                       try:
+                       
+                          test_rate_units=input_group_params['RateUnits']
+                           
+                          if not isinstance(test_rate_units,str):
+                          
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'RateUnits' must be of type 'str'."
+                             "The current type is %s."%type(test_rate_units))
+                             
+                             error_counter+=1
+                             
+                       except KeyError:
+                       
+                              opencortex.print_comment_v("KeyError in input parametres: the key 'RateUnits' is not in the keys of inputs parameters.")
+                              
+                              error_counter+=1
+                           
+                       try:
+                       
+                          test_synapse=input_group_params['Synapse']
+                          
+                          if not isinstance(test_synapse,str):
+                          
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'Synapse' must be of type 'str'."
+                             " The current type is %s."%type(test_synapse) )
+                             
+                             error_counter+=1
+                             
+                          else:
+                          
+                             if path_to_synapses != None:
+                          
+                                found=check_synapse_location(test_synapse,path_to_synapses)
+                             
+                                if not found:
+                             
+                                   opencortex.print_comment_v("ValueError in input parameters: the value '%s' of the key 'Synapse' is not found in %s"%(test_synapse,path_to_synapses))
+                                
+                                   error_counter+=1
+                                
+                       except KeyError:
+                       
+                           opencortex.print_comment_v("KeyError in input parameters: the key 'Synapse' is not in the keys of input parameters.")  
+                            
+                           error_counter+=1
+                           
+                    if test_key=='GenerateSpikeSourcePoisson':
+                    
+                       try:
+                                   
+                          test_time_units=input_group_params['TimeUnits']
+                                      
+                          if not isinstance(test_time_units,str):
+                                      
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'TimeUnits' must be of type 'str'."
+                             " The current type is %s."%type(test_time_units)) 
+                                         
+                             error_counter+=1
+                                         
+                       except KeyError:
+                                   
+                          opencortex.print_comment_v("KeyError in input parameters: the key 'TimeUnits' is not in the keys of input parameters.")
+                                      
+                          error_counter+=1
+                                       
+                       try:
+                                   
+                          test_rates=input_group_params['AverageRateList']
+                                      
+                          if not isinstance(test_rates,list):
+                                      
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'AverageRateList' must be of type 'list'."
+                             " The current type is %s."%type(test_rates) )
+                                         
+                             error_counter+=1
+                                         
+                          else:
+                                      
+                             for r in range(0,len(test_rates)):
+                                         
+                                 if not isinstance(test_rates[r],float):
+                                             
+                                    opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'AverageRateList' must be of type 'float'."
+                                    " The current type is %s."%type(test_rates[r]) )
+                                                
+                                    error_counter+=1
+                                      
+                       except KeyError:
+                                   
+                          opencortex.print_comment_v("KeyError in input parameters: the key 'AverageRateList' is not in the keys of input parameters.")
+                                      
+                          error_counter+=1
+                                   
+                       try:
+                                   
+                          test_rates=input_group_params['DelayList']
+                                      
+                          if not isinstance(test_rates,list):
+                                      
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'DelayList' must be of type 'list'."
+                             " The current type is %s."%type(test_rates) )
+                                         
+                             error_counter+=1
+                                         
+                          else:
+                                      
+                             for r in range(0,len(test_rates)):
+                                         
+                                 if not isinstance(test_rates[r],float):
+                                             
+                                    opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'DelayList' must be of type 'float'."
+                                    " The current type is %s."%type(test_rates[r])  )
+                                                
+                                    error_counter+=1
+                                         
+                       except KeyError:
+                                   
+                          opencortex.print_comment_v("KeyError in input parameters: the key 'DelayList' is not in the keys of input parameters.")
+                                      
+                          error_counter+=1
+                                   
+                       try:
+                                   
+                          test_rates=input_group_params['DurationList']
+                                      
+                          if not isinstance(test_rates,list):
+                                      
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'DurationList' must be of type 'list'."
+                             " The current type is %s."%type(test_rates) )
+                                         
+                             error_counter+=1
+                                         
+                          else:
+                                      
+                             for r in range(0,len(test_rates)):
+                                         
+                                 if not isinstance(test_rates[r],float):
+                                             
+                                    opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'DurationList' must be of type 'float'."
+                                    " The current type is %s."%type(test_rates[r]) )
+                                                
+                                    error_counter+=1
+                                      
+                       except KeyError:
+                                   
+                          opencortex.print_comment_v("KeyError in input parameters: the key 'DurationList' is not in the keys of input parameters.")
+                                      
+                          error_counter+=1
+                          
+                       try:
+                                   
+                          test_weights=input_group_params['WeightList']
+                                      
+                          if not isinstance(test_weights,list):
+                                      
+                             opencortex.print_comment_v("TypeError in input parameters: the value of the key 'WeightList' must be of type 'list'."
+                             " The current type is %s."%type(test_weights) )
+                                         
+                             error_counter+=1
+                                         
+                          else:
+                                      
+                             for r in range(0,len(test_weights)):
+                                         
+                                 if not isinstance(test_weights[r],float):
+                                             
+                                    opencortex.print_comment_v("TypeError in input parameters: the list values of the key 'WeightList' must be of type 'float'."
+                                    " The current type is %s."%type(test_weights[r]) )
+                                                
+                                    error_counter+=1
+                                      
+                       except KeyError:
+                                   
+                          opencortex.print_comment_v("KeyError in input parameters: the key 'WeightList' is not in the keys of input parameters.")
+                                      
+                          error_counter+=1
+                                     
                        try:
                        
                           test_rate_units=input_group_params['RateUnits']
