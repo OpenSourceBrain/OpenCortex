@@ -270,8 +270,8 @@ def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False
         input_list.input.append(input)
         count+=1
         
-                         
-    net.input_lists.append(input_list)
+    if count>0:                 
+        net.input_lists.append(input_list)
     
     return input_list
     
