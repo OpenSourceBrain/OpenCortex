@@ -80,6 +80,11 @@ def add_elect_connection(projection,
                          gap_junction_id,
                          pre_fraction=0.5,
                          post_fraction=0.5):
+                             
+    opencortex.print_comment("Adding single elect conn %s in proj %s: %s(%s:%s:%s) -> %s(%s:%s:%s), delay: %sms, weight: %s"%(id, projection.id, \
+                              presynaptic_population.id, pre_cell_id, pre_seg_id, pre_fraction,\
+                              postsynaptic_population.id, post_cell_id, post_seg_id, post_fraction,
+                              delay, weight))  
     
     connection =neuroml.ElectricalConnectionInstance(id=id,\
                                                      pre_cell="../%s/%i/%s"%(presynaptic_population.id, pre_cell_id, presynaptic_population.component),\
@@ -2793,8 +2798,8 @@ def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False
         input_list.input.append(input)
         count+=1
         
-                         
-    net.input_lists.append(input_list)
+    if count>0:                 
+        net.input_lists.append(input_list)
     
     return input_list
 ########################################################################################################    

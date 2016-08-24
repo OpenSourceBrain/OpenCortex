@@ -16,6 +16,7 @@ def generate(reference = "ACNet",
              connections=True,
              global_delay = 0,
              duration = 1000,
+             segments_to_plot_record = {'pop_pyr':[0],'pop_bask':[0]},
              format='xml'):
 
 
@@ -134,10 +135,41 @@ def generate(reference = "ACNet",
                     format = format)
 
     if format=='xml':
+        
+        gen_plots_for_quantities = {}   #  Dict with displays vs lists of quantity paths
+        gen_saves_for_quantities = {}   #  Dict with file names vs lists of quantity paths
+        
+        for pop in segments_to_plot_record.keys():
+            pop_nml = network.get_by_id(pop)
+            if pop_nml is not None and pop_nml.size>0:
+                
+                group = len(segments_to_plot_record[pop]) == 1
+                if group:
+                    display = 'Display_%s_v'%(pop)
+                    file_ = 'Sim_%s.%s.v.dat'%(nml_doc.id,pop)
+                    gen_plots_for_quantities[display] = []
+                    gen_saves_for_quantities[file_] = []
+                    
+                for i in range(int(pop_nml.size)):
+                    if not group:
+                        display = 'Display_%s_%i_v'%(pop,i)
+                        file_ = 'Sim_%s.%s.%i.v.dat'%(nml_doc.id,pop,i)
+                        gen_plots_for_quantities[display] = []
+                        gen_saves_for_quantities[file_] = []
+
+                    for seg in segments_to_plot_record[pop]:
+                        quantity = '%s/%i/%s/%i/v'%(pop,i,pop_nml.component,seg)
+                        gen_plots_for_quantities[display].append(quantity)
+                        gen_saves_for_quantities[file_].append(quantity)
+
         lems_file_name = oc.generate_lems_simulation(nml_doc, network, 
                                 nml_file_name, 
                                 duration =      duration, 
-                                dt =            0.025)
+                                dt =            0.025,
+                                gen_plots_for_all_v = False,
+                                gen_plots_for_quantities = gen_plots_for_quantities,
+                                gen_saves_for_all_v = False,
+                                gen_saves_for_quantities = gen_saves_for_quantities)
     else:
         lems_file_name = None
                                 
@@ -152,5 +184,10 @@ if __name__ == '__main__':
                  num_bask=2,
                  duration = 500,
                  global_delay = 2)
+                 
+        generate(num_pyr = 1,
+                 num_bask=0,
+                 duration = 500,
+                 segments_to_plot_record = {'pop_pyr':range(9)})
     else:
         generate(global_delay = 1)

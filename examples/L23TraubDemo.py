@@ -12,8 +12,11 @@ def generate(reference = "L23TraubDemo",
              scaley=1,
              scalez=1,
              connections=True,
+             poisson_inputs=True,
+             offset_curents=False,
              global_delay = 0,
              duration = 300,
+             segments_to_plot_record = {'pop_rs':[0],'pop_bask':[0]},
              format='xml'):
 
 
@@ -27,15 +30,15 @@ def generate(reference = "L23TraubDemo",
     yDim = 200*scaley
     zDim = 500*scalez
 
-    pop_pre = oc.add_population_in_rectangular_region(network,
-                                                  'pop_pre',
+    pop_rs = oc.add_population_in_rectangular_region(network,
+                                                  'pop_rs',
                                                   'L23PyrRS',
                                                   num_rs,
                                                   0,0,0,
                                                   xDim,yDim,zDim)
 
-    pop_post = oc.add_population_in_rectangular_region(network,
-                                                  'pop_post',
+    pop_bask = oc.add_population_in_rectangular_region(network,
+                                                  'pop_bask',
                                                   'SupBasket',
                                                   num_bask,
                                                   0,0,0,
@@ -54,17 +57,39 @@ def generate(reference = "L23TraubDemo",
                              erev="0mV",
                              tau_rise="1ms",
                              tau_decay="15ms")
+                             
+                            
+    if poisson_inputs:
 
-    pfs = oc.add_poisson_firing_synapse(nml_doc,
-                                       id="poissonFiringSyn",
-                                       average_rate="150 Hz",
-                                       synapse_id=syn0.id)
+        pfs = oc.add_poisson_firing_synapse(nml_doc,
+                                           id="poissonFiringSyn",
+                                           average_rate="150 Hz",
+                                           synapse_id=syn0.id)
 
-    oc.add_inputs_to_population(network,
-                                "Stim0",
-                                pop_pre,
-                                pfs.id,
-                                all_cells=True)
+        oc.add_inputs_to_population(network,
+                                    "Stim0",
+                                    pop_rs,
+                                    pfs.id,
+                                    all_cells=True)
+    if offset_curents:
+
+        pg0 = oc.add_pulse_generator(nml_doc,
+                               id="pg0",
+                               delay="0ms",
+                               duration="%sms"%duration,
+                               amplitude="0.5nA")
+
+        oc.add_inputs_to_population(network,
+                                    "Stim0",
+                                    pop_rs,
+                                    pg0.id,
+                                    all_cells=True)
+
+        oc.add_inputs_to_population(network,
+                                    "Stim0",
+                                    pop_bask,
+                                    pg0.id,
+                                    all_cells=True)
                                 
                                 
     total_conns = 0
@@ -72,8 +97,8 @@ def generate(reference = "L23TraubDemo",
 
         proj = oc.add_probabilistic_projection(network,
                                         "proj0",
-                                        pop_pre,
-                                        pop_post,
+                                        pop_rs,
+                                        pop_bask,
                                         syn1.id,
                                         0.3,
                                         weight=0.05,
@@ -94,10 +119,31 @@ def generate(reference = "L23TraubDemo",
                     format = format)
 
     if format=='xml':
+        gen_plots_for_quantities = {}   #  Dict with displays vs lists of quantity paths
+        gen_saves_for_quantities = {}   #  Dict with file names vs lists of quantity paths
+        
+        for pop in segments_to_plot_record.keys():
+            pop_nml = network.get_by_id(pop)
+            if pop_nml is not None and pop_nml.size>0:
+                for i in range(int(pop_nml.size)):
+                    gen_plots_for_quantities['Display_%s_%i_v'%(pop,i)] = []
+                    gen_saves_for_quantities['Sim_%s.%s.%i.v.dat'%(nml_doc.id,pop,i)] = []
+
+                    for seg in segments_to_plot_record[pop]:
+                        quantity = '%s/%i/%s/%i/v'%(pop,i,pop_nml.component,seg)
+                        gen_plots_for_quantities['Display_%s_%i_v'%(pop,i)].append(quantity)
+                        gen_saves_for_quantities['Sim_%s.%s.%i.v.dat'%(nml_doc.id,pop,i)].append(quantity)
+
+
+            
         lems_file_name = oc.generate_lems_simulation(nml_doc, network, 
                                 nml_file_name, 
                                 duration =      duration, 
-                                dt =            0.025)
+                                dt =            0.025,
+                                gen_plots_for_all_v = False,
+                                gen_plots_for_quantities = gen_plots_for_quantities,
+                                gen_saves_for_all_v = False,
+                                gen_saves_for_quantities = gen_saves_for_quantities)
     else:
         lems_file_name = None
                                 
@@ -112,13 +158,19 @@ if __name__ == '__main__':
                  num_bask=0,
                  duration = 50,
                  global_delay = 2)
-                 
+
+        generate(num_rs = 0,
+                 num_bask=1,
+                 duration = 30,
+                 poisson_inputs=False,
+                 offset_curents=True,
+                 segments_to_plot_record = {'pop_bask':[0,117,104,55]})
+
     if '-large' in sys.argv:
         
         generate(num_rs = 10,
                  num_bask=10,
                  duration = 50,
                  global_delay = 2)
-                 
     else:
         generate(global_delay = 5)
