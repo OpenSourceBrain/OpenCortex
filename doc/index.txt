@@ -1,0 +1,38 @@
+========================
+OpenCortex: documentation
+========================
+
+.. toctree::
+   :maxdepth: 2
+
+   introduction
+   install
+
+=======================
+Developer documentation
+=======================
+
+.. toctree::
+   :maxdepth: 2
+
+   how_to_contribute
+   modules
+
+
+..        .. Source documentation
+..           ==================
+..          
+..          .. toctree::
+..             :maxdepth: 3
+..              
+..        modules
+
+..        Indices and tables
+..        ==================
+
+..        * :ref:`genindex`
+..        * :ref:`modindex`
+..        * :ref:`search`
+
+
+
