@@ -85,10 +85,13 @@ def add_elect_connection(projection,
                          pre_fraction=0.5,
                          post_fraction=0.5):
                              
-    opencortex.print_comment("Adding single elect conn %s in proj %s: %s(%s:%s:%s) -> %s(%s:%s:%s), delay: %sms, weight: %s"%(id, projection.id, \
+    """
+    Add a single electrical connection (via a gap junction) to a projection between `presynaptic_population` and `postsynaptic_population`
+    """
+                             
+    opencortex.print_comment("Adding single electrical conn %s in proj %s: %s(%s:%s:%s) -> %s(%s:%s:%s)"%(id, projection.id, \
                               presynaptic_population.id, pre_cell_id, pre_seg_id, pre_fraction,\
-                              postsynaptic_population.id, post_cell_id, post_seg_id, post_fraction,
-                              delay, weight))  
+                              postsynaptic_population.id, post_cell_id, post_seg_id, post_fraction))  
     
     connection =neuroml.ElectricalConnectionInstance(id=id,\
                                                      pre_cell="../%s/%i/%s"%(presynaptic_population.id, pre_cell_id, presynaptic_population.component),\
@@ -103,6 +106,7 @@ def add_elect_connection(projection,
     
     
 ########################################################################################################################################        
+
 def add_probabilistic_projection(net, 
                                  prefix, 
                                  presynaptic_population, 
@@ -110,7 +114,10 @@ def add_probabilistic_projection(net,
                                  synapse_id,  
                                  connection_probability,
                                  delay = 0,
-                                 weight = 1):
+                                 weight = 1):     
+    """
+    Add a projection between two populations with probability of connection between each pre & post pair of cells given by `connection_probability`
+    """
     
     if presynaptic_population.size==0 or postsynaptic_population.size==0:
         return None
@@ -143,7 +150,8 @@ def add_probabilistic_projection(net,
 
     return proj
     
-##############################################################################################################################################################       
+############################################################################################################################################################## 
+
 def add_probabilistic_projection_list(net,
                                       presynaptic_population, 
                                       postsynaptic_population, 
@@ -157,9 +165,11 @@ def add_probabilistic_projection_list(net,
                                       std_delay=None,
                                       std_weight=None):
                                       
-    '''Modification of the method add_probabilistic_projection() to allow multiple synaptic components per physical projection;
+    '''
+    Modification of the method `add_probabilistic_projection()` to allow multiple synaptic components per physical projection;
     specifically works for networks containing single-compartment neuronal models. This method also allows gaussian variation in synaptic weight and delay;
-    it also accepts populations that do not necessarily have the type attribute set to 'populationList' .'''
+    it also accepts populations that do not necessarily have the type attribute in <population> set to `populationList` .
+    '''
     
     if presynaptic_population.size==0 or postsynaptic_population.size==0:
         return None
@@ -2622,8 +2632,9 @@ def add_population_in_cylindrical_region(net,
        
 ############################################################################################################################## 
 def find_constrained_cell_position(num_of_polygon_sides,cyl_radius,lower_bound_dim3,upper_bound_dim3,positions_of_vertices,constants_of_sides):
-
-    '''Method to find a constrained position of the cell; used inside the method add_population_in_cylindrical_region( *args) . '''
+    '''
+    Method to find a constrained position of the cell; used inside the method add_population_in_cylindrical_region(). 
+    '''
 
     if num_of_polygon_sides ==None:
     
