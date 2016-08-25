@@ -1,6 +1,6 @@
-========================
+=========================
 OpenCortex: documentation
-========================
+=========================
 
 .. toctree::
    :maxdepth: 2
@@ -20,7 +20,7 @@ Developer documentation
 
 
 ..        .. Source documentation
-..           ==================
+..           ====================
 ..          
 ..          .. toctree::
 ..             :maxdepth: 3
