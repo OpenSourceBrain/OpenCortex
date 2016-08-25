@@ -47,6 +47,10 @@ def add_connection(projection,
                    weight,
                    pre_fraction=0.5,
                    post_fraction=0.5):
+                       
+    """
+    Add a single connection to a projection between two populations
+    """
     
 
     opencortex.print_comment("Adding single conn %s in proj %s: %s(%s:%s:%s) -> %s(%s:%s:%s), delay: %sms, weight: %s"%(id, projection.id, \
