@@ -13,6 +13,8 @@ import neuroml
 import numpy as np
 import os
 
+import random
+
 try:
     import unittest2 as unittest
 except ImportError:
@@ -1353,6 +1355,8 @@ class TestNetConnectionMethods(unittest.TestCase):
           
       def test_add_probabilistic_projection_list(self):
           
+          random.seed(1234)
+          
           ######## Test 1 convergent
           network = neuroml.Network(id='Net0')     
           presynaptic_population = neuroml.Population(id="Pop0", component="L23PyrRS", type="populationList", size=50)
@@ -1372,7 +1376,6 @@ class TestNetConnectionMethods(unittest.TestCase):
           
                                             
           self.assertEqual(len(network.projections),2)
-          
           self.assertEqual(len(network.projections[0].connection_wds), len(network.projections[1].connection_wds) )
           
           for proj_ind in range(0,len(network.projections) ):
@@ -1385,7 +1388,7 @@ class TestNetConnectionMethods(unittest.TestCase):
               
                   connection=network.projections[proj_ind].connection_wds[conn_ind]
           
-                  self.assertTrue( str(0.05) in connection.delay)
+                  self.assertTrue( connection.get_delay_in_ms() == 0.05)
                   
                   self.assertTrue( 2==connection.weight)
           
@@ -1437,11 +1440,11 @@ class TestNetConnectionMethods(unittest.TestCase):
                   
                   if 'Syn_1' in network.projections[proj_ind].id:
           
-                     self.assertTrue( str(0.05) in connection.delay)
+                     self.assertTrue( connection.get_delay_in_ms() == 0.05 )
                      
                   if 'Syn_2' in network.projections[proj_ind].id:
                   
-                     self.assertTrue( str(0.01) in connection.delay)
+                     self.assertTrue( connection.get_delay_in_ms() == 0.01 )
                   
                   self.assertTrue( 2==connection.weight)
           
@@ -1482,7 +1485,7 @@ class TestNetConnectionMethods(unittest.TestCase):
                   
                      self.assertTrue( 2.5==connection.weight )
                   
-                  self.assertTrue( str(0.05) in connection.delay)
+                  self.assertTrue( connection.get_delay_in_ms() == 0.05 )
           
           ######## Test 3 std weight:
           
@@ -1496,7 +1499,7 @@ class TestNetConnectionMethods(unittest.TestCase):
                                                               delay=0.05,
                                                               weight=[2,2.5],
                                                               std_delay=None,
-                                                              std_weight=0.3)
+                                                              std_weight=0.1)
           
                                             
           self.assertEqual(len(network.projections),2)
@@ -1515,13 +1518,13 @@ class TestNetConnectionMethods(unittest.TestCase):
                   
                   if 'Syn_1' in network.projections[proj_ind].id:
           
-                     self.assertTrue( 2 != connection.weight or 2== connection.weight )
+                     self.assertTrue( connection.weight !=2 and  connection.weight>0 and connection.weight < 5)
                      
                   if 'Syn_2' in network.projections[proj_ind].id:
                   
-                     self.assertTrue( 2.5 != connection.weight or 2.5 ==connection.weight )
+                     self.assertTrue( connection.weight != 2.5 and connection.weight>0 and connection.weight < 5)
                   
-                  self.assertTrue( str(0.05) in connection.delay)
+                  self.assertTrue( connection.get_delay_in_ms() == 0.05)
                   
           ######## Test 4 std delay:
           
@@ -1532,9 +1535,9 @@ class TestNetConnectionMethods(unittest.TestCase):
                                                               postsynaptic_population=postsynaptic_population, 
                                                               synapse_list=synapse_list,  
                                                               connection_probability=0.5,
-                                                              delay=[0.05,0.1],
+                                                              delay=[5,1],
                                                               weight=[2,2.5],
-                                                              std_delay=[0.1,0.2],
+                                                              std_delay=[0.01,0.001],
                                                               std_weight=None)
           
                                             
@@ -1556,13 +1559,13 @@ class TestNetConnectionMethods(unittest.TestCase):
           
                      self.assertTrue(  2==connection.weight )
                      
-                     self.assertTrue( str(0.05) in connection.delay or str(0.05) not in connection.delay)
+                     self.assertTrue( connection.get_delay_in_ms() != 5 and connection.get_delay_in_ms()>3 and connection.get_delay_in_ms()< 7)
                      
                   if 'Syn_2' in network.projections[proj_ind].id:
                   
                      self.assertTrue( 2.5 ==connection.weight )
                   
-                     self.assertTrue( str(0.1) in connection.delay or str(0.1) not in connection.delay)
+                     self.assertTrue( connection.get_delay_in_ms() != 1 and connection.get_delay_in_ms()>0 and connection.get_delay_in_ms()< 2)
           
           
           

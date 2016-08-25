@@ -195,7 +195,6 @@ def add_probabilistic_projection_list(net,
        
           opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument delay is a list but not of the same length as"
           " argument synapse_list; execution will terminate.")
-          
           quit()
           
     if isinstance(weight,list):
@@ -204,7 +203,6 @@ def add_probabilistic_projection_list(net,
        
           opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument weight is a list but not of the same length as"
           " argument synapse_list; execution will terminate.")
-          
           quit()
           
     if std_delay !=None:
@@ -215,7 +213,6 @@ def add_probabilistic_projection_list(net,
        
              opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument std_delay is a list but not of the same length as"
              " argument synapse_list; execution will terminate.")
-          
              quit()
              
     if std_weight != None:
@@ -226,7 +223,6 @@ def add_probabilistic_projection_list(net,
        
              opencortex.print_comment_v("Error in method opencortex.build.add_probabilistic_projection_list() : argument std_weight is a list but not of the same length as"
              " argument synapse_list; execution will terminate.")
-          
              quit()
        
     for i in range(0, presynaptic_population.size):
@@ -236,63 +232,40 @@ def add_probabilistic_projection_list(net,
                 if connection_probability>= 1 or random.random() < connection_probability:
                 
                    if not isinstance(delay,list):
-                
                       if std_delay != None:
-                      
                          if clipped_distributions:
-                         
                             found_positive_delay=False
                             
                             while not found_positive_delay:
-                            
                               del_val=random.gauss(delay, std_delay)
-                              
                               if del_val >=0:
-                              
                                  found_positive_delay=True
-                         
                          else:
-                   
                             del_val=random.gauss(delay, std_delay)
-                      
                       else:
-                   
                          del_val=delay
                          
                    if not isinstance(weight,list):
-                      
                       if std_weight != None:
-                      
                          if clipped_distributions:
-                         
                             found_signed_weight=False
-                            
                             while not found_signed_weight:
-                            
                                w_val=random.gauss(weight,std_weight)
-                               
                                if weight >0:
-                               
                                   if w_val >=0:
-                                   
                                      found_signed_weight=True
                                      
                                elif weight <0:
-                               
                                   if w_val <=0:
-                                  
                                      found_signed_weight=True
                                      
                                else:
-                               
                                   found_signed_weight=True
                                   
                          else:
-                   
                             w_val=random.gauss(weight,std_weight)
                       
                       else:
-                   
                          w_val=weight
                          
                    syn_counter=0
@@ -302,41 +275,26 @@ def add_probabilistic_projection_list(net,
                        if isinstance(delay,list):
                         
                            if std_delay != None:
-                           
                               if isinstance(std_delay,list):
-                   
                                  if clipped_distributions:
-                         
                                     found_positive_delay=False
-                            
                                     while not found_positive_delay:
-                                       
                                        del_val=random.gauss(delay[syn_counter], std_delay[syn_counter])
-                                       
                                        if del_val >=0:
-                              
                                           found_positive_delay=True
-                                          
                                  else:
-                                 
                                     del_val=random.gauss(delay[syn_counter], std_delay[syn_counter])
                   
                               else:
                               
                                  if clipped_distributions:
-                         
                                     found_positive_delay=False
-                            
                                     while not found_positive_delay:
-                              
                                        del_val=random.gauss(delay[syn_counter], std_delay)
                                        
                                        if del_val >=0:
-                              
                                           found_positive_delay=True
-                                          
                                  else:
-                                  
                                     del_val=random.gauss(delay[syn_counter], std_delay) 
                       
                            else:
@@ -346,65 +304,45 @@ def add_probabilistic_projection_list(net,
                        if isinstance(weight,list):
                         
                            if std_weight != None:
-                           
                               if isinstance(std_weight,list):
-                              
                                  if clipped_distributions:
-                         
                                     found_signed_weight=False
                             
                                     while not found_signed_weight:
-                           
                                        w_val=random.gauss(weight[syn_counter],std_weight[syn_counter])
                                        
                                        if weight[syn_counter] >0:
-                               
                                           if w_val >=0:
-                                   
                                              found_signed_weight=True
                                       
                                        elif weight[syn_counter] <0:
-                               
                                           if w_val <=0:
-                                  
                                              found_signed_weight=True
                                      
                                        else:
-                               
                                           found_signed_weight=True
-                                          
                                  else:
-                                 
                                     w_val=random.gauss(weight[syn_counter],std_weight[syn_counter])
                                  
                               else:
                               
                                  if clipped_distributions:
-                         
                                     found_signed_weight=False
-                            
                                     while not found_signed_weight:
-                              
                                        w_val=random.gauss(weight[syn_counter],std_weight)
                                        
                                        if weight[syn_counter] >0:
-                               
                                           if w_val >=0:
-                                   
                                              found_signed_weight=True
                                       
                                        elif weight[syn_counter] <0:
-                               
                                           if w_val <=0:
-                                  
                                              found_signed_weight=True
                                      
                                        else:
-                               
                                           found_signed_weight=True
                                           
                                  else:
-                                 
                                     w_val=random.gauss(weight[syn_counter],std_weight)
                            
                            else:
@@ -412,19 +350,15 @@ def add_probabilistic_projection_list(net,
                               w_val=weight[syn_counter]
                                       
                        if presynaptic_population_list:
-                       
                           pre_cell_string="../%s/%i/%s"%(presynaptic_population.id, i, presynaptic_population.component)    
                           
                        else:
-                       
                           pre_cell_string="../%s[%i]"%(presynaptic_population.id, i)  
                           
                        if postsynaptic_population_list:
-                      
                           post_cell_string="../%s/%i/%s"%(postsynaptic_population.id, j, postsynaptic_population.component)
                          
                        else:
-                      
                           post_cell_string="../%s[%i]"%(postsynaptic_population.id, j)
                                    
                        connection = neuroml.ConnectionWD(id=count, \
@@ -448,9 +382,7 @@ def add_probabilistic_projection_list(net,
     if count != 0:
                     
        for synapse_id in synapse_list:
-
            net.projections.append(proj_components[synapse_id])
-        
            return_proj_components.append(proj_components[synapse_id])
            
        return return_proj_components
@@ -458,6 +390,8 @@ def add_probabilistic_projection_list(net,
     else:
     
        return None
+   
+   
 ###################################################################################################################################################################   
 
 def add_chem_projection0(nml_doc,
