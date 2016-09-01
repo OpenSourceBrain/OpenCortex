@@ -69,3 +69,6 @@ build/lib*
 /doc/_build
 /examples/L23TraubDemo_1cells_0conns.net.nml
 /examples/LEMS_L23TraubDemo_1cells_0conns.xml
+/examples/L23TraubDemo_2cells_1conns.net.nml
+/examples/LEMS_L23TraubDemo_2cells_1conns.xml
+/examples/LEMS_L23TraubDemo_8cells_16conns.xml
