@@ -3,19 +3,22 @@ import opencortex.build as oc
 
 import sys
 
-
+num_rs_default = 2
+num_bask_default = 2
 
 def generate(reference = "L23TraubDemo",
-             num_rs =2,
-             num_bask =2,
+             num_rs = num_rs_default,
+             num_bask = num_bask_default,
              scalex=1,
              scaley=1,
              scalez=1,
              connections=True,
+             conn_probability=0.3,
              poisson_inputs=True,
+             poisson_inputs_per_cell=1,
              offset_curents=False,
              global_delay = 0,
-             duration = 300,
+             duration = 100,
              segments_to_plot_record = {'pop_rs':[0],'pop_bask':[0]},
              format='xml'):
 
@@ -44,32 +47,40 @@ def generate(reference = "L23TraubDemo",
                                                   0,0,0,
                                                   xDim,yDim,zDim)
 
-    syn0 = oc.add_exp_two_syn(nml_doc, 
-                             id="syn0", 
-                             gbase="1nS",
+    synInput = oc.add_exp_two_syn(nml_doc, 
+                             id="synInput", 
+                             gbase="2nS",
                              erev="0mV",
                              tau_rise="0.5ms",
                              tau_decay="10ms")
 
-    syn1 = oc.add_exp_two_syn(nml_doc, 
-                             id="syn1", 
+    synAmpa = oc.add_exp_two_syn(nml_doc, 
+                             id="synAmpa", 
                              gbase="2nS",
                              erev="0mV",
                              tau_rise="1ms",
                              tau_decay="15ms")
+
+    synGaba = oc.add_exp_two_syn(nml_doc, 
+                             id="synGaba", 
+                             gbase="2nS",
+                             erev="-70mV",
+                             tau_rise="2ms",
+                             tau_decay="30ms")
                              
                             
     if poisson_inputs:
 
         pfs = oc.add_poisson_firing_synapse(nml_doc,
                                            id="poissonFiringSyn",
-                                           average_rate="150 Hz",
-                                           synapse_id=syn0.id)
+                                           average_rate="50 Hz",
+                                           synapse_id=synInput.id)
 
         oc.add_inputs_to_population(network,
                                     "Stim0",
                                     pop_rs,
                                     pfs.id,
+                                    number_per_cell = poisson_inputs_per_cell,
                                     all_cells=True)
     if offset_curents:
 
@@ -99,15 +110,48 @@ def generate(reference = "L23TraubDemo",
                                         "proj0",
                                         pop_rs,
                                         pop_bask,
-                                        syn1.id,
-                                        0.3,
-                                        weight=0.05,
+                                        synAmpa.id,
+                                        conn_probability,
+                                        weight=1,
+                                        delay=global_delay)
+        if proj:                           
+            total_conns += len(proj.connection_wds)
+
+        proj = oc.add_probabilistic_projection(network,
+                                        "proj1",
+                                        pop_rs,
+                                        pop_rs,
+                                        synAmpa.id,
+                                        conn_probability,
+                                        weight=1,
+                                        delay=global_delay)
+        if proj:                           
+            total_conns += len(proj.connection_wds)
+
+        proj = oc.add_probabilistic_projection(network,
+                                        "proj2",
+                                        pop_bask,
+                                        pop_rs,
+                                        synGaba.id,
+                                        conn_probability,
+                                        weight=1,
+                                        delay=global_delay)
+        if proj:                           
+            total_conns += len(proj.connection_wds)
+
+        proj = oc.add_probabilistic_projection(network,
+                                        "proj3",
+                                        pop_bask,
+                                        pop_bask,
+                                        synGaba.id,
+                                        conn_probability,
+                                        weight=1,
                                         delay=global_delay)
         if proj:                           
             total_conns += len(proj.connection_wds)
         
         
-    if num_rs != 2 or num_bask!=2:
+    if num_rs != num_rs_default or num_bask!=num_bask_default:
         new_reference = '%s_%scells_%sconns'%(nml_doc.id,num_rs+num_bask,total_conns)
         network.id = new_reference
         nml_doc.id = new_reference
@@ -166,11 +210,14 @@ if __name__ == '__main__':
                  offset_curents=True,
                  segments_to_plot_record = {'pop_bask':[0,117,104,55]})
 
-    if '-large' in sys.argv:
+    elif '-large' in sys.argv:
         
         generate(num_rs = 10,
                  num_bask=10,
                  duration = 50,
                  global_delay = 2)
     else:
-        generate(global_delay = 5)
+        generate(global_delay = 5,
+                 conn_probability=.7,
+                 poisson_inputs_per_cell =10,
+                 offset_curents=False)

@@ -2721,7 +2721,7 @@ def get_soma_diameter(cell_name,cell_type=None,dir_to_cell=None):
 
 ################################################################################################################################################
 
-def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False, only_cells=None):
+def add_inputs_to_population(net, id, population, input_comp_id, number_per_cell=1, all_cells=False, only_cells=None):
     
     if all_cells and only_cells is not None:
         opencortex.print_comment_v("Error! Method opencortex.build.%s() called with both arguments all_cells and only_cells set!"%sys._getframe().f_code.co_name)
@@ -2741,11 +2741,12 @@ def add_inputs_to_population(net, id, population, input_comp_id, all_cells=False
                          populations=population.id)
     count = 0
     for cell_id in cell_ids:
-        input = neuroml.Input(id=count, 
-                      target="../%s/%i/%s"%(population.id, cell_id, population.component), 
-                      destination="synapses")  
-        input_list.input.append(input)
-        count+=1
+        for i in range(number_per_cell):
+            input = neuroml.Input(id=count, 
+                          target="../%s/%i/%s"%(population.id, cell_id, population.component), 
+                          destination="synapses")  
+            input_list.input.append(input)
+            count+=1
         
     if count>0:                 
         net.input_lists.append(input_list)
