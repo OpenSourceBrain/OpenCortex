@@ -2,3 +2,28 @@
 
 target: ../LEMS_ACNet.xml
 engine: jNeuroML_NEURON
+mep: .test.acnet.mep
+experiments:
+  p_0:
+    observables:
+      spike times:
+        file: 
+          path: ../Sim_ACNet.pop_pyr.v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0.0
+  p_1:
+    observables:
+      spike times:
+        file: 
+          path: ../Sim_ACNet.pop_pyr.v.dat
+          columns: [0,2]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0.000
+

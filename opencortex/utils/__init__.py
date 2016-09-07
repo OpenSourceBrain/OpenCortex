@@ -430,7 +430,8 @@ def build_connectivity(net,
                        return_cached_dicts=True,
                        synaptic_scaling_params=None,
                        synaptic_delay_params=None,
-                       distance_dependence_params=None):
+                       distance_dependence_params=None,
+                       ignore_synapses = []):
                        
     '''This method calls the appropriate build and utils methods to build connectivity of the NeuroML2 cortical network. Input arguments are as follows:
     
@@ -487,8 +488,11 @@ def build_connectivity(net,
             postCellObject=pop_objects[postPop]
                     
             if preCellObject['PopObj'].size !=0 and postCellObject['PopObj'].size !=0:
-                       
-               proj_summary=read_connectivity(prePop,postPop,full_path_to_conn_summary)
+                      
+               proj_summary=read_connectivity(prePop,
+                                              postPop,
+                                              full_path_to_conn_summary,
+                                              ignore_synapses=ignore_synapses)
                
                if proj_summary !=[]:
                        
@@ -898,7 +902,8 @@ def build_probability_based_connectivity(net,
 
 def read_connectivity(pre_pop,
                       post_pop,
-                      path_to_txt_file):
+                      path_to_txt_file,
+                      ignore_synapses = []):
                       
     '''Method that reads the txt file in the format of netConnList found in: Thalamocortical/neuroConstruct/pythonScripts/netbuild.'''                   
 
@@ -987,6 +992,10 @@ def read_connectivity(pre_pop,
                                   
                   continue  
            
+           for syn in ignore_synapses:
+               if syn in synapse_list: synapse_list.remove(syn)
+               
+               
            proj_info['SynapseList']=synapse_list
              
            if 'Elect' in extract_info[2]:

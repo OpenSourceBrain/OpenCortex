@@ -2,3 +2,27 @@
 
 target: ../LEMS_L23TraubDemo.xml
 engine: jNeuroML_NEURON
+mep: .test.l23traub.mep
+experiments:
+  rs_0:
+    observables:
+      spike times:
+        file: 
+          path: ../Sim_L23TraubDemo.pop_rs.0.v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0.0
+  bask_0:
+    observables:
+      spike times:
+        file: 
+          path: ../Sim_L23TraubDemo.pop_bask.0.v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0.0
