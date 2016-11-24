@@ -150,6 +150,28 @@ def _copy_to_dir_for_model(nml_doc,file_name):
     shutil.copy(file_name, dir_for_model)
     
     
+def include_neuroml2_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
+    
+    
+    nml2_doc_cell = pynml.read_neuroml2_file(cell_nml2_path, include_includes=False)
+    
+    for cell in _get_cells_of_all_known_types(nml2_doc_cell):
+        if cell.id == cell_id:
+            all_cells[cell_id] = cell
+            
+            new_file = cell_nml2_path
+            nml_doc.includes.append(neuroml.IncludeType(new_file)) 
+            if not new_file in all_included_files:
+                all_included_files.append(new_file)
+            
+            for included in nml2_doc_cell.includes:
+                
+                new_loc = included.href
+                nml_doc.includes.append(neuroml.IncludeType(new_loc))
+                if not new_loc in all_included_files:
+                    all_included_files.append(new_loc)
+                    
+                    
 def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id):
     
     cell_nml2_path = os.path.dirname(__file__)+"/../../NeuroML2/prototypes/"+cell_nml2_rel_path
