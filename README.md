@@ -1,4 +1,4 @@
-# OpenCortex
+## OpenCortex
 
 A framework for building cortical network models on OSB
 
