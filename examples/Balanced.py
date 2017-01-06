@@ -23,6 +23,8 @@ def generate(reference = "Balanced",
              connections=True,
              duration = 1000,
              global_delay = 0,
+             max_in_pop_to_plot_and_save = 5,
+             gen_spike_saves_for_all_somas = True,
              format='xml'):
 
     num_exc = scale_pop_size(80,scalePops)
@@ -95,6 +97,7 @@ def generate(reference = "Balanced",
 
     total_conns = 0
     if connections:
+        
         proj = oc.add_probabilistic_projection(network, "proj0",
                                         popExc, popExc,
                                         synAmpa1.id, 0.3, delay = global_delay)
@@ -146,10 +149,35 @@ def generate(reference = "Balanced",
                     format = format)
 
     if format=='xml':
+        
+        plot_v = {popExc.id:[],popInh.id:[]}
+        save_v = {'%s_v.dat'%popExc.id:[],'%s_v.dat'%popInh.id:[]}
+        
+        if num_bbp>0:
+            plot_v[popBBP.id]=[]
+            save_v['%s_v.dat'%popBBP.id]=[]
+        
+        for i in range(min(max_in_pop_to_plot_and_save,num_exc)):
+            plot_v[popExc.id].append("%s/%i/%s/v"%(popExc.id,i,popExc.component))
+            save_v['%s_v.dat'%popExc.id].append("%s/%i/%s/v"%(popExc.id,i,popExc.component))
+            
+        for i in range(min(max_in_pop_to_plot_and_save,num_inh)):
+            plot_v[popInh.id].append("%s/%i/%s/v"%(popInh.id,i,popInh.component))
+            save_v['%s_v.dat'%popInh.id].append("%s/%i/%s/v"%(popInh.id,i,popInh.component))
+            
+        for i in range(min(max_in_pop_to_plot_and_save,num_bbp)):
+            plot_v[popBBP.id].append("%s/%i/%s/v"%(popBBP.id,i,popBBP.component))
+            save_v['%s_v.dat'%popBBP.id].append("%s/%i/%s/v"%(popBBP.id,i,popBBP.component))
+            
         lems_file_name = oc.generate_lems_simulation(nml_doc, network, 
                                 nml_file_name, 
                                 duration =      duration, 
-                                dt =            0.025)
+                                dt =            0.025,
+                                gen_plots_for_all_v = False,
+                                gen_plots_for_quantities = plot_v,
+                                gen_saves_for_all_v = False,
+                                gen_saves_for_quantities = save_v,
+                                gen_spike_saves_for_all_somas = gen_spike_saves_for_all_somas)
     else:
         lems_file_name = None
                                 
@@ -181,9 +209,11 @@ if __name__ == '__main__':
     elif '-test' in sys.argv:
         
         generate(num_bbp =0,
-             scalePops = 1,
+             scalePops = 0.2,
              scalex=2,
              scalez=2,
+             duration = 200,
+             max_in_pop_to_plot_and_save = 3,
              global_delay = 2)
     else:
-        generate()
+        generate(gen_spike_saves_for_all_somas = True)

@@ -62,3 +62,4 @@ build/lib*
 /examples/Sim_L23TraubDemo.pop_post.v.dat.n
 /examples/Sim_L23TraubDemo.pop_pre.v.dat.n
 /examples/Sim_L23TraubDemo_2cells_0conns.pop_pre.v.dat.n
+/examples/*.spikes

@@ -362,6 +362,8 @@ def generate_lems_simulation(nml_doc,
                              save_all_segments = False,
                              gen_saves_for_only_populations = [],  #  List of populations, all pops if = []
                              gen_saves_for_quantities = {},   #  Dict with file names vs lists of quantity paths
+                             gen_spike_saves_for_all_somas = False,
+                             spike_time_format='ID_TIME',
                              seed=12345):
                                  
     lems_file_name = "LEMS_%s.xml"%network.id
@@ -384,6 +386,8 @@ def generate_lems_simulation(nml_doc,
                                    save_all_segments = save_all_segments,
                                    gen_saves_for_only_populations = gen_saves_for_only_populations,
                                    gen_saves_for_quantities = gen_saves_for_quantities,
+                                   gen_spike_saves_for_all_somas = gen_spike_saves_for_all_somas,
+                                   spike_time_format = spike_time_format,
                                    seed=seed)
                                    
     del include_extra_lems_files[:]

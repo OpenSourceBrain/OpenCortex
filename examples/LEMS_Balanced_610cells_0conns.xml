@@ -38,1243 +38,672 @@
    
     <Simulation id="Sim_Balanced_610cells_0conns" length="1000ms" step="0.025ms" target="Balanced_610cells_0conns" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
-        <Display id="DispPop__popExc" title="Membrane potentials of cells in popExc" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popExc[0]: v" quantity="popExc/0/HH_464198958/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
-            <Line id="popExc[1]: v" quantity="popExc/1/HH_464198958/v" scale="1mV" color="#029a72" timeScale="1ms"/>
-            <Line id="popExc[2]: v" quantity="popExc/2/HH_464198958/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
-            <Line id="popExc[3]: v" quantity="popExc/3/HH_464198958/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
-            <Line id="popExc[4]: v" quantity="popExc/4/HH_464198958/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
-            <Line id="popExc[5]: v" quantity="popExc/5/HH_464198958/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
-            <Line id="popExc[6]: v" quantity="popExc/6/HH_464198958/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
-            <Line id="popExc[7]: v" quantity="popExc/7/HH_464198958/v" scale="1mV" color="#29645f" timeScale="1ms"/>
-            <Line id="popExc[8]: v" quantity="popExc/8/HH_464198958/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
-            <Line id="popExc[9]: v" quantity="popExc/9/HH_464198958/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
-            <Line id="popExc[10]: v" quantity="popExc/10/HH_464198958/v" scale="1mV" color="#8fe460" timeScale="1ms"/>
-            <Line id="popExc[11]: v" quantity="popExc/11/HH_464198958/v" scale="1mV" color="#2ca1c7" timeScale="1ms"/>
-            <Line id="popExc[12]: v" quantity="popExc/12/HH_464198958/v" scale="1mV" color="#8d9fe5" timeScale="1ms"/>
-            <Line id="popExc[13]: v" quantity="popExc/13/HH_464198958/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
-            <Line id="popExc[14]: v" quantity="popExc/14/HH_464198958/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
-            <Line id="popExc[15]: v" quantity="popExc/15/HH_464198958/v" scale="1mV" color="#175f0c" timeScale="1ms"/>
-            <Line id="popExc[16]: v" quantity="popExc/16/HH_464198958/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
-            <Line id="popExc[17]: v" quantity="popExc/17/HH_464198958/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
-            <Line id="popExc[18]: v" quantity="popExc/18/HH_464198958/v" scale="1mV" color="#8101e8" timeScale="1ms"/>
-            <Line id="popExc[19]: v" quantity="popExc/19/HH_464198958/v" scale="1mV" color="#25ece8" timeScale="1ms"/>
-            <Line id="popExc[20]: v" quantity="popExc/20/HH_464198958/v" scale="1mV" color="#b80e3b" timeScale="1ms"/>
-            <Line id="popExc[21]: v" quantity="popExc/21/HH_464198958/v" scale="1mV" color="#30a1f6" timeScale="1ms"/>
-            <Line id="popExc[22]: v" quantity="popExc/22/HH_464198958/v" scale="1mV" color="#577081" timeScale="1ms"/>
-            <Line id="popExc[23]: v" quantity="popExc/23/HH_464198958/v" scale="1mV" color="#06057c" timeScale="1ms"/>
-            <Line id="popExc[24]: v" quantity="popExc/24/HH_464198958/v" scale="1mV" color="#56eaa3" timeScale="1ms"/>
-            <Line id="popExc[25]: v" quantity="popExc/25/HH_464198958/v" scale="1mV" color="#f7acee" timeScale="1ms"/>
-            <Line id="popExc[26]: v" quantity="popExc/26/HH_464198958/v" scale="1mV" color="#fa9289" timeScale="1ms"/>
-            <Line id="popExc[27]: v" quantity="popExc/27/HH_464198958/v" scale="1mV" color="#be9985" timeScale="1ms"/>
-            <Line id="popExc[28]: v" quantity="popExc/28/HH_464198958/v" scale="1mV" color="#00e266" timeScale="1ms"/>
-            <Line id="popExc[29]: v" quantity="popExc/29/HH_464198958/v" scale="1mV" color="#f0b378" timeScale="1ms"/>
-            <Line id="popExc[30]: v" quantity="popExc/30/HH_464198958/v" scale="1mV" color="#deea95" timeScale="1ms"/>
-            <Line id="popExc[31]: v" quantity="popExc/31/HH_464198958/v" scale="1mV" color="#c55566" timeScale="1ms"/>
-            <Line id="popExc[32]: v" quantity="popExc/32/HH_464198958/v" scale="1mV" color="#2dcaab" timeScale="1ms"/>
-            <Line id="popExc[33]: v" quantity="popExc/33/HH_464198958/v" scale="1mV" color="#1978ce" timeScale="1ms"/>
-            <Line id="popExc[34]: v" quantity="popExc/34/HH_464198958/v" scale="1mV" color="#6a1ecc" timeScale="1ms"/>
-            <Line id="popExc[35]: v" quantity="popExc/35/HH_464198958/v" scale="1mV" color="#e2b284" timeScale="1ms"/>
-            <Line id="popExc[36]: v" quantity="popExc/36/HH_464198958/v" scale="1mV" color="#93fd72" timeScale="1ms"/>
-            <Line id="popExc[37]: v" quantity="popExc/37/HH_464198958/v" scale="1mV" color="#bc90a6" timeScale="1ms"/>
-            <Line id="popExc[38]: v" quantity="popExc/38/HH_464198958/v" scale="1mV" color="#3b8d0e" timeScale="1ms"/>
-            <Line id="popExc[39]: v" quantity="popExc/39/HH_464198958/v" scale="1mV" color="#860a7d" timeScale="1ms"/>
-            <Line id="popExc[40]: v" quantity="popExc/40/HH_464198958/v" scale="1mV" color="#b59a59" timeScale="1ms"/>
-            <Line id="popExc[41]: v" quantity="popExc/41/HH_464198958/v" scale="1mV" color="#d32851" timeScale="1ms"/>
-            <Line id="popExc[42]: v" quantity="popExc/42/HH_464198958/v" scale="1mV" color="#ce9fb6" timeScale="1ms"/>
-            <Line id="popExc[43]: v" quantity="popExc/43/HH_464198958/v" scale="1mV" color="#3b788b" timeScale="1ms"/>
-            <Line id="popExc[44]: v" quantity="popExc/44/HH_464198958/v" scale="1mV" color="#df8960" timeScale="1ms"/>
-            <Line id="popExc[45]: v" quantity="popExc/45/HH_464198958/v" scale="1mV" color="#3764b5" timeScale="1ms"/>
-            <Line id="popExc[46]: v" quantity="popExc/46/HH_464198958/v" scale="1mV" color="#cd4944" timeScale="1ms"/>
-            <Line id="popExc[47]: v" quantity="popExc/47/HH_464198958/v" scale="1mV" color="#8e1a11" timeScale="1ms"/>
-            <Line id="popExc[48]: v" quantity="popExc/48/HH_464198958/v" scale="1mV" color="#2f9272" timeScale="1ms"/>
-            <Line id="popExc[49]: v" quantity="popExc/49/HH_464198958/v" scale="1mV" color="#96af0d" timeScale="1ms"/>
-            <Line id="popExc[50]: v" quantity="popExc/50/HH_464198958/v" scale="1mV" color="#84ab56" timeScale="1ms"/>
-            <Line id="popExc[51]: v" quantity="popExc/51/HH_464198958/v" scale="1mV" color="#f56ae7" timeScale="1ms"/>
-            <Line id="popExc[52]: v" quantity="popExc/52/HH_464198958/v" scale="1mV" color="#0aa250" timeScale="1ms"/>
-            <Line id="popExc[53]: v" quantity="popExc/53/HH_464198958/v" scale="1mV" color="#2a04f7" timeScale="1ms"/>
-            <Line id="popExc[54]: v" quantity="popExc/54/HH_464198958/v" scale="1mV" color="#fbb911" timeScale="1ms"/>
-            <Line id="popExc[55]: v" quantity="popExc/55/HH_464198958/v" scale="1mV" color="#d50b61" timeScale="1ms"/>
-            <Line id="popExc[56]: v" quantity="popExc/56/HH_464198958/v" scale="1mV" color="#267841" timeScale="1ms"/>
-            <Line id="popExc[57]: v" quantity="popExc/57/HH_464198958/v" scale="1mV" color="#3aa725" timeScale="1ms"/>
-            <Line id="popExc[58]: v" quantity="popExc/58/HH_464198958/v" scale="1mV" color="#8a04f7" timeScale="1ms"/>
-            <Line id="popExc[59]: v" quantity="popExc/59/HH_464198958/v" scale="1mV" color="#282fe5" timeScale="1ms"/>
-            <Line id="popExc[60]: v" quantity="popExc/60/HH_464198958/v" scale="1mV" color="#52e1fb" timeScale="1ms"/>
-            <Line id="popExc[61]: v" quantity="popExc/61/HH_464198958/v" scale="1mV" color="#0ca02f" timeScale="1ms"/>
-            <Line id="popExc[62]: v" quantity="popExc/62/HH_464198958/v" scale="1mV" color="#b6307b" timeScale="1ms"/>
-            <Line id="popExc[63]: v" quantity="popExc/63/HH_464198958/v" scale="1mV" color="#141cb0" timeScale="1ms"/>
-            <Line id="popExc[64]: v" quantity="popExc/64/HH_464198958/v" scale="1mV" color="#fe9e62" timeScale="1ms"/>
-            <Line id="popExc[65]: v" quantity="popExc/65/HH_464198958/v" scale="1mV" color="#ebaa77" timeScale="1ms"/>
-            <Line id="popExc[66]: v" quantity="popExc/66/HH_464198958/v" scale="1mV" color="#c9f0b0" timeScale="1ms"/>
-            <Line id="popExc[67]: v" quantity="popExc/67/HH_464198958/v" scale="1mV" color="#c5bc64" timeScale="1ms"/>
-            <Line id="popExc[68]: v" quantity="popExc/68/HH_464198958/v" scale="1mV" color="#5e2503" timeScale="1ms"/>
-            <Line id="popExc[69]: v" quantity="popExc/69/HH_464198958/v" scale="1mV" color="#adbfb0" timeScale="1ms"/>
-            <Line id="popExc[70]: v" quantity="popExc/70/HH_464198958/v" scale="1mV" color="#c2e1da" timeScale="1ms"/>
-            <Line id="popExc[71]: v" quantity="popExc/71/HH_464198958/v" scale="1mV" color="#7b1427" timeScale="1ms"/>
-            <Line id="popExc[72]: v" quantity="popExc/72/HH_464198958/v" scale="1mV" color="#0fc01b" timeScale="1ms"/>
-            <Line id="popExc[73]: v" quantity="popExc/73/HH_464198958/v" scale="1mV" color="#a04859" timeScale="1ms"/>
-            <Line id="popExc[74]: v" quantity="popExc/74/HH_464198958/v" scale="1mV" color="#53650f" timeScale="1ms"/>
-            <Line id="popExc[75]: v" quantity="popExc/75/HH_464198958/v" scale="1mV" color="#9c2ecc" timeScale="1ms"/>
-            <Line id="popExc[76]: v" quantity="popExc/76/HH_464198958/v" scale="1mV" color="#6bbb69" timeScale="1ms"/>
-            <Line id="popExc[77]: v" quantity="popExc/77/HH_464198958/v" scale="1mV" color="#f3d90e" timeScale="1ms"/>
-            <Line id="popExc[78]: v" quantity="popExc/78/HH_464198958/v" scale="1mV" color="#339bb4" timeScale="1ms"/>
-            <Line id="popExc[79]: v" quantity="popExc/79/HH_464198958/v" scale="1mV" color="#c4d3c5" timeScale="1ms"/>
-            <Line id="popExc[80]: v" quantity="popExc/80/HH_464198958/v" scale="1mV" color="#b2d4f3" timeScale="1ms"/>
-            <Line id="popExc[81]: v" quantity="popExc/81/HH_464198958/v" scale="1mV" color="#8e7ae9" timeScale="1ms"/>
-            <Line id="popExc[82]: v" quantity="popExc/82/HH_464198958/v" scale="1mV" color="#147de9" timeScale="1ms"/>
-            <Line id="popExc[83]: v" quantity="popExc/83/HH_464198958/v" scale="1mV" color="#2a3a46" timeScale="1ms"/>
-            <Line id="popExc[84]: v" quantity="popExc/84/HH_464198958/v" scale="1mV" color="#f79fca" timeScale="1ms"/>
-            <Line id="popExc[85]: v" quantity="popExc/85/HH_464198958/v" scale="1mV" color="#3b0b63" timeScale="1ms"/>
-            <Line id="popExc[86]: v" quantity="popExc/86/HH_464198958/v" scale="1mV" color="#29ddf4" timeScale="1ms"/>
-            <Line id="popExc[87]: v" quantity="popExc/87/HH_464198958/v" scale="1mV" color="#49cdbe" timeScale="1ms"/>
-            <Line id="popExc[88]: v" quantity="popExc/88/HH_464198958/v" scale="1mV" color="#8980bb" timeScale="1ms"/>
-            <Line id="popExc[89]: v" quantity="popExc/89/HH_464198958/v" scale="1mV" color="#850561" timeScale="1ms"/>
-            <Line id="popExc[90]: v" quantity="popExc/90/HH_464198958/v" scale="1mV" color="#00da5a" timeScale="1ms"/>
-            <Line id="popExc[91]: v" quantity="popExc/91/HH_464198958/v" scale="1mV" color="#00d0ba" timeScale="1ms"/>
-            <Line id="popExc[92]: v" quantity="popExc/92/HH_464198958/v" scale="1mV" color="#7efe36" timeScale="1ms"/>
-            <Line id="popExc[93]: v" quantity="popExc/93/HH_464198958/v" scale="1mV" color="#2f529f" timeScale="1ms"/>
-            <Line id="popExc[94]: v" quantity="popExc/94/HH_464198958/v" scale="1mV" color="#9b852c" timeScale="1ms"/>
-            <Line id="popExc[95]: v" quantity="popExc/95/HH_464198958/v" scale="1mV" color="#cc6812" timeScale="1ms"/>
-            <Line id="popExc[96]: v" quantity="popExc/96/HH_464198958/v" scale="1mV" color="#188b26" timeScale="1ms"/>
-            <Line id="popExc[97]: v" quantity="popExc/97/HH_464198958/v" scale="1mV" color="#8152a2" timeScale="1ms"/>
-            <Line id="popExc[98]: v" quantity="popExc/98/HH_464198958/v" scale="1mV" color="#67f8ab" timeScale="1ms"/>
-            <Line id="popExc[99]: v" quantity="popExc/99/HH_464198958/v" scale="1mV" color="#ca5b25" timeScale="1ms"/>
-            <Line id="popExc[100]: v" quantity="popExc/100/HH_464198958/v" scale="1mV" color="#f46d4e" timeScale="1ms"/>
-            <Line id="popExc[101]: v" quantity="popExc/101/HH_464198958/v" scale="1mV" color="#6aae0b" timeScale="1ms"/>
-            <Line id="popExc[102]: v" quantity="popExc/102/HH_464198958/v" scale="1mV" color="#3e46cc" timeScale="1ms"/>
-            <Line id="popExc[103]: v" quantity="popExc/103/HH_464198958/v" scale="1mV" color="#e0e3a1" timeScale="1ms"/>
-            <Line id="popExc[104]: v" quantity="popExc/104/HH_464198958/v" scale="1mV" color="#06fb8a" timeScale="1ms"/>
-            <Line id="popExc[105]: v" quantity="popExc/105/HH_464198958/v" scale="1mV" color="#549968" timeScale="1ms"/>
-            <Line id="popExc[106]: v" quantity="popExc/106/HH_464198958/v" scale="1mV" color="#650ffb" timeScale="1ms"/>
-            <Line id="popExc[107]: v" quantity="popExc/107/HH_464198958/v" scale="1mV" color="#2d9059" timeScale="1ms"/>
-            <Line id="popExc[108]: v" quantity="popExc/108/HH_464198958/v" scale="1mV" color="#ae1036" timeScale="1ms"/>
-            <Line id="popExc[109]: v" quantity="popExc/109/HH_464198958/v" scale="1mV" color="#84ad19" timeScale="1ms"/>
-            <Line id="popExc[110]: v" quantity="popExc/110/HH_464198958/v" scale="1mV" color="#3fba91" timeScale="1ms"/>
-            <Line id="popExc[111]: v" quantity="popExc/111/HH_464198958/v" scale="1mV" color="#69cacc" timeScale="1ms"/>
-            <Line id="popExc[112]: v" quantity="popExc/112/HH_464198958/v" scale="1mV" color="#b11f43" timeScale="1ms"/>
-            <Line id="popExc[113]: v" quantity="popExc/113/HH_464198958/v" scale="1mV" color="#5330d7" timeScale="1ms"/>
-            <Line id="popExc[114]: v" quantity="popExc/114/HH_464198958/v" scale="1mV" color="#11552d" timeScale="1ms"/>
-            <Line id="popExc[115]: v" quantity="popExc/115/HH_464198958/v" scale="1mV" color="#75e387" timeScale="1ms"/>
-            <Line id="popExc[116]: v" quantity="popExc/116/HH_464198958/v" scale="1mV" color="#31efbe" timeScale="1ms"/>
-            <Line id="popExc[117]: v" quantity="popExc/117/HH_464198958/v" scale="1mV" color="#9f0e56" timeScale="1ms"/>
-            <Line id="popExc[118]: v" quantity="popExc/118/HH_464198958/v" scale="1mV" color="#33af06" timeScale="1ms"/>
-            <Line id="popExc[119]: v" quantity="popExc/119/HH_464198958/v" scale="1mV" color="#22910c" timeScale="1ms"/>
-            <Line id="popExc[120]: v" quantity="popExc/120/HH_464198958/v" scale="1mV" color="#e4daa2" timeScale="1ms"/>
-            <Line id="popExc[121]: v" quantity="popExc/121/HH_464198958/v" scale="1mV" color="#548dc2" timeScale="1ms"/>
-            <Line id="popExc[122]: v" quantity="popExc/122/HH_464198958/v" scale="1mV" color="#4ad484" timeScale="1ms"/>
-            <Line id="popExc[123]: v" quantity="popExc/123/HH_464198958/v" scale="1mV" color="#89cb56" timeScale="1ms"/>
-            <Line id="popExc[124]: v" quantity="popExc/124/HH_464198958/v" scale="1mV" color="#b1817b" timeScale="1ms"/>
-            <Line id="popExc[125]: v" quantity="popExc/125/HH_464198958/v" scale="1mV" color="#abc677" timeScale="1ms"/>
-            <Line id="popExc[126]: v" quantity="popExc/126/HH_464198958/v" scale="1mV" color="#cc638b" timeScale="1ms"/>
-            <Line id="popExc[127]: v" quantity="popExc/127/HH_464198958/v" scale="1mV" color="#428b2d" timeScale="1ms"/>
-            <Line id="popExc[128]: v" quantity="popExc/128/HH_464198958/v" scale="1mV" color="#6d47be" timeScale="1ms"/>
-            <Line id="popExc[129]: v" quantity="popExc/129/HH_464198958/v" scale="1mV" color="#5d2c80" timeScale="1ms"/>
-            <Line id="popExc[130]: v" quantity="popExc/130/HH_464198958/v" scale="1mV" color="#84459a" timeScale="1ms"/>
-            <Line id="popExc[131]: v" quantity="popExc/131/HH_464198958/v" scale="1mV" color="#92f4b2" timeScale="1ms"/>
-            <Line id="popExc[132]: v" quantity="popExc/132/HH_464198958/v" scale="1mV" color="#a11908" timeScale="1ms"/>
-            <Line id="popExc[133]: v" quantity="popExc/133/HH_464198958/v" scale="1mV" color="#11656e" timeScale="1ms"/>
-            <Line id="popExc[134]: v" quantity="popExc/134/HH_464198958/v" scale="1mV" color="#5f0819" timeScale="1ms"/>
-            <Line id="popExc[135]: v" quantity="popExc/135/HH_464198958/v" scale="1mV" color="#b56471" timeScale="1ms"/>
-            <Line id="popExc[136]: v" quantity="popExc/136/HH_464198958/v" scale="1mV" color="#090b35" timeScale="1ms"/>
-            <Line id="popExc[137]: v" quantity="popExc/137/HH_464198958/v" scale="1mV" color="#bf0976" timeScale="1ms"/>
-            <Line id="popExc[138]: v" quantity="popExc/138/HH_464198958/v" scale="1mV" color="#af973c" timeScale="1ms"/>
-            <Line id="popExc[139]: v" quantity="popExc/139/HH_464198958/v" scale="1mV" color="#66dbcc" timeScale="1ms"/>
-            <Line id="popExc[140]: v" quantity="popExc/140/HH_464198958/v" scale="1mV" color="#72fce3" timeScale="1ms"/>
-            <Line id="popExc[141]: v" quantity="popExc/141/HH_464198958/v" scale="1mV" color="#43abd5" timeScale="1ms"/>
-            <Line id="popExc[142]: v" quantity="popExc/142/HH_464198958/v" scale="1mV" color="#bcba85" timeScale="1ms"/>
-            <Line id="popExc[143]: v" quantity="popExc/143/HH_464198958/v" scale="1mV" color="#7afbd9" timeScale="1ms"/>
-            <Line id="popExc[144]: v" quantity="popExc/144/HH_464198958/v" scale="1mV" color="#43df86" timeScale="1ms"/>
-            <Line id="popExc[145]: v" quantity="popExc/145/HH_464198958/v" scale="1mV" color="#0783a8" timeScale="1ms"/>
-            <Line id="popExc[146]: v" quantity="popExc/146/HH_464198958/v" scale="1mV" color="#58569a" timeScale="1ms"/>
-            <Line id="popExc[147]: v" quantity="popExc/147/HH_464198958/v" scale="1mV" color="#ebc622" timeScale="1ms"/>
-            <Line id="popExc[148]: v" quantity="popExc/148/HH_464198958/v" scale="1mV" color="#ad17d5" timeScale="1ms"/>
-            <Line id="popExc[149]: v" quantity="popExc/149/HH_464198958/v" scale="1mV" color="#a0277b" timeScale="1ms"/>
-            <Line id="popExc[150]: v" quantity="popExc/150/HH_464198958/v" scale="1mV" color="#ef12d1" timeScale="1ms"/>
-            <Line id="popExc[151]: v" quantity="popExc/151/HH_464198958/v" scale="1mV" color="#07d5ba" timeScale="1ms"/>
-            <Line id="popExc[152]: v" quantity="popExc/152/HH_464198958/v" scale="1mV" color="#9a3a95" timeScale="1ms"/>
-            <Line id="popExc[153]: v" quantity="popExc/153/HH_464198958/v" scale="1mV" color="#301d8a" timeScale="1ms"/>
-            <Line id="popExc[154]: v" quantity="popExc/154/HH_464198958/v" scale="1mV" color="#659e23" timeScale="1ms"/>
-            <Line id="popExc[155]: v" quantity="popExc/155/HH_464198958/v" scale="1mV" color="#2e8cc3" timeScale="1ms"/>
-            <Line id="popExc[156]: v" quantity="popExc/156/HH_464198958/v" scale="1mV" color="#596091" timeScale="1ms"/>
-            <Line id="popExc[157]: v" quantity="popExc/157/HH_464198958/v" scale="1mV" color="#e6c0bc" timeScale="1ms"/>
-            <Line id="popExc[158]: v" quantity="popExc/158/HH_464198958/v" scale="1mV" color="#b9b34e" timeScale="1ms"/>
-            <Line id="popExc[159]: v" quantity="popExc/159/HH_464198958/v" scale="1mV" color="#d8a692" timeScale="1ms"/>
-            <Line id="popExc[160]: v" quantity="popExc/160/HH_464198958/v" scale="1mV" color="#1352e6" timeScale="1ms"/>
-            <Line id="popExc[161]: v" quantity="popExc/161/HH_464198958/v" scale="1mV" color="#4d0412" timeScale="1ms"/>
-            <Line id="popExc[162]: v" quantity="popExc/162/HH_464198958/v" scale="1mV" color="#c8bec0" timeScale="1ms"/>
-            <Line id="popExc[163]: v" quantity="popExc/163/HH_464198958/v" scale="1mV" color="#0a5b03" timeScale="1ms"/>
-            <Line id="popExc[164]: v" quantity="popExc/164/HH_464198958/v" scale="1mV" color="#3091a7" timeScale="1ms"/>
-            <Line id="popExc[165]: v" quantity="popExc/165/HH_464198958/v" scale="1mV" color="#14f491" timeScale="1ms"/>
-            <Line id="popExc[166]: v" quantity="popExc/166/HH_464198958/v" scale="1mV" color="#d14b5d" timeScale="1ms"/>
-            <Line id="popExc[167]: v" quantity="popExc/167/HH_464198958/v" scale="1mV" color="#3b747b" timeScale="1ms"/>
-            <Line id="popExc[168]: v" quantity="popExc/168/HH_464198958/v" scale="1mV" color="#6c9e62" timeScale="1ms"/>
-            <Line id="popExc[169]: v" quantity="popExc/169/HH_464198958/v" scale="1mV" color="#038c13" timeScale="1ms"/>
-            <Line id="popExc[170]: v" quantity="popExc/170/HH_464198958/v" scale="1mV" color="#1d1940" timeScale="1ms"/>
-            <Line id="popExc[171]: v" quantity="popExc/171/HH_464198958/v" scale="1mV" color="#839542" timeScale="1ms"/>
-            <Line id="popExc[172]: v" quantity="popExc/172/HH_464198958/v" scale="1mV" color="#ca9353" timeScale="1ms"/>
-            <Line id="popExc[173]: v" quantity="popExc/173/HH_464198958/v" scale="1mV" color="#574d88" timeScale="1ms"/>
-            <Line id="popExc[174]: v" quantity="popExc/174/HH_464198958/v" scale="1mV" color="#51c0d2" timeScale="1ms"/>
-            <Line id="popExc[175]: v" quantity="popExc/175/HH_464198958/v" scale="1mV" color="#0a72aa" timeScale="1ms"/>
-            <Line id="popExc[176]: v" quantity="popExc/176/HH_464198958/v" scale="1mV" color="#19806f" timeScale="1ms"/>
-            <Line id="popExc[177]: v" quantity="popExc/177/HH_464198958/v" scale="1mV" color="#260512" timeScale="1ms"/>
-            <Line id="popExc[178]: v" quantity="popExc/178/HH_464198958/v" scale="1mV" color="#34cd4f" timeScale="1ms"/>
-            <Line id="popExc[179]: v" quantity="popExc/179/HH_464198958/v" scale="1mV" color="#91e19c" timeScale="1ms"/>
-            <Line id="popExc[180]: v" quantity="popExc/180/HH_464198958/v" scale="1mV" color="#5be070" timeScale="1ms"/>
-            <Line id="popExc[181]: v" quantity="popExc/181/HH_464198958/v" scale="1mV" color="#fa4c52" timeScale="1ms"/>
-            <Line id="popExc[182]: v" quantity="popExc/182/HH_464198958/v" scale="1mV" color="#48bb6e" timeScale="1ms"/>
-            <Line id="popExc[183]: v" quantity="popExc/183/HH_464198958/v" scale="1mV" color="#db3522" timeScale="1ms"/>
-            <Line id="popExc[184]: v" quantity="popExc/184/HH_464198958/v" scale="1mV" color="#177e84" timeScale="1ms"/>
-            <Line id="popExc[185]: v" quantity="popExc/185/HH_464198958/v" scale="1mV" color="#87111a" timeScale="1ms"/>
-            <Line id="popExc[186]: v" quantity="popExc/186/HH_464198958/v" scale="1mV" color="#8caa59" timeScale="1ms"/>
-            <Line id="popExc[187]: v" quantity="popExc/187/HH_464198958/v" scale="1mV" color="#a8448d" timeScale="1ms"/>
-            <Line id="popExc[188]: v" quantity="popExc/188/HH_464198958/v" scale="1mV" color="#68feb0" timeScale="1ms"/>
-            <Line id="popExc[189]: v" quantity="popExc/189/HH_464198958/v" scale="1mV" color="#862427" timeScale="1ms"/>
-            <Line id="popExc[190]: v" quantity="popExc/190/HH_464198958/v" scale="1mV" color="#c71eb8" timeScale="1ms"/>
-            <Line id="popExc[191]: v" quantity="popExc/191/HH_464198958/v" scale="1mV" color="#26cf61" timeScale="1ms"/>
-            <Line id="popExc[192]: v" quantity="popExc/192/HH_464198958/v" scale="1mV" color="#881836" timeScale="1ms"/>
-            <Line id="popExc[193]: v" quantity="popExc/193/HH_464198958/v" scale="1mV" color="#968c80" timeScale="1ms"/>
-            <Line id="popExc[194]: v" quantity="popExc/194/HH_464198958/v" scale="1mV" color="#c81d4c" timeScale="1ms"/>
-            <Line id="popExc[195]: v" quantity="popExc/195/HH_464198958/v" scale="1mV" color="#29e8fa" timeScale="1ms"/>
-            <Line id="popExc[196]: v" quantity="popExc/196/HH_464198958/v" scale="1mV" color="#6a2254" timeScale="1ms"/>
-            <Line id="popExc[197]: v" quantity="popExc/197/HH_464198958/v" scale="1mV" color="#064a2c" timeScale="1ms"/>
-            <Line id="popExc[198]: v" quantity="popExc/198/HH_464198958/v" scale="1mV" color="#a99d45" timeScale="1ms"/>
-            <Line id="popExc[199]: v" quantity="popExc/199/HH_464198958/v" scale="1mV" color="#de372e" timeScale="1ms"/>
-            <Line id="popExc[200]: v" quantity="popExc/200/HH_464198958/v" scale="1mV" color="#5a80c8" timeScale="1ms"/>
-            <Line id="popExc[201]: v" quantity="popExc/201/HH_464198958/v" scale="1mV" color="#d0f6cb" timeScale="1ms"/>
-            <Line id="popExc[202]: v" quantity="popExc/202/HH_464198958/v" scale="1mV" color="#a8748e" timeScale="1ms"/>
-            <Line id="popExc[203]: v" quantity="popExc/203/HH_464198958/v" scale="1mV" color="#045ca3" timeScale="1ms"/>
-            <Line id="popExc[204]: v" quantity="popExc/204/HH_464198958/v" scale="1mV" color="#7861a5" timeScale="1ms"/>
-            <Line id="popExc[205]: v" quantity="popExc/205/HH_464198958/v" scale="1mV" color="#0bb58d" timeScale="1ms"/>
-            <Line id="popExc[206]: v" quantity="popExc/206/HH_464198958/v" scale="1mV" color="#502f52" timeScale="1ms"/>
-            <Line id="popExc[207]: v" quantity="popExc/207/HH_464198958/v" scale="1mV" color="#ccf6ae" timeScale="1ms"/>
-            <Line id="popExc[208]: v" quantity="popExc/208/HH_464198958/v" scale="1mV" color="#201e28" timeScale="1ms"/>
-            <Line id="popExc[209]: v" quantity="popExc/209/HH_464198958/v" scale="1mV" color="#90bc0e" timeScale="1ms"/>
-            <Line id="popExc[210]: v" quantity="popExc/210/HH_464198958/v" scale="1mV" color="#0e851f" timeScale="1ms"/>
-            <Line id="popExc[211]: v" quantity="popExc/211/HH_464198958/v" scale="1mV" color="#1c1d86" timeScale="1ms"/>
-            <Line id="popExc[212]: v" quantity="popExc/212/HH_464198958/v" scale="1mV" color="#f3c10a" timeScale="1ms"/>
-            <Line id="popExc[213]: v" quantity="popExc/213/HH_464198958/v" scale="1mV" color="#18ae27" timeScale="1ms"/>
-            <Line id="popExc[214]: v" quantity="popExc/214/HH_464198958/v" scale="1mV" color="#2c92bd" timeScale="1ms"/>
-            <Line id="popExc[215]: v" quantity="popExc/215/HH_464198958/v" scale="1mV" color="#f0a8c3" timeScale="1ms"/>
-            <Line id="popExc[216]: v" quantity="popExc/216/HH_464198958/v" scale="1mV" color="#4f10da" timeScale="1ms"/>
-            <Line id="popExc[217]: v" quantity="popExc/217/HH_464198958/v" scale="1mV" color="#376bec" timeScale="1ms"/>
-            <Line id="popExc[218]: v" quantity="popExc/218/HH_464198958/v" scale="1mV" color="#18b151" timeScale="1ms"/>
-            <Line id="popExc[219]: v" quantity="popExc/219/HH_464198958/v" scale="1mV" color="#7fcf87" timeScale="1ms"/>
-            <Line id="popExc[220]: v" quantity="popExc/220/HH_464198958/v" scale="1mV" color="#0f137e" timeScale="1ms"/>
-            <Line id="popExc[221]: v" quantity="popExc/221/HH_464198958/v" scale="1mV" color="#38556b" timeScale="1ms"/>
-            <Line id="popExc[222]: v" quantity="popExc/222/HH_464198958/v" scale="1mV" color="#38dcc1" timeScale="1ms"/>
-            <Line id="popExc[223]: v" quantity="popExc/223/HH_464198958/v" scale="1mV" color="#bec1e4" timeScale="1ms"/>
-            <Line id="popExc[224]: v" quantity="popExc/224/HH_464198958/v" scale="1mV" color="#29815f" timeScale="1ms"/>
-            <Line id="popExc[225]: v" quantity="popExc/225/HH_464198958/v" scale="1mV" color="#969031" timeScale="1ms"/>
-            <Line id="popExc[226]: v" quantity="popExc/226/HH_464198958/v" scale="1mV" color="#3ddf7b" timeScale="1ms"/>
-            <Line id="popExc[227]: v" quantity="popExc/227/HH_464198958/v" scale="1mV" color="#fe6b0f" timeScale="1ms"/>
-            <Line id="popExc[228]: v" quantity="popExc/228/HH_464198958/v" scale="1mV" color="#fd9a77" timeScale="1ms"/>
-            <Line id="popExc[229]: v" quantity="popExc/229/HH_464198958/v" scale="1mV" color="#ec81ac" timeScale="1ms"/>
-            <Line id="popExc[230]: v" quantity="popExc/230/HH_464198958/v" scale="1mV" color="#e66be0" timeScale="1ms"/>
-            <Line id="popExc[231]: v" quantity="popExc/231/HH_464198958/v" scale="1mV" color="#8dbee3" timeScale="1ms"/>
-            <Line id="popExc[232]: v" quantity="popExc/232/HH_464198958/v" scale="1mV" color="#ee4c8d" timeScale="1ms"/>
-            <Line id="popExc[233]: v" quantity="popExc/233/HH_464198958/v" scale="1mV" color="#a3cddd" timeScale="1ms"/>
-            <Line id="popExc[234]: v" quantity="popExc/234/HH_464198958/v" scale="1mV" color="#28cdd5" timeScale="1ms"/>
-            <Line id="popExc[235]: v" quantity="popExc/235/HH_464198958/v" scale="1mV" color="#bb7b32" timeScale="1ms"/>
-            <Line id="popExc[236]: v" quantity="popExc/236/HH_464198958/v" scale="1mV" color="#d96ad6" timeScale="1ms"/>
-            <Line id="popExc[237]: v" quantity="popExc/237/HH_464198958/v" scale="1mV" color="#03b318" timeScale="1ms"/>
-            <Line id="popExc[238]: v" quantity="popExc/238/HH_464198958/v" scale="1mV" color="#31e638" timeScale="1ms"/>
-            <Line id="popExc[239]: v" quantity="popExc/239/HH_464198958/v" scale="1mV" color="#c8c7e5" timeScale="1ms"/>
-            <Line id="popExc[240]: v" quantity="popExc/240/HH_464198958/v" scale="1mV" color="#c49ee9" timeScale="1ms"/>
-            <Line id="popExc[241]: v" quantity="popExc/241/HH_464198958/v" scale="1mV" color="#8f8236" timeScale="1ms"/>
-            <Line id="popExc[242]: v" quantity="popExc/242/HH_464198958/v" scale="1mV" color="#1f4fb4" timeScale="1ms"/>
-            <Line id="popExc[243]: v" quantity="popExc/243/HH_464198958/v" scale="1mV" color="#43e7a2" timeScale="1ms"/>
-            <Line id="popExc[244]: v" quantity="popExc/244/HH_464198958/v" scale="1mV" color="#3c57d6" timeScale="1ms"/>
-            <Line id="popExc[245]: v" quantity="popExc/245/HH_464198958/v" scale="1mV" color="#fb078b" timeScale="1ms"/>
-            <Line id="popExc[246]: v" quantity="popExc/246/HH_464198958/v" scale="1mV" color="#39aee1" timeScale="1ms"/>
-            <Line id="popExc[247]: v" quantity="popExc/247/HH_464198958/v" scale="1mV" color="#5ec053" timeScale="1ms"/>
-            <Line id="popExc[248]: v" quantity="popExc/248/HH_464198958/v" scale="1mV" color="#b06475" timeScale="1ms"/>
-            <Line id="popExc[249]: v" quantity="popExc/249/HH_464198958/v" scale="1mV" color="#a9c544" timeScale="1ms"/>
-            <Line id="popExc[250]: v" quantity="popExc/250/HH_464198958/v" scale="1mV" color="#8febd8" timeScale="1ms"/>
-            <Line id="popExc[251]: v" quantity="popExc/251/HH_464198958/v" scale="1mV" color="#a692be" timeScale="1ms"/>
-            <Line id="popExc[252]: v" quantity="popExc/252/HH_464198958/v" scale="1mV" color="#dd710d" timeScale="1ms"/>
-            <Line id="popExc[253]: v" quantity="popExc/253/HH_464198958/v" scale="1mV" color="#e9f8fc" timeScale="1ms"/>
-            <Line id="popExc[254]: v" quantity="popExc/254/HH_464198958/v" scale="1mV" color="#1bc32d" timeScale="1ms"/>
-            <Line id="popExc[255]: v" quantity="popExc/255/HH_464198958/v" scale="1mV" color="#07b67c" timeScale="1ms"/>
-            <Line id="popExc[256]: v" quantity="popExc/256/HH_464198958/v" scale="1mV" color="#e9e110" timeScale="1ms"/>
-            <Line id="popExc[257]: v" quantity="popExc/257/HH_464198958/v" scale="1mV" color="#e90726" timeScale="1ms"/>
-            <Line id="popExc[258]: v" quantity="popExc/258/HH_464198958/v" scale="1mV" color="#5e33e8" timeScale="1ms"/>
-            <Line id="popExc[259]: v" quantity="popExc/259/HH_464198958/v" scale="1mV" color="#66528d" timeScale="1ms"/>
-            <Line id="popExc[260]: v" quantity="popExc/260/HH_464198958/v" scale="1mV" color="#af5641" timeScale="1ms"/>
-            <Line id="popExc[261]: v" quantity="popExc/261/HH_464198958/v" scale="1mV" color="#6be805" timeScale="1ms"/>
-            <Line id="popExc[262]: v" quantity="popExc/262/HH_464198958/v" scale="1mV" color="#1c6c52" timeScale="1ms"/>
-            <Line id="popExc[263]: v" quantity="popExc/263/HH_464198958/v" scale="1mV" color="#3fccf7" timeScale="1ms"/>
-            <Line id="popExc[264]: v" quantity="popExc/264/HH_464198958/v" scale="1mV" color="#4dc094" timeScale="1ms"/>
-            <Line id="popExc[265]: v" quantity="popExc/265/HH_464198958/v" scale="1mV" color="#90f23c" timeScale="1ms"/>
-            <Line id="popExc[266]: v" quantity="popExc/266/HH_464198958/v" scale="1mV" color="#2bd47c" timeScale="1ms"/>
-            <Line id="popExc[267]: v" quantity="popExc/267/HH_464198958/v" scale="1mV" color="#ba87b5" timeScale="1ms"/>
-            <Line id="popExc[268]: v" quantity="popExc/268/HH_464198958/v" scale="1mV" color="#f84417" timeScale="1ms"/>
-            <Line id="popExc[269]: v" quantity="popExc/269/HH_464198958/v" scale="1mV" color="#62852c" timeScale="1ms"/>
-            <Line id="popExc[270]: v" quantity="popExc/270/HH_464198958/v" scale="1mV" color="#920026" timeScale="1ms"/>
-            <Line id="popExc[271]: v" quantity="popExc/271/HH_464198958/v" scale="1mV" color="#a2e109" timeScale="1ms"/>
-            <Line id="popExc[272]: v" quantity="popExc/272/HH_464198958/v" scale="1mV" color="#cc4883" timeScale="1ms"/>
-            <Line id="popExc[273]: v" quantity="popExc/273/HH_464198958/v" scale="1mV" color="#a10d94" timeScale="1ms"/>
-            <Line id="popExc[274]: v" quantity="popExc/274/HH_464198958/v" scale="1mV" color="#843aac" timeScale="1ms"/>
-            <Line id="popExc[275]: v" quantity="popExc/275/HH_464198958/v" scale="1mV" color="#b872d8" timeScale="1ms"/>
-            <Line id="popExc[276]: v" quantity="popExc/276/HH_464198958/v" scale="1mV" color="#0614cf" timeScale="1ms"/>
-            <Line id="popExc[277]: v" quantity="popExc/277/HH_464198958/v" scale="1mV" color="#f09646" timeScale="1ms"/>
-            <Line id="popExc[278]: v" quantity="popExc/278/HH_464198958/v" scale="1mV" color="#e60cca" timeScale="1ms"/>
-            <Line id="popExc[279]: v" quantity="popExc/279/HH_464198958/v" scale="1mV" color="#b19e09" timeScale="1ms"/>
-            <Line id="popExc[280]: v" quantity="popExc/280/HH_464198958/v" scale="1mV" color="#339d4e" timeScale="1ms"/>
-            <Line id="popExc[281]: v" quantity="popExc/281/HH_464198958/v" scale="1mV" color="#a02798" timeScale="1ms"/>
-            <Line id="popExc[282]: v" quantity="popExc/282/HH_464198958/v" scale="1mV" color="#073321" timeScale="1ms"/>
-            <Line id="popExc[283]: v" quantity="popExc/283/HH_464198958/v" scale="1mV" color="#65cfa1" timeScale="1ms"/>
-            <Line id="popExc[284]: v" quantity="popExc/284/HH_464198958/v" scale="1mV" color="#372273" timeScale="1ms"/>
-            <Line id="popExc[285]: v" quantity="popExc/285/HH_464198958/v" scale="1mV" color="#8fad43" timeScale="1ms"/>
-            <Line id="popExc[286]: v" quantity="popExc/286/HH_464198958/v" scale="1mV" color="#401c00" timeScale="1ms"/>
-            <Line id="popExc[287]: v" quantity="popExc/287/HH_464198958/v" scale="1mV" color="#179fb7" timeScale="1ms"/>
-            <Line id="popExc[288]: v" quantity="popExc/288/HH_464198958/v" scale="1mV" color="#cb3aae" timeScale="1ms"/>
-            <Line id="popExc[289]: v" quantity="popExc/289/HH_464198958/v" scale="1mV" color="#405355" timeScale="1ms"/>
-            <Line id="popExc[290]: v" quantity="popExc/290/HH_464198958/v" scale="1mV" color="#8f492c" timeScale="1ms"/>
-            <Line id="popExc[291]: v" quantity="popExc/291/HH_464198958/v" scale="1mV" color="#043c86" timeScale="1ms"/>
-            <Line id="popExc[292]: v" quantity="popExc/292/HH_464198958/v" scale="1mV" color="#903f13" timeScale="1ms"/>
-            <Line id="popExc[293]: v" quantity="popExc/293/HH_464198958/v" scale="1mV" color="#ca0c42" timeScale="1ms"/>
-            <Line id="popExc[294]: v" quantity="popExc/294/HH_464198958/v" scale="1mV" color="#c8f548" timeScale="1ms"/>
-            <Line id="popExc[295]: v" quantity="popExc/295/HH_464198958/v" scale="1mV" color="#541152" timeScale="1ms"/>
-            <Line id="popExc[296]: v" quantity="popExc/296/HH_464198958/v" scale="1mV" color="#20df15" timeScale="1ms"/>
-            <Line id="popExc[297]: v" quantity="popExc/297/HH_464198958/v" scale="1mV" color="#9c06a6" timeScale="1ms"/>
-            <Line id="popExc[298]: v" quantity="popExc/298/HH_464198958/v" scale="1mV" color="#4e7746" timeScale="1ms"/>
-            <Line id="popExc[299]: v" quantity="popExc/299/HH_464198958/v" scale="1mV" color="#492b44" timeScale="1ms"/>
-            <Line id="popExc[300]: v" quantity="popExc/300/HH_464198958/v" scale="1mV" color="#35ca0e" timeScale="1ms"/>
-            <Line id="popExc[301]: v" quantity="popExc/301/HH_464198958/v" scale="1mV" color="#64b0bc" timeScale="1ms"/>
-            <Line id="popExc[302]: v" quantity="popExc/302/HH_464198958/v" scale="1mV" color="#aea505" timeScale="1ms"/>
-            <Line id="popExc[303]: v" quantity="popExc/303/HH_464198958/v" scale="1mV" color="#66cb8c" timeScale="1ms"/>
-            <Line id="popExc[304]: v" quantity="popExc/304/HH_464198958/v" scale="1mV" color="#a57d91" timeScale="1ms"/>
-            <Line id="popExc[305]: v" quantity="popExc/305/HH_464198958/v" scale="1mV" color="#ba52b1" timeScale="1ms"/>
-            <Line id="popExc[306]: v" quantity="popExc/306/HH_464198958/v" scale="1mV" color="#cf72b4" timeScale="1ms"/>
-            <Line id="popExc[307]: v" quantity="popExc/307/HH_464198958/v" scale="1mV" color="#921f5c" timeScale="1ms"/>
-            <Line id="popExc[308]: v" quantity="popExc/308/HH_464198958/v" scale="1mV" color="#fd8566" timeScale="1ms"/>
-            <Line id="popExc[309]: v" quantity="popExc/309/HH_464198958/v" scale="1mV" color="#8087e4" timeScale="1ms"/>
-            <Line id="popExc[310]: v" quantity="popExc/310/HH_464198958/v" scale="1mV" color="#8984dc" timeScale="1ms"/>
-            <Line id="popExc[311]: v" quantity="popExc/311/HH_464198958/v" scale="1mV" color="#a887f6" timeScale="1ms"/>
-            <Line id="popExc[312]: v" quantity="popExc/312/HH_464198958/v" scale="1mV" color="#f8a76f" timeScale="1ms"/>
-            <Line id="popExc[313]: v" quantity="popExc/313/HH_464198958/v" scale="1mV" color="#b3b2cb" timeScale="1ms"/>
-            <Line id="popExc[314]: v" quantity="popExc/314/HH_464198958/v" scale="1mV" color="#eab59d" timeScale="1ms"/>
-            <Line id="popExc[315]: v" quantity="popExc/315/HH_464198958/v" scale="1mV" color="#289e1e" timeScale="1ms"/>
-            <Line id="popExc[316]: v" quantity="popExc/316/HH_464198958/v" scale="1mV" color="#6c0811" timeScale="1ms"/>
-            <Line id="popExc[317]: v" quantity="popExc/317/HH_464198958/v" scale="1mV" color="#b4197a" timeScale="1ms"/>
-            <Line id="popExc[318]: v" quantity="popExc/318/HH_464198958/v" scale="1mV" color="#bb9342" timeScale="1ms"/>
-            <Line id="popExc[319]: v" quantity="popExc/319/HH_464198958/v" scale="1mV" color="#d47c1e" timeScale="1ms"/>
-            <Line id="popExc[320]: v" quantity="popExc/320/HH_464198958/v" scale="1mV" color="#443000" timeScale="1ms"/>
-            <Line id="popExc[321]: v" quantity="popExc/321/HH_464198958/v" scale="1mV" color="#509140" timeScale="1ms"/>
-            <Line id="popExc[322]: v" quantity="popExc/322/HH_464198958/v" scale="1mV" color="#69a837" timeScale="1ms"/>
-            <Line id="popExc[323]: v" quantity="popExc/323/HH_464198958/v" scale="1mV" color="#64722c" timeScale="1ms"/>
-            <Line id="popExc[324]: v" quantity="popExc/324/HH_464198958/v" scale="1mV" color="#17bb14" timeScale="1ms"/>
-            <Line id="popExc[325]: v" quantity="popExc/325/HH_464198958/v" scale="1mV" color="#63c759" timeScale="1ms"/>
-            <Line id="popExc[326]: v" quantity="popExc/326/HH_464198958/v" scale="1mV" color="#a47390" timeScale="1ms"/>
-            <Line id="popExc[327]: v" quantity="popExc/327/HH_464198958/v" scale="1mV" color="#bd4dec" timeScale="1ms"/>
-            <Line id="popExc[328]: v" quantity="popExc/328/HH_464198958/v" scale="1mV" color="#3ad921" timeScale="1ms"/>
-            <Line id="popExc[329]: v" quantity="popExc/329/HH_464198958/v" scale="1mV" color="#9ee4b9" timeScale="1ms"/>
-            <Line id="popExc[330]: v" quantity="popExc/330/HH_464198958/v" scale="1mV" color="#c0485e" timeScale="1ms"/>
-            <Line id="popExc[331]: v" quantity="popExc/331/HH_464198958/v" scale="1mV" color="#27d052" timeScale="1ms"/>
-            <Line id="popExc[332]: v" quantity="popExc/332/HH_464198958/v" scale="1mV" color="#03aaa7" timeScale="1ms"/>
-            <Line id="popExc[333]: v" quantity="popExc/333/HH_464198958/v" scale="1mV" color="#28fdf2" timeScale="1ms"/>
-            <Line id="popExc[334]: v" quantity="popExc/334/HH_464198958/v" scale="1mV" color="#adce60" timeScale="1ms"/>
-            <Line id="popExc[335]: v" quantity="popExc/335/HH_464198958/v" scale="1mV" color="#e9cf5a" timeScale="1ms"/>
-            <Line id="popExc[336]: v" quantity="popExc/336/HH_464198958/v" scale="1mV" color="#63239f" timeScale="1ms"/>
-            <Line id="popExc[337]: v" quantity="popExc/337/HH_464198958/v" scale="1mV" color="#4fdf18" timeScale="1ms"/>
-            <Line id="popExc[338]: v" quantity="popExc/338/HH_464198958/v" scale="1mV" color="#a09455" timeScale="1ms"/>
-            <Line id="popExc[339]: v" quantity="popExc/339/HH_464198958/v" scale="1mV" color="#50f1a7" timeScale="1ms"/>
-            <Line id="popExc[340]: v" quantity="popExc/340/HH_464198958/v" scale="1mV" color="#0a09b3" timeScale="1ms"/>
-            <Line id="popExc[341]: v" quantity="popExc/341/HH_464198958/v" scale="1mV" color="#3ecae8" timeScale="1ms"/>
-            <Line id="popExc[342]: v" quantity="popExc/342/HH_464198958/v" scale="1mV" color="#99bd1c" timeScale="1ms"/>
-            <Line id="popExc[343]: v" quantity="popExc/343/HH_464198958/v" scale="1mV" color="#75326a" timeScale="1ms"/>
-            <Line id="popExc[344]: v" quantity="popExc/344/HH_464198958/v" scale="1mV" color="#58ce5e" timeScale="1ms"/>
-            <Line id="popExc[345]: v" quantity="popExc/345/HH_464198958/v" scale="1mV" color="#6464d5" timeScale="1ms"/>
-            <Line id="popExc[346]: v" quantity="popExc/346/HH_464198958/v" scale="1mV" color="#231a38" timeScale="1ms"/>
-            <Line id="popExc[347]: v" quantity="popExc/347/HH_464198958/v" scale="1mV" color="#c47491" timeScale="1ms"/>
-            <Line id="popExc[348]: v" quantity="popExc/348/HH_464198958/v" scale="1mV" color="#5fc098" timeScale="1ms"/>
-            <Line id="popExc[349]: v" quantity="popExc/349/HH_464198958/v" scale="1mV" color="#b0a227" timeScale="1ms"/>
-            <Line id="popExc[350]: v" quantity="popExc/350/HH_464198958/v" scale="1mV" color="#915ad2" timeScale="1ms"/>
-            <Line id="popExc[351]: v" quantity="popExc/351/HH_464198958/v" scale="1mV" color="#e66db8" timeScale="1ms"/>
-            <Line id="popExc[352]: v" quantity="popExc/352/HH_464198958/v" scale="1mV" color="#cbe3db" timeScale="1ms"/>
-            <Line id="popExc[353]: v" quantity="popExc/353/HH_464198958/v" scale="1mV" color="#21ddae" timeScale="1ms"/>
-            <Line id="popExc[354]: v" quantity="popExc/354/HH_464198958/v" scale="1mV" color="#739084" timeScale="1ms"/>
-            <Line id="popExc[355]: v" quantity="popExc/355/HH_464198958/v" scale="1mV" color="#02da80" timeScale="1ms"/>
-            <Line id="popExc[356]: v" quantity="popExc/356/HH_464198958/v" scale="1mV" color="#c14d9e" timeScale="1ms"/>
-            <Line id="popExc[357]: v" quantity="popExc/357/HH_464198958/v" scale="1mV" color="#3b12f2" timeScale="1ms"/>
-            <Line id="popExc[358]: v" quantity="popExc/358/HH_464198958/v" scale="1mV" color="#fa01b3" timeScale="1ms"/>
-            <Line id="popExc[359]: v" quantity="popExc/359/HH_464198958/v" scale="1mV" color="#39b59f" timeScale="1ms"/>
-            <Line id="popExc[360]: v" quantity="popExc/360/HH_464198958/v" scale="1mV" color="#821a34" timeScale="1ms"/>
-            <Line id="popExc[361]: v" quantity="popExc/361/HH_464198958/v" scale="1mV" color="#7dd8b8" timeScale="1ms"/>
-            <Line id="popExc[362]: v" quantity="popExc/362/HH_464198958/v" scale="1mV" color="#d3cbf9" timeScale="1ms"/>
-            <Line id="popExc[363]: v" quantity="popExc/363/HH_464198958/v" scale="1mV" color="#985d2c" timeScale="1ms"/>
-            <Line id="popExc[364]: v" quantity="popExc/364/HH_464198958/v" scale="1mV" color="#e18fa8" timeScale="1ms"/>
-            <Line id="popExc[365]: v" quantity="popExc/365/HH_464198958/v" scale="1mV" color="#51d3ee" timeScale="1ms"/>
-            <Line id="popExc[366]: v" quantity="popExc/366/HH_464198958/v" scale="1mV" color="#18f4b9" timeScale="1ms"/>
-            <Line id="popExc[367]: v" quantity="popExc/367/HH_464198958/v" scale="1mV" color="#2f8aee" timeScale="1ms"/>
-            <Line id="popExc[368]: v" quantity="popExc/368/HH_464198958/v" scale="1mV" color="#0bd942" timeScale="1ms"/>
-            <Line id="popExc[369]: v" quantity="popExc/369/HH_464198958/v" scale="1mV" color="#b51615" timeScale="1ms"/>
-            <Line id="popExc[370]: v" quantity="popExc/370/HH_464198958/v" scale="1mV" color="#afa197" timeScale="1ms"/>
-            <Line id="popExc[371]: v" quantity="popExc/371/HH_464198958/v" scale="1mV" color="#c1317f" timeScale="1ms"/>
-            <Line id="popExc[372]: v" quantity="popExc/372/HH_464198958/v" scale="1mV" color="#c7e78f" timeScale="1ms"/>
-            <Line id="popExc[373]: v" quantity="popExc/373/HH_464198958/v" scale="1mV" color="#200a66" timeScale="1ms"/>
-            <Line id="popExc[374]: v" quantity="popExc/374/HH_464198958/v" scale="1mV" color="#106c43" timeScale="1ms"/>
-            <Line id="popExc[375]: v" quantity="popExc/375/HH_464198958/v" scale="1mV" color="#a8b96d" timeScale="1ms"/>
-            <Line id="popExc[376]: v" quantity="popExc/376/HH_464198958/v" scale="1mV" color="#004b23" timeScale="1ms"/>
-            <Line id="popExc[377]: v" quantity="popExc/377/HH_464198958/v" scale="1mV" color="#5649a5" timeScale="1ms"/>
-            <Line id="popExc[378]: v" quantity="popExc/378/HH_464198958/v" scale="1mV" color="#96710d" timeScale="1ms"/>
-            <Line id="popExc[379]: v" quantity="popExc/379/HH_464198958/v" scale="1mV" color="#a7059d" timeScale="1ms"/>
-            <Line id="popExc[380]: v" quantity="popExc/380/HH_464198958/v" scale="1mV" color="#9d97ca" timeScale="1ms"/>
-            <Line id="popExc[381]: v" quantity="popExc/381/HH_464198958/v" scale="1mV" color="#f30b5c" timeScale="1ms"/>
-            <Line id="popExc[382]: v" quantity="popExc/382/HH_464198958/v" scale="1mV" color="#f980d3" timeScale="1ms"/>
-            <Line id="popExc[383]: v" quantity="popExc/383/HH_464198958/v" scale="1mV" color="#4f7f62" timeScale="1ms"/>
-            <Line id="popExc[384]: v" quantity="popExc/384/HH_464198958/v" scale="1mV" color="#50a353" timeScale="1ms"/>
-            <Line id="popExc[385]: v" quantity="popExc/385/HH_464198958/v" scale="1mV" color="#057c0a" timeScale="1ms"/>
-            <Line id="popExc[386]: v" quantity="popExc/386/HH_464198958/v" scale="1mV" color="#1efddf" timeScale="1ms"/>
-            <Line id="popExc[387]: v" quantity="popExc/387/HH_464198958/v" scale="1mV" color="#702c31" timeScale="1ms"/>
-            <Line id="popExc[388]: v" quantity="popExc/388/HH_464198958/v" scale="1mV" color="#a44784" timeScale="1ms"/>
-            <Line id="popExc[389]: v" quantity="popExc/389/HH_464198958/v" scale="1mV" color="#3c558f" timeScale="1ms"/>
-            <Line id="popExc[390]: v" quantity="popExc/390/HH_464198958/v" scale="1mV" color="#19747c" timeScale="1ms"/>
-            <Line id="popExc[391]: v" quantity="popExc/391/HH_464198958/v" scale="1mV" color="#af5877" timeScale="1ms"/>
-            <Line id="popExc[392]: v" quantity="popExc/392/HH_464198958/v" scale="1mV" color="#ac168b" timeScale="1ms"/>
-            <Line id="popExc[393]: v" quantity="popExc/393/HH_464198958/v" scale="1mV" color="#801930" timeScale="1ms"/>
-            <Line id="popExc[394]: v" quantity="popExc/394/HH_464198958/v" scale="1mV" color="#241552" timeScale="1ms"/>
-            <Line id="popExc[395]: v" quantity="popExc/395/HH_464198958/v" scale="1mV" color="#3268c3" timeScale="1ms"/>
-            <Line id="popExc[396]: v" quantity="popExc/396/HH_464198958/v" scale="1mV" color="#44a235" timeScale="1ms"/>
-            <Line id="popExc[397]: v" quantity="popExc/397/HH_464198958/v" scale="1mV" color="#da50cc" timeScale="1ms"/>
-            <Line id="popExc[398]: v" quantity="popExc/398/HH_464198958/v" scale="1mV" color="#ed1832" timeScale="1ms"/>
-            <Line id="popExc[399]: v" quantity="popExc/399/HH_464198958/v" scale="1mV" color="#0c12d0" timeScale="1ms"/>
+        <Display id="popBBP" title="Plots of popBBP" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
+            <Line id="popBBP_0_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1" color="#6aa799" timeScale="1ms"/>
+            <Line id="popBBP_1_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/1/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1" color="#029a72" timeScale="1ms"/>
+            <Line id="popBBP_2_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/2/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1" color="#d340bb" timeScale="1ms"/>
+            <Line id="popBBP_3_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/3/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1" color="#4c73a9" timeScale="1ms"/>
+            <Line id="popBBP_4_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/4/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1" color="#5e503a" timeScale="1ms"/>
         </Display>
         
-        <Display id="DispPop__popInh" title="Membrane potentials of cells in popInh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popInh[0]: v" quantity="popInh/0/HH_471141261/v" scale="1mV" color="#efcf82" timeScale="1ms"/>
-            <Line id="popInh[1]: v" quantity="popInh/1/HH_471141261/v" scale="1mV" color="#e9a5d9" timeScale="1ms"/>
-            <Line id="popInh[2]: v" quantity="popInh/2/HH_471141261/v" scale="1mV" color="#caf93e" timeScale="1ms"/>
-            <Line id="popInh[3]: v" quantity="popInh/3/HH_471141261/v" scale="1mV" color="#3bb823" timeScale="1ms"/>
-            <Line id="popInh[4]: v" quantity="popInh/4/HH_471141261/v" scale="1mV" color="#f78cac" timeScale="1ms"/>
-            <Line id="popInh[5]: v" quantity="popInh/5/HH_471141261/v" scale="1mV" color="#cf0493" timeScale="1ms"/>
-            <Line id="popInh[6]: v" quantity="popInh/6/HH_471141261/v" scale="1mV" color="#23adc7" timeScale="1ms"/>
-            <Line id="popInh[7]: v" quantity="popInh/7/HH_471141261/v" scale="1mV" color="#092928" timeScale="1ms"/>
-            <Line id="popInh[8]: v" quantity="popInh/8/HH_471141261/v" scale="1mV" color="#60c466" timeScale="1ms"/>
-            <Line id="popInh[9]: v" quantity="popInh/9/HH_471141261/v" scale="1mV" color="#945dd4" timeScale="1ms"/>
-            <Line id="popInh[10]: v" quantity="popInh/10/HH_471141261/v" scale="1mV" color="#064f91" timeScale="1ms"/>
-            <Line id="popInh[11]: v" quantity="popInh/11/HH_471141261/v" scale="1mV" color="#f4620a" timeScale="1ms"/>
-            <Line id="popInh[12]: v" quantity="popInh/12/HH_471141261/v" scale="1mV" color="#ac3c9f" timeScale="1ms"/>
-            <Line id="popInh[13]: v" quantity="popInh/13/HH_471141261/v" scale="1mV" color="#84453c" timeScale="1ms"/>
-            <Line id="popInh[14]: v" quantity="popInh/14/HH_471141261/v" scale="1mV" color="#7def67" timeScale="1ms"/>
-            <Line id="popInh[15]: v" quantity="popInh/15/HH_471141261/v" scale="1mV" color="#1ad0d2" timeScale="1ms"/>
-            <Line id="popInh[16]: v" quantity="popInh/16/HH_471141261/v" scale="1mV" color="#bf6e71" timeScale="1ms"/>
-            <Line id="popInh[17]: v" quantity="popInh/17/HH_471141261/v" scale="1mV" color="#bdd516" timeScale="1ms"/>
-            <Line id="popInh[18]: v" quantity="popInh/18/HH_471141261/v" scale="1mV" color="#05bdd5" timeScale="1ms"/>
-            <Line id="popInh[19]: v" quantity="popInh/19/HH_471141261/v" scale="1mV" color="#ce962b" timeScale="1ms"/>
-            <Line id="popInh[20]: v" quantity="popInh/20/HH_471141261/v" scale="1mV" color="#5ab53e" timeScale="1ms"/>
-            <Line id="popInh[21]: v" quantity="popInh/21/HH_471141261/v" scale="1mV" color="#eee19f" timeScale="1ms"/>
-            <Line id="popInh[22]: v" quantity="popInh/22/HH_471141261/v" scale="1mV" color="#5791bb" timeScale="1ms"/>
-            <Line id="popInh[23]: v" quantity="popInh/23/HH_471141261/v" scale="1mV" color="#363c89" timeScale="1ms"/>
-            <Line id="popInh[24]: v" quantity="popInh/24/HH_471141261/v" scale="1mV" color="#322172" timeScale="1ms"/>
-            <Line id="popInh[25]: v" quantity="popInh/25/HH_471141261/v" scale="1mV" color="#54dff4" timeScale="1ms"/>
-            <Line id="popInh[26]: v" quantity="popInh/26/HH_471141261/v" scale="1mV" color="#121ba8" timeScale="1ms"/>
-            <Line id="popInh[27]: v" quantity="popInh/27/HH_471141261/v" scale="1mV" color="#2999b2" timeScale="1ms"/>
-            <Line id="popInh[28]: v" quantity="popInh/28/HH_471141261/v" scale="1mV" color="#78f719" timeScale="1ms"/>
-            <Line id="popInh[29]: v" quantity="popInh/29/HH_471141261/v" scale="1mV" color="#8d5cae" timeScale="1ms"/>
-            <Line id="popInh[30]: v" quantity="popInh/30/HH_471141261/v" scale="1mV" color="#8eba5d" timeScale="1ms"/>
-            <Line id="popInh[31]: v" quantity="popInh/31/HH_471141261/v" scale="1mV" color="#21cafa" timeScale="1ms"/>
-            <Line id="popInh[32]: v" quantity="popInh/32/HH_471141261/v" scale="1mV" color="#064ccb" timeScale="1ms"/>
-            <Line id="popInh[33]: v" quantity="popInh/33/HH_471141261/v" scale="1mV" color="#258fa0" timeScale="1ms"/>
-            <Line id="popInh[34]: v" quantity="popInh/34/HH_471141261/v" scale="1mV" color="#e64413" timeScale="1ms"/>
-            <Line id="popInh[35]: v" quantity="popInh/35/HH_471141261/v" scale="1mV" color="#22e74a" timeScale="1ms"/>
-            <Line id="popInh[36]: v" quantity="popInh/36/HH_471141261/v" scale="1mV" color="#af047c" timeScale="1ms"/>
-            <Line id="popInh[37]: v" quantity="popInh/37/HH_471141261/v" scale="1mV" color="#8e351c" timeScale="1ms"/>
-            <Line id="popInh[38]: v" quantity="popInh/38/HH_471141261/v" scale="1mV" color="#999e5a" timeScale="1ms"/>
-            <Line id="popInh[39]: v" quantity="popInh/39/HH_471141261/v" scale="1mV" color="#efd8ec" timeScale="1ms"/>
-            <Line id="popInh[40]: v" quantity="popInh/40/HH_471141261/v" scale="1mV" color="#417337" timeScale="1ms"/>
-            <Line id="popInh[41]: v" quantity="popInh/41/HH_471141261/v" scale="1mV" color="#b3da3e" timeScale="1ms"/>
-            <Line id="popInh[42]: v" quantity="popInh/42/HH_471141261/v" scale="1mV" color="#847d75" timeScale="1ms"/>
-            <Line id="popInh[43]: v" quantity="popInh/43/HH_471141261/v" scale="1mV" color="#5e5889" timeScale="1ms"/>
-            <Line id="popInh[44]: v" quantity="popInh/44/HH_471141261/v" scale="1mV" color="#66ae38" timeScale="1ms"/>
-            <Line id="popInh[45]: v" quantity="popInh/45/HH_471141261/v" scale="1mV" color="#33cdf4" timeScale="1ms"/>
-            <Line id="popInh[46]: v" quantity="popInh/46/HH_471141261/v" scale="1mV" color="#19d04c" timeScale="1ms"/>
-            <Line id="popInh[47]: v" quantity="popInh/47/HH_471141261/v" scale="1mV" color="#ebddd1" timeScale="1ms"/>
-            <Line id="popInh[48]: v" quantity="popInh/48/HH_471141261/v" scale="1mV" color="#a3ebff" timeScale="1ms"/>
-            <Line id="popInh[49]: v" quantity="popInh/49/HH_471141261/v" scale="1mV" color="#2b7b49" timeScale="1ms"/>
-            <Line id="popInh[50]: v" quantity="popInh/50/HH_471141261/v" scale="1mV" color="#cd98d2" timeScale="1ms"/>
-            <Line id="popInh[51]: v" quantity="popInh/51/HH_471141261/v" scale="1mV" color="#2f4a2c" timeScale="1ms"/>
-            <Line id="popInh[52]: v" quantity="popInh/52/HH_471141261/v" scale="1mV" color="#a98a05" timeScale="1ms"/>
-            <Line id="popInh[53]: v" quantity="popInh/53/HH_471141261/v" scale="1mV" color="#962e63" timeScale="1ms"/>
-            <Line id="popInh[54]: v" quantity="popInh/54/HH_471141261/v" scale="1mV" color="#cbf989" timeScale="1ms"/>
-            <Line id="popInh[55]: v" quantity="popInh/55/HH_471141261/v" scale="1mV" color="#698980" timeScale="1ms"/>
-            <Line id="popInh[56]: v" quantity="popInh/56/HH_471141261/v" scale="1mV" color="#f48883" timeScale="1ms"/>
-            <Line id="popInh[57]: v" quantity="popInh/57/HH_471141261/v" scale="1mV" color="#b8161c" timeScale="1ms"/>
-            <Line id="popInh[58]: v" quantity="popInh/58/HH_471141261/v" scale="1mV" color="#72fdd7" timeScale="1ms"/>
-            <Line id="popInh[59]: v" quantity="popInh/59/HH_471141261/v" scale="1mV" color="#1efe50" timeScale="1ms"/>
-            <Line id="popInh[60]: v" quantity="popInh/60/HH_471141261/v" scale="1mV" color="#4212fe" timeScale="1ms"/>
-            <Line id="popInh[61]: v" quantity="popInh/61/HH_471141261/v" scale="1mV" color="#21e195" timeScale="1ms"/>
-            <Line id="popInh[62]: v" quantity="popInh/62/HH_471141261/v" scale="1mV" color="#856ae7" timeScale="1ms"/>
-            <Line id="popInh[63]: v" quantity="popInh/63/HH_471141261/v" scale="1mV" color="#ce4c78" timeScale="1ms"/>
-            <Line id="popInh[64]: v" quantity="popInh/64/HH_471141261/v" scale="1mV" color="#bdff71" timeScale="1ms"/>
-            <Line id="popInh[65]: v" quantity="popInh/65/HH_471141261/v" scale="1mV" color="#a31755" timeScale="1ms"/>
-            <Line id="popInh[66]: v" quantity="popInh/66/HH_471141261/v" scale="1mV" color="#6d4623" timeScale="1ms"/>
-            <Line id="popInh[67]: v" quantity="popInh/67/HH_471141261/v" scale="1mV" color="#47496f" timeScale="1ms"/>
-            <Line id="popInh[68]: v" quantity="popInh/68/HH_471141261/v" scale="1mV" color="#cdcb06" timeScale="1ms"/>
-            <Line id="popInh[69]: v" quantity="popInh/69/HH_471141261/v" scale="1mV" color="#abd48a" timeScale="1ms"/>
-            <Line id="popInh[70]: v" quantity="popInh/70/HH_471141261/v" scale="1mV" color="#a9e207" timeScale="1ms"/>
-            <Line id="popInh[71]: v" quantity="popInh/71/HH_471141261/v" scale="1mV" color="#8ee73a" timeScale="1ms"/>
-            <Line id="popInh[72]: v" quantity="popInh/72/HH_471141261/v" scale="1mV" color="#ca683e" timeScale="1ms"/>
-            <Line id="popInh[73]: v" quantity="popInh/73/HH_471141261/v" scale="1mV" color="#96c0ac" timeScale="1ms"/>
-            <Line id="popInh[74]: v" quantity="popInh/74/HH_471141261/v" scale="1mV" color="#436a03" timeScale="1ms"/>
-            <Line id="popInh[75]: v" quantity="popInh/75/HH_471141261/v" scale="1mV" color="#5fa057" timeScale="1ms"/>
-            <Line id="popInh[76]: v" quantity="popInh/76/HH_471141261/v" scale="1mV" color="#4f4b07" timeScale="1ms"/>
-            <Line id="popInh[77]: v" quantity="popInh/77/HH_471141261/v" scale="1mV" color="#4aaae7" timeScale="1ms"/>
-            <Line id="popInh[78]: v" quantity="popInh/78/HH_471141261/v" scale="1mV" color="#e5fee7" timeScale="1ms"/>
-            <Line id="popInh[79]: v" quantity="popInh/79/HH_471141261/v" scale="1mV" color="#b628a7" timeScale="1ms"/>
-            <Line id="popInh[80]: v" quantity="popInh/80/HH_471141261/v" scale="1mV" color="#9d16a2" timeScale="1ms"/>
-            <Line id="popInh[81]: v" quantity="popInh/81/HH_471141261/v" scale="1mV" color="#736e8d" timeScale="1ms"/>
-            <Line id="popInh[82]: v" quantity="popInh/82/HH_471141261/v" scale="1mV" color="#7c4253" timeScale="1ms"/>
-            <Line id="popInh[83]: v" quantity="popInh/83/HH_471141261/v" scale="1mV" color="#1aea83" timeScale="1ms"/>
-            <Line id="popInh[84]: v" quantity="popInh/84/HH_471141261/v" scale="1mV" color="#797c58" timeScale="1ms"/>
-            <Line id="popInh[85]: v" quantity="popInh/85/HH_471141261/v" scale="1mV" color="#967b36" timeScale="1ms"/>
-            <Line id="popInh[86]: v" quantity="popInh/86/HH_471141261/v" scale="1mV" color="#59ab48" timeScale="1ms"/>
-            <Line id="popInh[87]: v" quantity="popInh/87/HH_471141261/v" scale="1mV" color="#81d9ff" timeScale="1ms"/>
-            <Line id="popInh[88]: v" quantity="popInh/88/HH_471141261/v" scale="1mV" color="#ffd181" timeScale="1ms"/>
-            <Line id="popInh[89]: v" quantity="popInh/89/HH_471141261/v" scale="1mV" color="#e9b9c1" timeScale="1ms"/>
-            <Line id="popInh[90]: v" quantity="popInh/90/HH_471141261/v" scale="1mV" color="#13b7cf" timeScale="1ms"/>
-            <Line id="popInh[91]: v" quantity="popInh/91/HH_471141261/v" scale="1mV" color="#f22e8d" timeScale="1ms"/>
-            <Line id="popInh[92]: v" quantity="popInh/92/HH_471141261/v" scale="1mV" color="#cb6318" timeScale="1ms"/>
-            <Line id="popInh[93]: v" quantity="popInh/93/HH_471141261/v" scale="1mV" color="#cff2e8" timeScale="1ms"/>
-            <Line id="popInh[94]: v" quantity="popInh/94/HH_471141261/v" scale="1mV" color="#cdfa82" timeScale="1ms"/>
-            <Line id="popInh[95]: v" quantity="popInh/95/HH_471141261/v" scale="1mV" color="#356a42" timeScale="1ms"/>
-            <Line id="popInh[96]: v" quantity="popInh/96/HH_471141261/v" scale="1mV" color="#21cbfb" timeScale="1ms"/>
-            <Line id="popInh[97]: v" quantity="popInh/97/HH_471141261/v" scale="1mV" color="#a4557a" timeScale="1ms"/>
-            <Line id="popInh[98]: v" quantity="popInh/98/HH_471141261/v" scale="1mV" color="#d3efd8" timeScale="1ms"/>
-            <Line id="popInh[99]: v" quantity="popInh/99/HH_471141261/v" scale="1mV" color="#1a1b57" timeScale="1ms"/>
-            <Line id="popInh[100]: v" quantity="popInh/100/HH_471141261/v" scale="1mV" color="#03ae7f" timeScale="1ms"/>
-            <Line id="popInh[101]: v" quantity="popInh/101/HH_471141261/v" scale="1mV" color="#f26d37" timeScale="1ms"/>
-            <Line id="popInh[102]: v" quantity="popInh/102/HH_471141261/v" scale="1mV" color="#e8f71c" timeScale="1ms"/>
-            <Line id="popInh[103]: v" quantity="popInh/103/HH_471141261/v" scale="1mV" color="#42edb0" timeScale="1ms"/>
-            <Line id="popInh[104]: v" quantity="popInh/104/HH_471141261/v" scale="1mV" color="#d43c95" timeScale="1ms"/>
-            <Line id="popInh[105]: v" quantity="popInh/105/HH_471141261/v" scale="1mV" color="#4c7002" timeScale="1ms"/>
-            <Line id="popInh[106]: v" quantity="popInh/106/HH_471141261/v" scale="1mV" color="#d76ddb" timeScale="1ms"/>
-            <Line id="popInh[107]: v" quantity="popInh/107/HH_471141261/v" scale="1mV" color="#035229" timeScale="1ms"/>
-            <Line id="popInh[108]: v" quantity="popInh/108/HH_471141261/v" scale="1mV" color="#9bbf78" timeScale="1ms"/>
-            <Line id="popInh[109]: v" quantity="popInh/109/HH_471141261/v" scale="1mV" color="#398992" timeScale="1ms"/>
-            <Line id="popInh[110]: v" quantity="popInh/110/HH_471141261/v" scale="1mV" color="#a2c7e2" timeScale="1ms"/>
-            <Line id="popInh[111]: v" quantity="popInh/111/HH_471141261/v" scale="1mV" color="#066a9c" timeScale="1ms"/>
-            <Line id="popInh[112]: v" quantity="popInh/112/HH_471141261/v" scale="1mV" color="#a5b097" timeScale="1ms"/>
-            <Line id="popInh[113]: v" quantity="popInh/113/HH_471141261/v" scale="1mV" color="#198bca" timeScale="1ms"/>
-            <Line id="popInh[114]: v" quantity="popInh/114/HH_471141261/v" scale="1mV" color="#719112" timeScale="1ms"/>
-            <Line id="popInh[115]: v" quantity="popInh/115/HH_471141261/v" scale="1mV" color="#11e9b1" timeScale="1ms"/>
-            <Line id="popInh[116]: v" quantity="popInh/116/HH_471141261/v" scale="1mV" color="#623380" timeScale="1ms"/>
-            <Line id="popInh[117]: v" quantity="popInh/117/HH_471141261/v" scale="1mV" color="#27ef13" timeScale="1ms"/>
-            <Line id="popInh[118]: v" quantity="popInh/118/HH_471141261/v" scale="1mV" color="#53f5f4" timeScale="1ms"/>
-            <Line id="popInh[119]: v" quantity="popInh/119/HH_471141261/v" scale="1mV" color="#783520" timeScale="1ms"/>
-            <Line id="popInh[120]: v" quantity="popInh/120/HH_471141261/v" scale="1mV" color="#a8bbb0" timeScale="1ms"/>
-            <Line id="popInh[121]: v" quantity="popInh/121/HH_471141261/v" scale="1mV" color="#a23486" timeScale="1ms"/>
-            <Line id="popInh[122]: v" quantity="popInh/122/HH_471141261/v" scale="1mV" color="#860692" timeScale="1ms"/>
-            <Line id="popInh[123]: v" quantity="popInh/123/HH_471141261/v" scale="1mV" color="#da4dc6" timeScale="1ms"/>
-            <Line id="popInh[124]: v" quantity="popInh/124/HH_471141261/v" scale="1mV" color="#692b6a" timeScale="1ms"/>
-            <Line id="popInh[125]: v" quantity="popInh/125/HH_471141261/v" scale="1mV" color="#24e701" timeScale="1ms"/>
-            <Line id="popInh[126]: v" quantity="popInh/126/HH_471141261/v" scale="1mV" color="#af6e9b" timeScale="1ms"/>
-            <Line id="popInh[127]: v" quantity="popInh/127/HH_471141261/v" scale="1mV" color="#5b6fb0" timeScale="1ms"/>
-            <Line id="popInh[128]: v" quantity="popInh/128/HH_471141261/v" scale="1mV" color="#ef4d13" timeScale="1ms"/>
-            <Line id="popInh[129]: v" quantity="popInh/129/HH_471141261/v" scale="1mV" color="#63e36c" timeScale="1ms"/>
-            <Line id="popInh[130]: v" quantity="popInh/130/HH_471141261/v" scale="1mV" color="#038b91" timeScale="1ms"/>
-            <Line id="popInh[131]: v" quantity="popInh/131/HH_471141261/v" scale="1mV" color="#5806e2" timeScale="1ms"/>
-            <Line id="popInh[132]: v" quantity="popInh/132/HH_471141261/v" scale="1mV" color="#f5ab78" timeScale="1ms"/>
-            <Line id="popInh[133]: v" quantity="popInh/133/HH_471141261/v" scale="1mV" color="#7a5d55" timeScale="1ms"/>
-            <Line id="popInh[134]: v" quantity="popInh/134/HH_471141261/v" scale="1mV" color="#d2a65a" timeScale="1ms"/>
-            <Line id="popInh[135]: v" quantity="popInh/135/HH_471141261/v" scale="1mV" color="#5e3270" timeScale="1ms"/>
-            <Line id="popInh[136]: v" quantity="popInh/136/HH_471141261/v" scale="1mV" color="#9bc130" timeScale="1ms"/>
-            <Line id="popInh[137]: v" quantity="popInh/137/HH_471141261/v" scale="1mV" color="#136f71" timeScale="1ms"/>
-            <Line id="popInh[138]: v" quantity="popInh/138/HH_471141261/v" scale="1mV" color="#33d5a3" timeScale="1ms"/>
-            <Line id="popInh[139]: v" quantity="popInh/139/HH_471141261/v" scale="1mV" color="#1aa1ef" timeScale="1ms"/>
-            <Line id="popInh[140]: v" quantity="popInh/140/HH_471141261/v" scale="1mV" color="#670af5" timeScale="1ms"/>
-            <Line id="popInh[141]: v" quantity="popInh/141/HH_471141261/v" scale="1mV" color="#52cc7d" timeScale="1ms"/>
-            <Line id="popInh[142]: v" quantity="popInh/142/HH_471141261/v" scale="1mV" color="#8ecc5b" timeScale="1ms"/>
-            <Line id="popInh[143]: v" quantity="popInh/143/HH_471141261/v" scale="1mV" color="#a615b3" timeScale="1ms"/>
-            <Line id="popInh[144]: v" quantity="popInh/144/HH_471141261/v" scale="1mV" color="#3d6c0f" timeScale="1ms"/>
-            <Line id="popInh[145]: v" quantity="popInh/145/HH_471141261/v" scale="1mV" color="#44a5fd" timeScale="1ms"/>
-            <Line id="popInh[146]: v" quantity="popInh/146/HH_471141261/v" scale="1mV" color="#064b1a" timeScale="1ms"/>
-            <Line id="popInh[147]: v" quantity="popInh/147/HH_471141261/v" scale="1mV" color="#1f257a" timeScale="1ms"/>
-            <Line id="popInh[148]: v" quantity="popInh/148/HH_471141261/v" scale="1mV" color="#61a685" timeScale="1ms"/>
-            <Line id="popInh[149]: v" quantity="popInh/149/HH_471141261/v" scale="1mV" color="#e6341d" timeScale="1ms"/>
-            <Line id="popInh[150]: v" quantity="popInh/150/HH_471141261/v" scale="1mV" color="#3032a9" timeScale="1ms"/>
-            <Line id="popInh[151]: v" quantity="popInh/151/HH_471141261/v" scale="1mV" color="#6865bd" timeScale="1ms"/>
-            <Line id="popInh[152]: v" quantity="popInh/152/HH_471141261/v" scale="1mV" color="#034858" timeScale="1ms"/>
-            <Line id="popInh[153]: v" quantity="popInh/153/HH_471141261/v" scale="1mV" color="#96ba51" timeScale="1ms"/>
-            <Line id="popInh[154]: v" quantity="popInh/154/HH_471141261/v" scale="1mV" color="#6bba14" timeScale="1ms"/>
-            <Line id="popInh[155]: v" quantity="popInh/155/HH_471141261/v" scale="1mV" color="#54c97a" timeScale="1ms"/>
-            <Line id="popInh[156]: v" quantity="popInh/156/HH_471141261/v" scale="1mV" color="#63cc58" timeScale="1ms"/>
-            <Line id="popInh[157]: v" quantity="popInh/157/HH_471141261/v" scale="1mV" color="#45d191" timeScale="1ms"/>
-            <Line id="popInh[158]: v" quantity="popInh/158/HH_471141261/v" scale="1mV" color="#687813" timeScale="1ms"/>
-            <Line id="popInh[159]: v" quantity="popInh/159/HH_471141261/v" scale="1mV" color="#2f4d5b" timeScale="1ms"/>
-            <Line id="popInh[160]: v" quantity="popInh/160/HH_471141261/v" scale="1mV" color="#b66a0a" timeScale="1ms"/>
-            <Line id="popInh[161]: v" quantity="popInh/161/HH_471141261/v" scale="1mV" color="#eee1fd" timeScale="1ms"/>
-            <Line id="popInh[162]: v" quantity="popInh/162/HH_471141261/v" scale="1mV" color="#e8245c" timeScale="1ms"/>
-            <Line id="popInh[163]: v" quantity="popInh/163/HH_471141261/v" scale="1mV" color="#5dcdfd" timeScale="1ms"/>
-            <Line id="popInh[164]: v" quantity="popInh/164/HH_471141261/v" scale="1mV" color="#02fa05" timeScale="1ms"/>
-            <Line id="popInh[165]: v" quantity="popInh/165/HH_471141261/v" scale="1mV" color="#c4d759" timeScale="1ms"/>
-            <Line id="popInh[166]: v" quantity="popInh/166/HH_471141261/v" scale="1mV" color="#7627e0" timeScale="1ms"/>
-            <Line id="popInh[167]: v" quantity="popInh/167/HH_471141261/v" scale="1mV" color="#8b9507" timeScale="1ms"/>
-            <Line id="popInh[168]: v" quantity="popInh/168/HH_471141261/v" scale="1mV" color="#a7e22d" timeScale="1ms"/>
-            <Line id="popInh[169]: v" quantity="popInh/169/HH_471141261/v" scale="1mV" color="#cfc54d" timeScale="1ms"/>
-            <Line id="popInh[170]: v" quantity="popInh/170/HH_471141261/v" scale="1mV" color="#8497ec" timeScale="1ms"/>
-            <Line id="popInh[171]: v" quantity="popInh/171/HH_471141261/v" scale="1mV" color="#6f3650" timeScale="1ms"/>
-            <Line id="popInh[172]: v" quantity="popInh/172/HH_471141261/v" scale="1mV" color="#21a718" timeScale="1ms"/>
-            <Line id="popInh[173]: v" quantity="popInh/173/HH_471141261/v" scale="1mV" color="#0ab73e" timeScale="1ms"/>
-            <Line id="popInh[174]: v" quantity="popInh/174/HH_471141261/v" scale="1mV" color="#2a584a" timeScale="1ms"/>
-            <Line id="popInh[175]: v" quantity="popInh/175/HH_471141261/v" scale="1mV" color="#27982d" timeScale="1ms"/>
-            <Line id="popInh[176]: v" quantity="popInh/176/HH_471141261/v" scale="1mV" color="#f0d855" timeScale="1ms"/>
-            <Line id="popInh[177]: v" quantity="popInh/177/HH_471141261/v" scale="1mV" color="#911d35" timeScale="1ms"/>
-            <Line id="popInh[178]: v" quantity="popInh/178/HH_471141261/v" scale="1mV" color="#0705ec" timeScale="1ms"/>
-            <Line id="popInh[179]: v" quantity="popInh/179/HH_471141261/v" scale="1mV" color="#51771a" timeScale="1ms"/>
-            <Line id="popInh[180]: v" quantity="popInh/180/HH_471141261/v" scale="1mV" color="#6977c1" timeScale="1ms"/>
-            <Line id="popInh[181]: v" quantity="popInh/181/HH_471141261/v" scale="1mV" color="#d5a015" timeScale="1ms"/>
-            <Line id="popInh[182]: v" quantity="popInh/182/HH_471141261/v" scale="1mV" color="#69cc64" timeScale="1ms"/>
-            <Line id="popInh[183]: v" quantity="popInh/183/HH_471141261/v" scale="1mV" color="#8bfc4c" timeScale="1ms"/>
-            <Line id="popInh[184]: v" quantity="popInh/184/HH_471141261/v" scale="1mV" color="#4398c5" timeScale="1ms"/>
-            <Line id="popInh[185]: v" quantity="popInh/185/HH_471141261/v" scale="1mV" color="#52b97d" timeScale="1ms"/>
-            <Line id="popInh[186]: v" quantity="popInh/186/HH_471141261/v" scale="1mV" color="#146a50" timeScale="1ms"/>
-            <Line id="popInh[187]: v" quantity="popInh/187/HH_471141261/v" scale="1mV" color="#c86e5c" timeScale="1ms"/>
-            <Line id="popInh[188]: v" quantity="popInh/188/HH_471141261/v" scale="1mV" color="#7d2d7a" timeScale="1ms"/>
-            <Line id="popInh[189]: v" quantity="popInh/189/HH_471141261/v" scale="1mV" color="#bb3c9a" timeScale="1ms"/>
-            <Line id="popInh[190]: v" quantity="popInh/190/HH_471141261/v" scale="1mV" color="#92797b" timeScale="1ms"/>
-            <Line id="popInh[191]: v" quantity="popInh/191/HH_471141261/v" scale="1mV" color="#16c860" timeScale="1ms"/>
-            <Line id="popInh[192]: v" quantity="popInh/192/HH_471141261/v" scale="1mV" color="#44d2fd" timeScale="1ms"/>
-            <Line id="popInh[193]: v" quantity="popInh/193/HH_471141261/v" scale="1mV" color="#51f67e" timeScale="1ms"/>
-            <Line id="popInh[194]: v" quantity="popInh/194/HH_471141261/v" scale="1mV" color="#c87cc1" timeScale="1ms"/>
-            <Line id="popInh[195]: v" quantity="popInh/195/HH_471141261/v" scale="1mV" color="#58b33a" timeScale="1ms"/>
-            <Line id="popInh[196]: v" quantity="popInh/196/HH_471141261/v" scale="1mV" color="#f73421" timeScale="1ms"/>
-            <Line id="popInh[197]: v" quantity="popInh/197/HH_471141261/v" scale="1mV" color="#cbf394" timeScale="1ms"/>
-            <Line id="popInh[198]: v" quantity="popInh/198/HH_471141261/v" scale="1mV" color="#b0d563" timeScale="1ms"/>
-            <Line id="popInh[199]: v" quantity="popInh/199/HH_471141261/v" scale="1mV" color="#881671" timeScale="1ms"/>
+        <Display id="popInh" title="Plots of popInh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
+            <Line id="popInh_0_HH_471141261_v" quantity="popInh/0/HH_471141261/v" scale="1" color="#3193ca" timeScale="1ms"/>
+            <Line id="popInh_1_HH_471141261_v" quantity="popInh/1/HH_471141261/v" scale="1" color="#90e5e9" timeScale="1ms"/>
+            <Line id="popInh_2_HH_471141261_v" quantity="popInh/2/HH_471141261/v" scale="1" color="#29645f" timeScale="1ms"/>
+            <Line id="popInh_3_HH_471141261_v" quantity="popInh/3/HH_471141261/v" scale="1" color="#1fcff4" timeScale="1ms"/>
+            <Line id="popInh_4_HH_471141261_v" quantity="popInh/4/HH_471141261/v" scale="1" color="#6ed4e9" timeScale="1ms"/>
         </Display>
         
-        <Display id="DispPop__popBBP" title="Membrane potentials of cells in popBBP" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popBBP[0]: v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#b13fb0" timeScale="1ms"/>
-            <Line id="popBBP[1]: v" quantity="popBBP/1/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#56b68d" timeScale="1ms"/>
-            <Line id="popBBP[2]: v" quantity="popBBP/2/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#1a2ba4" timeScale="1ms"/>
-            <Line id="popBBP[3]: v" quantity="popBBP/3/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#dbb6f7" timeScale="1ms"/>
-            <Line id="popBBP[4]: v" quantity="popBBP/4/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#75a4a6" timeScale="1ms"/>
-            <Line id="popBBP[5]: v" quantity="popBBP/5/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#f55000" timeScale="1ms"/>
-            <Line id="popBBP[6]: v" quantity="popBBP/6/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#bb62f1" timeScale="1ms"/>
-            <Line id="popBBP[7]: v" quantity="popBBP/7/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#930a65" timeScale="1ms"/>
-            <Line id="popBBP[8]: v" quantity="popBBP/8/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#6d54e3" timeScale="1ms"/>
-            <Line id="popBBP[9]: v" quantity="popBBP/9/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#afa622" timeScale="1ms"/>
+        <Display id="popExc" title="Plots of popExc" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
+            <Line id="popExc_0_HH_464198958_v" quantity="popExc/0/HH_464198958/v" scale="1" color="#8fe460" timeScale="1ms"/>
+            <Line id="popExc_1_HH_464198958_v" quantity="popExc/1/HH_464198958/v" scale="1" color="#2ca1c7" timeScale="1ms"/>
+            <Line id="popExc_2_HH_464198958_v" quantity="popExc/2/HH_464198958/v" scale="1" color="#8d9fe5" timeScale="1ms"/>
+            <Line id="popExc_3_HH_464198958_v" quantity="popExc/3/HH_464198958/v" scale="1" color="#5adad1" timeScale="1ms"/>
+            <Line id="popExc_4_HH_464198958_v" quantity="popExc/4/HH_464198958/v" scale="1" color="#f543bb" timeScale="1ms"/>
         </Display>
         
-        <OutputFile id="Volts_file__popExc" fileName="Sim_Balanced_610cells_0conns.popExc.v.dat">
-            <OutputColumn id="v_popExc_0_HH_464198958_v" quantity="popExc/0/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_1_HH_464198958_v" quantity="popExc/1/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_2_HH_464198958_v" quantity="popExc/2/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_3_HH_464198958_v" quantity="popExc/3/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_4_HH_464198958_v" quantity="popExc/4/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_5_HH_464198958_v" quantity="popExc/5/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_6_HH_464198958_v" quantity="popExc/6/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_7_HH_464198958_v" quantity="popExc/7/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_8_HH_464198958_v" quantity="popExc/8/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_9_HH_464198958_v" quantity="popExc/9/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_10_HH_464198958_v" quantity="popExc/10/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_11_HH_464198958_v" quantity="popExc/11/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_12_HH_464198958_v" quantity="popExc/12/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_13_HH_464198958_v" quantity="popExc/13/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_14_HH_464198958_v" quantity="popExc/14/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_15_HH_464198958_v" quantity="popExc/15/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_16_HH_464198958_v" quantity="popExc/16/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_17_HH_464198958_v" quantity="popExc/17/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_18_HH_464198958_v" quantity="popExc/18/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_19_HH_464198958_v" quantity="popExc/19/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_20_HH_464198958_v" quantity="popExc/20/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_21_HH_464198958_v" quantity="popExc/21/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_22_HH_464198958_v" quantity="popExc/22/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_23_HH_464198958_v" quantity="popExc/23/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_24_HH_464198958_v" quantity="popExc/24/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_25_HH_464198958_v" quantity="popExc/25/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_26_HH_464198958_v" quantity="popExc/26/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_27_HH_464198958_v" quantity="popExc/27/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_28_HH_464198958_v" quantity="popExc/28/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_29_HH_464198958_v" quantity="popExc/29/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_30_HH_464198958_v" quantity="popExc/30/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_31_HH_464198958_v" quantity="popExc/31/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_32_HH_464198958_v" quantity="popExc/32/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_33_HH_464198958_v" quantity="popExc/33/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_34_HH_464198958_v" quantity="popExc/34/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_35_HH_464198958_v" quantity="popExc/35/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_36_HH_464198958_v" quantity="popExc/36/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_37_HH_464198958_v" quantity="popExc/37/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_38_HH_464198958_v" quantity="popExc/38/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_39_HH_464198958_v" quantity="popExc/39/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_40_HH_464198958_v" quantity="popExc/40/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_41_HH_464198958_v" quantity="popExc/41/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_42_HH_464198958_v" quantity="popExc/42/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_43_HH_464198958_v" quantity="popExc/43/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_44_HH_464198958_v" quantity="popExc/44/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_45_HH_464198958_v" quantity="popExc/45/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_46_HH_464198958_v" quantity="popExc/46/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_47_HH_464198958_v" quantity="popExc/47/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_48_HH_464198958_v" quantity="popExc/48/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_49_HH_464198958_v" quantity="popExc/49/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_50_HH_464198958_v" quantity="popExc/50/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_51_HH_464198958_v" quantity="popExc/51/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_52_HH_464198958_v" quantity="popExc/52/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_53_HH_464198958_v" quantity="popExc/53/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_54_HH_464198958_v" quantity="popExc/54/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_55_HH_464198958_v" quantity="popExc/55/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_56_HH_464198958_v" quantity="popExc/56/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_57_HH_464198958_v" quantity="popExc/57/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_58_HH_464198958_v" quantity="popExc/58/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_59_HH_464198958_v" quantity="popExc/59/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_60_HH_464198958_v" quantity="popExc/60/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_61_HH_464198958_v" quantity="popExc/61/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_62_HH_464198958_v" quantity="popExc/62/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_63_HH_464198958_v" quantity="popExc/63/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_64_HH_464198958_v" quantity="popExc/64/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_65_HH_464198958_v" quantity="popExc/65/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_66_HH_464198958_v" quantity="popExc/66/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_67_HH_464198958_v" quantity="popExc/67/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_68_HH_464198958_v" quantity="popExc/68/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_69_HH_464198958_v" quantity="popExc/69/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_70_HH_464198958_v" quantity="popExc/70/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_71_HH_464198958_v" quantity="popExc/71/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_72_HH_464198958_v" quantity="popExc/72/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_73_HH_464198958_v" quantity="popExc/73/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_74_HH_464198958_v" quantity="popExc/74/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_75_HH_464198958_v" quantity="popExc/75/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_76_HH_464198958_v" quantity="popExc/76/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_77_HH_464198958_v" quantity="popExc/77/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_78_HH_464198958_v" quantity="popExc/78/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_79_HH_464198958_v" quantity="popExc/79/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_80_HH_464198958_v" quantity="popExc/80/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_81_HH_464198958_v" quantity="popExc/81/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_82_HH_464198958_v" quantity="popExc/82/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_83_HH_464198958_v" quantity="popExc/83/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_84_HH_464198958_v" quantity="popExc/84/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_85_HH_464198958_v" quantity="popExc/85/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_86_HH_464198958_v" quantity="popExc/86/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_87_HH_464198958_v" quantity="popExc/87/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_88_HH_464198958_v" quantity="popExc/88/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_89_HH_464198958_v" quantity="popExc/89/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_90_HH_464198958_v" quantity="popExc/90/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_91_HH_464198958_v" quantity="popExc/91/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_92_HH_464198958_v" quantity="popExc/92/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_93_HH_464198958_v" quantity="popExc/93/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_94_HH_464198958_v" quantity="popExc/94/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_95_HH_464198958_v" quantity="popExc/95/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_96_HH_464198958_v" quantity="popExc/96/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_97_HH_464198958_v" quantity="popExc/97/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_98_HH_464198958_v" quantity="popExc/98/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_99_HH_464198958_v" quantity="popExc/99/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_100_HH_464198958_v" quantity="popExc/100/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_101_HH_464198958_v" quantity="popExc/101/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_102_HH_464198958_v" quantity="popExc/102/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_103_HH_464198958_v" quantity="popExc/103/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_104_HH_464198958_v" quantity="popExc/104/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_105_HH_464198958_v" quantity="popExc/105/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_106_HH_464198958_v" quantity="popExc/106/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_107_HH_464198958_v" quantity="popExc/107/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_108_HH_464198958_v" quantity="popExc/108/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_109_HH_464198958_v" quantity="popExc/109/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_110_HH_464198958_v" quantity="popExc/110/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_111_HH_464198958_v" quantity="popExc/111/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_112_HH_464198958_v" quantity="popExc/112/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_113_HH_464198958_v" quantity="popExc/113/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_114_HH_464198958_v" quantity="popExc/114/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_115_HH_464198958_v" quantity="popExc/115/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_116_HH_464198958_v" quantity="popExc/116/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_117_HH_464198958_v" quantity="popExc/117/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_118_HH_464198958_v" quantity="popExc/118/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_119_HH_464198958_v" quantity="popExc/119/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_120_HH_464198958_v" quantity="popExc/120/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_121_HH_464198958_v" quantity="popExc/121/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_122_HH_464198958_v" quantity="popExc/122/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_123_HH_464198958_v" quantity="popExc/123/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_124_HH_464198958_v" quantity="popExc/124/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_125_HH_464198958_v" quantity="popExc/125/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_126_HH_464198958_v" quantity="popExc/126/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_127_HH_464198958_v" quantity="popExc/127/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_128_HH_464198958_v" quantity="popExc/128/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_129_HH_464198958_v" quantity="popExc/129/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_130_HH_464198958_v" quantity="popExc/130/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_131_HH_464198958_v" quantity="popExc/131/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_132_HH_464198958_v" quantity="popExc/132/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_133_HH_464198958_v" quantity="popExc/133/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_134_HH_464198958_v" quantity="popExc/134/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_135_HH_464198958_v" quantity="popExc/135/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_136_HH_464198958_v" quantity="popExc/136/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_137_HH_464198958_v" quantity="popExc/137/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_138_HH_464198958_v" quantity="popExc/138/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_139_HH_464198958_v" quantity="popExc/139/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_140_HH_464198958_v" quantity="popExc/140/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_141_HH_464198958_v" quantity="popExc/141/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_142_HH_464198958_v" quantity="popExc/142/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_143_HH_464198958_v" quantity="popExc/143/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_144_HH_464198958_v" quantity="popExc/144/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_145_HH_464198958_v" quantity="popExc/145/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_146_HH_464198958_v" quantity="popExc/146/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_147_HH_464198958_v" quantity="popExc/147/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_148_HH_464198958_v" quantity="popExc/148/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_149_HH_464198958_v" quantity="popExc/149/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_150_HH_464198958_v" quantity="popExc/150/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_151_HH_464198958_v" quantity="popExc/151/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_152_HH_464198958_v" quantity="popExc/152/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_153_HH_464198958_v" quantity="popExc/153/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_154_HH_464198958_v" quantity="popExc/154/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_155_HH_464198958_v" quantity="popExc/155/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_156_HH_464198958_v" quantity="popExc/156/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_157_HH_464198958_v" quantity="popExc/157/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_158_HH_464198958_v" quantity="popExc/158/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_159_HH_464198958_v" quantity="popExc/159/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_160_HH_464198958_v" quantity="popExc/160/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_161_HH_464198958_v" quantity="popExc/161/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_162_HH_464198958_v" quantity="popExc/162/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_163_HH_464198958_v" quantity="popExc/163/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_164_HH_464198958_v" quantity="popExc/164/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_165_HH_464198958_v" quantity="popExc/165/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_166_HH_464198958_v" quantity="popExc/166/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_167_HH_464198958_v" quantity="popExc/167/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_168_HH_464198958_v" quantity="popExc/168/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_169_HH_464198958_v" quantity="popExc/169/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_170_HH_464198958_v" quantity="popExc/170/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_171_HH_464198958_v" quantity="popExc/171/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_172_HH_464198958_v" quantity="popExc/172/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_173_HH_464198958_v" quantity="popExc/173/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_174_HH_464198958_v" quantity="popExc/174/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_175_HH_464198958_v" quantity="popExc/175/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_176_HH_464198958_v" quantity="popExc/176/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_177_HH_464198958_v" quantity="popExc/177/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_178_HH_464198958_v" quantity="popExc/178/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_179_HH_464198958_v" quantity="popExc/179/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_180_HH_464198958_v" quantity="popExc/180/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_181_HH_464198958_v" quantity="popExc/181/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_182_HH_464198958_v" quantity="popExc/182/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_183_HH_464198958_v" quantity="popExc/183/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_184_HH_464198958_v" quantity="popExc/184/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_185_HH_464198958_v" quantity="popExc/185/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_186_HH_464198958_v" quantity="popExc/186/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_187_HH_464198958_v" quantity="popExc/187/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_188_HH_464198958_v" quantity="popExc/188/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_189_HH_464198958_v" quantity="popExc/189/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_190_HH_464198958_v" quantity="popExc/190/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_191_HH_464198958_v" quantity="popExc/191/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_192_HH_464198958_v" quantity="popExc/192/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_193_HH_464198958_v" quantity="popExc/193/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_194_HH_464198958_v" quantity="popExc/194/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_195_HH_464198958_v" quantity="popExc/195/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_196_HH_464198958_v" quantity="popExc/196/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_197_HH_464198958_v" quantity="popExc/197/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_198_HH_464198958_v" quantity="popExc/198/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_199_HH_464198958_v" quantity="popExc/199/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_200_HH_464198958_v" quantity="popExc/200/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_201_HH_464198958_v" quantity="popExc/201/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_202_HH_464198958_v" quantity="popExc/202/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_203_HH_464198958_v" quantity="popExc/203/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_204_HH_464198958_v" quantity="popExc/204/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_205_HH_464198958_v" quantity="popExc/205/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_206_HH_464198958_v" quantity="popExc/206/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_207_HH_464198958_v" quantity="popExc/207/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_208_HH_464198958_v" quantity="popExc/208/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_209_HH_464198958_v" quantity="popExc/209/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_210_HH_464198958_v" quantity="popExc/210/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_211_HH_464198958_v" quantity="popExc/211/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_212_HH_464198958_v" quantity="popExc/212/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_213_HH_464198958_v" quantity="popExc/213/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_214_HH_464198958_v" quantity="popExc/214/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_215_HH_464198958_v" quantity="popExc/215/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_216_HH_464198958_v" quantity="popExc/216/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_217_HH_464198958_v" quantity="popExc/217/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_218_HH_464198958_v" quantity="popExc/218/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_219_HH_464198958_v" quantity="popExc/219/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_220_HH_464198958_v" quantity="popExc/220/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_221_HH_464198958_v" quantity="popExc/221/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_222_HH_464198958_v" quantity="popExc/222/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_223_HH_464198958_v" quantity="popExc/223/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_224_HH_464198958_v" quantity="popExc/224/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_225_HH_464198958_v" quantity="popExc/225/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_226_HH_464198958_v" quantity="popExc/226/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_227_HH_464198958_v" quantity="popExc/227/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_228_HH_464198958_v" quantity="popExc/228/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_229_HH_464198958_v" quantity="popExc/229/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_230_HH_464198958_v" quantity="popExc/230/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_231_HH_464198958_v" quantity="popExc/231/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_232_HH_464198958_v" quantity="popExc/232/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_233_HH_464198958_v" quantity="popExc/233/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_234_HH_464198958_v" quantity="popExc/234/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_235_HH_464198958_v" quantity="popExc/235/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_236_HH_464198958_v" quantity="popExc/236/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_237_HH_464198958_v" quantity="popExc/237/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_238_HH_464198958_v" quantity="popExc/238/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_239_HH_464198958_v" quantity="popExc/239/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_240_HH_464198958_v" quantity="popExc/240/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_241_HH_464198958_v" quantity="popExc/241/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_242_HH_464198958_v" quantity="popExc/242/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_243_HH_464198958_v" quantity="popExc/243/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_244_HH_464198958_v" quantity="popExc/244/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_245_HH_464198958_v" quantity="popExc/245/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_246_HH_464198958_v" quantity="popExc/246/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_247_HH_464198958_v" quantity="popExc/247/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_248_HH_464198958_v" quantity="popExc/248/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_249_HH_464198958_v" quantity="popExc/249/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_250_HH_464198958_v" quantity="popExc/250/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_251_HH_464198958_v" quantity="popExc/251/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_252_HH_464198958_v" quantity="popExc/252/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_253_HH_464198958_v" quantity="popExc/253/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_254_HH_464198958_v" quantity="popExc/254/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_255_HH_464198958_v" quantity="popExc/255/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_256_HH_464198958_v" quantity="popExc/256/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_257_HH_464198958_v" quantity="popExc/257/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_258_HH_464198958_v" quantity="popExc/258/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_259_HH_464198958_v" quantity="popExc/259/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_260_HH_464198958_v" quantity="popExc/260/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_261_HH_464198958_v" quantity="popExc/261/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_262_HH_464198958_v" quantity="popExc/262/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_263_HH_464198958_v" quantity="popExc/263/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_264_HH_464198958_v" quantity="popExc/264/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_265_HH_464198958_v" quantity="popExc/265/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_266_HH_464198958_v" quantity="popExc/266/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_267_HH_464198958_v" quantity="popExc/267/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_268_HH_464198958_v" quantity="popExc/268/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_269_HH_464198958_v" quantity="popExc/269/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_270_HH_464198958_v" quantity="popExc/270/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_271_HH_464198958_v" quantity="popExc/271/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_272_HH_464198958_v" quantity="popExc/272/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_273_HH_464198958_v" quantity="popExc/273/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_274_HH_464198958_v" quantity="popExc/274/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_275_HH_464198958_v" quantity="popExc/275/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_276_HH_464198958_v" quantity="popExc/276/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_277_HH_464198958_v" quantity="popExc/277/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_278_HH_464198958_v" quantity="popExc/278/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_279_HH_464198958_v" quantity="popExc/279/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_280_HH_464198958_v" quantity="popExc/280/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_281_HH_464198958_v" quantity="popExc/281/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_282_HH_464198958_v" quantity="popExc/282/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_283_HH_464198958_v" quantity="popExc/283/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_284_HH_464198958_v" quantity="popExc/284/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_285_HH_464198958_v" quantity="popExc/285/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_286_HH_464198958_v" quantity="popExc/286/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_287_HH_464198958_v" quantity="popExc/287/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_288_HH_464198958_v" quantity="popExc/288/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_289_HH_464198958_v" quantity="popExc/289/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_290_HH_464198958_v" quantity="popExc/290/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_291_HH_464198958_v" quantity="popExc/291/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_292_HH_464198958_v" quantity="popExc/292/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_293_HH_464198958_v" quantity="popExc/293/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_294_HH_464198958_v" quantity="popExc/294/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_295_HH_464198958_v" quantity="popExc/295/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_296_HH_464198958_v" quantity="popExc/296/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_297_HH_464198958_v" quantity="popExc/297/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_298_HH_464198958_v" quantity="popExc/298/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_299_HH_464198958_v" quantity="popExc/299/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_300_HH_464198958_v" quantity="popExc/300/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_301_HH_464198958_v" quantity="popExc/301/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_302_HH_464198958_v" quantity="popExc/302/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_303_HH_464198958_v" quantity="popExc/303/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_304_HH_464198958_v" quantity="popExc/304/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_305_HH_464198958_v" quantity="popExc/305/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_306_HH_464198958_v" quantity="popExc/306/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_307_HH_464198958_v" quantity="popExc/307/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_308_HH_464198958_v" quantity="popExc/308/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_309_HH_464198958_v" quantity="popExc/309/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_310_HH_464198958_v" quantity="popExc/310/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_311_HH_464198958_v" quantity="popExc/311/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_312_HH_464198958_v" quantity="popExc/312/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_313_HH_464198958_v" quantity="popExc/313/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_314_HH_464198958_v" quantity="popExc/314/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_315_HH_464198958_v" quantity="popExc/315/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_316_HH_464198958_v" quantity="popExc/316/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_317_HH_464198958_v" quantity="popExc/317/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_318_HH_464198958_v" quantity="popExc/318/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_319_HH_464198958_v" quantity="popExc/319/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_320_HH_464198958_v" quantity="popExc/320/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_321_HH_464198958_v" quantity="popExc/321/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_322_HH_464198958_v" quantity="popExc/322/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_323_HH_464198958_v" quantity="popExc/323/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_324_HH_464198958_v" quantity="popExc/324/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_325_HH_464198958_v" quantity="popExc/325/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_326_HH_464198958_v" quantity="popExc/326/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_327_HH_464198958_v" quantity="popExc/327/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_328_HH_464198958_v" quantity="popExc/328/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_329_HH_464198958_v" quantity="popExc/329/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_330_HH_464198958_v" quantity="popExc/330/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_331_HH_464198958_v" quantity="popExc/331/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_332_HH_464198958_v" quantity="popExc/332/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_333_HH_464198958_v" quantity="popExc/333/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_334_HH_464198958_v" quantity="popExc/334/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_335_HH_464198958_v" quantity="popExc/335/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_336_HH_464198958_v" quantity="popExc/336/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_337_HH_464198958_v" quantity="popExc/337/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_338_HH_464198958_v" quantity="popExc/338/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_339_HH_464198958_v" quantity="popExc/339/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_340_HH_464198958_v" quantity="popExc/340/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_341_HH_464198958_v" quantity="popExc/341/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_342_HH_464198958_v" quantity="popExc/342/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_343_HH_464198958_v" quantity="popExc/343/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_344_HH_464198958_v" quantity="popExc/344/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_345_HH_464198958_v" quantity="popExc/345/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_346_HH_464198958_v" quantity="popExc/346/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_347_HH_464198958_v" quantity="popExc/347/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_348_HH_464198958_v" quantity="popExc/348/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_349_HH_464198958_v" quantity="popExc/349/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_350_HH_464198958_v" quantity="popExc/350/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_351_HH_464198958_v" quantity="popExc/351/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_352_HH_464198958_v" quantity="popExc/352/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_353_HH_464198958_v" quantity="popExc/353/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_354_HH_464198958_v" quantity="popExc/354/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_355_HH_464198958_v" quantity="popExc/355/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_356_HH_464198958_v" quantity="popExc/356/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_357_HH_464198958_v" quantity="popExc/357/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_358_HH_464198958_v" quantity="popExc/358/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_359_HH_464198958_v" quantity="popExc/359/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_360_HH_464198958_v" quantity="popExc/360/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_361_HH_464198958_v" quantity="popExc/361/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_362_HH_464198958_v" quantity="popExc/362/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_363_HH_464198958_v" quantity="popExc/363/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_364_HH_464198958_v" quantity="popExc/364/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_365_HH_464198958_v" quantity="popExc/365/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_366_HH_464198958_v" quantity="popExc/366/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_367_HH_464198958_v" quantity="popExc/367/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_368_HH_464198958_v" quantity="popExc/368/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_369_HH_464198958_v" quantity="popExc/369/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_370_HH_464198958_v" quantity="popExc/370/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_371_HH_464198958_v" quantity="popExc/371/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_372_HH_464198958_v" quantity="popExc/372/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_373_HH_464198958_v" quantity="popExc/373/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_374_HH_464198958_v" quantity="popExc/374/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_375_HH_464198958_v" quantity="popExc/375/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_376_HH_464198958_v" quantity="popExc/376/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_377_HH_464198958_v" quantity="popExc/377/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_378_HH_464198958_v" quantity="popExc/378/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_379_HH_464198958_v" quantity="popExc/379/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_380_HH_464198958_v" quantity="popExc/380/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_381_HH_464198958_v" quantity="popExc/381/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_382_HH_464198958_v" quantity="popExc/382/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_383_HH_464198958_v" quantity="popExc/383/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_384_HH_464198958_v" quantity="popExc/384/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_385_HH_464198958_v" quantity="popExc/385/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_386_HH_464198958_v" quantity="popExc/386/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_387_HH_464198958_v" quantity="popExc/387/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_388_HH_464198958_v" quantity="popExc/388/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_389_HH_464198958_v" quantity="popExc/389/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_390_HH_464198958_v" quantity="popExc/390/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_391_HH_464198958_v" quantity="popExc/391/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_392_HH_464198958_v" quantity="popExc/392/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_393_HH_464198958_v" quantity="popExc/393/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_394_HH_464198958_v" quantity="popExc/394/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_395_HH_464198958_v" quantity="popExc/395/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_396_HH_464198958_v" quantity="popExc/396/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_397_HH_464198958_v" quantity="popExc/397/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_398_HH_464198958_v" quantity="popExc/398/HH_464198958/v"/> 
-            <OutputColumn id="v_popExc_399_HH_464198958_v" quantity="popExc/399/HH_464198958/v"/> 
+        <OutputFile id="popBBP_v_dat" fileName="popBBP_v.dat">
+            <OutputColumn id="popBBP_0_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
+            <OutputColumn id="popBBP_1_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/1/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
+            <OutputColumn id="popBBP_2_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/2/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
+            <OutputColumn id="popBBP_3_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/3/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
+            <OutputColumn id="popBBP_4_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/4/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
         </OutputFile>
         
-        <OutputFile id="Volts_file__popInh" fileName="Sim_Balanced_610cells_0conns.popInh.v.dat">
-            <OutputColumn id="v_popInh_0_HH_471141261_v" quantity="popInh/0/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_1_HH_471141261_v" quantity="popInh/1/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_2_HH_471141261_v" quantity="popInh/2/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_3_HH_471141261_v" quantity="popInh/3/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_4_HH_471141261_v" quantity="popInh/4/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_5_HH_471141261_v" quantity="popInh/5/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_6_HH_471141261_v" quantity="popInh/6/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_7_HH_471141261_v" quantity="popInh/7/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_8_HH_471141261_v" quantity="popInh/8/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_9_HH_471141261_v" quantity="popInh/9/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_10_HH_471141261_v" quantity="popInh/10/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_11_HH_471141261_v" quantity="popInh/11/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_12_HH_471141261_v" quantity="popInh/12/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_13_HH_471141261_v" quantity="popInh/13/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_14_HH_471141261_v" quantity="popInh/14/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_15_HH_471141261_v" quantity="popInh/15/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_16_HH_471141261_v" quantity="popInh/16/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_17_HH_471141261_v" quantity="popInh/17/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_18_HH_471141261_v" quantity="popInh/18/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_19_HH_471141261_v" quantity="popInh/19/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_20_HH_471141261_v" quantity="popInh/20/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_21_HH_471141261_v" quantity="popInh/21/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_22_HH_471141261_v" quantity="popInh/22/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_23_HH_471141261_v" quantity="popInh/23/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_24_HH_471141261_v" quantity="popInh/24/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_25_HH_471141261_v" quantity="popInh/25/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_26_HH_471141261_v" quantity="popInh/26/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_27_HH_471141261_v" quantity="popInh/27/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_28_HH_471141261_v" quantity="popInh/28/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_29_HH_471141261_v" quantity="popInh/29/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_30_HH_471141261_v" quantity="popInh/30/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_31_HH_471141261_v" quantity="popInh/31/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_32_HH_471141261_v" quantity="popInh/32/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_33_HH_471141261_v" quantity="popInh/33/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_34_HH_471141261_v" quantity="popInh/34/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_35_HH_471141261_v" quantity="popInh/35/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_36_HH_471141261_v" quantity="popInh/36/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_37_HH_471141261_v" quantity="popInh/37/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_38_HH_471141261_v" quantity="popInh/38/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_39_HH_471141261_v" quantity="popInh/39/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_40_HH_471141261_v" quantity="popInh/40/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_41_HH_471141261_v" quantity="popInh/41/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_42_HH_471141261_v" quantity="popInh/42/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_43_HH_471141261_v" quantity="popInh/43/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_44_HH_471141261_v" quantity="popInh/44/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_45_HH_471141261_v" quantity="popInh/45/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_46_HH_471141261_v" quantity="popInh/46/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_47_HH_471141261_v" quantity="popInh/47/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_48_HH_471141261_v" quantity="popInh/48/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_49_HH_471141261_v" quantity="popInh/49/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_50_HH_471141261_v" quantity="popInh/50/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_51_HH_471141261_v" quantity="popInh/51/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_52_HH_471141261_v" quantity="popInh/52/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_53_HH_471141261_v" quantity="popInh/53/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_54_HH_471141261_v" quantity="popInh/54/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_55_HH_471141261_v" quantity="popInh/55/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_56_HH_471141261_v" quantity="popInh/56/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_57_HH_471141261_v" quantity="popInh/57/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_58_HH_471141261_v" quantity="popInh/58/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_59_HH_471141261_v" quantity="popInh/59/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_60_HH_471141261_v" quantity="popInh/60/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_61_HH_471141261_v" quantity="popInh/61/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_62_HH_471141261_v" quantity="popInh/62/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_63_HH_471141261_v" quantity="popInh/63/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_64_HH_471141261_v" quantity="popInh/64/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_65_HH_471141261_v" quantity="popInh/65/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_66_HH_471141261_v" quantity="popInh/66/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_67_HH_471141261_v" quantity="popInh/67/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_68_HH_471141261_v" quantity="popInh/68/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_69_HH_471141261_v" quantity="popInh/69/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_70_HH_471141261_v" quantity="popInh/70/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_71_HH_471141261_v" quantity="popInh/71/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_72_HH_471141261_v" quantity="popInh/72/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_73_HH_471141261_v" quantity="popInh/73/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_74_HH_471141261_v" quantity="popInh/74/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_75_HH_471141261_v" quantity="popInh/75/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_76_HH_471141261_v" quantity="popInh/76/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_77_HH_471141261_v" quantity="popInh/77/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_78_HH_471141261_v" quantity="popInh/78/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_79_HH_471141261_v" quantity="popInh/79/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_80_HH_471141261_v" quantity="popInh/80/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_81_HH_471141261_v" quantity="popInh/81/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_82_HH_471141261_v" quantity="popInh/82/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_83_HH_471141261_v" quantity="popInh/83/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_84_HH_471141261_v" quantity="popInh/84/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_85_HH_471141261_v" quantity="popInh/85/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_86_HH_471141261_v" quantity="popInh/86/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_87_HH_471141261_v" quantity="popInh/87/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_88_HH_471141261_v" quantity="popInh/88/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_89_HH_471141261_v" quantity="popInh/89/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_90_HH_471141261_v" quantity="popInh/90/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_91_HH_471141261_v" quantity="popInh/91/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_92_HH_471141261_v" quantity="popInh/92/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_93_HH_471141261_v" quantity="popInh/93/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_94_HH_471141261_v" quantity="popInh/94/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_95_HH_471141261_v" quantity="popInh/95/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_96_HH_471141261_v" quantity="popInh/96/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_97_HH_471141261_v" quantity="popInh/97/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_98_HH_471141261_v" quantity="popInh/98/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_99_HH_471141261_v" quantity="popInh/99/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_100_HH_471141261_v" quantity="popInh/100/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_101_HH_471141261_v" quantity="popInh/101/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_102_HH_471141261_v" quantity="popInh/102/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_103_HH_471141261_v" quantity="popInh/103/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_104_HH_471141261_v" quantity="popInh/104/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_105_HH_471141261_v" quantity="popInh/105/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_106_HH_471141261_v" quantity="popInh/106/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_107_HH_471141261_v" quantity="popInh/107/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_108_HH_471141261_v" quantity="popInh/108/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_109_HH_471141261_v" quantity="popInh/109/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_110_HH_471141261_v" quantity="popInh/110/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_111_HH_471141261_v" quantity="popInh/111/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_112_HH_471141261_v" quantity="popInh/112/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_113_HH_471141261_v" quantity="popInh/113/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_114_HH_471141261_v" quantity="popInh/114/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_115_HH_471141261_v" quantity="popInh/115/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_116_HH_471141261_v" quantity="popInh/116/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_117_HH_471141261_v" quantity="popInh/117/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_118_HH_471141261_v" quantity="popInh/118/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_119_HH_471141261_v" quantity="popInh/119/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_120_HH_471141261_v" quantity="popInh/120/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_121_HH_471141261_v" quantity="popInh/121/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_122_HH_471141261_v" quantity="popInh/122/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_123_HH_471141261_v" quantity="popInh/123/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_124_HH_471141261_v" quantity="popInh/124/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_125_HH_471141261_v" quantity="popInh/125/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_126_HH_471141261_v" quantity="popInh/126/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_127_HH_471141261_v" quantity="popInh/127/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_128_HH_471141261_v" quantity="popInh/128/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_129_HH_471141261_v" quantity="popInh/129/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_130_HH_471141261_v" quantity="popInh/130/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_131_HH_471141261_v" quantity="popInh/131/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_132_HH_471141261_v" quantity="popInh/132/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_133_HH_471141261_v" quantity="popInh/133/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_134_HH_471141261_v" quantity="popInh/134/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_135_HH_471141261_v" quantity="popInh/135/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_136_HH_471141261_v" quantity="popInh/136/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_137_HH_471141261_v" quantity="popInh/137/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_138_HH_471141261_v" quantity="popInh/138/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_139_HH_471141261_v" quantity="popInh/139/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_140_HH_471141261_v" quantity="popInh/140/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_141_HH_471141261_v" quantity="popInh/141/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_142_HH_471141261_v" quantity="popInh/142/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_143_HH_471141261_v" quantity="popInh/143/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_144_HH_471141261_v" quantity="popInh/144/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_145_HH_471141261_v" quantity="popInh/145/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_146_HH_471141261_v" quantity="popInh/146/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_147_HH_471141261_v" quantity="popInh/147/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_148_HH_471141261_v" quantity="popInh/148/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_149_HH_471141261_v" quantity="popInh/149/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_150_HH_471141261_v" quantity="popInh/150/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_151_HH_471141261_v" quantity="popInh/151/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_152_HH_471141261_v" quantity="popInh/152/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_153_HH_471141261_v" quantity="popInh/153/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_154_HH_471141261_v" quantity="popInh/154/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_155_HH_471141261_v" quantity="popInh/155/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_156_HH_471141261_v" quantity="popInh/156/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_157_HH_471141261_v" quantity="popInh/157/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_158_HH_471141261_v" quantity="popInh/158/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_159_HH_471141261_v" quantity="popInh/159/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_160_HH_471141261_v" quantity="popInh/160/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_161_HH_471141261_v" quantity="popInh/161/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_162_HH_471141261_v" quantity="popInh/162/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_163_HH_471141261_v" quantity="popInh/163/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_164_HH_471141261_v" quantity="popInh/164/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_165_HH_471141261_v" quantity="popInh/165/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_166_HH_471141261_v" quantity="popInh/166/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_167_HH_471141261_v" quantity="popInh/167/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_168_HH_471141261_v" quantity="popInh/168/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_169_HH_471141261_v" quantity="popInh/169/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_170_HH_471141261_v" quantity="popInh/170/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_171_HH_471141261_v" quantity="popInh/171/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_172_HH_471141261_v" quantity="popInh/172/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_173_HH_471141261_v" quantity="popInh/173/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_174_HH_471141261_v" quantity="popInh/174/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_175_HH_471141261_v" quantity="popInh/175/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_176_HH_471141261_v" quantity="popInh/176/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_177_HH_471141261_v" quantity="popInh/177/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_178_HH_471141261_v" quantity="popInh/178/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_179_HH_471141261_v" quantity="popInh/179/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_180_HH_471141261_v" quantity="popInh/180/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_181_HH_471141261_v" quantity="popInh/181/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_182_HH_471141261_v" quantity="popInh/182/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_183_HH_471141261_v" quantity="popInh/183/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_184_HH_471141261_v" quantity="popInh/184/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_185_HH_471141261_v" quantity="popInh/185/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_186_HH_471141261_v" quantity="popInh/186/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_187_HH_471141261_v" quantity="popInh/187/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_188_HH_471141261_v" quantity="popInh/188/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_189_HH_471141261_v" quantity="popInh/189/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_190_HH_471141261_v" quantity="popInh/190/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_191_HH_471141261_v" quantity="popInh/191/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_192_HH_471141261_v" quantity="popInh/192/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_193_HH_471141261_v" quantity="popInh/193/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_194_HH_471141261_v" quantity="popInh/194/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_195_HH_471141261_v" quantity="popInh/195/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_196_HH_471141261_v" quantity="popInh/196/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_197_HH_471141261_v" quantity="popInh/197/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_198_HH_471141261_v" quantity="popInh/198/HH_471141261/v"/> 
-            <OutputColumn id="v_popInh_199_HH_471141261_v" quantity="popInh/199/HH_471141261/v"/> 
+        <OutputFile id="popInh_v_dat" fileName="popInh_v.dat">
+            <OutputColumn id="popInh_0_HH_471141261_v" quantity="popInh/0/HH_471141261/v"/> 
+            <OutputColumn id="popInh_1_HH_471141261_v" quantity="popInh/1/HH_471141261/v"/> 
+            <OutputColumn id="popInh_2_HH_471141261_v" quantity="popInh/2/HH_471141261/v"/> 
+            <OutputColumn id="popInh_3_HH_471141261_v" quantity="popInh/3/HH_471141261/v"/> 
+            <OutputColumn id="popInh_4_HH_471141261_v" quantity="popInh/4/HH_471141261/v"/> 
         </OutputFile>
         
-        <OutputFile id="Volts_file__popBBP" fileName="Sim_Balanced_610cells_0conns.popBBP.v.dat">
-            <OutputColumn id="v_popBBP_0_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
-            <OutputColumn id="v_popBBP_1_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/1/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
-            <OutputColumn id="v_popBBP_2_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/2/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
-            <OutputColumn id="v_popBBP_3_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/3/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
-            <OutputColumn id="v_popBBP_4_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/4/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
-            <OutputColumn id="v_popBBP_5_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/5/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
-            <OutputColumn id="v_popBBP_6_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/6/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
-            <OutputColumn id="v_popBBP_7_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/7/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
-            <OutputColumn id="v_popBBP_8_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/8/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
-            <OutputColumn id="v_popBBP_9_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/9/cADpyr229_L23_PC_5ecbf9b163_0_0/v"/> 
+        <OutputFile id="popExc_v_dat" fileName="popExc_v.dat">
+            <OutputColumn id="popExc_0_HH_464198958_v" quantity="popExc/0/HH_464198958/v"/> 
+            <OutputColumn id="popExc_1_HH_464198958_v" quantity="popExc/1/HH_464198958/v"/> 
+            <OutputColumn id="popExc_2_HH_464198958_v" quantity="popExc/2/HH_464198958/v"/> 
+            <OutputColumn id="popExc_3_HH_464198958_v" quantity="popExc/3/HH_464198958/v"/> 
+            <OutputColumn id="popExc_4_HH_464198958_v" quantity="popExc/4/HH_464198958/v"/> 
         </OutputFile>
+        
+        <EventOutputFile id="Spikes_file__popExc" fileName="Sim_Balanced_610cells_0conns.popExc.spikes" format="ID_TIME">
+            <EventSelection id="0" select="popExc/0/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="1" select="popExc/1/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="2" select="popExc/2/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="3" select="popExc/3/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="4" select="popExc/4/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="5" select="popExc/5/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="6" select="popExc/6/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="7" select="popExc/7/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="8" select="popExc/8/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="9" select="popExc/9/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="10" select="popExc/10/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="11" select="popExc/11/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="12" select="popExc/12/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="13" select="popExc/13/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="14" select="popExc/14/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="15" select="popExc/15/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="16" select="popExc/16/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="17" select="popExc/17/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="18" select="popExc/18/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="19" select="popExc/19/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="20" select="popExc/20/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="21" select="popExc/21/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="22" select="popExc/22/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="23" select="popExc/23/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="24" select="popExc/24/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="25" select="popExc/25/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="26" select="popExc/26/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="27" select="popExc/27/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="28" select="popExc/28/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="29" select="popExc/29/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="30" select="popExc/30/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="31" select="popExc/31/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="32" select="popExc/32/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="33" select="popExc/33/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="34" select="popExc/34/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="35" select="popExc/35/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="36" select="popExc/36/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="37" select="popExc/37/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="38" select="popExc/38/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="39" select="popExc/39/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="40" select="popExc/40/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="41" select="popExc/41/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="42" select="popExc/42/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="43" select="popExc/43/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="44" select="popExc/44/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="45" select="popExc/45/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="46" select="popExc/46/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="47" select="popExc/47/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="48" select="popExc/48/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="49" select="popExc/49/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="50" select="popExc/50/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="51" select="popExc/51/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="52" select="popExc/52/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="53" select="popExc/53/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="54" select="popExc/54/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="55" select="popExc/55/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="56" select="popExc/56/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="57" select="popExc/57/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="58" select="popExc/58/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="59" select="popExc/59/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="60" select="popExc/60/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="61" select="popExc/61/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="62" select="popExc/62/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="63" select="popExc/63/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="64" select="popExc/64/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="65" select="popExc/65/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="66" select="popExc/66/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="67" select="popExc/67/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="68" select="popExc/68/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="69" select="popExc/69/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="70" select="popExc/70/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="71" select="popExc/71/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="72" select="popExc/72/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="73" select="popExc/73/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="74" select="popExc/74/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="75" select="popExc/75/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="76" select="popExc/76/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="77" select="popExc/77/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="78" select="popExc/78/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="79" select="popExc/79/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="80" select="popExc/80/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="81" select="popExc/81/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="82" select="popExc/82/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="83" select="popExc/83/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="84" select="popExc/84/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="85" select="popExc/85/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="86" select="popExc/86/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="87" select="popExc/87/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="88" select="popExc/88/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="89" select="popExc/89/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="90" select="popExc/90/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="91" select="popExc/91/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="92" select="popExc/92/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="93" select="popExc/93/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="94" select="popExc/94/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="95" select="popExc/95/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="96" select="popExc/96/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="97" select="popExc/97/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="98" select="popExc/98/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="99" select="popExc/99/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="100" select="popExc/100/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="101" select="popExc/101/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="102" select="popExc/102/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="103" select="popExc/103/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="104" select="popExc/104/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="105" select="popExc/105/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="106" select="popExc/106/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="107" select="popExc/107/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="108" select="popExc/108/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="109" select="popExc/109/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="110" select="popExc/110/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="111" select="popExc/111/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="112" select="popExc/112/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="113" select="popExc/113/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="114" select="popExc/114/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="115" select="popExc/115/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="116" select="popExc/116/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="117" select="popExc/117/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="118" select="popExc/118/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="119" select="popExc/119/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="120" select="popExc/120/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="121" select="popExc/121/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="122" select="popExc/122/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="123" select="popExc/123/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="124" select="popExc/124/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="125" select="popExc/125/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="126" select="popExc/126/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="127" select="popExc/127/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="128" select="popExc/128/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="129" select="popExc/129/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="130" select="popExc/130/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="131" select="popExc/131/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="132" select="popExc/132/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="133" select="popExc/133/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="134" select="popExc/134/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="135" select="popExc/135/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="136" select="popExc/136/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="137" select="popExc/137/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="138" select="popExc/138/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="139" select="popExc/139/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="140" select="popExc/140/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="141" select="popExc/141/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="142" select="popExc/142/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="143" select="popExc/143/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="144" select="popExc/144/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="145" select="popExc/145/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="146" select="popExc/146/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="147" select="popExc/147/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="148" select="popExc/148/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="149" select="popExc/149/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="150" select="popExc/150/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="151" select="popExc/151/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="152" select="popExc/152/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="153" select="popExc/153/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="154" select="popExc/154/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="155" select="popExc/155/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="156" select="popExc/156/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="157" select="popExc/157/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="158" select="popExc/158/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="159" select="popExc/159/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="160" select="popExc/160/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="161" select="popExc/161/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="162" select="popExc/162/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="163" select="popExc/163/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="164" select="popExc/164/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="165" select="popExc/165/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="166" select="popExc/166/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="167" select="popExc/167/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="168" select="popExc/168/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="169" select="popExc/169/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="170" select="popExc/170/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="171" select="popExc/171/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="172" select="popExc/172/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="173" select="popExc/173/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="174" select="popExc/174/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="175" select="popExc/175/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="176" select="popExc/176/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="177" select="popExc/177/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="178" select="popExc/178/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="179" select="popExc/179/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="180" select="popExc/180/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="181" select="popExc/181/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="182" select="popExc/182/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="183" select="popExc/183/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="184" select="popExc/184/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="185" select="popExc/185/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="186" select="popExc/186/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="187" select="popExc/187/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="188" select="popExc/188/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="189" select="popExc/189/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="190" select="popExc/190/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="191" select="popExc/191/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="192" select="popExc/192/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="193" select="popExc/193/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="194" select="popExc/194/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="195" select="popExc/195/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="196" select="popExc/196/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="197" select="popExc/197/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="198" select="popExc/198/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="199" select="popExc/199/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="200" select="popExc/200/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="201" select="popExc/201/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="202" select="popExc/202/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="203" select="popExc/203/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="204" select="popExc/204/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="205" select="popExc/205/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="206" select="popExc/206/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="207" select="popExc/207/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="208" select="popExc/208/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="209" select="popExc/209/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="210" select="popExc/210/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="211" select="popExc/211/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="212" select="popExc/212/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="213" select="popExc/213/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="214" select="popExc/214/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="215" select="popExc/215/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="216" select="popExc/216/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="217" select="popExc/217/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="218" select="popExc/218/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="219" select="popExc/219/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="220" select="popExc/220/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="221" select="popExc/221/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="222" select="popExc/222/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="223" select="popExc/223/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="224" select="popExc/224/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="225" select="popExc/225/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="226" select="popExc/226/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="227" select="popExc/227/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="228" select="popExc/228/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="229" select="popExc/229/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="230" select="popExc/230/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="231" select="popExc/231/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="232" select="popExc/232/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="233" select="popExc/233/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="234" select="popExc/234/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="235" select="popExc/235/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="236" select="popExc/236/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="237" select="popExc/237/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="238" select="popExc/238/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="239" select="popExc/239/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="240" select="popExc/240/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="241" select="popExc/241/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="242" select="popExc/242/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="243" select="popExc/243/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="244" select="popExc/244/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="245" select="popExc/245/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="246" select="popExc/246/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="247" select="popExc/247/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="248" select="popExc/248/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="249" select="popExc/249/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="250" select="popExc/250/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="251" select="popExc/251/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="252" select="popExc/252/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="253" select="popExc/253/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="254" select="popExc/254/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="255" select="popExc/255/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="256" select="popExc/256/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="257" select="popExc/257/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="258" select="popExc/258/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="259" select="popExc/259/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="260" select="popExc/260/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="261" select="popExc/261/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="262" select="popExc/262/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="263" select="popExc/263/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="264" select="popExc/264/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="265" select="popExc/265/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="266" select="popExc/266/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="267" select="popExc/267/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="268" select="popExc/268/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="269" select="popExc/269/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="270" select="popExc/270/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="271" select="popExc/271/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="272" select="popExc/272/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="273" select="popExc/273/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="274" select="popExc/274/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="275" select="popExc/275/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="276" select="popExc/276/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="277" select="popExc/277/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="278" select="popExc/278/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="279" select="popExc/279/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="280" select="popExc/280/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="281" select="popExc/281/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="282" select="popExc/282/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="283" select="popExc/283/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="284" select="popExc/284/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="285" select="popExc/285/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="286" select="popExc/286/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="287" select="popExc/287/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="288" select="popExc/288/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="289" select="popExc/289/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="290" select="popExc/290/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="291" select="popExc/291/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="292" select="popExc/292/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="293" select="popExc/293/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="294" select="popExc/294/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="295" select="popExc/295/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="296" select="popExc/296/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="297" select="popExc/297/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="298" select="popExc/298/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="299" select="popExc/299/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="300" select="popExc/300/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="301" select="popExc/301/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="302" select="popExc/302/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="303" select="popExc/303/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="304" select="popExc/304/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="305" select="popExc/305/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="306" select="popExc/306/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="307" select="popExc/307/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="308" select="popExc/308/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="309" select="popExc/309/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="310" select="popExc/310/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="311" select="popExc/311/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="312" select="popExc/312/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="313" select="popExc/313/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="314" select="popExc/314/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="315" select="popExc/315/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="316" select="popExc/316/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="317" select="popExc/317/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="318" select="popExc/318/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="319" select="popExc/319/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="320" select="popExc/320/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="321" select="popExc/321/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="322" select="popExc/322/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="323" select="popExc/323/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="324" select="popExc/324/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="325" select="popExc/325/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="326" select="popExc/326/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="327" select="popExc/327/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="328" select="popExc/328/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="329" select="popExc/329/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="330" select="popExc/330/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="331" select="popExc/331/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="332" select="popExc/332/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="333" select="popExc/333/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="334" select="popExc/334/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="335" select="popExc/335/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="336" select="popExc/336/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="337" select="popExc/337/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="338" select="popExc/338/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="339" select="popExc/339/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="340" select="popExc/340/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="341" select="popExc/341/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="342" select="popExc/342/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="343" select="popExc/343/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="344" select="popExc/344/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="345" select="popExc/345/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="346" select="popExc/346/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="347" select="popExc/347/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="348" select="popExc/348/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="349" select="popExc/349/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="350" select="popExc/350/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="351" select="popExc/351/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="352" select="popExc/352/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="353" select="popExc/353/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="354" select="popExc/354/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="355" select="popExc/355/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="356" select="popExc/356/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="357" select="popExc/357/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="358" select="popExc/358/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="359" select="popExc/359/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="360" select="popExc/360/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="361" select="popExc/361/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="362" select="popExc/362/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="363" select="popExc/363/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="364" select="popExc/364/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="365" select="popExc/365/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="366" select="popExc/366/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="367" select="popExc/367/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="368" select="popExc/368/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="369" select="popExc/369/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="370" select="popExc/370/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="371" select="popExc/371/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="372" select="popExc/372/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="373" select="popExc/373/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="374" select="popExc/374/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="375" select="popExc/375/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="376" select="popExc/376/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="377" select="popExc/377/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="378" select="popExc/378/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="379" select="popExc/379/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="380" select="popExc/380/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="381" select="popExc/381/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="382" select="popExc/382/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="383" select="popExc/383/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="384" select="popExc/384/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="385" select="popExc/385/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="386" select="popExc/386/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="387" select="popExc/387/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="388" select="popExc/388/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="389" select="popExc/389/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="390" select="popExc/390/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="391" select="popExc/391/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="392" select="popExc/392/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="393" select="popExc/393/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="394" select="popExc/394/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="395" select="popExc/395/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="396" select="popExc/396/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="397" select="popExc/397/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="398" select="popExc/398/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="399" select="popExc/399/HH_464198958" eventPort="spike"/> 
+        </EventOutputFile>
+        
+        <EventOutputFile id="Spikes_file__popInh" fileName="Sim_Balanced_610cells_0conns.popInh.spikes" format="ID_TIME">
+            <EventSelection id="0" select="popInh/0/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="1" select="popInh/1/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="2" select="popInh/2/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="3" select="popInh/3/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="4" select="popInh/4/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="5" select="popInh/5/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="6" select="popInh/6/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="7" select="popInh/7/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="8" select="popInh/8/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="9" select="popInh/9/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="10" select="popInh/10/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="11" select="popInh/11/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="12" select="popInh/12/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="13" select="popInh/13/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="14" select="popInh/14/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="15" select="popInh/15/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="16" select="popInh/16/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="17" select="popInh/17/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="18" select="popInh/18/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="19" select="popInh/19/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="20" select="popInh/20/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="21" select="popInh/21/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="22" select="popInh/22/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="23" select="popInh/23/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="24" select="popInh/24/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="25" select="popInh/25/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="26" select="popInh/26/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="27" select="popInh/27/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="28" select="popInh/28/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="29" select="popInh/29/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="30" select="popInh/30/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="31" select="popInh/31/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="32" select="popInh/32/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="33" select="popInh/33/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="34" select="popInh/34/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="35" select="popInh/35/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="36" select="popInh/36/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="37" select="popInh/37/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="38" select="popInh/38/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="39" select="popInh/39/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="40" select="popInh/40/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="41" select="popInh/41/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="42" select="popInh/42/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="43" select="popInh/43/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="44" select="popInh/44/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="45" select="popInh/45/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="46" select="popInh/46/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="47" select="popInh/47/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="48" select="popInh/48/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="49" select="popInh/49/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="50" select="popInh/50/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="51" select="popInh/51/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="52" select="popInh/52/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="53" select="popInh/53/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="54" select="popInh/54/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="55" select="popInh/55/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="56" select="popInh/56/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="57" select="popInh/57/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="58" select="popInh/58/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="59" select="popInh/59/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="60" select="popInh/60/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="61" select="popInh/61/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="62" select="popInh/62/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="63" select="popInh/63/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="64" select="popInh/64/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="65" select="popInh/65/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="66" select="popInh/66/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="67" select="popInh/67/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="68" select="popInh/68/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="69" select="popInh/69/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="70" select="popInh/70/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="71" select="popInh/71/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="72" select="popInh/72/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="73" select="popInh/73/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="74" select="popInh/74/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="75" select="popInh/75/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="76" select="popInh/76/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="77" select="popInh/77/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="78" select="popInh/78/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="79" select="popInh/79/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="80" select="popInh/80/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="81" select="popInh/81/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="82" select="popInh/82/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="83" select="popInh/83/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="84" select="popInh/84/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="85" select="popInh/85/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="86" select="popInh/86/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="87" select="popInh/87/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="88" select="popInh/88/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="89" select="popInh/89/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="90" select="popInh/90/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="91" select="popInh/91/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="92" select="popInh/92/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="93" select="popInh/93/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="94" select="popInh/94/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="95" select="popInh/95/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="96" select="popInh/96/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="97" select="popInh/97/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="98" select="popInh/98/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="99" select="popInh/99/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="100" select="popInh/100/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="101" select="popInh/101/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="102" select="popInh/102/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="103" select="popInh/103/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="104" select="popInh/104/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="105" select="popInh/105/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="106" select="popInh/106/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="107" select="popInh/107/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="108" select="popInh/108/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="109" select="popInh/109/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="110" select="popInh/110/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="111" select="popInh/111/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="112" select="popInh/112/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="113" select="popInh/113/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="114" select="popInh/114/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="115" select="popInh/115/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="116" select="popInh/116/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="117" select="popInh/117/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="118" select="popInh/118/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="119" select="popInh/119/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="120" select="popInh/120/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="121" select="popInh/121/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="122" select="popInh/122/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="123" select="popInh/123/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="124" select="popInh/124/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="125" select="popInh/125/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="126" select="popInh/126/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="127" select="popInh/127/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="128" select="popInh/128/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="129" select="popInh/129/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="130" select="popInh/130/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="131" select="popInh/131/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="132" select="popInh/132/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="133" select="popInh/133/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="134" select="popInh/134/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="135" select="popInh/135/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="136" select="popInh/136/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="137" select="popInh/137/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="138" select="popInh/138/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="139" select="popInh/139/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="140" select="popInh/140/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="141" select="popInh/141/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="142" select="popInh/142/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="143" select="popInh/143/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="144" select="popInh/144/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="145" select="popInh/145/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="146" select="popInh/146/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="147" select="popInh/147/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="148" select="popInh/148/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="149" select="popInh/149/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="150" select="popInh/150/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="151" select="popInh/151/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="152" select="popInh/152/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="153" select="popInh/153/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="154" select="popInh/154/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="155" select="popInh/155/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="156" select="popInh/156/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="157" select="popInh/157/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="158" select="popInh/158/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="159" select="popInh/159/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="160" select="popInh/160/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="161" select="popInh/161/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="162" select="popInh/162/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="163" select="popInh/163/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="164" select="popInh/164/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="165" select="popInh/165/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="166" select="popInh/166/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="167" select="popInh/167/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="168" select="popInh/168/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="169" select="popInh/169/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="170" select="popInh/170/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="171" select="popInh/171/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="172" select="popInh/172/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="173" select="popInh/173/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="174" select="popInh/174/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="175" select="popInh/175/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="176" select="popInh/176/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="177" select="popInh/177/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="178" select="popInh/178/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="179" select="popInh/179/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="180" select="popInh/180/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="181" select="popInh/181/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="182" select="popInh/182/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="183" select="popInh/183/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="184" select="popInh/184/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="185" select="popInh/185/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="186" select="popInh/186/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="187" select="popInh/187/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="188" select="popInh/188/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="189" select="popInh/189/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="190" select="popInh/190/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="191" select="popInh/191/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="192" select="popInh/192/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="193" select="popInh/193/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="194" select="popInh/194/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="195" select="popInh/195/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="196" select="popInh/196/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="197" select="popInh/197/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="198" select="popInh/198/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="199" select="popInh/199/HH_471141261" eventPort="spike"/> 
+        </EventOutputFile>
+        
+        <EventOutputFile id="Spikes_file__popBBP" fileName="Sim_Balanced_610cells_0conns.popBBP.spikes" format="ID_TIME">
+            <EventSelection id="0" select="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+            <EventSelection id="1" select="popBBP/1/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+            <EventSelection id="2" select="popBBP/2/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+            <EventSelection id="3" select="popBBP/3/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+            <EventSelection id="4" select="popBBP/4/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+            <EventSelection id="5" select="popBBP/5/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+            <EventSelection id="6" select="popBBP/6/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+            <EventSelection id="7" select="popBBP/7/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+            <EventSelection id="8" select="popBBP/8/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+            <EventSelection id="9" select="popBBP/9/cADpyr229_L23_PC_5ecbf9b163_0_0" eventPort="spike"/> 
+        </EventOutputFile>
         
     </Simulation>
 
