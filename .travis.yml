@@ -25,13 +25,26 @@ env:
     - OMV_ENGINE=jNeuroML_NetPyNE
     - OMV_ENGINE=jNeuroML_PyNN_NEURON
     - OMV_ENGINE=jNeuroML_validate
+    - OMV_ENGINE=NON_OMV_TESTS
 
 install: 
     - pip install git+https://github.com/OpenSourceBrain/osb-model-validation
+    # Get latest libNeuroML & pyNeuroML
+    - pip install git+https://github.com/NeuralEnsemble/libNeuroML.git@development
+    - pip install git+https://github.com/NeuroML/pyNeuroML
+    - pip install .
 
 script:
-    - omv all -V
+    - omv all -V; export OMV_SUCCESS=$?; echo $OMV_SUCCESS
+    - echo "Finished all OMV tests"
     - omv list-engines
+    - if [[ ${OMV_ENGINE} == "NON_OMV_TESTS" ]]; then echo "Continuing with tests not under OMV..."; else exit $OMV_SUCCESS; fi
+    - echo "Running non OMV tests..."
+    - cd examples
+    - ./regenerateAll.sh
+    - ls -alt
+    - cd ../opencortex/test
+    - nosetests -vs
     
     
     
