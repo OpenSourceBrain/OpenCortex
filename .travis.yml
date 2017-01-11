@@ -5,19 +5,24 @@ sudo: false
 addons:
   apt:
     packages:
+    - python-matplotlib 
+    - python-tk
+    - python-lxml
        # Requirements for Brian & NEST
     - python-numpy 
     - python-scipy 
-    - python-matplotlib 
     - python-sympy
-    
     
 language: python
 python: 2.7
 
+virtualenv:
+    system_site_packages: true
+    
 env:
     - OMV_ENGINE=jNeuroML
     - OMV_ENGINE=jNeuroML_NEURON
+    - OMV_ENGINE=jNeuroML_NetPyNE
     - OMV_ENGINE=jNeuroML_PyNN_NEURON
     - OMV_ENGINE=jNeuroML_validate
     - OMV_ENGINE=NON_OMV_TESTS
@@ -32,6 +37,7 @@ install:
 script:
     - omv all -V; export OMV_SUCCESS=$?; echo $OMV_SUCCESS
     - echo "Finished all OMV tests"
+    - omv list-engines
     - if [[ ${OMV_ENGINE} == "NON_OMV_TESTS" ]]; then echo "Continuing with tests not under OMV..."; else exit $OMV_SUCCESS; fi
     - echo "Running non OMV tests..."
     - cd examples

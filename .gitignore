@@ -72,3 +72,8 @@ build/lib*
 /examples/L23TraubDemo_2cells_1conns.net.nml
 /examples/LEMS_L23TraubDemo_2cells_1conns.xml
 /examples/LEMS_L23TraubDemo_8cells_16conns.xml
+
+/examples/Sim_L23TraubDemo.pop_post.v.dat.n
+/examples/Sim_L23TraubDemo.pop_pre.v.dat.n
+/examples/Sim_L23TraubDemo_2cells_0conns.pop_pre.v.dat.n
+/examples/*.spikes
