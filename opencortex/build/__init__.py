@@ -1948,7 +1948,7 @@ def copy_nml2_source(dir_to_project_nml2,
        os.makedirs(full_path_to_cells)
        
     opencortex.print_comment_v("Will be copying cell component files from %s to %s"%(primary_nml2_dir,full_path_to_cells) )
-    
+
     opencortex.print_comment_v("Will be copying channel component files from %s to %s"%(primary_nml2_dir,full_path_to_channels) )
      
     opencortex.print_comment_v("Will be copying synapse component files from %s to %s"%(primary_nml2_dir,full_path_to_synapses) )
@@ -1996,6 +1996,30 @@ def copy_nml2_source(dir_to_project_nml2,
               if channel_tag in file_name:
            
                  shutil.copy(full_file_name,full_path_to_channels)
+                 
+                 
+#########################################################################################
+
+def include_neuroml2_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
+    
+    nml2_doc_cell = pynml.read_neuroml2_file(cell_nml2_path, include_includes=False)
+    
+    for cell in _get_cells_of_all_known_types(nml2_doc_cell):
+        if cell.id == cell_id:
+            all_cells[cell_id] = cell
+            
+            new_file = cell_nml2_path
+            nml_doc.includes.append(neuroml.IncludeType(new_file)) 
+            if not new_file in all_included_files:
+                all_included_files.append(new_file)
+            
+            for included in nml2_doc_cell.includes:
+                
+                new_loc = included.href
+                nml_doc.includes.append(neuroml.IncludeType(new_loc))
+                if not new_loc in all_included_files:
+                    all_included_files.append(new_loc)
+              
               
 #########################################################################################
 def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id,use_prototypes=True):
@@ -3141,6 +3165,8 @@ def generate_lems_simulation(nml_doc,
                              save_all_segments = False,
                              gen_saves_for_only_populations = [],  #  List of populations, all pops if = []
                              gen_saves_for_quantities = {},   #  Dict with file names vs lists of quantity paths
+                             gen_spike_saves_for_all_somas = False,
+                             spike_time_format='ID_TIME',
                              seed=12345):
                                  
     lems_file_name = "LEMS_%s.xml"%network.id
@@ -3163,6 +3189,8 @@ def generate_lems_simulation(nml_doc,
                                    save_all_segments = save_all_segments,
                                    gen_saves_for_only_populations = gen_saves_for_only_populations,
                                    gen_saves_for_quantities = gen_saves_for_quantities,
+                                   gen_spike_saves_for_all_somas = gen_spike_saves_for_all_somas,
+                                   spike_time_format = spike_time_format,
                                    seed=seed)
                                    
     del include_extra_lems_files[:]

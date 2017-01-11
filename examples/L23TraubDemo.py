@@ -3,17 +3,16 @@ import opencortex.build as oc
 
 import sys
 
-num_rs_default = 2
-num_bask_default = 2
+DEFAULT_RS_POP_SIZE = 1
+DEFAULT_BASK_POP_SIZE = 1
 
 def generate(reference = "L23TraubDemo",
-             num_rs = num_rs_default,
-             num_bask = num_bask_default,
+             num_rs = DEFAULT_RS_POP_SIZE,
+             num_bask = DEFAULT_BASK_POP_SIZE,
              scalex=1,
              scaley=1,
              scalez=1,
-             connections=True,
-             conn_probability=0.3,
+             connections=False,
              poisson_inputs=True,
              poisson_inputs_per_cell=1,
              offset_curents=False,
@@ -82,6 +81,12 @@ def generate(reference = "L23TraubDemo",
                                     pfs.id,
                                     number_per_cell = poisson_inputs_per_cell,
                                     all_cells=True)
+                                    
+        oc.add_inputs_to_population(network,
+                                    "Stim1",
+                                    pop_bask,
+                                    pfs.id,
+                                    all_cells=True)
     if offset_curents:
 
         pg0 = oc.add_pulse_generator(nml_doc,
@@ -97,7 +102,7 @@ def generate(reference = "L23TraubDemo",
                                     all_cells=True)
 
         oc.add_inputs_to_population(network,
-                                    "Stim0",
+                                    "Stim1",
                                     pop_bask,
                                     pg0.id,
                                     all_cells=True)
@@ -150,8 +155,8 @@ def generate(reference = "L23TraubDemo",
         if proj:                           
             total_conns += len(proj.connection_wds)
         
-        
-    if num_rs != num_rs_default or num_bask!=num_bask_default:
+
+    if num_rs != DEFAULT_RS_POP_SIZE or num_bask!=DEFAULT_BASK_POP_SIZE:
         new_reference = '%s_%scells_%sconns'%(nml_doc.id,num_rs+num_bask,total_conns)
         network.id = new_reference
         nml_doc.id = new_reference

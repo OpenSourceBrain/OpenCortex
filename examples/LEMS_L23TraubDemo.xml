@@ -38,34 +38,18 @@
     <Include file="L23TraubDemo/naf2__a0__b0__c0__d0__fastNa_shiftmin2_5.channel.nml"/>
     <Include file="L23TraubDemo.net.nml"/>
    
-    <Simulation id="Sim_L23TraubDemo" length="100ms" step="0.025ms" target="L23TraubDemo" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="Sim_L23TraubDemo" length="300ms" step="0.025ms" target="L23TraubDemo" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
-        <Display id="Display_pop_rs_0_v" title="Plots of Display_pop_rs_0_v" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-90" ymax="50">
+        <Display id="Display_pop_rs_0_v" title="Plots of Display_pop_rs_0_v" timeScale="1ms" xmin="-30.0" xmax="330.0" ymin="-90" ymax="50">
             <Line id="pop_rs_0_L23PyrRS_0_v" quantity="pop_rs/0/L23PyrRS/0/v" scale="1" color="#6aa799" timeScale="1ms"/>
         </Display>
         
-        <Display id="Display_pop_rs_1_v" title="Plots of Display_pop_rs_1_v" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-90" ymax="50">
-            <Line id="pop_rs_1_L23PyrRS_0_v" quantity="pop_rs/1/L23PyrRS/0/v" scale="1" color="#029a72" timeScale="1ms"/>
-        </Display>
-        
-        <Display id="Display_pop_bask_0_v" title="Plots of Display_pop_bask_0_v" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-90" ymax="50">
-            <Line id="pop_bask_0_SupBasket_0_v" quantity="pop_bask/0/SupBasket/0/v" scale="1" color="#d340bb" timeScale="1ms"/>
-        </Display>
-        
-        <Display id="Display_pop_bask_1_v" title="Plots of Display_pop_bask_1_v" timeScale="1ms" xmin="-10.0" xmax="110.0" ymin="-90" ymax="50">
-            <Line id="pop_bask_1_SupBasket_0_v" quantity="pop_bask/1/SupBasket/0/v" scale="1" color="#4c73a9" timeScale="1ms"/>
+        <Display id="Display_pop_bask_0_v" title="Plots of Display_pop_bask_0_v" timeScale="1ms" xmin="-30.0" xmax="330.0" ymin="-90" ymax="50">
+            <Line id="pop_bask_0_SupBasket_0_v" quantity="pop_bask/0/SupBasket/0/v" scale="1" color="#029a72" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Sim_L23TraubDemo_pop_bask_0_v_dat" fileName="Sim_L23TraubDemo.pop_bask.0.v.dat">
             <OutputColumn id="pop_bask_0_SupBasket_0_v" quantity="pop_bask/0/SupBasket/0/v"/> 
-        </OutputFile>
-        
-        <OutputFile id="Sim_L23TraubDemo_pop_rs_1_v_dat" fileName="Sim_L23TraubDemo.pop_rs.1.v.dat">
-            <OutputColumn id="pop_rs_1_L23PyrRS_0_v" quantity="pop_rs/1/L23PyrRS/0/v"/> 
-        </OutputFile>
-        
-        <OutputFile id="Sim_L23TraubDemo_pop_bask_1_v_dat" fileName="Sim_L23TraubDemo.pop_bask.1.v.dat">
-            <OutputColumn id="pop_bask_1_SupBasket_0_v" quantity="pop_bask/1/SupBasket/0/v"/> 
         </OutputFile>
         
         <OutputFile id="Sim_L23TraubDemo_pop_rs_0_v_dat" fileName="Sim_L23TraubDemo.pop_rs.0.v.dat">
