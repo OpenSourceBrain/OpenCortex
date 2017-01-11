@@ -1,0 +1,20 @@
+opencortex Package
+==================
+
+:mod:`opencortex` Package
+-------------------------
+
+.. automodule:: opencortex.__init__
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Subpackages
+-----------
+
+.. toctree::
+
+    opencortex.build
+    opencortex.utils
+
+
