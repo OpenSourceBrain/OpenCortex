@@ -223,6 +223,5 @@ if __name__ == '__main__':
                  global_delay = 2)
     else:
         generate(global_delay = 5,
-                 conn_probability=.7,
                  poisson_inputs_per_cell =10,
                  offset_curents=False)
