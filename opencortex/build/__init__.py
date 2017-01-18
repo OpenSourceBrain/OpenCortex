@@ -175,7 +175,7 @@ def include_neuroml2_cell_and_channels(nml_doc,cell_nml2_path, cell_id):
 def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id):
     
     cell_nml2_path = os.path.dirname(__file__)+"/../../NeuroML2/prototypes/"+cell_nml2_rel_path
-    print("Translated %s to %s"%(cell_nml2_rel_path,cell_nml2_path))
+    opencortex.print_comment("Translated %s to %s"%(cell_nml2_rel_path,cell_nml2_path))
     nml2_doc_cell = pynml.read_neuroml2_file(cell_nml2_path, include_includes=False)
     
     for cell in _get_cells_of_all_known_types(nml2_doc_cell):
@@ -191,7 +191,7 @@ def add_cell_and_channels(nml_doc,cell_nml2_rel_path, cell_id):
             for included in nml2_doc_cell.includes:
                 #Todo replace... quick & dirty...
                 old_loc = '%s/%s'%(os.path.dirname(os.path.abspath(cell_nml2_path)), included.href)
-                print old_loc
+                
                 _copy_to_dir_for_model(nml_doc,old_loc)
                 new_loc = '%s/%s'%(nml_doc.id,included.href)
                 nml_doc.includes.append(neuroml.IncludeType(new_loc))
@@ -331,6 +331,8 @@ def save_network(nml_doc, nml_file_name, validate=True, comment=True, format='xm
     
     if format == 'xml':
         writers.NeuroMLWriter.write(nml_doc, nml_file_name)
+    elif format == 'xml_hdf5':
+        writers.NeuroMLHdf5Writer.write_xml_and_hdf5(nml_doc, nml_file_name, '%s.h5'%nml_file_name)
     elif format == 'hdf5':
         writers.NeuroMLHdf5Writer.write(nml_doc, nml_file_name)
     
