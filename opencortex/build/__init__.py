@@ -366,9 +366,11 @@ def generate_lems_simulation(nml_doc,
                              gen_saves_for_quantities = {},   #  Dict with file names vs lists of quantity paths
                              gen_spike_saves_for_all_somas = False,
                              spike_time_format='ID_TIME',
+                             lems_file_name = None,
                              seed=12345):
-                                 
-    lems_file_name = "LEMS_%s.xml"%network.id
+                
+    if not lems_file_name:
+        lems_file_name = "LEMS_%s.xml"%network.id
     
     include_extra_lems_files.extend(all_included_files)
     
