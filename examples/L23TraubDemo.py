@@ -172,5 +172,19 @@ if __name__ == '__main__':
                  poisson_inputs=False,
                  offset_curents=True,
                  segments_to_plot_record = {'pop_bask':[0,117,104,55]})
+                 
+                 
+        
+        generate(num_rs = 8,
+                 num_bask=4,
+                 duration = 200,
+                 connections = True,
+                 global_delay = 2)
+        
+        generate(num_rs = 32,
+                 num_bask=16,
+                 duration = 200,
+                 connections = True,
+                 global_delay = 2)
     else:
         generate(global_delay = 5)
