@@ -3133,6 +3133,8 @@ def save_network(nml_doc, nml_file_name, validate=True, comment=True, format='xm
     
     if format == 'xml':
         writers.NeuroMLWriter.write(nml_doc, nml_file_name)
+    elif format == 'xml_hdf5':
+        writers.NeuroMLHdf5Writer.write_xml_and_hdf5(nml_doc, nml_file_name, '%s.h5'%nml_file_name)
     elif format == 'hdf5':
         writers.NeuroMLHdf5Writer.write(nml_doc, nml_file_name)
     
@@ -3167,9 +3169,11 @@ def generate_lems_simulation(nml_doc,
                              gen_saves_for_quantities = {},   #  Dict with file names vs lists of quantity paths
                              gen_spike_saves_for_all_somas = False,
                              spike_time_format='ID_TIME',
+                             lems_file_name = None,
                              seed=12345):
-                                 
-    lems_file_name = "LEMS_%s.xml"%network.id
+                
+    if not lems_file_name:
+        lems_file_name = "LEMS_%s.xml"%network.id
     
     include_extra_lems_files.extend(all_included_files)
     
