@@ -78,3 +78,16 @@ build/lib*
 /examples/Sim_L23TraubDemo_2cells_0conns.pop_pre.v.dat.n
 /examples/*.spikes
 /private/cache/retriever/catalog.xml
+
+/notebooks/*.mod
+/notebooks/*.hoc
+/notebooks/*.dat
+/notebooks/x86_64
+/notebooks/*.xml
+/notebooks/*.nml
+/notebooks/TestIClamp
+/notebooks/*.py
+/notebooks/*.png
+/notebooks/*.svg
+/notebooks/.ipynb_checkpoints/
+
