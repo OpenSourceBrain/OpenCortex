@@ -8,6 +8,7 @@ python Deterministic.py
 python Recording.py
 python L23TraubDemo.py
 python ACNet.py
+python GapJunctions.py
 
 python Balanced.py -all
 

@@ -17,7 +17,7 @@ def print_comment_v(text):
     
 def print_comment(text, print_it=verbose):
     """
-    Print a comment if print_it == True
+    Print a comment only if print_it == True
     """
     prefix = "OpenCortex >>> "
     if not isinstance(text, str): text = text.decode('ascii')
