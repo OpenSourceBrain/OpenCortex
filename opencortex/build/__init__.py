@@ -392,7 +392,7 @@ def add_probabilistic_projection_list(net,
 
 ##############################################################################################
 
-def add_chem_projection0(nml_doc,
+def add_targeted_projection(nml_doc,
                          net,
                          prefix,
                          presynaptic_population,
@@ -404,7 +404,10 @@ def add_chem_projection0(nml_doc,
                          post_segment_group,
                          delays_dict=None,
                          weights_dict=None):
-
+    '''
+    Adds a projection from `presynaptic_population` to `postsynaptic_population`, specifically limiting connections presynaptically 
+    to `pre_segment_group` and postsynaptically to `post_segment_group`.
+    '''
 
     if presynaptic_population.size == 0 or postsynaptic_population.size == 0:
         return None
@@ -448,7 +451,7 @@ def add_chem_projection0(nml_doc,
     subset_dict[post_segment_group] = number_conns_per_cell
 
 
-    add_chem_projection(net,
+    add_targeted_projection_by_dicts(net,
                         projections,
                         presynaptic_population,
                         postsynaptic_population,
@@ -465,7 +468,7 @@ def add_chem_projection0(nml_doc,
 
 ############################################################################################## 
 
-def add_chem_projection(net,
+def add_targeted_projection_by_dicts(net,
                         proj_array,
                         presynaptic_population,
                         postsynaptic_population,

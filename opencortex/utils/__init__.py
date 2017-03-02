@@ -357,7 +357,7 @@ def build_projection(net,
     if distance_dependent_rule == None:
 
         if proj_type == 'Chem':
-            proj_array = oc_build.add_chem_projection(net,
+            proj_array = oc_build.add_targeted_projection_by_dicts(net,
                                                       proj_array,
                                                       presynaptic_population,
                                                       postsynaptic_population,
@@ -3427,28 +3427,28 @@ def check_inputs(input_params, popDict, path_to_cells, path_to_synapses=None):
 
                                                             error_counter += 1
 
-                                               else:
+                                                        else:
 
-                                                  if (test_region_key[region][dim_key][0]-test_region_key[region][dim_key][1]) == 0:
+                                                          if (test_region_key[region][dim_key][0]-test_region_key[region][dim_key][1]) == 0:
 
-                                                     opencortex.print_comment_v("ValueError in input parameters: the lists stored by 'XVector', 'YVector' and 'ZVector'"
-                                                     " must contain two different values.")
+                                                             opencortex.print_comment_v("ValueError in input parameters: the lists stored by 'XVector', 'YVector' and 'ZVector'"
+                                                             " must contain two different values.")
 
-                                                     error_counter += 1
+                                                             error_counter += 1
 
-                       except KeyError:
+                            except KeyError:
 
-                         opencortex.print_comment_v("KeyError in input parameters: 'LocationSpecific' is True but the key 'TargetRegions' is not in input parameters.")
+                              opencortex.print_comment_v("KeyError in input parameters: 'LocationSpecific' is True but the key 'TargetRegions' is not in input parameters.")
 
-                         error_counter += 1
+                              error_counter += 1
 
 
 
-               except KeyError:
+                except KeyError:
 
-                  opencortex.print_comment_v("KeyError in input parameters: the key 'LocationSpecific' is not in input parameters.")
+                   opencortex.print_comment_v("KeyError in input parameters: the key 'LocationSpecific' is not in input parameters.")
 
-                  error_counter += 1
+                   error_counter += 1
 
     if error_counter == 0:
 
