@@ -2,10 +2,10 @@ system: Test Simple
 experiments:
     0:
         expected:
-            spike times: [70.075, 248.0, 443.2]
+            spike times: [166.125, 183.925, 351.4, 496.025]
     1:
         expected:
-            spike times: [102.375, 212.125, 451.625]
+            spike times: [47.775, 342.57500000000005]
     2:
         expected:
-            spike times: [102.55, 185.625, 325.35]
+            spike times: [55.9, 144.6, 435.075]

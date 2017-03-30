@@ -44,14 +44,16 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'OpenCortex'
-copyright = u'2016, OpenCortex authors and contributors'
+copyright = u'2017, OpenCortex authors and contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = opencortex.__version__
+for l in open('../opencortex/__init__.py'):
+    if '__version__' in l:
+        version = l.split("'")[1]
 # The full version, including alpha/beta/rc tags.
 release = opencortex.__version__
 
