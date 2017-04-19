@@ -1,5 +1,5 @@
 
-import opencortex.build as oc
+import opencortex.core as oc
 
 import sys
 
@@ -24,8 +24,8 @@ def generate(reference = "L23TraubDemo",
     nml_doc, network = oc.generate_network(reference)
 
     #oc.add_cell_and_channels(nml_doc, 'acnet2/pyr_4_sym.cell.nml','pyr_4_sym')
-    oc.add_cell_and_channels(nml_doc, 'Thalamocortical/L23PyrRS.cell.nml','L23PyrRS')
-    oc.add_cell_and_channels(nml_doc, 'Thalamocortical/SupBasket.cell.nml','SupBasket')
+    oc.include_opencortex_cell(nml_doc, 'Thalamocortical/L23PyrRS.cell.nml')
+    oc.include_opencortex_cell(nml_doc, 'Thalamocortical/SupBasket.cell.nml')
     
     xDim = 500*scalex
     yDim = 200*scaley

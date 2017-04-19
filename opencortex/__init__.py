@@ -1,9 +1,20 @@
+###############################################################
+### 
+### Note: OpenCortex is under active development, the API is subject to change without notice!!
+### 
+### Authors: Padraig Gleeson, Rokas Stanislovas
+###
+### This software has been funded by the Wellcome Trust, as well as a GSoC 2016 project 
+### on Cortical Network develoment
+###
+##############################################################
+
 print("\n*********************************************************************************************")
 print("          Please note that OpenCortex is in a very preliminary state ");
 print("          and the API is subject to change without notice!  ")
 print("*********************************************************************************************\n")
 
-__version__ = '0.0.8'
+__version__ = '0.1.0'
 
 
 verbose = False

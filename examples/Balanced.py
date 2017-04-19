@@ -3,7 +3,8 @@ Generates a NeuroML 2 file with many types of cells, populations and inputs
 for testing purposes
 '''
 
-import opencortex.build as oc
+
+import opencortex.core as oc
 import sys
 
 
@@ -32,11 +33,11 @@ def generate(reference = "Balanced",
     
     nml_doc, network = oc.generate_network(reference)
 
-    oc.add_cell_and_channels(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_464198958.cell.nml','HH_464198958')
-    oc.add_cell_and_channels(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_471141261.cell.nml','HH_471141261')
+    oc.include_opencortex_cell(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_464198958.cell.nml')
+    oc.include_opencortex_cell(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_471141261.cell.nml')
     
     if num_bbp>0:
-        oc.add_cell_and_channels(nml_doc, 'BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml', 'cADpyr229_L23_PC_5ecbf9b163_0_0')
+        oc.include_opencortex_cell(nml_doc, 'BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml')
 
     xDim = 400*scalex
     yDim = 500*scaley

@@ -1,6 +1,8 @@
 opencortex build Package
 ========================
 
+Utility functions for OpenCortex. See :mod:`opencortex.core` for the main module for user interaction with OpenCortex.
+
 :mod:`opencortex.build` Package
 -------------------------------
 

@@ -1,10 +1,11 @@
-#####################
-### Subject to change without notice!!
-#####################
-##############################################################
-### Author : Rokas Stanislovas
+###############################################################
+### 
+### Note: OpenCortex is under active development, the API is subject to change without notice!!
+### 
+### Authors: Padraig Gleeson, Rokas Stanislovas
 ###
-### GSoC 2016 project: Cortical Networks
+### This software has been funded by the Wellcome Trust, as well as a GSoC 2016 project 
+### on Cortical Network develoment
 ###
 ##############################################################
 
@@ -72,7 +73,7 @@ def add_populations_in_rectangular_layers(net, boundaryDict, popDict, x_vector, 
 
             if storeSoma:
 
-                pop, cellPositions = oc_build.add_population_in_rectangular_region(net,
+                pop, cellPositions = oc_build._add_population_in_rectangular_region(net,
                                                                                    cell_pop,
                                                                                    cell_model,
                                                                                    size,
@@ -89,7 +90,7 @@ def add_populations_in_rectangular_layers(net, boundaryDict, popDict, x_vector, 
 
             else:
 
-                pop = oc_build.add_population_in_rectangular_region(net,
+                pop = oc_build._add_population_in_rectangular_region(net,
                                                                     cell_pop,
                                                                     cell_model,
                                                                     size,
@@ -370,7 +371,7 @@ def build_projection(net,
                                                       weights_dict) 
 
         if proj_type == 'Elect':
-            proj_array = oc_build.add_elect_projection(net,
+            proj_array = oc_build._add_elect_projection(net,
                                                        proj_array,
                                                        presynaptic_population,
                                                        postsynaptic_population,
@@ -1496,7 +1497,7 @@ def build_inputs(nml_doc, net, population_params, input_params, cached_dicts=Non
 
                                 for input_index in range(0, len(input_group_params['AverageRateList'])):
 
-                                    tpfs = oc_build.add_transient_poisson_firing_synapse(nml_doc=nml_doc, 
+                                    tpfs = oc_build._add_transient_poisson_firing_synapse(nml_doc=nml_doc, 
                                                                                          id=input_group_tag + "_TransPoiSyn%d" % input_index, 
                                                                                          average_rate="%f %s" % (input_group_params['AverageRateList'][input_index], input_group_params['RateUnits']),
                                                                                          delay="%f %s" % (input_group_params['DelayList'][input_index], input_group_params['TimeUnits']),
@@ -1510,7 +1511,7 @@ def build_inputs(nml_doc, net, population_params, input_params, cached_dicts=Non
 
                                 for input_index in range(0, len(input_group_params['AverageRateList'])):
 
-                                    pfs = oc_build.add_poisson_firing_synapse(nml_doc=nml_doc, 
+                                    pfs = oc_build._add_poisson_firing_synapse(nml_doc=nml_doc, 
                                                                               id=input_group_tag + "_PoiSyn%d" % input_index, 
                                                                               average_rate="%f %s" % (input_group_params['AverageRateList'][input_index], input_group_params['RateUnits']), 
                                                                               synapse_id=input_group_params['Synapse'])
@@ -1528,7 +1529,7 @@ def build_inputs(nml_doc, net, population_params, input_params, cached_dicts=Non
 
                                 for input_index in range(0, len(input_group_params['AmplitudeList'])):
 
-                                    pg = oc_build.add_pulse_generator(nml_doc=nml_doc, 
+                                    pg = oc_build._add_pulse_generator(nml_doc=nml_doc, 
                                                                       id=input_group_tag + "_Pulse%d" % input_index, 
                                                                       delay="%f %s" % (input_group_params['DelayList'][input_index], input_group_params['TimeUnits']),
                                                                       duration="%f %s" % (input_group_params['DurationList'][input_index], input_group_params['TimeUnits']), 
@@ -1548,7 +1549,7 @@ def build_inputs(nml_doc, net, population_params, input_params, cached_dicts=Non
 
                                         random_amplitude = random.uniform(input_group_params['SmallestAmplitudeList'][input_index], input_group_params['LargestAmplitudeList'][input_index])
 
-                                        pg = oc_build.add_pulse_generator(nml_doc=nml_doc, 
+                                        pg = oc_build._add_pulse_generator(nml_doc=nml_doc, 
                                                                           id=input_group_tag + "_Pulse%d_Cell%d" % (input_index, cell), 
                                                                           delay="%f %s" % (input_group_params['DelayList'][input_index], input_group_params['TimeUnits']),
                                                                           duration="%f %s" % (input_group_params['DurationList'][input_index], input_group_params['TimeUnits']), 
@@ -1566,7 +1567,7 @@ def build_inputs(nml_doc, net, population_params, input_params, cached_dicts=Non
 
                             for input_index in range(0, len(input_group_params['AverageRateList'])):
 
-                                ssp = oc_build.add_spike_source_poisson(nml_doc=nml_doc, 
+                                ssp = oc_build._add_spike_source_poisson(nml_doc=nml_doc, 
                                                                         id=input_group_tag + "_SpSourcePoi%d" % input_index, 
                                                                         start="%f %s" % (input_group_params['DelayList'][input_index], input_group_params['TimeUnits']),
                                                                         duration="%f %s" % (input_group_params['DurationList'][input_index], input_group_params['TimeUnits']),

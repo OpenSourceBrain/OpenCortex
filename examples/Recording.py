@@ -2,7 +2,7 @@
 Generates a NeuroML 2 file with a LEMS file recording many details of the network
 '''
 
-import opencortex.build as oc
+import opencortex.core as oc
 
 
 nml_doc, network = oc.generate_network("Recording")
@@ -10,10 +10,10 @@ nml_doc, network = oc.generate_network("Recording")
 
 #####   Cells
 
-oc.add_cell_and_channels(nml_doc, 'izhikevich/RS.cell.nml','RS')
-oc.add_cell_and_channels(nml_doc, 'iaf/iaf.cell.nml','iaf')
-oc.add_cell_and_channels(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml','pyr_4_sym_soma')
-oc.add_cell_and_channels(nml_doc, 'acnet2/pyr_4_sym.cell.nml','pyr_4_sym')
+oc.include_opencortex_cell(nml_doc, 'izhikevich/RS.cell.nml')
+oc.include_opencortex_cell(nml_doc, 'iaf/iaf.cell.nml')
+oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml')
+oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym.cell.nml')
 
 xDim = 500
 yDim = 100

@@ -1,0 +1,15 @@
+opencortex core Package
+=======================
+
+This is the main module for user interaction with OpenCortex.
+
+:mod:`opencortex.core` Package
+------------------------------
+
+.. automodule:: opencortex.core
+    :members:
+    :undoc-members:
+    :show-inheritance: 
+
+
+

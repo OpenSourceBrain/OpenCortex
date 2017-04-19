@@ -3,7 +3,7 @@ Generates a complex NeuroML 2 file with many types of cells, populations and inp
 for testing purposes
 '''
 
-import opencortex.build as oc
+import opencortex.core as oc
 
 
 nml_doc, network = oc.generate_network("Complex")
@@ -17,11 +17,11 @@ def scale_pop_size(baseline):
 #####   Cells
 
 #oc.add_cell_prototype(nml_doc, 'izhikevich/Izh_471141261.cell.nml')
-oc.add_cell_and_channels(nml_doc, 'izhikevich/RS.cell.nml','RS')
-oc.add_cell_and_channels(nml_doc, 'iaf/iaf.cell.nml','iaf')
-oc.add_cell_and_channels(nml_doc, 'iaf/iafRef.cell.nml','iafRef')
-oc.add_cell_and_channels(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml','pyr_4_sym_soma')
-oc.add_cell_and_channels(nml_doc, 'acnet2/pyr_4_sym.cell.nml','pyr_4_sym')
+oc.include_opencortex_cell(nml_doc, 'izhikevich/RS.cell.nml')
+oc.include_opencortex_cell(nml_doc, 'iaf/iaf.cell.nml')
+oc.include_opencortex_cell(nml_doc, 'iaf/iafRef.cell.nml')
+oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml')
+oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym.cell.nml')
 
 xDim = 500
 yDim = 100

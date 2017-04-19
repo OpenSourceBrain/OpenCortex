@@ -1,12 +1,12 @@
 
-import opencortex.build as oc
+import opencortex.core as oc
 
 population_size0 = 10
 population_size1 = 10
 
 nml_doc, network = oc.generate_network("SpikingNet")
 
-oc.add_cell_and_channels(nml_doc, 'izhikevich/RS.cell.nml','RS')
+oc.include_opencortex_cell(nml_doc, 'izhikevich/RS.cell.nml')
 
 pop_pre = oc.add_population_in_rectangular_region(network,
                                               'pop_pre',

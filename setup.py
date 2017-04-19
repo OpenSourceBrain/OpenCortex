@@ -9,6 +9,7 @@ setup(
     author='Rokas Stanislovas and Padraig Gleeson',
     author_email='p.gleeson@gmail.com',
     packages = ['opencortex',
+                'opencortex.core',
                 'opencortex.build',
                 'opencortex.test',
                 'opencortex.utils'],

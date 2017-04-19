@@ -7,7 +7,9 @@
 ### GSoC 2016 project: Cortical Networks
 ###
 ##############################################################
-import opencortex.build as oc
+
+import opencortex.core as oc
+import opencortex.build as oc_build
 import opencortex.utils as oc_utils
 import neuroml
 import numpy as np
@@ -138,7 +140,7 @@ class TestUtilsMethods(unittest.TestCase):
           
           for pop_id in popDict.keys():
           
-              cell_diameter=oc.get_soma_diameter(popDict[pop_id][2])
+              cell_diameter=oc_build.get_soma_diameter(popDict[pop_id][2])
               
               cell_diameters[popDict[pop_id][2]]=cell_diameter
           
@@ -182,7 +184,7 @@ class TestUtilsMethods(unittest.TestCase):
                   
                          inner_location=inner_instance_case.location
                          
-                         d=oc.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
+                         d=oc_build.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
                          
                          self.assertTrue( d < (cell_diameters[pop.component]+cell_diameters[pop.component] )/2 )
                          
@@ -200,7 +202,7 @@ class TestUtilsMethods(unittest.TestCase):
                   
                                 inner_location=inner_instance_case.location
                          
-                                d=oc.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
+                                d=oc_build.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
                          
                                 self.assertTrue( d < (cell_diameters[pop_inner.component]+cell_diameters[pop_inner.component] )/2 )
                          
@@ -253,7 +255,7 @@ class TestUtilsMethods(unittest.TestCase):
                   
                   location=instance_case.location
                   
-                  self.assertTrue(oc.distance([location.x,location.z],[0,0])  <= 250 )
+                  self.assertTrue(oc_build.distance([location.x,location.z],[0,0])  <= 250 )
                   
                   self.assertTrue(boundaries[popDict[pop.id][1]][0] >= location.y and location.y >= boundaries[popDict[pop.id][1]][1] )  
                   
@@ -298,7 +300,7 @@ class TestUtilsMethods(unittest.TestCase):
           
           for pop_id in popDict.keys():
           
-              cell_diameter=oc.get_soma_diameter(popDict[pop_id][2])
+              cell_diameter=oc_build.get_soma_diameter(popDict[pop_id][2])
               
               cell_diameters[popDict[pop_id][2]]=cell_diameter
           
@@ -341,7 +343,7 @@ class TestUtilsMethods(unittest.TestCase):
                   
                          inner_location=inner_instance_case.location
                          
-                         d=oc.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
+                         d=oc_build.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
                          
                          self.assertTrue( d < (cell_diameters[pop.component]+cell_diameters[pop.component] )/2 )
                          
@@ -359,7 +361,7 @@ class TestUtilsMethods(unittest.TestCase):
                   
                                 inner_location=inner_instance_case.location
                          
-                                d=oc.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
+                                d=oc_build.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
                          
                                 self.assertTrue( d < (cell_diameters[pop_inner.component]+cell_diameters[pop_inner.component] )/2 )   
                                 
@@ -445,7 +447,7 @@ class TestUtilsMethods(unittest.TestCase):
                   
                   location=instance_case.location
                   
-                  self.assertTrue(oc.distance([location.x,location.z],[0,0])  <= 250 )
+                  self.assertTrue(oc_build.distance([location.x,location.z],[0,0])  <= 250 )
                   
                   self.assertTrue(boundaries[popDict[pop.id][1]][0] >= location.y and location.y >= boundaries[popDict[pop.id][1]][1] ) 
                   
@@ -833,7 +835,7 @@ class TestUtilsMethods(unittest.TestCase):
                                 
           cell_object=document_cell.cells[0]
           
-          CG3D_L23PyrRS_target_segs=oc.extract_seg_ids(cell_object,
+          CG3D_L23PyrRS_target_segs=oc_build.extract_seg_ids(cell_object,
                                                       target_compartment_array=['dendrite_group'],
                                                       targeting_mode='segGroups')
                                                       
@@ -846,7 +848,7 @@ class TestUtilsMethods(unittest.TestCase):
                                 
           cell_object=document_cell.cells[0]
           
-          CG3D_L23PyrFRB_target_segs=oc.extract_seg_ids(cell_object,
+          CG3D_L23PyrFRB_target_segs=oc_build.extract_seg_ids(cell_object,
                                                       target_compartment_array=['dendrite_group'],
                                                       targeting_mode='segGroups')
                                                       

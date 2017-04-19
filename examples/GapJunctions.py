@@ -1,4 +1,4 @@
-import opencortex.build as oc
+import opencortex.core as oc
 import sys
 
 '''
@@ -18,7 +18,7 @@ def generate(reference = "GapJunctions",
 
     nml_doc, network = oc.generate_network(reference)
 
-    oc.add_cell_and_channels(nml_doc, 'acnet2/pyr_4_sym.cell.nml','pyr_4_sym')
+    oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym.cell.nml')
 
     xDim = 500
     yDim = 50
@@ -51,7 +51,7 @@ def generate(reference = "GapJunctions",
     if connections:
 
         this_syn=gj_syn.id
-        proj = oc.add_elect_projection0(nml_doc, 
+        proj = oc.add_targeted_electrical_projection(nml_doc, 
                                         network,
                                         "Proj0",
                                         pop_pre,
