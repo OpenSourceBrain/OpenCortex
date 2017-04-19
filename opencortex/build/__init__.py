@@ -1920,6 +1920,8 @@ def _include_neuroml2_cell_and_channels(nml_doc, cell_nml2_path, cell_id):
                 nml_doc.includes.append(neuroml.IncludeType(new_loc))
                 if not new_loc in all_included_files:
                     all_included_files.append(new_loc)
+                    
+    cell_ids_vs_nml_docs[cell_id] = nml2_doc_cell
 
 
 #########################################################################################

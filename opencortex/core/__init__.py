@@ -513,7 +513,7 @@ def add_inputs_to_population(net, id, population, input_comp_id, number_per_cell
         id of the <inputList> to be created
         
     `population` 
-        id of the <population> to be targeted
+        the <population> to be targeted
         
     `input_comp_id` 
         id of the component to be used for the input (e.g. added with add_pulse_generator())
@@ -552,6 +552,90 @@ def add_inputs_to_population(net, id, population, input_comp_id, number_per_cell
         for i in range(number_per_cell):
             input = neuroml.Input(id=count, 
                                   target="../%s/%i/%s" % (population.id, cell_id, population.component), 
+                                  destination="synapses")  
+            input_list.input.append(input)
+            count += 1
+
+    if count > 0:                 
+        net.input_lists.append(input_list)
+
+    return input_list
+
+
+
+
+##############################################################################################
+
+def add_targeted_inputs_to_population(net, id, population, input_comp_id, segment_group, number_per_cell=1, all_cells=False, only_cells=None):
+    
+    """
+    Add current input to the specified population. Attributes:
+    
+    `net`
+        reference to the network object previously created
+
+    `id` 
+        id of the <inputList> to be created
+        
+    `population` 
+        the <population> to be targeted
+        
+    `input_comp_id` 
+        id of the component to be used for the input (e.g. added with add_pulse_generator())
+        
+    `segment_group`
+        which segment group on the target cells to limit input locations to 
+
+        
+    `number_per_cell`
+        How many inputs to apply to each cell of the population. Default 1
+        
+    `all_cells`
+        whether to target all cells. Default False
+        
+    `only_cells`
+        which specific cells to target. List of ids. Default None
+        
+        
+    """
+
+    if all_cells and only_cells is not None:
+        error = "Error! Method opencortex.build.%s() called with both arguments all_cells and only_cells set!" % sys._getframe().f_code.co_name
+        opencortex.print_comment_v(error)
+        raise Exception(error)
+
+    cell_ids = []
+    
+    target_cell = oc_build.cell_ids_vs_nml_docs[population.component].get_by_id(population.component)
+
+    target_segs = oc_build.extract_seg_ids(target_cell,
+                                           [segment_group],
+                                           "segGroups")
+
+    seg_target_dict = oc_build.make_target_dict(target_cell, target_segs)
+    
+    subset_dict = {segment_group: number_per_cell}
+    
+    if all_cells:
+        cell_ids = range(population.size)
+    if only_cells is not None:
+        if only_cells == []:
+            return
+        cell_ids = only_cells
+
+    input_list = neuroml.InputList(id=id,
+                                   component=input_comp_id,
+                                   populations=population.id)
+    count = 0
+    for cell_id in cell_ids:
+        
+        target_seg_array, target_fractions = oc_build.get_target_segments(seg_target_dict, subset_dict)
+    
+        for i in range(number_per_cell):
+            input = neuroml.Input(id=count, 
+                                  target="../%s/%i/%s" % (population.id, cell_id, population.component),
+                                  segment_id=target_seg_array[i],
+                                  fraction_along=target_fractions[i],
                                   destination="synapses")  
             input_list.input.append(input)
             count += 1

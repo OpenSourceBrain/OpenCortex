@@ -55,9 +55,6 @@ def generate(reference = "ACNet",
 
     pfs = oc.add_poisson_firing_synapse(nml_doc, id="poissonFiringSyn",
                                        average_rate="30 Hz", synapse_id=ampa_syn.id)
-
-    oc.add_inputs_to_population(network, "Stim0",
-                                pop_pyr, pfs.id, all_cells=True)
                                 
                                 
     total_conns = 0
@@ -122,6 +119,13 @@ def generate(reference = "ACNet",
                                         delays_dict = {this_syn:global_delay})
         if proj:                           
             total_conns += len(proj[0].connection_wds)
+            
+            
+    oc.add_targeted_inputs_to_population(network, "Stim0",
+                                pop_pyr, pfs.id, 
+                                segment_group='soma_group',
+                                number_per_cell = 1,
+                                all_cells=True)
         
         
     if num_pyr != 48 or num_bask!=12:
