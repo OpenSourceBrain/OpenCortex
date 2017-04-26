@@ -501,7 +501,15 @@ def add_targeted_electrical_projection(nml_doc,
 
 ##############################################################################################
 
-def add_inputs_to_population(net, id, population, input_comp_id, number_per_cell=1, all_cells=False, only_cells=None):
+def add_inputs_to_population(net, 
+                             id, 
+                             population, 
+                             input_comp_id, 
+                             number_per_cell=1, 
+                             all_cells=False, 
+                             only_cells=None,
+                             segment_ids=[0],
+                             fraction_alongs=[0.5]):
     
     """
     Add current input to the specified population. Attributes:
@@ -527,11 +535,33 @@ def add_inputs_to_population(net, id, population, input_comp_id, number_per_cell
     `only_cells`
         Which specific cells to target. List of ids. Default None
         
+    `segment_ids`
+        List of segment ids to place inputs onto on each cell. Either list of 1 value or list of number_per_cell entries. Default [0]
+        
+    `fraction_alongs`
+        List of fractions along the specified segments to place inputs onto on each cell. Either list of 1 value or list of number_per_cell entries. Default [0.5]
+        
         
     """
 
     if all_cells and only_cells is not None:
         error = "Error! Method opencortex.build.%s() called with both arguments all_cells and only_cells set!" % sys._getframe().f_code.co_name
+        opencortex.print_comment_v(error)
+        raise Exception(error)
+    
+    if len(segment_ids)!=1 or len(segment_ids)!=number_per_cell:
+        
+        error = "Error! Attribute segment_ids in method opencortex.build.%s()"% sys._getframe().f_code.co_name+\
+        " should be a list of one integer (id of the segment all inputs to each cell go into) or a "+ \
+        "list of the same length as number_per_cell!" 
+        opencortex.print_comment_v(error)
+        raise Exception(error)
+    
+    if len(fraction_alongs)!=1 or len(fraction_alongs)!=number_per_cell:
+        
+        error = "Error! Attribute fraction_alongs in method opencortex.build.%s()"% sys._getframe().f_code.co_name+\
+        " should be a list of one float (fraction along the segment all inputs to each cell go into) or a "+ \
+        "list of the same length as number_per_cell!" 
         opencortex.print_comment_v(error)
         raise Exception(error)
 
@@ -550,8 +580,29 @@ def add_inputs_to_population(net, id, population, input_comp_id, number_per_cell
     count = 0
     for cell_id in cell_ids:
         for i in range(number_per_cell):
+            
+            segment_id = -1
+            if len(segment_ids)==1:
+                segment_id = segment_ids[0]
+            else:
+                segment_id = segment_ids[i]
+            
+            fraction_along = -1
+            if len(fraction_alongs)==1:
+                fraction_along = fraction_alongs[0]
+            else:
+                fraction_along = fraction_alongs[i]
+                
+            if fraction_along<0 or fraction_along>1:
+                error = "Error! Attribute fraction_along should be >=0 and <=1" 
+                opencortex.print_comment_v(error)
+                raise Exception(error)
+            
+                
             input = neuroml.Input(id=count, 
-                                  target="../%s/%i/%s" % (population.id, cell_id, population.component), 
+                                  target="../%s/%i/%s" % (population.id, cell_id, population.component),
+                                  segment_id=segment_id,
+                                  fraction_along=fraction_along,
                                   destination="synapses")  
             input_list.input.append(input)
             count += 1
