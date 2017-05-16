@@ -53,14 +53,27 @@ def include_neuroml2_file(nml_doc, nml2_file_path):
     
 #########################################################################################
 
+def include_neuroml2_cell(nml_doc, cell_nml2_path, cell_id, channels_also=True):
+    
+    """
+    Add a cell with id `cell_id` which is in `cell_nml2_path` to the build document,
+    along with all its channels (if channels_also==True)
+    """
+
+    return oc_build._include_neuroml2_cell(nml_doc, cell_nml2_path, cell_id, channels_also=channels_also)
+    
+    
+#########################################################################################
+
 def include_neuroml2_cell_and_channels(nml_doc, cell_nml2_path, cell_id):
     
     """
+    TODO: remove, due to include_neuroml2_cell
     Add a cell with id `cell_id` which is in `cell_nml2_path` to the build document,
     along with all its channels
     """
 
-    return oc_build._include_neuroml2_cell_and_channels(nml_doc, cell_nml2_path, cell_id)
+    return oc_build._include_neuroml2_cell(nml_doc, cell_nml2_path, cell_id, channels_also=True)
 
 
 #########################################################################################

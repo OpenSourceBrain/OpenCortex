@@ -1897,7 +1897,7 @@ def copy_nml2_source(dir_to_project_nml2,
 
 
 
-def _include_neuroml2_cell_and_channels(nml_doc, cell_nml2_path, cell_id):
+def _include_neuroml2_cell(nml_doc, cell_nml2_path, cell_id, channels_also=True):
     
     '''
     This could be called from opencortex.core
@@ -1914,12 +1914,13 @@ def _include_neuroml2_cell_and_channels(nml_doc, cell_nml2_path, cell_id):
             if not new_file in all_included_files:
                 all_included_files.append(new_file)
 
-            for included in nml2_doc_cell.includes:
+            if channels_also:
+                for included in nml2_doc_cell.includes:
 
-                new_loc = included.href
-                nml_doc.includes.append(neuroml.IncludeType(new_loc))
-                if not new_loc in all_included_files:
-                    all_included_files.append(new_loc)
+                    new_loc = included.href
+                    nml_doc.includes.append(neuroml.IncludeType(new_loc))
+                    if not new_loc in all_included_files:
+                        all_included_files.append(new_loc)
                     
     cell_ids_vs_nml_docs[cell_id] = nml2_doc_cell
 
