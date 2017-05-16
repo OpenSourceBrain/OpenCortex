@@ -23,6 +23,7 @@ def generate(reference = "Balanced",
              scalez=1,
              connections=True,
              duration = 1000,
+             input_rate = 150,
              global_delay = 0,
              max_in_pop_to_plot_and_save = 5,
              gen_spike_saves_for_all_somas = True,
@@ -33,8 +34,8 @@ def generate(reference = "Balanced",
     
     nml_doc, network = oc.generate_network(reference)
 
-    oc.include_opencortex_cell(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_464198958.cell.nml')
-    oc.include_opencortex_cell(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_471141261.cell.nml')
+    oc.include_opencortex_cell(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_477127614.cell.nml')
+    oc.include_opencortex_cell(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_476686112.cell.nml')
     
     if num_bbp>0:
         oc.include_opencortex_cell(nml_doc, 'BlueBrainProject_NMC/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml')
@@ -60,7 +61,7 @@ def generate(reference = "Balanced",
 
     pfs1 = oc.add_poisson_firing_synapse(nml_doc,
                                        id="psf1",
-                                       average_rate="150 Hz",
+                                       average_rate="%s Hz"%input_rate,
                                        synapse_id=synAmpa1.id)
 
 
@@ -68,14 +69,14 @@ def generate(reference = "Balanced",
 
     popExc = oc.add_population_in_rectangular_region(network,
                                                   'popExc',
-                                                  'HH_464198958',
+                                                  'HH_477127614',
                                                   num_exc,
                                                   xs,ys,zs,
                                                   xDim,yDim,zDim)
 
     popInh = oc.add_population_in_rectangular_region(network,
                                                   'popInh',
-                                                  'HH_471141261',
+                                                  'HH_476686112',
                                                   num_inh,
                                                   xs,ys,zs,
                                                   xDim,yDim,zDim)
@@ -101,12 +102,12 @@ def generate(reference = "Balanced",
         
         proj = oc.add_probabilistic_projection(network, "proj0",
                                         popExc, popExc,
-                                        synAmpa1.id, 0.3, delay = global_delay)
+                                        synAmpa1.id, 0.5, delay = global_delay)
         total_conns += len(proj.connection_wds)
 
         proj = oc.add_probabilistic_projection(network, "proj1",
                                         popExc, popInh,
-                                        synAmpa1.id, 0.5, delay = global_delay)
+                                        synAmpa1.id, 0.7, delay = global_delay)
         total_conns += len(proj.connection_wds)
 
         proj = oc.add_probabilistic_projection(network, "proj3",
@@ -205,7 +206,7 @@ if __name__ == '__main__':
              scalePops = 2,
              scalex=2,
              scalez=2,
-             duration = 100)
+             duration = 2000)
              
     elif '-test' in sys.argv:
         
@@ -213,8 +214,9 @@ if __name__ == '__main__':
              scalePops = 0.2,
              scalex=2,
              scalez=2,
-             duration = 200,
-             max_in_pop_to_plot_and_save = 3,
-             global_delay = 2)
+             duration = 1000,
+             max_in_pop_to_plot_and_save = 5,
+             global_delay = 2,
+             input_rate=250)
     else:
         generate(gen_spike_saves_for_all_somas = True)

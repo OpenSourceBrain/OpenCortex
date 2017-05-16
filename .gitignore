@@ -90,4 +90,6 @@ build/lib*
 /notebooks/*.png
 /notebooks/*.svg
 /notebooks/.ipynb_checkpoints/
-
+/examples/LEMS_Balanced_240cells_36926conns.xml
+/examples/LEMS_Balanced_610cells_213550conns.xml
+/private/cache/retriever/www.w3.org/1999/02/22-rdf-syntax-ns

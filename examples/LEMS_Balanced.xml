@@ -14,12 +14,12 @@
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
     
-    <Include file="Balanced/HH_464198958.cell.nml"/>
-    <Include file="Balanced/IM.channel.nml"/>
+    <Include file="Balanced/HH_477127614.cell.nml"/>
+    <Include file="Balanced/IMchan.channel.nml"/>
     <Include file="Balanced/Kd.channel.nml"/>
     <Include file="Balanced/Leak.channel.nml"/>
     <Include file="Balanced/Na.channel.nml"/>
-    <Include file="Balanced/HH_471141261.cell.nml"/>
+    <Include file="Balanced/HH_476686112.cell.nml"/>
     <Include file="Balanced/cADpyr229_L23_PC_5ecbf9b163_0_0.cell.nml"/>
     <Include file="Balanced/pas.channel.nml"/>
     <Include file="Balanced/Ih.channel.nml"/>
@@ -43,19 +43,19 @@
         </Display>
         
         <Display id="popInh" title="Plots of popInh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popInh_0_HH_471141261_v" quantity="popInh/0/HH_471141261/v" scale="1" color="#029a72" timeScale="1ms"/>
-            <Line id="popInh_1_HH_471141261_v" quantity="popInh/1/HH_471141261/v" scale="1" color="#d340bb" timeScale="1ms"/>
-            <Line id="popInh_2_HH_471141261_v" quantity="popInh/2/HH_471141261/v" scale="1" color="#4c73a9" timeScale="1ms"/>
-            <Line id="popInh_3_HH_471141261_v" quantity="popInh/3/HH_471141261/v" scale="1" color="#5e503a" timeScale="1ms"/>
-            <Line id="popInh_4_HH_471141261_v" quantity="popInh/4/HH_471141261/v" scale="1" color="#3193ca" timeScale="1ms"/>
+            <Line id="popInh_0_HH_476686112_v" quantity="popInh/0/HH_476686112/v" scale="1" color="#029a72" timeScale="1ms"/>
+            <Line id="popInh_1_HH_476686112_v" quantity="popInh/1/HH_476686112/v" scale="1" color="#d340bb" timeScale="1ms"/>
+            <Line id="popInh_2_HH_476686112_v" quantity="popInh/2/HH_476686112/v" scale="1" color="#4c73a9" timeScale="1ms"/>
+            <Line id="popInh_3_HH_476686112_v" quantity="popInh/3/HH_476686112/v" scale="1" color="#5e503a" timeScale="1ms"/>
+            <Line id="popInh_4_HH_476686112_v" quantity="popInh/4/HH_476686112/v" scale="1" color="#3193ca" timeScale="1ms"/>
         </Display>
         
         <Display id="popExc" title="Plots of popExc" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popExc_0_HH_464198958_v" quantity="popExc/0/HH_464198958/v" scale="1" color="#90e5e9" timeScale="1ms"/>
-            <Line id="popExc_1_HH_464198958_v" quantity="popExc/1/HH_464198958/v" scale="1" color="#29645f" timeScale="1ms"/>
-            <Line id="popExc_2_HH_464198958_v" quantity="popExc/2/HH_464198958/v" scale="1" color="#1fcff4" timeScale="1ms"/>
-            <Line id="popExc_3_HH_464198958_v" quantity="popExc/3/HH_464198958/v" scale="1" color="#6ed4e9" timeScale="1ms"/>
-            <Line id="popExc_4_HH_464198958_v" quantity="popExc/4/HH_464198958/v" scale="1" color="#8fe460" timeScale="1ms"/>
+            <Line id="popExc_0_HH_477127614_v" quantity="popExc/0/HH_477127614/v" scale="1" color="#90e5e9" timeScale="1ms"/>
+            <Line id="popExc_1_HH_477127614_v" quantity="popExc/1/HH_477127614/v" scale="1" color="#29645f" timeScale="1ms"/>
+            <Line id="popExc_2_HH_477127614_v" quantity="popExc/2/HH_477127614/v" scale="1" color="#1fcff4" timeScale="1ms"/>
+            <Line id="popExc_3_HH_477127614_v" quantity="popExc/3/HH_477127614/v" scale="1" color="#6ed4e9" timeScale="1ms"/>
+            <Line id="popExc_4_HH_477127614_v" quantity="popExc/4/HH_477127614/v" scale="1" color="#8fe460" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="popBBP_v_dat" fileName="popBBP_v.dat">
@@ -63,145 +63,145 @@
         </OutputFile>
         
         <OutputFile id="popInh_v_dat" fileName="popInh_v.dat">
-            <OutputColumn id="popInh_0_HH_471141261_v" quantity="popInh/0/HH_471141261/v"/> 
-            <OutputColumn id="popInh_1_HH_471141261_v" quantity="popInh/1/HH_471141261/v"/> 
-            <OutputColumn id="popInh_2_HH_471141261_v" quantity="popInh/2/HH_471141261/v"/> 
-            <OutputColumn id="popInh_3_HH_471141261_v" quantity="popInh/3/HH_471141261/v"/> 
-            <OutputColumn id="popInh_4_HH_471141261_v" quantity="popInh/4/HH_471141261/v"/> 
+            <OutputColumn id="popInh_0_HH_476686112_v" quantity="popInh/0/HH_476686112/v"/> 
+            <OutputColumn id="popInh_1_HH_476686112_v" quantity="popInh/1/HH_476686112/v"/> 
+            <OutputColumn id="popInh_2_HH_476686112_v" quantity="popInh/2/HH_476686112/v"/> 
+            <OutputColumn id="popInh_3_HH_476686112_v" quantity="popInh/3/HH_476686112/v"/> 
+            <OutputColumn id="popInh_4_HH_476686112_v" quantity="popInh/4/HH_476686112/v"/> 
         </OutputFile>
         
         <OutputFile id="popExc_v_dat" fileName="popExc_v.dat">
-            <OutputColumn id="popExc_0_HH_464198958_v" quantity="popExc/0/HH_464198958/v"/> 
-            <OutputColumn id="popExc_1_HH_464198958_v" quantity="popExc/1/HH_464198958/v"/> 
-            <OutputColumn id="popExc_2_HH_464198958_v" quantity="popExc/2/HH_464198958/v"/> 
-            <OutputColumn id="popExc_3_HH_464198958_v" quantity="popExc/3/HH_464198958/v"/> 
-            <OutputColumn id="popExc_4_HH_464198958_v" quantity="popExc/4/HH_464198958/v"/> 
+            <OutputColumn id="popExc_0_HH_477127614_v" quantity="popExc/0/HH_477127614/v"/> 
+            <OutputColumn id="popExc_1_HH_477127614_v" quantity="popExc/1/HH_477127614/v"/> 
+            <OutputColumn id="popExc_2_HH_477127614_v" quantity="popExc/2/HH_477127614/v"/> 
+            <OutputColumn id="popExc_3_HH_477127614_v" quantity="popExc/3/HH_477127614/v"/> 
+            <OutputColumn id="popExc_4_HH_477127614_v" quantity="popExc/4/HH_477127614/v"/> 
         </OutputFile>
         
         <EventOutputFile id="Spikes_file__popExc" fileName="Sim_Balanced.popExc.spikes" format="ID_TIME">
-            <EventSelection id="0" select="popExc/0/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="1" select="popExc/1/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="2" select="popExc/2/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="3" select="popExc/3/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="4" select="popExc/4/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="5" select="popExc/5/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="6" select="popExc/6/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="7" select="popExc/7/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="8" select="popExc/8/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="9" select="popExc/9/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="10" select="popExc/10/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="11" select="popExc/11/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="12" select="popExc/12/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="13" select="popExc/13/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="14" select="popExc/14/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="15" select="popExc/15/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="16" select="popExc/16/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="17" select="popExc/17/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="18" select="popExc/18/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="19" select="popExc/19/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="20" select="popExc/20/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="21" select="popExc/21/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="22" select="popExc/22/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="23" select="popExc/23/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="24" select="popExc/24/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="25" select="popExc/25/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="26" select="popExc/26/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="27" select="popExc/27/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="28" select="popExc/28/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="29" select="popExc/29/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="30" select="popExc/30/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="31" select="popExc/31/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="32" select="popExc/32/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="33" select="popExc/33/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="34" select="popExc/34/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="35" select="popExc/35/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="36" select="popExc/36/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="37" select="popExc/37/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="38" select="popExc/38/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="39" select="popExc/39/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="40" select="popExc/40/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="41" select="popExc/41/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="42" select="popExc/42/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="43" select="popExc/43/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="44" select="popExc/44/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="45" select="popExc/45/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="46" select="popExc/46/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="47" select="popExc/47/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="48" select="popExc/48/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="49" select="popExc/49/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="50" select="popExc/50/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="51" select="popExc/51/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="52" select="popExc/52/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="53" select="popExc/53/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="54" select="popExc/54/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="55" select="popExc/55/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="56" select="popExc/56/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="57" select="popExc/57/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="58" select="popExc/58/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="59" select="popExc/59/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="60" select="popExc/60/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="61" select="popExc/61/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="62" select="popExc/62/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="63" select="popExc/63/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="64" select="popExc/64/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="65" select="popExc/65/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="66" select="popExc/66/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="67" select="popExc/67/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="68" select="popExc/68/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="69" select="popExc/69/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="70" select="popExc/70/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="71" select="popExc/71/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="72" select="popExc/72/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="73" select="popExc/73/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="74" select="popExc/74/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="75" select="popExc/75/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="76" select="popExc/76/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="77" select="popExc/77/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="78" select="popExc/78/HH_464198958" eventPort="spike"/> 
-            <EventSelection id="79" select="popExc/79/HH_464198958" eventPort="spike"/> 
+            <EventSelection id="0" select="popExc/0/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="1" select="popExc/1/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="2" select="popExc/2/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="3" select="popExc/3/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="4" select="popExc/4/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="5" select="popExc/5/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="6" select="popExc/6/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="7" select="popExc/7/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="8" select="popExc/8/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="9" select="popExc/9/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="10" select="popExc/10/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="11" select="popExc/11/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="12" select="popExc/12/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="13" select="popExc/13/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="14" select="popExc/14/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="15" select="popExc/15/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="16" select="popExc/16/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="17" select="popExc/17/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="18" select="popExc/18/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="19" select="popExc/19/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="20" select="popExc/20/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="21" select="popExc/21/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="22" select="popExc/22/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="23" select="popExc/23/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="24" select="popExc/24/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="25" select="popExc/25/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="26" select="popExc/26/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="27" select="popExc/27/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="28" select="popExc/28/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="29" select="popExc/29/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="30" select="popExc/30/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="31" select="popExc/31/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="32" select="popExc/32/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="33" select="popExc/33/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="34" select="popExc/34/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="35" select="popExc/35/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="36" select="popExc/36/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="37" select="popExc/37/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="38" select="popExc/38/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="39" select="popExc/39/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="40" select="popExc/40/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="41" select="popExc/41/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="42" select="popExc/42/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="43" select="popExc/43/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="44" select="popExc/44/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="45" select="popExc/45/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="46" select="popExc/46/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="47" select="popExc/47/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="48" select="popExc/48/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="49" select="popExc/49/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="50" select="popExc/50/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="51" select="popExc/51/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="52" select="popExc/52/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="53" select="popExc/53/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="54" select="popExc/54/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="55" select="popExc/55/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="56" select="popExc/56/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="57" select="popExc/57/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="58" select="popExc/58/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="59" select="popExc/59/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="60" select="popExc/60/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="61" select="popExc/61/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="62" select="popExc/62/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="63" select="popExc/63/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="64" select="popExc/64/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="65" select="popExc/65/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="66" select="popExc/66/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="67" select="popExc/67/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="68" select="popExc/68/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="69" select="popExc/69/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="70" select="popExc/70/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="71" select="popExc/71/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="72" select="popExc/72/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="73" select="popExc/73/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="74" select="popExc/74/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="75" select="popExc/75/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="76" select="popExc/76/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="77" select="popExc/77/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="78" select="popExc/78/HH_477127614" eventPort="spike"/> 
+            <EventSelection id="79" select="popExc/79/HH_477127614" eventPort="spike"/> 
         </EventOutputFile>
         
         <EventOutputFile id="Spikes_file__popInh" fileName="Sim_Balanced.popInh.spikes" format="ID_TIME">
-            <EventSelection id="0" select="popInh/0/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="1" select="popInh/1/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="2" select="popInh/2/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="3" select="popInh/3/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="4" select="popInh/4/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="5" select="popInh/5/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="6" select="popInh/6/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="7" select="popInh/7/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="8" select="popInh/8/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="9" select="popInh/9/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="10" select="popInh/10/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="11" select="popInh/11/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="12" select="popInh/12/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="13" select="popInh/13/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="14" select="popInh/14/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="15" select="popInh/15/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="16" select="popInh/16/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="17" select="popInh/17/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="18" select="popInh/18/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="19" select="popInh/19/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="20" select="popInh/20/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="21" select="popInh/21/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="22" select="popInh/22/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="23" select="popInh/23/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="24" select="popInh/24/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="25" select="popInh/25/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="26" select="popInh/26/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="27" select="popInh/27/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="28" select="popInh/28/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="29" select="popInh/29/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="30" select="popInh/30/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="31" select="popInh/31/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="32" select="popInh/32/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="33" select="popInh/33/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="34" select="popInh/34/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="35" select="popInh/35/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="36" select="popInh/36/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="37" select="popInh/37/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="38" select="popInh/38/HH_471141261" eventPort="spike"/> 
-            <EventSelection id="39" select="popInh/39/HH_471141261" eventPort="spike"/> 
+            <EventSelection id="0" select="popInh/0/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="1" select="popInh/1/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="2" select="popInh/2/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="3" select="popInh/3/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="4" select="popInh/4/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="5" select="popInh/5/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="6" select="popInh/6/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="7" select="popInh/7/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="8" select="popInh/8/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="9" select="popInh/9/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="10" select="popInh/10/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="11" select="popInh/11/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="12" select="popInh/12/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="13" select="popInh/13/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="14" select="popInh/14/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="15" select="popInh/15/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="16" select="popInh/16/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="17" select="popInh/17/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="18" select="popInh/18/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="19" select="popInh/19/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="20" select="popInh/20/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="21" select="popInh/21/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="22" select="popInh/22/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="23" select="popInh/23/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="24" select="popInh/24/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="25" select="popInh/25/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="26" select="popInh/26/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="27" select="popInh/27/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="28" select="popInh/28/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="29" select="popInh/29/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="30" select="popInh/30/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="31" select="popInh/31/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="32" select="popInh/32/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="33" select="popInh/33/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="34" select="popInh/34/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="35" select="popInh/35/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="36" select="popInh/36/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="37" select="popInh/37/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="38" select="popInh/38/HH_476686112" eventPort="spike"/> 
+            <EventSelection id="39" select="popInh/39/HH_476686112" eventPort="spike"/> 
         </EventOutputFile>
         
         <EventOutputFile id="Spikes_file__popBBP" fileName="Sim_Balanced.popBBP.spikes" format="ID_TIME">
