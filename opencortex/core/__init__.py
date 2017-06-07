@@ -863,4 +863,8 @@ def simulate_network(lems_file_name,
     else:
         raise Exception("Simulator %s not yet supported"%simulator)
 
+    if load_saved_data:
+        return results
+    
+
 

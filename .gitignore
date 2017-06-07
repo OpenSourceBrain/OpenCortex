@@ -93,3 +93,6 @@ build/lib*
 /examples/LEMS_Balanced_240cells_36926conns.xml
 /examples/LEMS_Balanced_610cells_213550conns.xml
 /private/cache/retriever/www.w3.org/1999/02/22-rdf-syntax-ns
+/examples/LEMS_Multiscale*.xml
+/examples/Multiscale*.net.nml
+/examples/Multiscale*
