@@ -28,7 +28,7 @@ def generate(scalePops = 1,
              format='xml',
              run_in_simulator=None):
                  
-    reference = "Multiscale_g%s_i%s"%(ratio_inh_exc,input_rate)
+    reference = ("Multiscale__g%s__i%s"%(ratio_inh_exc,input_rate)).replace('.','_')
                     
 
     num_exc = scale_pop_size(80,scalePops)
@@ -196,8 +196,8 @@ def _plot_(X, g_rng, i_rng, sbplt=111, ttl=[]):
     ax = pl.subplot(sbplt)
     pl.title(ttl)
     pl.imshow(X, origin='lower', interpolation='none')
-    pl.xlabel('g')
-    pl.ylabel(r'$\nu_{ext} / \nu_{thr}$')
+    pl.xlabel('Ratio inh/exc')
+    pl.ylabel('Input (Hz)')
     ax.set_xticks(range(0,len(g_rng))); ax.set_xticklabels(g_rng)
     ax.set_yticks(range(0,len(i_rng))); ax.set_yticklabels(i_rng)
     pl.colorbar()
@@ -234,23 +234,33 @@ if __name__ == '__main__':
              
     elif '-paramSweep' in sys.argv:     
         
-        duration = 100
+        duration = 600
         run_in_simulator='jNeuroML_NEURON'
+        #run_in_simulator='jNeuroML_NetPyNE'
         scalePops = 1
         
-        g_rng = np.arange(1, 4, .5)
-        g_rng = [2,4]
+        quick = False
+        quick = True
         
-        i_rng = [150,250]
+        g_rng = np.arange(.5, 4.5, .5)
+        i_rng = np.arange(50, 400, 50)
+        
+        if quick:
+            g_rng = [2,3,4]
+            i_rng = [100,150,200]
+            duration = 200
+            scalePops = .5
 
 
 
         Rexc = np.zeros((len(g_rng), len(i_rng)))
         Rinh = np.zeros((len(g_rng), len(i_rng)))
         
-        
+        count=1
         for i1, g in enumerate(g_rng):
             for i2, i in enumerate(i_rng):
+                print("====================================")
+                print(" Run %s of %s: g = %s; i=%s"%(count, len(g_rng)*len(i_rng), g, i))
                 info = generate(scalePops = scalePops,
                     scalex=2,
                     scalez=2,
@@ -263,6 +273,7 @@ if __name__ == '__main__':
                     
                 Rexc[i1,i2] = info[0]
                 Rinh[i1,i2] = info[1]
+                count+=1
                     
                 
 
@@ -279,7 +290,7 @@ if __name__ == '__main__':
         pl.subplots_adjust(wspace=.3, hspace=.3)
 
 
-        #pl.savefig('%s_%s_N%s_%sms.png'%(simulator_name.upper(), label,N,simtime), bbox_inches='tight')
+        pl.savefig('%s_%s_%sms.png'%(run_in_simulator,scalePops, duration), bbox_inches='tight')
         print("Finished: "+info)
         pl.show()
         
