@@ -6,6 +6,7 @@ for testing purposes
 import opencortex.core as oc
 import sys
 import numpy as np
+import pylab as pl
 
 min_pop_size = 3
 
@@ -157,21 +158,50 @@ def generate(scalePops = 1,
         
         if run_in_simulator:
             
-            results = oc.simulate_network(lems_file_name,
+            traces, events = oc.simulate_network(lems_file_name,
                      run_in_simulator,
                      max_memory='4000M',
                      nogui=True,
                      load_saved_data=True,
+                     reload_events=True,
                      plot=False,
-                     verbose=True)
+                     verbose=False)
                      
-            return nml_doc, nml_file_name, lems_file_name, results
+                     
+            print("Reloaded traces: %s"%traces.keys())
+            #print("Reloaded events: %s"%events.keys())
+            
+            exc_rate = 0
+            inh_rate = 0
+            for ek in events.keys():
+                rate = 1000 * len(events[ek])/float(duration)
+                print("Cell %s has rate %s Hz"%(ek,rate))
+                if 'popExc' in ek:
+                    exc_rate += rate/num_exc
+                if 'popInh' in ek:
+                    inh_rate += rate/num_inh
+                    
+            print("Run %s: Exc rate: %s Hz; Inh rate %s Hz"%(reference,exc_rate, inh_rate))
+                     
+            return exc_rate, inh_rate
         
     else:
         lems_file_name = None
                                 
     return nml_doc, nml_file_name, lems_file_name
-                               
+                         
+                         
+                         
+def _plot_(X, g_rng, i_rng, sbplt=111, ttl=[]):
+    ax = pl.subplot(sbplt)
+    pl.title(ttl)
+    pl.imshow(X, origin='lower', interpolation='none')
+    pl.xlabel('g')
+    pl.ylabel(r'$\nu_{ext} / \nu_{thr}$')
+    ax.set_xticks(range(0,len(g_rng))); ax.set_xticklabels(g_rng)
+    ax.set_yticks(range(0,len(i_rng))); ax.set_yticklabels(i_rng)
+    pl.colorbar()
+
 
 if __name__ == '__main__':
     
@@ -204,21 +234,54 @@ if __name__ == '__main__':
              
     elif '-paramSweep' in sys.argv:     
         
-        g_rng = np.arange(1, 4, .5)
-        g_rng = [4]
+        duration = 100
+        run_in_simulator='jNeuroML_NEURON'
+        scalePops = 1
         
-        for g in g_rng:
-            nml_doc, nml_file_name, lems_file_name, results = generate(scalePops = 1,
-                scalex=2,
-                scalez=2,
-                duration = 100,
-                max_in_pop_to_plot_and_save = 5,
-                global_delay = 2,
-                ratio_inh_exc = g,
-                input_rate=250,
-                run_in_simulator='jNeuroML_NEURON')
-             
-            print("Reloaded: %s"%results.keys())
+        g_rng = np.arange(1, 4, .5)
+        g_rng = [2,4]
+        
+        i_rng = [150,250]
+
+
+
+        Rexc = np.zeros((len(g_rng), len(i_rng)))
+        Rinh = np.zeros((len(g_rng), len(i_rng)))
+        
+        
+        for i1, g in enumerate(g_rng):
+            for i2, i in enumerate(i_rng):
+                info = generate(scalePops = scalePops,
+                    scalex=2,
+                    scalez=2,
+                    duration = duration,
+                    max_in_pop_to_plot_and_save = 5,
+                    global_delay = 2,
+                    ratio_inh_exc = g,
+                    input_rate=i,
+                    run_in_simulator=run_in_simulator)
+                    
+                Rexc[i1,i2] = info[0]
+                Rinh[i1,i2] = info[1]
+                    
+                
+
+        fig = pl.figure(figsize=(16,8))
+        info = "%s: scale %s, %s ms"%(run_in_simulator,scalePops, duration)
+
+        fig.canvas.set_window_title(info)
+        pl.suptitle(info)
+
+        _plot_(Rexc.T, g_rng, i_rng, 221, 'Rates Exc (Hz)')
+        _plot_(Rinh.T, g_rng, i_rng, 222, 'Rates Inh (Hz)')
+        
+
+        pl.subplots_adjust(wspace=.3, hspace=.3)
+
+
+        #pl.savefig('%s_%s_N%s_%sms.png'%(simulator_name.upper(), label,N,simtime), bbox_inches='tight')
+        print("Finished: "+info)
+        pl.show()
         
 
     else:

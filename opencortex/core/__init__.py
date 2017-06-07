@@ -849,6 +849,7 @@ def simulate_network(lems_file_name,
                      max_memory='400M',
                      nogui=True,
                      load_saved_data=False,
+                     reload_events=False,
                      plot=False,
                      verbose=True):
 
@@ -857,9 +858,9 @@ def simulate_network(lems_file_name,
     """
 
     if simulator == "jNeuroML":
-       results = pynml.run_lems_with_jneuroml(lems_file_name, max_memory=max_memory, nogui=nogui, load_saved_data=load_saved_data, plot=plot, verbose=verbose)
+       results = pynml.run_lems_with_jneuroml(lems_file_name, max_memory=max_memory, nogui=nogui, load_saved_data=load_saved_data, reload_events=reload_events, plot=plot, verbose=verbose)
     elif simulator == "jNeuroML_NEURON":
-       results = pynml.run_lems_with_jneuroml_neuron(lems_file_name, max_memory=max_memory, nogui=nogui, load_saved_data=load_saved_data, plot=plot, verbose=verbose)
+       results = pynml.run_lems_with_jneuroml_neuron(lems_file_name, max_memory=max_memory, nogui=nogui, load_saved_data=load_saved_data, reload_events=reload_events, plot=plot, verbose=verbose)
     else:
         raise Exception("Simulator %s not yet supported"%simulator)
 
