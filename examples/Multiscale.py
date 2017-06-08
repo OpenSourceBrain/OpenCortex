@@ -7,8 +7,15 @@ import opencortex.core as oc
 import sys
 import numpy as np
 import pylab as pl
+from pyneuroml import pynml
+
+from pyelectro import analysis
+import pprint
+
+pp = pprint.PrettyPrinter(indent=4)
 
 min_pop_size = 3
+
 
 def scale_pop_size(baseline, scale):
     return max(min_pop_size, int(baseline*scale))
@@ -24,7 +31,6 @@ def generate(scalePops = 1,
              input_rate = 150,
              global_delay = 0,
              max_in_pop_to_plot_and_save = 5,
-             gen_spike_saves_for_all_somas = True,
              format='xml',
              run_in_simulator=None):
                  
@@ -40,9 +46,9 @@ def generate(scalePops = 1,
     oc.include_opencortex_cell(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_476686112.cell.nml')
     
 
-    xDim = 400*scalex
-    yDim = 500*scaley
-    zDim = 300*scalez
+    xDim = 1000*scalex
+    yDim = 300*scaley
+    zDim = 1000*scalez
 
     xs = -200
     ys = -150
@@ -74,14 +80,16 @@ def generate(scalePops = 1,
                                                   'HH_477127614',
                                                   num_exc,
                                                   xs,ys,zs,
-                                                  xDim,yDim,zDim)
+                                                  xDim,yDim,zDim,
+                                                  color='0 0 1')
 
     popInh = oc.add_population_in_rectangular_region(network,
                                                   'popInh',
                                                   'HH_476686112',
                                                   num_inh,
                                                   xs,ys,zs,
-                                                  xDim,yDim,zDim)
+                                                  xDim,yDim,zDim,
+                                                  color='1 0 0')
 
 
     #####   Projections
@@ -122,12 +130,14 @@ def generate(scalePops = 1,
 
     #####   Save NeuroML and LEMS Simulation files      
     
+    target_dir='./temp/'
 
     nml_file_name = '%s.net.%s'%(network.id,'nml.h5' if format == 'hdf5' else 'nml')
     oc.save_network(nml_doc, 
                     nml_file_name, 
                     validate=(format=='xml'),
-                    format = format)
+                    format = format,
+                    target_dir=target_dir)
 
     if format=='xml':
         
@@ -145,18 +155,23 @@ def generate(scalePops = 1,
             plot_v[popInh.id].append("%s/%i/%s/v"%(popInh.id,i,popInh.component))
             save_v[inh_traces].append("%s/%i/%s/v"%(popInh.id,i,popInh.component))
             
+        gen_spike_saves_for_all_somas = run_in_simulator!='jNeuroML_NetPyNE'
+            
         lems_file_name = oc.generate_lems_simulation(nml_doc, network, 
-                                nml_file_name, 
+                                target_dir+nml_file_name, 
                                 duration =      duration, 
                                 dt =            0.025,
                                 gen_plots_for_all_v = False,
                                 gen_plots_for_quantities = plot_v,
                                 gen_saves_for_all_v = False,
                                 gen_saves_for_quantities = save_v,
-                                gen_spike_saves_for_all_somas = gen_spike_saves_for_all_somas)
+                                gen_spike_saves_for_all_somas = gen_spike_saves_for_all_somas,
+                                target_dir=target_dir)
                                 
         
         if run_in_simulator:
+            
+            print ("Running %s in %s"%(lems_file_name, run_in_simulator))
             
             traces, events = oc.simulate_network(lems_file_name,
                      run_in_simulator,
@@ -171,26 +186,76 @@ def generate(scalePops = 1,
             print("Reloaded traces: %s"%traces.keys())
             #print("Reloaded events: %s"%events.keys())
             
+            use_events_for_rates = False
+            
             exc_rate = 0
             inh_rate = 0
-            for ek in events.keys():
-                rate = 1000 * len(events[ek])/float(duration)
-                print("Cell %s has rate %s Hz"%(ek,rate))
-                if 'popExc' in ek:
-                    exc_rate += rate/num_exc
-                if 'popInh' in ek:
-                    inh_rate += rate/num_inh
+            
+            if use_events_for_rates:
+                if (run_in_simulator=='jNeuroML_NetPyNE'):
+                    raise('Saving of spikes (and so calculation of rates) not yet supported in jNeuroML_NetPyNE')
+                for ek in events.keys():
+                    rate = 1000 * len(events[ek])/float(duration)
+                    print("Cell %s has rate %s Hz"%(ek,rate))
+                    if 'popExc' in ek:
+                        exc_rate += rate/num_exc
+                    if 'popInh' in ek:
+                        inh_rate += rate/num_inh
+            
+            else:
+                tot_exc_rate = 0 
+                exc_cells = 0
+                tot_inh_rate = 0 
+                inh_cells = 0
+                tt = [t*1000 for t in traces['t']]
+                for tk in traces.keys():
+                    if tk!='t':
+                        rate = get_rate_from_trace(tt,[v*1000 for v in traces[tk]])
+                        print("Cell %s has rate %s Hz"%(tk,rate))
+                        if 'popExc' in tk:
+                            tot_exc_rate += rate
+                            exc_cells+=1
+                        if 'popInh' in tk:
+                            tot_inh_rate += rate
+                            inh_cells+=1
+                            
+                exc_rate = tot_exc_rate/exc_cells
+                inh_rate = tot_inh_rate/inh_cells
+                    
+                    
                     
             print("Run %s: Exc rate: %s Hz; Inh rate %s Hz"%(reference,exc_rate, inh_rate))
                      
-            return exc_rate, inh_rate
+            return exc_rate, inh_rate, traces
         
     else:
         lems_file_name = None
                                 
     return nml_doc, nml_file_name, lems_file_name
                          
-                         
+       
+def get_rate_from_trace(times, volts):
+
+    analysis_var={'peak_delta':0,'baseline':0,'dvdt_threshold':0, 'peak_threshold':0}
+
+    try:
+        analysis_data=analysis.IClampAnalysis(volts,
+                                           times,
+                                           analysis_var,
+                                           start_analysis=0,
+                                           end_analysis=times[-1],
+                                           smooth_data=False,
+                                           show_smoothed_data=False)
+
+        analysed = analysis_data.analyse()
+
+        pp.pprint(analysed)
+
+        return analysed['mean_spike_frequency']
+    
+    except:
+        return 0
+
                          
 def _plot_(X, g_rng, i_rng, sbplt=111, ttl=[]):
     ax = pl.subplot(sbplt)
@@ -212,31 +277,13 @@ if __name__ == '__main__':
              scalex=2,
              scalez=2,
              connections=False)
-        
-        generate(scalePops = 5,
-             scalex=2,
-             scalez=2)
-        
-        generate(scalePops = 2,
-             scalex=2,
-             scalez=2,
-             duration = 2000)
              
-    elif '-test' in sys.argv:
-        
-        generate(scalePops = 0.2,
-             scalex=2,
-             scalez=2,
-             duration = 1000,
-             max_in_pop_to_plot_and_save = 5,
-             global_delay = 2,
-             input_rate=250)
              
     elif '-paramSweep' in sys.argv:     
         
         duration = 600
         run_in_simulator='jNeuroML_NEURON'
-        #run_in_simulator='jNeuroML_NetPyNE'
+        run_in_simulator='jNeuroML_NetPyNE'
         scalePops = 1
         
         quick = False
@@ -244,13 +291,15 @@ if __name__ == '__main__':
         
         g_rng = np.arange(.5, 4.5, .5)
         i_rng = np.arange(50, 400, 50)
+        trace_highlight = [(2,150)]
         
         if quick:
             g_rng = [2,3,4]
+            g_rng = [2]
             i_rng = [100,150,200]
-            duration = 200
-            scalePops = .5
-
+            i_rng = [150]
+            duration = 1000
+            scalePops = 1
 
 
         Rexc = np.zeros((len(g_rng), len(i_rng)))
@@ -260,7 +309,11 @@ if __name__ == '__main__':
         for i1, g in enumerate(g_rng):
             for i2, i in enumerate(i_rng):
                 print("====================================")
-                print(" Run %s of %s: g = %s; i=%s"%(count, len(g_rng)*len(i_rng), g, i))
+                highlight = False
+                for h in trace_highlight:
+                    if h[0]==g and h[1]==i:
+                        highlight = True
+                print(" Run %s of %s: g = %s; i=%s (highlighting: %s)"%(count, len(g_rng)*len(i_rng), g, i, highlight))
                 info = generate(scalePops = scalePops,
                     scalex=2,
                     scalez=2,
@@ -273,6 +326,28 @@ if __name__ == '__main__':
                     
                 Rexc[i1,i2] = info[0]
                 Rinh[i1,i2] = info[1]
+
+                if highlight:
+                    traces = info[2]
+                    all_t = []
+                    all_v = []
+                    colours = []
+                    tr_shade_e=1
+                    tr_shade_i=1
+                    for vs in traces.keys():
+                        if vs!='t':
+                            all_v.append(traces[vs])
+                            all_t.append(traces['t'])
+                            if 'Exc' in vs:
+                                colours.append((1-tr_shade_e,1-tr_shade_e,1))
+                                tr_shade_e*=0.8
+                            else:
+                                colours.append((1,1-tr_shade_i,1-tr_shade_i))
+                                tr_shade_i*=0.8
+                                
+                    
+                    print colours
+                    pynml.generate_plot(all_t,all_v,"Sim g=%s, i=%s"%(g,i),colors=colours,show_plot_already=False)
                 count+=1
                     
                 
@@ -286,6 +361,7 @@ if __name__ == '__main__':
         _plot_(Rexc.T, g_rng, i_rng, 221, 'Rates Exc (Hz)')
         _plot_(Rinh.T, g_rng, i_rng, 222, 'Rates Inh (Hz)')
         
+        
 
         pl.subplots_adjust(wspace=.3, hspace=.3)
 
@@ -296,4 +372,6 @@ if __name__ == '__main__':
         
 
     else:
-        generate(gen_spike_saves_for_all_somas = False)
+        generate(ratio_inh_exc=2,
+                 duration = 500,
+                 input_rate = 170)

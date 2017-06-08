@@ -96,3 +96,7 @@ build/lib*
 /examples/LEMS_Multiscale*.xml
 /examples/Multiscale*.net.nml
 /examples/Multiscale*
+/examples/temp
+/examples/Balanced_240cells_36926conns
+/examples/Balanced_610cells_0conns
+/examples/Balanced_610cells_213550conns

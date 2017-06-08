@@ -25,17 +25,17 @@
    
     <Simulation id="Sim_GapJunctions" length="1000ms" step="0.025ms" target="GapJunctions" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
-        <Display id="Display_pop_post_v" title="Plots of Display_pop_post_v" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="pop_post_0_pyr_4_sym_0_v" quantity="pop_post/0/pyr_4_sym/0/v" scale="1" color="#6aa799" timeScale="1ms"/>
-            <Line id="pop_post_1_pyr_4_sym_0_v" quantity="pop_post/1/pyr_4_sym/0/v" scale="1" color="#029a72" timeScale="1ms"/>
+        <Display id="Display_pop_post_v" title="Plots of Display_pop_post_v" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
+            <Line id="pop_post_0_pyr_4_sym_0_v" quantity="pop_post/0/pyr_4_sym/0/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
+            <Line id="pop_post_1_pyr_4_sym_0_v" quantity="pop_post/1/pyr_4_sym/0/v" scale="1mV" color="#029a72" timeScale="1ms"/>
         </Display>
         
-        <Display id="Display_pop_pre_v" title="Plots of Display_pop_pre_v" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="pop_pre_0_pyr_4_sym_0_v" quantity="pop_pre/0/pyr_4_sym/0/v" scale="1" color="#d340bb" timeScale="1ms"/>
-            <Line id="pop_pre_1_pyr_4_sym_0_v" quantity="pop_pre/1/pyr_4_sym/0/v" scale="1" color="#4c73a9" timeScale="1ms"/>
-            <Line id="pop_pre_2_pyr_4_sym_0_v" quantity="pop_pre/2/pyr_4_sym/0/v" scale="1" color="#5e503a" timeScale="1ms"/>
-            <Line id="pop_pre_3_pyr_4_sym_0_v" quantity="pop_pre/3/pyr_4_sym/0/v" scale="1" color="#3193ca" timeScale="1ms"/>
-            <Line id="pop_pre_4_pyr_4_sym_0_v" quantity="pop_pre/4/pyr_4_sym/0/v" scale="1" color="#90e5e9" timeScale="1ms"/>
+        <Display id="Display_pop_pre_v" title="Plots of Display_pop_pre_v" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
+            <Line id="pop_pre_0_pyr_4_sym_0_v" quantity="pop_pre/0/pyr_4_sym/0/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
+            <Line id="pop_pre_1_pyr_4_sym_0_v" quantity="pop_pre/1/pyr_4_sym/0/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
+            <Line id="pop_pre_2_pyr_4_sym_0_v" quantity="pop_pre/2/pyr_4_sym/0/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
+            <Line id="pop_pre_3_pyr_4_sym_0_v" quantity="pop_pre/3/pyr_4_sym/0/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
+            <Line id="pop_pre_4_pyr_4_sym_0_v" quantity="pop_pre/4/pyr_4_sym/0/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Sim_GapJunctions_pop_pre_v_dat" fileName="Sim_GapJunctions.pop_pre.v.dat">

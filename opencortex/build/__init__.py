@@ -31,6 +31,8 @@ all_included_files = []
 
 cell_ids_vs_nml_docs = {}
 
+to_be_copied_on_save = []
+
 ##############################################################################################
 
 def _add_connection(projection, 
@@ -1800,13 +1802,21 @@ def _add_to_neuroml_doc(nml_doc, element):
         nml_doc.ComponentType.append(element)
 
 
+# Add to list of files to be copied when the network is saved
 def _copy_to_dir_for_model(nml_doc, file_name):
 
-    dir_for_model = nml_doc.id
-    if not os.path.isdir(dir_for_model):
-        os.mkdir(dir_for_model)
+    to_be_copied_on_save.append(file_name)
+    
+    
+# Save included cell/channel files to specific dir when the network is saved
+def _finalise_copy_to_dir_for_model(nml_doc, target_dir='./'):
+    for file_name in to_be_copied_on_save:
 
-    shutil.copy(file_name, dir_for_model)
+        dir_for_model = target_dir+nml_doc.id
+        if not os.path.isdir(dir_for_model):
+            os.mkdir(dir_for_model)
+
+        shutil.copy(file_name, dir_for_model)
 
 
 ##########################################################################################   
@@ -2193,7 +2203,7 @@ def _add_population_in_rectangular_region(net,
     pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
 
     if color is not None:
-        pop.properties.append(Property("color", color))
+        pop.properties.append(neuroml.Property("color", color))
 
 
 
