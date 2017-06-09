@@ -20,6 +20,7 @@ setup(
             '../NeuroML2/prototypes/Thalamocortical/*',
             '../NeuroML2/prototypes/BlueBrainProject_NMC/*',
             '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/*',
+            '../NeuroML2/prototypes/L23Pyr_SmithEtAl2013/*',
             '../NeuroML2/prototypes/acnet2/*']}, 
 
     url='https://github.com/OpenSourceBrain/OpenCortex',

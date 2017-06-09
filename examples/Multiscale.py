@@ -22,6 +22,7 @@ def scale_pop_size(baseline, scale):
 
 
 def generate(scalePops = 1,
+             percentage_exc_detailed=0,
              scalex=1,
              scaley=1,
              scalez=1,
@@ -29,7 +30,7 @@ def generate(scalePops = 1,
              connections=True,
              duration = 1000,
              input_rate = 150,
-             global_delay = 0,
+             global_delay = 2,
              max_in_pop_to_plot_and_save = 5,
              format='xml',
              run_in_simulator=None):
@@ -38,12 +39,15 @@ def generate(scalePops = 1,
                     
 
     num_exc = scale_pop_size(80,scalePops)
+    num_exc2  = int(0.5 + num_exc*percentage_exc_detailed/100.0)
+    num_exc -= num_exc2
     num_inh = scale_pop_size(40,scalePops)
     
     nml_doc, network = oc.generate_network(reference)
 
     oc.include_opencortex_cell(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_477127614.cell.nml')
     oc.include_opencortex_cell(nml_doc, 'AllenInstituteCellTypesDB_HH/HH_476686112.cell.nml')
+    oc.include_opencortex_cell(nml_doc, 'L23Pyr_SmithEtAl2013/L23_NoHotSpot.cell.nml')
     
 
     xDim = 1000*scalex
@@ -83,6 +87,16 @@ def generate(scalePops = 1,
                                                   xDim,yDim,zDim,
                                                   color='0 0 1')
 
+    popExc2 = oc.add_population_in_rectangular_region(network,
+                                                  'popExc2',
+                                                  'L23_NoHotSpot',
+                                                  num_exc2,
+                                                  xs,ys,zs,
+                                                  xDim,yDim,zDim,
+                                                  color='0 1 0')
+                                                  
+    allExc = [popExc,popExc2]
+
     popInh = oc.add_population_in_rectangular_region(network,
                                                   'popInh',
                                                   'HH_476686112',
@@ -94,37 +108,35 @@ def generate(scalePops = 1,
 
     #####   Projections
 
-    total_conns = 0
     if connections:
-        
-        proj = oc.add_probabilistic_projection(network, "proj0",
-                                        popExc, popExc,
-                                        synAmpa1.id, 0.5, delay = global_delay)
-        total_conns += len(proj.connection_wds)
 
-        proj = oc.add_probabilistic_projection(network, "proj1",
-                                        popExc, popInh,
-                                        synAmpa1.id, 0.7, delay = global_delay)
-        total_conns += len(proj.connection_wds)
+        for pop1 in allExc:
+            
+            for pop2 in allExc:
+                proj = oc.add_probabilistic_projection(network, "proj0",
+                                                pop1, pop2,
+                                                synAmpa1.id, 0.5, delay = global_delay)
+
+            proj = oc.add_probabilistic_projection(network, "proj1",
+                                            pop1, popInh,
+                                            synAmpa1.id, 0.7, delay = global_delay)
+
+            proj = oc.add_probabilistic_projection(network, "proj2",
+                                            popInh, pop1,
+                                            synGaba1.id, 0.7, delay = global_delay)
 
         proj = oc.add_probabilistic_projection(network, "proj3",
-                                        popInh, popExc,
-                                        synGaba1.id, 0.7, delay = global_delay)
-        total_conns += len(proj.connection_wds)
-
-        proj = oc.add_probabilistic_projection(network, "proj4",
                                         popInh, popInh,
                                         synGaba1.id, 0.5, delay = global_delay)
-        total_conns += len(proj.connection_wds)
 
                                         
-        total_conns += len(proj.connection_wds)
 
     #####   Inputs
 
-    oc.add_inputs_to_population(network, "Stim0",
-                                popExc, pfs1.id,
-                                all_cells=True)
+    for pop in allExc:
+        oc.add_inputs_to_population(network, "Stim_%s"%pop.id,
+                                    pop, pfs1.id,
+                                    all_cells=True)
 
 
 
@@ -141,15 +153,20 @@ def generate(scalePops = 1,
 
     if format=='xml':
         
-        plot_v = {popExc.id:[],popInh.id:[]}
+        plot_v = {popExc.id:[],popExc2.id:[],popInh.id:[]}
         exc_traces = '%s_%s_v.dat'%(network.id,popExc.id)
+        exc2_traces = '%s_%s_v.dat'%(network.id,popExc2.id)
         inh_traces = '%s_%s_v.dat'%(network.id,popInh.id)
-        save_v = {exc_traces:[], inh_traces:[]}
+        save_v = {exc_traces:[], inh_traces:[], exc2_traces:[]}
         
         
         for i in range(min(max_in_pop_to_plot_and_save,num_exc)):
             plot_v[popExc.id].append("%s/%i/%s/v"%(popExc.id,i,popExc.component))
             save_v[exc_traces].append("%s/%i/%s/v"%(popExc.id,i,popExc.component))
+            
+        for i in range(min(max_in_pop_to_plot_and_save,num_exc2)):
+            plot_v[popExc2.id].append("%s/%i/%s/v"%(popExc2.id,i,popExc2.component))
+            save_v[exc2_traces].append("%s/%i/%s/v"%(popExc2.id,i,popExc2.component))
             
         for i in range(min(max_in_pop_to_plot_and_save,num_inh)):
             plot_v[popInh.id].append("%s/%i/%s/v"%(popInh.id,i,popInh.component))
@@ -283,7 +300,7 @@ if __name__ == '__main__':
         
         duration = 600
         run_in_simulator='jNeuroML_NEURON'
-        run_in_simulator='jNeuroML_NetPyNE'
+        #run_in_simulator='jNeuroML_NetPyNE'
         scalePops = 1
         
         quick = False
@@ -291,15 +308,15 @@ if __name__ == '__main__':
         
         g_rng = np.arange(.5, 4.5, .5)
         i_rng = np.arange(50, 400, 50)
-        trace_highlight = [(2,150)]
+        trace_highlight = [(1.5,150)]
         
         if quick:
             g_rng = [2,3,4]
-            g_rng = [2]
+            g_rng = [1.5]
             i_rng = [100,150,200]
             i_rng = [150]
             duration = 1000
-            scalePops = 1
+            scalePops = .3
 
 
         Rexc = np.zeros((len(g_rng), len(i_rng)))
@@ -333,12 +350,16 @@ if __name__ == '__main__':
                     all_v = []
                     colours = []
                     tr_shade_e=1
+                    tr_shade_e2=1
                     tr_shade_i=1
                     for vs in traces.keys():
                         if vs!='t':
                             all_v.append(traces[vs])
                             all_t.append(traces['t'])
-                            if 'Exc' in vs:
+                            if 'Exc2' in vs:
+                                colours.append((1-tr_shade_e2,1,1-tr_shade_e2))
+                                tr_shade_e2*=0.8
+                            elif 'Exc' in vs:
                                 colours.append((1-tr_shade_e,1-tr_shade_e,1))
                                 tr_shade_e*=0.8
                             else:
@@ -372,6 +393,8 @@ if __name__ == '__main__':
         
 
     else:
-        generate(ratio_inh_exc=2,
+        generate(ratio_inh_exc=1.5,
                  duration = 500,
-                 input_rate = 170)
+                 input_rate = 250,
+                 scalePops=.2,
+                 percentage_exc_detailed=50)

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd" 
+         id="AMPA_NMDA">
+    
+    <include href="AMPA.synapse.nml"></include>
+    <include href="NMDA.synapse.nml"></include>
+     
+   
+    <doubleSynapse id="AMPA_NMDA" synapse1="AMPA" synapse1Path="./AMPA" synapse2="NMDA" synapse2Path="./NMDA">
+        <notes>A single "synapse" which contains both AMPA and NMDA. Hopefully the need for extra synapse1Path/synapse2Path attributes can be removed in later versions.</notes>
+    </doubleSynapse>
+
+</neuroml>
+

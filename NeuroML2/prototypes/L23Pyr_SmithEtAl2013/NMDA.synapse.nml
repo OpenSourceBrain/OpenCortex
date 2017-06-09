@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" 
+         id="NMDA">
+
+    <notes>NeuroML 2 file describing a single synaptic mechanism</notes>
+     
+    <!--                                     0.97nS to scale for (1-pf) with pf=0.03 in exp2synNMDA.mod -->
+    <blockingPlasticSynapse id="NMDA" gbase="0.97nS"  
+                            erev="0mV" tauRise="2ms" tauDecay="20ms">
+        <notes>NMDA synapse</notes>
+        <blockMechanism type="voltageConcDepBlockMechanism" species="mg" blockConcentration="1 mM"
+                                      scalingConc="3.57 mM" scalingVolt="16.129032258 mV"/>
+    </blockingPlasticSynapse>
+
+</neuroml>
+

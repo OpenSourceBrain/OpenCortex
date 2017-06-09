@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" 
+         id="GABA">
+
+    <notes>NeuroML 2 file describing a single synaptic mechanism</notes>
+
+    <expTwoSynapse id="GABA" tauRise="0.1ms" tauDecay="4ms" gbase="1nS" erev="-80mV">
+        <notes>GABA synapse</notes>
+    </expTwoSynapse>
+
+</neuroml>
+
