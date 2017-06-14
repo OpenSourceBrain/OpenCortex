@@ -2370,7 +2370,7 @@ def add_population_in_cylindrical_region(net,
     pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
 
     if color is not None:
-        pop.properties.append(Property("color", color))
+        pop.properties.append(neuroml.Property("color", color))
 
     if size > 0:
 

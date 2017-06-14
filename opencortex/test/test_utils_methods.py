@@ -46,8 +46,8 @@ class TestUtilsMethods(unittest.TestCase):
       
           network = neuroml.Network(id='Net0')
           popDict={}
-          popDict['CG3D_L23PyrRS'] = (1000, 'L23','Test','multi')
-          popDict['CG3D_L23PyrFRB']= (50,'L23','Test2','multi')
+          popDict['CG3D_L23PyrRS'] = (1000, 'L23','Test','multi',None)
+          popDict['CG3D_L23PyrFRB']= (50,'L23','Test2','multi',None)
           t1=-0
           t2=-250
           t3=-250
@@ -210,8 +210,8 @@ class TestUtilsMethods(unittest.TestCase):
       
           network = neuroml.Network(id='Net0')
           popDict={}
-          popDict['CG3D_L23PyrRS'] = (1000, 'L23','Test','multi')
-          popDict['CG3D_L23PyrFRB']= (50,'L23','Test2','multi')
+          popDict['CG3D_L23PyrRS'] = (1000, 'L23','Test','multi',None)
+          popDict['CG3D_L23PyrFRB']= (50,'L23','Test2','multi',None)
           t1=-0
           t2=-250
           t3=-250
@@ -556,8 +556,8 @@ class TestUtilsMethods(unittest.TestCase):
       
           network = neuroml.Network(id='Net0')
           popDict={}
-          popDict['CG3D_L23PyrRS'] = (1000, 'L23','Test','multi')
-          popDict['CG3D_L23PyrFRB']= (50,'L23','Test2','multi')
+          popDict['CG3D_L23PyrRS'] = (1000, 'L23','Test','multi',None)
+          popDict['CG3D_L23PyrFRB']= (50,'L23','Test2','multi',None)
           t1=-0
           t2=-250
           t3=-250
@@ -685,8 +685,8 @@ class TestUtilsMethods(unittest.TestCase):
       
           network = neuroml.Network(id='Net0')
           popDict={}
-          popDict['CG3D_L23PyrRS'] = (1000, 'L23','Test','single')
-          popDict['CG3D_L23PyrFRB']= (50,'L23','Test2','single')
+          popDict['CG3D_L23PyrRS'] = (1000, 'L23','Test','single',None)
+          popDict['CG3D_L23PyrFRB']= (50,'L23','Test2','single',None)
           t1=-0
           t2=-250
           t3=-250
@@ -799,9 +799,9 @@ class TestUtilsMethods(unittest.TestCase):
           
           nml_doc, network = oc.generate_network('Net0')
           popDict={}
-          popDict['CG3D_L23PyrRS'] = (2, 'L23','Test','multi')
-          popDict['CG3D_L23PyrFRB']= (10,'L23','Test2','multi')
-          popDict['CG3D_PointNeurons']=(1,'L23','SingleCompartment','single')
+          popDict['CG3D_L23PyrRS'] = (2, 'L23','Test','multi',None)
+          popDict['CG3D_L23PyrFRB']= (10,'L23','Test2','multi',None)
+          popDict['CG3D_PointNeurons']=(1,'L23','SingleCompartment','single',None)
           t1=-0
           t2=-250
           t3=-250

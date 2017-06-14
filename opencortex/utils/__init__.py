@@ -36,7 +36,7 @@ def add_populations_in_rectangular_layers(net, boundaryDict, popDict, x_vector, 
 
    net - libNeuroML network object;
 
-   popDict - a dictionary whose keys are unique cell population ids; each key entry stores a tuple of three elements: population size, Layer tag and cell model id; 
+   popDict - a dictionary whose keys are unique cell population ids; each key entry stores a tuple of five elements: population size, Layer tag, cell model id, compartmentalization, color; 
 
    layer tags (of type string) must make up the keys() of boundaryDict;
 
@@ -59,7 +59,7 @@ def add_populations_in_rectangular_layers(net, boundaryDict, popDict, x_vector, 
 
     for cell_pop in popDict.keys():
 
-        size, layer, cell_model, compartmentalization = popDict[cell_pop]
+        size, layer, cell_model, compartmentalization, color = popDict[cell_pop]
 
         if size > 0:
 
@@ -86,7 +86,8 @@ def add_populations_in_rectangular_layers(net, boundaryDict, popDict, x_vector, 
                                                                                    cell_bodies_overlap=cellBodiesOverlap,
                                                                                    store_soma=storeSoma,
                                                                                    population_dictionary=return_pops,
-                                                                                   cell_diameter_dict=cellDiameterArray)
+                                                                                   cell_diameter_dict=cellDiameterArray,
+                                                                                   color=color)
 
             else:
 
@@ -124,7 +125,7 @@ def add_populations_in_cylindrical_layers(net, boundaryDict, popDict, radiusOfCy
 
    net - libNeuroML network object;
 
-   popDict - a dictionary whose keys are unique cell population ids; each key entry stores a tuple of three elements: population size, Layer tag and cell model id; 
+   popDict - a dictionary whose keys are unique cell population ids; each key entry stores a tuple of five elements: population size, Layer tag, cell model id, compartmentalization, color;  
 
    layer tags (of type string) must make up the keys() of boundaryDict;
 
@@ -219,7 +220,7 @@ def add_populations_in_cylindrical_layers(net, boundaryDict, popDict, radiusOfCy
 
     for cell_pop in popDict.keys():
 
-        size, layer, cell_model, compartmentalization = popDict[cell_pop]
+        size, layer, cell_model, compartmentalization, color = popDict[cell_pop]
 
         if size > 0:
 
@@ -240,7 +241,8 @@ def add_populations_in_cylindrical_layers(net, boundaryDict, popDict, radiusOfCy
                                                                                    cell_diameter_dict=cellDiameterArray,
                                                                                    num_of_polygon_sides=numOfSides,
                                                                                    positions_of_vertices=vertex_array,
-                                                                                   constants_of_sides=xy_sides)
+                                                                                   constants_of_sides=xy_sides,
+                                                                                   color = color)
 
             else:
 
@@ -2307,10 +2309,10 @@ def check_pop_dict_and_layers(pop_dict, boundary_dict):
 
         else:
 
-            if len(pop_dict[cell_population]) != 4:
+            if len(pop_dict[cell_population]) != 5:
 
                 print("ValueError in population parameters: tuples in the population dictionary must contain four elements in the following order and type: "
-                      "population size ('int'), layer ('str'), cell type ('str') and compartmentalization type ('single' or 'multi').")
+                      "population size ('int'), layer ('str'), cell type ('str'), compartmentalization type ('single' or 'multi'), color ('str', e.g. '1 0 0' for red).")
                 error_counter += 1
 
             else:
