@@ -27,9 +27,9 @@
     <Include file="ACNet/Na_bask.channel.nml"/>
     <Include file="ACNet.net.nml"/>
    
-    <Simulation id="Sim_ACNet" length="300ms" step="0.025ms" target="ACNet" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="Sim_ACNet" length="250ms" step="0.025ms" target="ACNet" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
-        <Display id="Display_pop_pyr_v" title="Plots of Display_pop_pyr_v" timeScale="1ms" xmin="-30.0" xmax="330.0" ymin="-80" ymax="40">
+        <Display id="Display_pop_pyr_v" title="Plots of Display_pop_pyr_v" timeScale="1ms" xmin="-25.0" xmax="275.0" ymin="-80" ymax="40">
             <Line id="pop_pyr_0_pyr_4_sym_0_v" quantity="pop_pyr/0/pyr_4_sym/0/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
             <Line id="pop_pyr_1_pyr_4_sym_0_v" quantity="pop_pyr/1/pyr_4_sym/0/v" scale="1mV" color="#029a72" timeScale="1ms"/>
             <Line id="pop_pyr_2_pyr_4_sym_0_v" quantity="pop_pyr/2/pyr_4_sym/0/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
@@ -80,7 +80,7 @@
             <Line id="pop_pyr_47_pyr_4_sym_0_v" quantity="pop_pyr/47/pyr_4_sym/0/v" scale="1mV" color="#8e1a11" timeScale="1ms"/>
         </Display>
         
-        <Display id="Display_pop_bask_v" title="Plots of Display_pop_bask_v" timeScale="1ms" xmin="-30.0" xmax="330.0" ymin="-80" ymax="40">
+        <Display id="Display_pop_bask_v" title="Plots of Display_pop_bask_v" timeScale="1ms" xmin="-25.0" xmax="275.0" ymin="-80" ymax="40">
             <Line id="pop_bask_0_bask_0_v" quantity="pop_bask/0/bask/0/v" scale="1mV" color="#2f9272" timeScale="1ms"/>
             <Line id="pop_bask_1_bask_0_v" quantity="pop_bask/1/bask/0/v" scale="1mV" color="#96af0d" timeScale="1ms"/>
             <Line id="pop_bask_2_bask_0_v" quantity="pop_bask/2/bask/0/v" scale="1mV" color="#84ab56" timeScale="1ms"/>

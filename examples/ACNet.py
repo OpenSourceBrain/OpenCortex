@@ -15,7 +15,7 @@ def generate(reference = "ACNet",
              scalez=1,
              connections=True,
              global_delay = 0,
-             duration = 300,
+             duration = 250,
              segments_to_plot_record = {'pop_pyr':[0],'pop_bask':[0]},
              format='xml'):
 
