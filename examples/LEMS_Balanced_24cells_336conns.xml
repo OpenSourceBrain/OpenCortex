@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.2.12 (libNeuroML v0.2.30)
+        This LEMS file has been automatically generated using PyNeuroML v0.2.13 (libNeuroML v0.2.32)
 
      -->
     
@@ -24,20 +24,20 @@
    
     <Simulation id="Sim_Balanced_24cells_336conns" length="1000ms" step="0.025ms" target="Balanced_24cells_336conns" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
-        <Display id="popInh" title="Plots of popInh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popInh_0_HH_476686112_v" quantity="popInh/0/HH_476686112/v" scale="1" color="#6aa799" timeScale="1ms"/>
-            <Line id="popInh_1_HH_476686112_v" quantity="popInh/1/HH_476686112/v" scale="1" color="#029a72" timeScale="1ms"/>
-            <Line id="popInh_2_HH_476686112_v" quantity="popInh/2/HH_476686112/v" scale="1" color="#d340bb" timeScale="1ms"/>
-            <Line id="popInh_3_HH_476686112_v" quantity="popInh/3/HH_476686112/v" scale="1" color="#4c73a9" timeScale="1ms"/>
-            <Line id="popInh_4_HH_476686112_v" quantity="popInh/4/HH_476686112/v" scale="1" color="#5e503a" timeScale="1ms"/>
+        <Display id="popInh" title="Plots of popInh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
+            <Line id="popInh_0_HH_476686112_v" quantity="popInh/0/HH_476686112/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
+            <Line id="popInh_1_HH_476686112_v" quantity="popInh/1/HH_476686112/v" scale="1mV" color="#029a72" timeScale="1ms"/>
+            <Line id="popInh_2_HH_476686112_v" quantity="popInh/2/HH_476686112/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
+            <Line id="popInh_3_HH_476686112_v" quantity="popInh/3/HH_476686112/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
+            <Line id="popInh_4_HH_476686112_v" quantity="popInh/4/HH_476686112/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
         </Display>
         
-        <Display id="popExc" title="Plots of popExc" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="popExc_0_HH_477127614_v" quantity="popExc/0/HH_477127614/v" scale="1" color="#3193ca" timeScale="1ms"/>
-            <Line id="popExc_1_HH_477127614_v" quantity="popExc/1/HH_477127614/v" scale="1" color="#90e5e9" timeScale="1ms"/>
-            <Line id="popExc_2_HH_477127614_v" quantity="popExc/2/HH_477127614/v" scale="1" color="#29645f" timeScale="1ms"/>
-            <Line id="popExc_3_HH_477127614_v" quantity="popExc/3/HH_477127614/v" scale="1" color="#1fcff4" timeScale="1ms"/>
-            <Line id="popExc_4_HH_477127614_v" quantity="popExc/4/HH_477127614/v" scale="1" color="#6ed4e9" timeScale="1ms"/>
+        <Display id="popExc" title="Plots of popExc" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
+            <Line id="popExc_0_HH_477127614_v" quantity="popExc/0/HH_477127614/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
+            <Line id="popExc_1_HH_477127614_v" quantity="popExc/1/HH_477127614/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
+            <Line id="popExc_2_HH_477127614_v" quantity="popExc/2/HH_477127614/v" scale="1mV" color="#29645f" timeScale="1ms"/>
+            <Line id="popExc_3_HH_477127614_v" quantity="popExc/3/HH_477127614/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
+            <Line id="popExc_4_HH_477127614_v" quantity="popExc/4/HH_477127614/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="popInh_v_dat" fileName="popInh_v.dat">
