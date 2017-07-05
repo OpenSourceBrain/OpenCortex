@@ -856,7 +856,8 @@ def simulate_network(lems_file_name,
                      load_saved_data=False,
                      reload_events=False,
                      plot=False,
-                     verbose=True):
+                     verbose=True,
+                     num_processors=1):
 
     """
     Run a simulation of the LEMS file `lems_file_name` using target platform `simulator`
@@ -867,7 +868,7 @@ def simulate_network(lems_file_name,
     elif simulator == "jNeuroML_NEURON":
        results = pynml.run_lems_with_jneuroml_neuron(lems_file_name, max_memory=max_memory, nogui=nogui, load_saved_data=load_saved_data, reload_events=reload_events, plot=plot, verbose=verbose)
     elif simulator == "jNeuroML_NetPyNE":
-       results = pynml.run_lems_with_jneuroml_netpyne(lems_file_name, max_memory=max_memory, nogui=nogui, load_saved_data=load_saved_data, reload_events=reload_events, plot=plot, verbose=verbose)
+       results = pynml.run_lems_with_jneuroml_netpyne(lems_file_name, max_memory=max_memory, nogui=nogui, load_saved_data=load_saved_data, reload_events=reload_events, plot=plot, verbose=verbose,num_processors=num_processors)
     else:
         raise Exception("Simulator %s not yet supported"%simulator)
 

@@ -14,7 +14,6 @@ def scale_pop_size(baseline, scale):
     return max(min_pop_size, int(baseline*scale))
 
 
-
 def generate(reference = "Balanced",
              num_bbp =1,
              scalePops = 1,
@@ -200,13 +199,15 @@ if __name__ == '__main__':
         generate(num_bbp =10,
              scalePops = 5,
              scalex=2,
-             scalez=2)
+             scalez=2,
+             global_delay = 2)
         
         generate(num_bbp =0,
              scalePops = 2,
              scalex=2,
              scalez=2,
-             duration = 2000)
+             duration = 2000,
+             global_delay = 2)
              
     elif '-test' in sys.argv:
         
@@ -219,4 +220,5 @@ if __name__ == '__main__':
              global_delay = 2,
              input_rate=250)
     else:
-        generate(gen_spike_saves_for_all_somas = True)
+        generate(gen_spike_saves_for_all_somas = True,
+             global_delay = 2)
