@@ -1809,14 +1809,16 @@ def _copy_to_dir_for_model(nml_doc, file_name):
     
     
 # Save included cell/channel files to specific dir when the network is saved
-def _finalise_copy_to_dir_for_model(nml_doc, target_dir='./'):
+def _finalise_copy_to_dir_for_model(nml_doc, target_dir='./', use_subfolder=True):
     for file_name in to_be_copied_on_save:
 
-        dir_for_model = target_dir+nml_doc.id
+        dir_for_model = target_dir+nml_doc.id if use_subfolder else target_dir
+        
         if not os.path.isdir(dir_for_model):
             os.mkdir(dir_for_model)
 
-        shutil.copy(file_name, dir_for_model)
+        if not os.path.exists(dir_for_model+"/"+file_name):
+            shutil.copy(file_name, dir_for_model)
 
 
 ##########################################################################################   
