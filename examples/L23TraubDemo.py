@@ -14,7 +14,7 @@ def generate(reference = "L23TraubDemo",
              scalez=1,
              connections=False,
              poisson_inputs=True,
-             offset_curents=False,
+             offset_curent_range_pA=None,
              global_delay = 0,
              duration = 300,
              segments_to_plot_record = {'pop_rs':[0],'pop_bask':[0]},
@@ -72,31 +72,45 @@ def generate(reference = "L23TraubDemo",
                                     pop_rs,
                                     pfs.id,
                                     all_cells=True)
-                                    
+        '''                            
         oc.add_inputs_to_population(network,
                                     "Stim1",
                                     pop_bask,
                                     pfs.id,
-                                    all_cells=True)
-    if offset_curents:
+                                    all_cells=True)'''
+    if offset_curent_range_pA:
 
-        pg0 = oc.add_pulse_generator(nml_doc,
-                               id="pg0",
-                               delay="0ms",
-                               duration="%sms"%duration,
-                               amplitude="0.5nA")
 
-        oc.add_inputs_to_population(network,
-                                    "Stim0",
-                                    pop_rs,
-                                    pg0.id,
-                                    all_cells=True)
+        for pop_id in offset_curent_range_pA:
 
-        oc.add_inputs_to_population(network,
-                                    "Stim1",
-                                    pop_bask,
-                                    pg0.id,
-                                    all_cells=True)
+            pop = next(p for p in network.populations if p.id==pop_id)
+            
+            pg0 = oc.add_pulse_generator(nml_doc,
+                                   id="offset_current_%s"%pop.id,
+                                   delay="0ms",
+                                   duration="%sms"%duration,
+                                   amplitude="1pA")
+
+            import neuroml
+            import random
+            
+            input_list = neuroml.InputList(id="inputs_offset_current_%s"%pop.id,
+                                           component=pg0.id,
+                                           populations=pop.id)
+                                           
+            network.input_lists.append(input_list)
+                                 
+            min_, max_ = offset_curent_range_pA[pop_id]
+            
+            for i in range(pop.get_size()):
+                
+                input = neuroml.InputW(id=i, 
+                                      target="../%s/%i/%s" % (pop.id, i, pop.component),
+                                      destination="synapses",
+                                      weight=(min_ + (max_-min_)*random.random()))
+                                      
+                input_list.input_ws.append(input)
+        
                                 
                                 
     total_conns = 0
@@ -107,9 +121,25 @@ def generate(reference = "L23TraubDemo",
                                         pop_rs,
                                         pop_bask,
                                         syn1.id,
-                                        0.3,
-                                        weight=0.05,
+                                        1,
+                                        weight=1,
                                         delay=global_delay)
+                                        
+
+        '''
+        proj = oc.add_targeted_projection(nml_doc,
+                                        network,
+                                        "proj0",
+                                        presynaptic_population = pop_rs,
+                                        postsynaptic_population = pop_bask,
+                                        targeting_mode = 'convergent',
+                                        synapse_list = [syn1.id],
+                                        number_conns_per_cell = 1,
+                                        pre_segment_group = 'axon_group',
+                                        post_segment_group = 'dendrite_group',
+                                        delays_dict = {syn1.id:2},
+                                        weights_dict = {syn1.id:1})'''
+                                        
         if proj:                           
             total_conns += len(proj.connection_wds)
         
@@ -164,14 +194,15 @@ if __name__ == '__main__':
         generate(num_rs = 2,
                  num_bask=0,
                  duration = 50,
-                 global_delay = 2)
+                 global_delay = 2) 
                  
         generate(num_rs = 0,
-                 num_bask=1,
-                 duration = 30,
-                 poisson_inputs=False,
-                 offset_curents=True,
-                 segments_to_plot_record = {'pop_bask':[0,117,104,55]})
+                 num_bask=4,
+                 duration = 10,
+                 offset_curent_range_pA = { 'pop_bask': [-50,50] },
+                 poisson_inputs=False )
+                 
+                 #segments_to_plot_record = {'pop_bask':[0,117,104,55]})
                  
                  
         
@@ -184,7 +215,13 @@ if __name__ == '__main__':
         generate(num_rs = 32,
                  num_bask=16,
                  duration = 200,
+                 offset_curent_range_pA = { 'pop_rs': [-50,50] },
                  connections = True,
                  global_delay = 2)
+                 
     else:
-        generate(global_delay = 5)
+        
+        generate(global_delay = 5,
+                 connections = True,
+                 offset_curent_range_pA = { 'pop_rs': [-50,50] },
+                 duration = 300)
