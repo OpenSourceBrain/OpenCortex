@@ -1452,6 +1452,8 @@ def build_inputs(nml_doc, net, population_params, input_params, cached_dicts=Non
                         condition2 = 'UniversalTargetSegmentID' not in input_group_params.keys()
 
                         condition3 = 'UniversalFractionAlong' not in input_group_params.keys()
+                        
+                        weight_dict = {}
 
                         if condition1 and condition2 and condition3:
 
@@ -1543,23 +1545,27 @@ def build_inputs(nml_doc, net, population_params, input_params, cached_dicts=Non
 
                             else:
 
-                                for cell in target_cell_ids:
-
-                                    list_of_input_ids = []
-
+                                for cell_id in target_cell_ids:
+                            
+                                    assert len(input_group_params['SmallestAmplitudeList'])==1 
+                                    
                                     for input_index in range(0, len(input_group_params['SmallestAmplitudeList'])):
 
                                         random_amplitude = random.uniform(input_group_params['SmallestAmplitudeList'][input_index], input_group_params['LargestAmplitudeList'][input_index])
+                                    
+                                        weight_dict[cell_id] = random_amplitude
+                                        
+                                list_of_input_ids = []
 
-                                        pg = oc_build._add_pulse_generator(nml_doc=nml_doc, 
-                                                                          id=input_group_tag + "_Pulse%d_Cell%d" % (input_index, cell), 
-                                                                          delay="%f %s" % (input_group_params['DelayList'][input_index], input_group_params['TimeUnits']),
-                                                                          duration="%f %s" % (input_group_params['DurationList'][input_index], input_group_params['TimeUnits']), 
-                                                                          amplitude="%f %s" % (random_amplitude, input_group_params['AmplitudeUnits']))
+                                pg = oc_build._add_pulse_generator(nml_doc=nml_doc, 
+                                                                  id=input_group_tag + "_Pulse", 
+                                                                  delay="%s %s" % (input_group_params['DelayList'][0], input_group_params['TimeUnits']),
+                                                                  duration="%s %s" % (input_group_params['DurationList'][0], input_group_params['TimeUnits']), 
+                                                                  amplitude="%s %s" % (1, input_group_params['AmplitudeUnits']))
 
-                                        list_of_input_ids.append(pg.id)
+                                list_of_input_ids.append(pg.id)
 
-                                    input_ids_final.append(list_of_input_ids)
+                                input_ids_final.append(list_of_input_ids)
 
                         if input_group_params['InputType'] == 'GenerateSpikeSourcePoisson':
 
@@ -1595,7 +1601,8 @@ def build_inputs(nml_doc, net, population_params, input_params, cached_dicts=Non
                                                                                           subset_dict=subset_dict,
                                                                                           universal_target_segment=target_segment,
                                                                                           universal_fraction_along=fraction_along,
-                                                                                          only_cells=target_cell_ids)
+                                                                                          only_cells=target_cell_ids,
+                                                                                          weight_dict=weight_dict)
 
                         if input_group_params['InputType'] == 'GenerateSpikeSourcePoisson':
 

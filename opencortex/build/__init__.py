@@ -2678,14 +2678,17 @@ def add_advanced_inputs_to_population(net,
                                       universal_target_segment,
                                       universal_fraction_along, 
                                       all_cells=False, 
-                                      only_cells=None):
+                                      only_cells=None,
+                                      weight_dict=None):
 
-    ''' This method distributes the poisson input synapses on the specific segment groups of target cells. Input arguments to this method:
+    ''' Do not use. Subject to change!!!
+    
+    This method distributes the poisson input synapses on the specific segment groups of target cells. Input arguments to this method:
 
     net- libNeuroML network object;
 
     id - unique string that tags the input group created by the method;
-
+ 
     population - libNeuroML population object of a target population;
 
     input_id_list - this is a list that stores lists of poisson synapse ids or pulse generator ids; 
@@ -2705,7 +2708,10 @@ def add_advanced_inputs_to_population(net,
 
     all_cells - default value is set to False; if all_cells==True then all cells in a given population will receive the inputs;
 
-    only_cells - optional variable which stores the list of ids of specific target cells; cannot be set together with all_cells. '''
+    only_cells - optional variable which stores the list of ids of specific target cells; cannot be set together with all_cells. 
+    
+    weight_dict - id of cell vs weight for each connection
+    '''
 
     if all_cells and only_cells is not None:
         opencortex.print_comment_v("Error! Method opencortex.build.%s() called with both arguments all_cells and only_cells set!" % sys._getframe().f_code.co_name)
@@ -2756,6 +2762,8 @@ def add_advanced_inputs_to_population(net,
         else:
 
             cell_index = 0
+            
+        weight = 1 if (not weight_dict or cell_id not in weight_dict) else weight_dict[cell_id]
 
         if subset_dict != None and seg_length_dict == None and universal_target_segment == None and universal_fraction_along == None:
 
@@ -2765,11 +2773,19 @@ def add_advanced_inputs_to_population(net,
 
                     for input_index in range(0, len(input_list_array_final[cell_index])):
 
-                        input = neuroml.Input(id=input_counters_final[cell_index][input_index], 
-                                              target="../%s/%i/%s" % (population.id, cell_id, population.component), 
-                                              destination="synapses")
+                        if weight == 1:
+                            input = neuroml.Input(id=input_counters_final[cell_index][input_index], 
+                                                  target="../%s/%i/%s" % (population.id, cell_id, population.component), 
+                                                  destination="synapses")
 
-                        input_list_array_final[cell_index][input_index].input.append(input)
+                            input_list_array_final[cell_index][input_index].input.append(input)
+                        else:
+                            input = neuroml.InputW(id=input_counters_final[cell_index][input_index], 
+                                                  target="../%s/%i/%s" % (population.id, cell_id, population.component), 
+                                                  destination="synapses",
+                                                  weight=weight)
+
+                            input_list_array_final[cell_index][input_index].input_ws.append(input)
 
                         input_counters_final[cell_index][input_index] += 1
 
@@ -2781,11 +2797,21 @@ def add_advanced_inputs_to_population(net,
 
                 for input_index in range(0, len(input_list_array_final[cell_index])):
 
-                    input = neuroml.Input(id=input_counters_final[cell_index][input_index], 
-                                          target="../%s/%i/%s" % (population.id, cell_id, population.component), 
-                                          destination="synapses", segment_id="%d" % target_seg_array[target_point], fraction_along="%f" % target_fractions[target_point])
+                    if weight == 1:
+                        input = neuroml.Input(id=input_counters_final[cell_index][input_index], 
+                                              target="../%s/%i/%s" % (population.id, cell_id, population.component), 
+                                              destination="synapses", segment_id="%d" % target_seg_array[target_point], fraction_along="%f" % target_fractions[target_point])
 
-                    input_list_array_final[cell_index][input_index].input.append(input)
+                        input_list_array_final[cell_index][input_index].input.append(input)
+                    else:
+                        input = neuroml.InputW(id=input_counters_final[cell_index][input_index], 
+                                          target="../%s/%i/%s" % (population.id, cell_id, population.component), 
+                                          destination="synapses", 
+                                          segment_id="%d" % target_seg_array[target_point], 
+                                          fraction_along="%f" % target_fractions[target_point],
+                                          weight=weight)
+
+                        input_list_array_final[cell_index][input_index].input_ws.append(input)
 
                     input_counters_final[cell_index][input_index] += 1
 
@@ -2793,11 +2819,22 @@ def add_advanced_inputs_to_population(net,
 
             for input_index in range(0, len(input_list_array_final[cell_index])):
 
-                input = neuroml.Input(id=input_counters_final[cell_index][input_index], 
+                if weight == 1:
+                    input = neuroml.Input(id=input_counters_final[cell_index][input_index], 
                                       target="../%s/%i/%s" % (population.id, cell_id, population.component), 
                                       destination="synapses", segment_id="%d" % universal_target_segment, fraction_along="%f" % universal_fraction_along)
+                    
+                    input_list_array_final[cell_index][input_index].input.append(input)
+                    
+                else:
+                    input = neuroml.InputW(id=input_counters_final[cell_index][input_index], 
+                                      target="../%s/%i/%s" % (population.id, cell_id, population.component), 
+                                      destination="synapses", 
+                                      segment_id="%d" % universal_target_segment, 
+                                      fraction_along="%f" % universal_fraction_along,
+                                      weight=weight)
 
-                input_list_array_final[cell_index][input_index].input.append(input)
+                    input_list_array_final[cell_index][input_index].input_ws.append(input)
 
                 input_counters_final[cell_index][input_index] += 1
 
