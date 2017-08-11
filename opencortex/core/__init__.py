@@ -171,6 +171,30 @@ def add_pulse_generator(nml_doc, id, delay, duration, amplitude):
     return oc_build._add_pulse_generator(nml_doc, id, delay, duration, amplitude)
 
 
+################################################################################    
+
+def add_voltage_clamp_triple(nml_doc, id, delay, duration, 
+                             conditioning_voltage,
+                             testing_voltage,
+                             return_voltage, 
+                             simple_series_resistance,
+                             active = "1"):
+
+    """
+    Adds a <voltageClampTriple> element to the document. See the definition of the 
+    behaviour of this here: https://github.com/NeuroML/NeuroML2/blob/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd
+    
+    Returns the class created.
+    """
+
+    return oc_build._add_voltage_clamp_triple(nml_doc, id, delay, duration, 
+                             conditioning_voltage,
+                             testing_voltage,
+                             return_voltage, 
+                             simple_series_resistance,
+                             active)
+
+
 ##############################################################################################
 
 def add_spike_source_poisson(nml_doc, id, start, duration, rate):

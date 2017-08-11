@@ -2122,6 +2122,38 @@ def _add_pulse_generator(nml_doc, id, delay, duration, amplitude):
 
 
 
+
+################################################################################    
+
+def _add_voltage_clamp_triple(nml_doc, id, delay, duration, 
+                             conditioning_voltage,
+                             testing_voltage,
+                             return_voltage, 
+                             simple_series_resistance,
+                             active):
+
+    """
+    Adds a <voltageClampTriple> element to the document. See the definition of the 
+    behaviour of this here: https://github.com/NeuroML/NeuroML2/blob/development/Schemas/NeuroML2/NeuroML_v2beta5.xsd
+    
+    Returns the class created.
+    """
+    
+    vc = neuroml.VoltageClampTriple(id=id,
+                                delay=delay,
+                                duration=duration,
+                                conditioning_voltage=conditioning_voltage,
+                                testing_voltage=testing_voltage,
+                                return_voltage=return_voltage, 
+                                simple_series_resistance=simple_series_resistance,
+                                active=active)
+
+    nml_doc.voltage_clamp_triples.append(vc)
+
+    return vc
+
+
+
 ##############################################################################################
 
 def _add_poisson_firing_synapse(nml_doc, id, average_rate, synapse_id):
