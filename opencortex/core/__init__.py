@@ -391,21 +391,58 @@ def add_probabilistic_projection(net,
 
 ##############################################################################################
 
-def add_targeted_projection(nml_doc,
-                         net,
+def add_targeted_projection(net,
                          prefix,
                          presynaptic_population,
                          postsynaptic_population,
                          targeting_mode,
                          synapse_list,
                          number_conns_per_cell,
-                         pre_segment_group,
-                         post_segment_group,
+                         pre_segment_group=None,
+                         post_segment_group=None,
                          delays_dict=None,
                          weights_dict=None):
     '''
     Adds (chemical, event based) projection from `presynaptic_population` to `postsynaptic_population`, 
     specifically limiting connections presynaptically to `pre_segment_group` and postsynaptically to `post_segment_group`.
+            
+    `net`
+        reference to the network object previously created
+        
+    `prefix`
+        prefix to use in the id of the projection
+    
+    `presynaptic_population`
+        presynaptic population e.g. added via add_population_in_rectangular_region()
+    
+    `postsynaptic_population`
+        postsynaptic population e.g. added via add_population_in_rectangular_region()
+            
+    `targeting_mode`
+        a string that specifies the targeting mode: 'convergent' or 'divergent'
+
+    `synapse_list`
+        the list of synapse ids that correspond to the individual receptor components on the physical synapse, e.g. the first element is
+        the id of the AMPA synapse and the second element is the id of the NMDA synapse; these synapse components will be mapped onto 
+        the same location of the target segment
+
+    `number_conns_per_cell`
+        number of connections to make on each cell in the postsynaptic population (when targeting_mode='convergent') or 
+        from each cell in the presynaptic population (when targeting_mode='divergent')
+        
+    `pre_segment_group`
+        which segment_group to target connennections from on the presynaptic population, e.g. axon_group. This can be left out or set to 
+        None if the presynaptic component has no morphology
+        
+    `post_segment_group`
+        which segment_group to target connennections from on the postsynaptic population, e.g. dendrite_group. This can be left out or set to 
+        None if the postsynaptic component has no morphology
+
+    `delays_dict` 
+        optional dictionary that specifies the delays (in ms) for individual synapse components, e.g. {'NMDA':5.0} or {'AMPA':3.0,'NMDA':5}
+
+    `weights_dict`
+        optional dictionary that specifies the weights (in ms) for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}
     '''
 
     if presynaptic_population.size == 0 or postsynaptic_population.size == 0:
@@ -414,20 +451,37 @@ def add_targeted_projection(nml_doc,
     projections = []
 
 
-    pre_cell = oc_build.cell_ids_vs_nml_docs[presynaptic_population.component].get_by_id(presynaptic_population.component)
-    post_cell = oc_build.cell_ids_vs_nml_docs[postsynaptic_population.component].get_by_id(postsynaptic_population.component)
+    if presynaptic_population.component in oc_build.cell_ids_vs_nml_docs:
+        pre_cell = oc_build.cell_ids_vs_nml_docs[presynaptic_population.component].get_by_id(presynaptic_population.component)
+    else:
+        pre_cell = "Undetermined"
+    
+    if postsynaptic_population.component in oc_build.cell_ids_vs_nml_docs:
+        post_cell = oc_build.cell_ids_vs_nml_docs[postsynaptic_population.component].get_by_id(postsynaptic_population.component)
+    else:
+        post_cell = "Undetermined"
+        
 
-
-    pre_segs = oc_build.extract_seg_ids(pre_cell,
+    if pre_segment_group:
+        pre_segs = oc_build.extract_seg_ids(pre_cell,
                                [pre_segment_group],
                                "segGroups")
-    post_segs = oc_build.extract_seg_ids(post_cell,
+        pre_seg_target_dict = oc_build.make_target_dict(pre_cell, pre_segs)
+        
+    else:
+        pre_segs = None
+        pre_seg_target_dict = None
+        
+    if post_segment_group:
+        post_segs = oc_build.extract_seg_ids(post_cell,
                                 [post_segment_group],
                                 "segGroups")
+        post_seg_target_dict = oc_build.make_target_dict(post_cell, post_segs)
+    else:
+        post_segs = None
+        post_seg_target_dict = None
 
 
-    pre_seg_target_dict = oc_build.make_target_dict(pre_cell, pre_segs)
-    post_seg_target_dict = oc_build.make_target_dict(post_cell, post_segs)
     #print pre_seg_target_dict, post_seg_target_dict
 
     for synapse in synapse_list:
@@ -435,7 +489,7 @@ def add_targeted_projection(nml_doc,
         proj_id = "%s_%s_%s" % (prefix, presynaptic_population.id, postsynaptic_population.id) if len(synapse_list) == 1 else \
             "%s_%s_%s_%s" % (prefix, presynaptic_population.id, postsynaptic_population.id, synapse)
 
-        opencortex.print_comment_v("Adding projection: %s: %s (%s) -> %s (%s)" % (proj_id, pre_cell.id, pre_segs, post_cell.id, post_segs))
+        opencortex.print_comment_v("Adding projection: %s: %s (%s) -> %s (%s)" % (proj_id, pre_cell, pre_segs, post_cell, post_segs))
 
         proj = neuroml.Projection(id=proj_id, 
                                   presynaptic_population=presynaptic_population.id, 

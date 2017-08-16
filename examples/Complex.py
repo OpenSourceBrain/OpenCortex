@@ -5,14 +5,20 @@ for testing purposes
 
 import opencortex.core as oc
 
+import neuroml
 
 nml_doc, network = oc.generate_network("Complex")
 
-scale = 0.01
+scale = .1
 min_pop_size = 3
 
 def scale_pop_size(baseline):
     return max(min_pop_size, int(baseline*scale))
+
+xDim = 500
+yDim = 100
+zDim = 500
+offset = 0
 
 #####   Cells
 
@@ -23,19 +29,22 @@ oc.include_opencortex_cell(nml_doc, 'iaf/iafRef.cell.nml')
 oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml')
 oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym.cell.nml')
 
-xDim = 500
-yDim = 100
-zDim = 500
-offset = 0
+
+# TODO: add method oc.add_spike_generator_poisson(...)
+spike_gen = neuroml.SpikeGeneratorPoisson(id="poissonInput",
+                                          average_rate="50Hz")
+                                          
+nml_doc.spike_generator_poissons.append(spike_gen)
+
 
 
 #####   Synapses
 
 synAmpa1 = oc.add_exp_two_syn(nml_doc, id="synAmpa1", gbase="1nS",
-                         erev="0mV", tau_rise="0.5ms", tau_decay="10ms")
+                         erev="0mV", tau_rise="0.5ms", tau_decay="5ms")
                          
 synAmpa2 = oc.add_exp_two_syn(nml_doc, id="synAmpa2", gbase="2nS",
-                         erev="0mV", tau_rise="0.5ms", tau_decay="10ms")
+                         erev="0mV", tau_rise="0.5ms", tau_decay="8ms")
 
 synGaba1 = oc.add_exp_two_syn(nml_doc, id="synGaba1", gbase="1nS",
                          erev="-70mV", tau_rise="2ms", tau_decay="20ms")
@@ -100,11 +109,33 @@ popPyr = oc.add_population_in_rectangular_region(network,
                                               xDim,yDim,zDim)
 offset+=yDim
 
+
+popStim = oc.add_population_in_rectangular_region(network,
+                                                  "popPoisson",
+                                                  spike_gen.id,
+                                                  scale_pop_size(100),
+                                                  0,offset,0,
+                                                  xDim,yDim,zDim)
+offset+=yDim
+
 #####   Projections
+
+                                
+proj = oc.add_targeted_projection(network,
+                                prefix="proj0",
+                                presynaptic_population=popStim,
+                                postsynaptic_population=popPyr,
+                                targeting_mode="convergent",
+                                synapse_list=[synAmpa1.id],
+                                number_conns_per_cell=2,
+                                pre_segment_group=None,
+                                post_segment_group="dendrite_group",
+                                delays_dict={synAmpa1.id:3},
+                                weights_dict={synAmpa1.id:1}) 
 
 
 oc.add_probabilistic_projection(network,
-                                "proj0",
+                                "proj1",
                                 popIaf,
                                 popIzh,
                                 synAmpa1.id,
@@ -128,9 +159,6 @@ oc.add_inputs_to_population(network, "Stim3",
                             popPyrS, pfs100.id,
                             all_cells=True)
 
-oc.add_inputs_to_population(network, "Stim4",
-                            popPyr, pfs200.id,
-                            all_cells=True)
 
 
 #####   Save NeuroML and LEMS Simulation files

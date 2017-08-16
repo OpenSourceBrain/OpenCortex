@@ -61,8 +61,7 @@ def generate(reference = "ACNet",
     if connections:
 
         this_syn=ampa_syn.id
-        proj = oc.add_targeted_projection(nml_doc, 
-                                        network,
+        proj = oc.add_targeted_projection(network,
                                         "Proj_pyr_pyr",
                                         pop_pyr,
                                         pop_pyr,
@@ -76,8 +75,7 @@ def generate(reference = "ACNet",
             total_conns += len(proj[0].connection_wds)
 
         this_syn=ampa_syn_inh.id
-        proj = oc.add_targeted_projection(nml_doc, 
-                                        network,
+        proj = oc.add_targeted_projection(network,
                                         "Proj_pyr_bask",
                                         pop_pyr,
                                         pop_bask,
@@ -91,8 +89,7 @@ def generate(reference = "ACNet",
             total_conns += len(proj[0].connection_wds)
 
         this_syn=gaba_syn.id
-        proj = oc.add_targeted_projection(nml_doc, 
-                                        network,
+        proj = oc.add_targeted_projection(network,
                                         "Proj_bask_pyr",
                                         pop_bask,
                                         pop_pyr,
@@ -106,8 +103,7 @@ def generate(reference = "ACNet",
             total_conns += len(proj[0].connection_wds)
 
         this_syn=gaba_syn_inh.id
-        proj = oc.add_targeted_projection(nml_doc, 
-                                        network,
+        proj = oc.add_targeted_projection(network,
                                         "Proj_bask_bask",
                                         pop_bask,
                                         pop_bask,
