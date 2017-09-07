@@ -428,7 +428,7 @@ def add_targeted_projection_by_dicts(net,
 
     if isinstance(subset_dict, int) or isinstance(subset_dict, float):
 
-        numberConnections = int(subset_dict)
+        numberConnections = [subset_dict]
 
     count = 0
 
@@ -1582,7 +1582,7 @@ def get_target_segments(seg_specifications,
     and the corresponding values are dictionaries with keys 'LengthDist' and 'SegList', as returned by the get_seg_lengths;
     subset_dict - a dictionary whose keys are target group names or individual segment names; each key stores the corresponding number of connections per target group.'''
 
-
+    opencortex.print_comment_v("get_target_segments(): %s; %s"%(seg_specifications.keys(), subset_dict))
     target_segs_per_cell = []
     target_fractions_along_per_cell = []
 
@@ -1601,6 +1601,8 @@ def get_target_segments(seg_specifications,
                 cumulative_length_dist = seg_specifications[target_group]['LengthDist']
 
                 segment_list = seg_specifications[target_group]['SegList']
+                
+                #opencortex.print_comment_v("cumulative_length_dist: %s; segment_list: %s"%(cumulative_length_dist, segment_list))
 
                 not_selected = True
 
@@ -1623,14 +1625,14 @@ def get_target_segments(seg_specifications,
                             else:
 
                                 previous_dist_value = cumulative_length_dist[seg_index-1]
-
-                            if loc > previous_dist_value and loc < current_dist_value:
+                                
+                            if loc >= previous_dist_value and loc <= current_dist_value:
 
                                 segment_length = current_dist_value-previous_dist_value
 
                                 length_within_seg = loc-previous_dist_value
 
-                                post_fraction_along = float(length_within_seg) / segment_length
+                                post_fraction_along = float(length_within_seg) / segment_length if segment_length>0 else 0.5
 
                                 target_segs_per_group.append(segment_list[seg_index])
 

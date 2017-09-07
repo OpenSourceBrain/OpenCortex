@@ -14,7 +14,7 @@ print("          Please note that OpenCortex is in a very preliminary state ");
 print("          and the API is subject to change without notice!  ")
 print("*********************************************************************************************\n")
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 
 verbose = False
@@ -35,3 +35,7 @@ def print_comment(text, print_it=verbose):
     if print_it:
         
         print("%s%s"%(prefix, text.replace("\n", "\n"+prefix)))
+        
+def set_verbose(value=True):
+    global verbose 
+    verbose = value

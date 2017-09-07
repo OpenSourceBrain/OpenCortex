@@ -489,7 +489,11 @@ def add_targeted_projection(net,
         proj_id = "%s_%s_%s" % (prefix, presynaptic_population.id, postsynaptic_population.id) if len(synapse_list) == 1 else \
             "%s_%s_%s_%s" % (prefix, presynaptic_population.id, postsynaptic_population.id, synapse)
 
-        opencortex.print_comment_v("Adding projection: %s: %s (%s) -> %s (%s)" % (proj_id, pre_cell, pre_segs, post_cell, post_segs))
+        opencortex.print_comment_v("Adding projection: %s: %s#%s, %s (%s) -> %s#%s, %s (%s)" % (proj_id, 
+                                  presynaptic_population.id, presynaptic_population.size,
+                                  pre_cell, pre_segs, 
+                                  postsynaptic_population.id, postsynaptic_population.size,
+                                  post_cell, post_segs))
 
         proj = neuroml.Projection(id=proj_id, 
                                   presynaptic_population=presynaptic_population.id, 
