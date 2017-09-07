@@ -428,7 +428,7 @@ def add_targeted_projection_by_dicts(net,
 
     if isinstance(subset_dict, int) or isinstance(subset_dict, float):
 
-        numberConnections = [subset_dict]
+        numberConnections = int(subset_dict)
 
     count = 0
 
