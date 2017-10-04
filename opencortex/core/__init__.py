@@ -849,7 +849,7 @@ def save_network(nml_doc, nml_file_name, validate=True, format='xml', max_memory
     else:
         nml_doc.notes = info
         
-    nml_full_file_name = target_dir+nml_file_name
+    nml_full_file_name = target_dir+'/'+nml_file_name
 
     if format == 'xml':
         writers.NeuroMLWriter.write(nml_doc, nml_full_file_name)

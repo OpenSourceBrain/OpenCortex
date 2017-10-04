@@ -102,3 +102,9 @@ build/lib*
 /examples/Balanced_610cells_213550conns
 /examples/L23TraubDemo_*
 /examples/LEMS_L23TraubDemo_*.xml
+/examples/HDF5/*.mod
+/examples/HDF5/*_nrn.py
+/examples/HDF5/*.dat
+/examples/HDF5/jsbml.log
+/examples/HDF5/libjhdf5.so
+/examples/HDF5/*.hoc

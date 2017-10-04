@@ -58,12 +58,26 @@ oc.add_inputs_to_population(network,
                             pgBBP.id,
                             all_cells=True)'''
 
+duration =      500
+dt =            0.005
 nml_file_name = '%s.net.nml'%network.id
+
 oc.save_network(nml_doc, nml_file_name, validate=True)
 
 oc.generate_lems_simulation(nml_doc, 
                             network, 
                             nml_file_name, 
-                            duration =      500, 
-                            dt =            0.005)
+                            duration, 
+                            dt)
+                            
+nml_file_name = '%s.net.nml.h5'%network.id
+target_dir='HDF5/'
+oc.save_network(nml_doc, nml_file_name, validate=False, target_dir=target_dir, format='hdf5')
+
+oc.generate_lems_simulation(nml_doc, 
+                            network, 
+                            target_dir+nml_file_name, 
+                            duration, 
+                            dt,
+                            target_dir=target_dir)
                                               
