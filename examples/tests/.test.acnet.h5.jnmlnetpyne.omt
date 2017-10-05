@@ -1,0 +1,39 @@
+# Script for running automated tests on OSB using Travis-CI, see https://github.com/OpenSourceBrain/osb-model-validation
+
+target: ../HDF5/LEMS_ACNet.xml
+engine: jNeuroML_NetPyNE
+mep: .test.acnet.mep
+experiments:
+  p_0:
+    observables:
+      spike times:
+        file: 
+          path: ../HDF5/Sim_ACNet.pop_pyr.v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 4.1e-8
+  p_1:
+    observables:
+      spike times:
+        file: 
+          path: ../HDF5/Sim_ACNet.pop_pyr.v.dat
+          columns: [0,2]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0.00011273957159
+  b_0:
+    observables:
+      spike times:
+        file: 
+          path: ../HDF5/Sim_ACNet.pop_bask.v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 4.1e-8

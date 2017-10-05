@@ -1582,7 +1582,7 @@ def get_target_segments(seg_specifications,
     and the corresponding values are dictionaries with keys 'LengthDist' and 'SegList', as returned by the get_seg_lengths;
     subset_dict - a dictionary whose keys are target group names or individual segment names; each key stores the corresponding number of connections per target group.'''
 
-    opencortex.print_comment_v("get_target_segments(): %s; %s"%(seg_specifications.keys(), subset_dict))
+    #opencortex.print_comment_v("get_target_segments(): %s; %s"%(seg_specifications.keys(), subset_dict))
     target_segs_per_cell = []
     target_fractions_along_per_cell = []
 
@@ -2282,7 +2282,8 @@ def _add_population_in_rectangular_region(net,
             X = x_min + (x_size) * random.random()
             Y = y_min + (y_size) * random.random()
             Z = z_min + (z_size) * random.random()
-            inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z))
+            inst.location = neuroml.Location(x="%.5f"%X, y="%.5f"%Y, z="%.5f"%Z)
+            #inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z))
 
             if store_soma:
                 cell_position = []
@@ -2333,7 +2334,8 @@ def _add_population_in_rectangular_region(net,
 
                     inst = neuroml.Instance(id=i)
                     pop.instances.append(inst)
-                    inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z))
+                    inst.location = neuroml.Location(x="%.5f"%X, y="%.5f"%Y, z="%.5f"%Z)
+                    #inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z))
 
                     cellPositions.append(try_cell_position)
 

@@ -56,12 +56,25 @@ oc.add_probabilistic_projection(network,
                                 weight=0.05,
                                 delay=5)
 
+duration =      1000
+dt =            0.01
 nml_file_name = '%s.net.nml'%network.id
+
 oc.save_network(nml_doc, nml_file_name, validate=True)
 
 oc.generate_lems_simulation(nml_doc, 
                             network, 
                             nml_file_name, 
-                            duration =      1000, 
-                            dt =            0.01)
+                            duration = duration, 
+                            dt =       dt)
                                               
+nml_file_name = '%s.net.nml.h5'%network.id
+target_dir='HDF5/'
+oc.save_network(nml_doc, nml_file_name, validate=False, target_dir=target_dir, format='hdf5')
+
+oc.generate_lems_simulation(nml_doc, 
+                            network, 
+                            target_dir+nml_file_name, 
+                            duration, 
+                            dt,
+                            target_dir=target_dir)

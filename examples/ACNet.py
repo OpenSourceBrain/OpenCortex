@@ -36,7 +36,7 @@ def generate(reference = "ACNet",
     pop_bask = oc.add_population_in_rectangular_region(network, 'pop_bask',
                                                   'bask', num_bask,
                                                   0,yDim,0, xDim,yDim+yDim,zDim)
-
+                   
     ampa_syn = oc.add_exp_two_syn(nml_doc, id="AMPA_syn", 
                              gbase="30e-9S", erev="0mV",
                              tau_rise="0.003s", tau_decay="0.0031s")
@@ -128,50 +128,53 @@ def generate(reference = "ACNet",
         new_reference = '%s_%scells_%sconns'%(nml_doc.id,num_pyr+num_bask,total_conns)
         network.id = new_reference
         nml_doc.id = new_reference
+        
     nml_file_name = '%s.net.%s'%(network.id,'nml.h5' if format == 'hdf5' else 'nml')
+    target_dir = 'HDF5/' if format == 'hdf5' else './'
+    
     oc.save_network(nml_doc, 
                     nml_file_name, 
                     validate=(format=='xml'),
-                    format = format)
+                    format = format,
+                    target_dir=target_dir)
 
-    if format=='xml':
-        
-        gen_plots_for_quantities = {}   #  Dict with displays vs lists of quantity paths
-        gen_saves_for_quantities = {}   #  Dict with file names vs lists of quantity paths
-        
-        for pop in segments_to_plot_record.keys():
-            pop_nml = network.get_by_id(pop)
-            if pop_nml is not None and pop_nml.size>0:
-                
-                group = len(segments_to_plot_record[pop]) == 1
-                if group:
-                    display = 'Display_%s_v'%(pop)
-                    file_ = 'Sim_%s.%s.v.dat'%(nml_doc.id,pop)
+
+    gen_plots_for_quantities = {}   #  Dict with displays vs lists of quantity paths
+    gen_saves_for_quantities = {}   #  Dict with file names vs lists of quantity paths
+
+    for pop in segments_to_plot_record.keys():
+        pop_nml = network.get_by_id(pop)
+        if pop_nml is not None and pop_nml.size>0:
+
+            group = len(segments_to_plot_record[pop]) == 1
+            if group:
+                display = 'Display_%s_v'%(pop)
+                file_ = 'Sim_%s.%s.v.dat'%(nml_doc.id,pop)
+                gen_plots_for_quantities[display] = []
+                gen_saves_for_quantities[file_] = []
+
+            for i in range(int(pop_nml.size)):
+                if not group:
+                    display = 'Display_%s_%i_v'%(pop,i)
+                    file_ = 'Sim_%s.%s.%i.v.dat'%(nml_doc.id,pop,i)
                     gen_plots_for_quantities[display] = []
                     gen_saves_for_quantities[file_] = []
-                    
-                for i in range(int(pop_nml.size)):
-                    if not group:
-                        display = 'Display_%s_%i_v'%(pop,i)
-                        file_ = 'Sim_%s.%s.%i.v.dat'%(nml_doc.id,pop,i)
-                        gen_plots_for_quantities[display] = []
-                        gen_saves_for_quantities[file_] = []
 
-                    for seg in segments_to_plot_record[pop]:
-                        quantity = '%s/%i/%s/%i/v'%(pop,i,pop_nml.component,seg)
-                        gen_plots_for_quantities[display].append(quantity)
-                        gen_saves_for_quantities[file_].append(quantity)
+                for seg in segments_to_plot_record[pop]:
+                    quantity = '%s/%i/%s/%i/v'%(pop,i,pop_nml.component,seg)
+                    gen_plots_for_quantities[display].append(quantity)
+                    gen_saves_for_quantities[file_].append(quantity)
 
-        lems_file_name = oc.generate_lems_simulation(nml_doc, network, 
-                                nml_file_name, 
-                                duration =      duration, 
-                                dt =            0.025,
-                                gen_plots_for_all_v = False,
-                                gen_plots_for_quantities = gen_plots_for_quantities,
-                                gen_saves_for_all_v = False,
-                                gen_saves_for_quantities = gen_saves_for_quantities)
-    else:
-        lems_file_name = None
+    lems_file_name = oc.generate_lems_simulation(nml_doc, 
+                            network, 
+                            target_dir+nml_file_name, 
+                            duration =      duration, 
+                            dt =            0.025,
+                            gen_plots_for_all_v = False,
+                            gen_plots_for_quantities = gen_plots_for_quantities,
+                            gen_saves_for_all_v = False,
+                            gen_saves_for_quantities = gen_saves_for_quantities,
+                            target_dir=target_dir)
                                 
     return nml_doc, nml_file_name, lems_file_name
 
@@ -191,3 +194,4 @@ if __name__ == '__main__':
                  segments_to_plot_record = {'pop_pyr':range(9)})
     else:
         generate(global_delay = 1)
+        generate(global_delay = 1, format='hdf5')
