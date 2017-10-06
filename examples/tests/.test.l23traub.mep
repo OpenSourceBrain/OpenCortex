@@ -2,7 +2,7 @@ system: Test Simple
 experiments:
     rs0:
         expected:
-            spike times: [ 7.475, 83.7, 189.4 ]
+            spike times: [ 7.8, 106.92500000000001, 278.275 ]
     bask0:
         expected:
-            spike times: [ 2.975, 89.27499999999999, 178.35000000000002, 265.825 ]
+            spike times: [ 2.975, 89.25, 174.2, 264.25 ]
