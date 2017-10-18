@@ -115,16 +115,16 @@ class TestUtilsMethods(unittest.TestCase):
               stored_cell_positions=pop_params[pop.id]['Positions']
               
               for cell_loc in range(0,len(pop.instances) ):
-              
+                  
                   instance_case=pop.instances[cell_loc]
                   
                   location=instance_case.location
                   
-                  check_x= abs(location.x-stored_cell_positions[cell_loc][0]) < 0.00000001  
+                  check_x= abs(location.x-stored_cell_positions[cell_loc][0]) < 0.00001  
                   
-                  check_y= abs(location.y-stored_cell_positions[cell_loc][1]) < 0.00000001           
+                  check_y= abs(location.y-stored_cell_positions[cell_loc][1]) < 0.00001           
                   
-                  check_z= abs(location.z-stored_cell_positions[cell_loc][2]) < 0.00000001   
+                  check_z= abs(location.z-stored_cell_positions[cell_loc][2]) < 0.00001   
                   
                   self.assertTrue(check_x)       
                   
@@ -164,11 +164,11 @@ class TestUtilsMethods(unittest.TestCase):
                   
                   location=instance_case.location
                   
-                  check_x= abs(location.x-stored_cell_positions[cell_loc][0]) < 0.00000001  
+                  check_x= abs(location.x-stored_cell_positions[cell_loc][0]) < 0.00001  
                   
-                  check_y= abs(location.y-stored_cell_positions[cell_loc][1]) < 0.00000001           
+                  check_y= abs(location.y-stored_cell_positions[cell_loc][1]) < 0.00001           
                   
-                  check_z= abs(location.z-stored_cell_positions[cell_loc][2]) < 0.00000001   
+                  check_z= abs(location.z-stored_cell_positions[cell_loc][2]) < 0.00001   
                   
                   self.assertTrue(check_x)       
                   
