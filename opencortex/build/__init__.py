@@ -482,8 +482,6 @@ def add_targeted_projection_by_dicts(net,
 
             ##### allows only one pre segment group per presynaptic population e.g. distal_axon
             if pre_seg_target_dict != None and len(pre_seg_target_dict.keys()) == 1:
-
-                print('printing here ... '+ pre_seg_target_dict.keys())
                 
                 pre_subset_dict = {}
 
