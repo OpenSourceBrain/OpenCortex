@@ -883,13 +883,15 @@ def generate_lems_simulation(nml_doc,
                              include_extra_lems_files=[],
                              gen_plots_for_all_v=True,
                              plot_all_segments=False,
-                             gen_plots_for_quantities={}, #  Dict with displays vs lists of quantity paths
-                             gen_plots_for_only_populations=[], #  List of populations, all pops if = []
+                             gen_plots_for_quantities={},  # Dict with displays vs lists of quantity paths
+                             gen_plots_for_only_populations=[],  # List of populations, all pops if = []
                              gen_saves_for_all_v=True,
                              save_all_segments=False,
-                             gen_saves_for_only_populations=[], #  List of populations, all pops if = []
-                             gen_saves_for_quantities={}, #  Dict with file names vs lists of quantity paths
+                             gen_saves_for_only_populations=[],  # List of populations, all pops if = []
+                             gen_saves_for_quantities={},  # Dict with file names vs lists of quantity paths
                              gen_spike_saves_for_all_somas=False,
+                             gen_spike_saves_for_only_populations=[],  #  List of populations, all pops if = []
+                             gen_spike_saves_for_cells={},  # Dict with file names vs lists of quantity paths
                              spike_time_format='ID_TIME',
                              lems_file_name=None,
                              simulation_seed=12345):
@@ -916,13 +918,15 @@ def generate_lems_simulation(nml_doc,
                                                   plot_all_segments=plot_all_segments,
                                                   gen_plots_for_quantities=gen_plots_for_quantities, 
                                                   gen_plots_for_only_populations=gen_plots_for_only_populations, 
-                                   gen_saves_for_all_v=gen_saves_for_all_v,
-                                   save_all_segments=save_all_segments,
-                                   gen_saves_for_only_populations=gen_saves_for_only_populations,
-                                   gen_saves_for_quantities=gen_saves_for_quantities,
-                                   gen_spike_saves_for_all_somas=gen_spike_saves_for_all_somas,
-                                   spike_time_format=spike_time_format,
-                                   seed=simulation_seed)
+                                                  gen_saves_for_all_v=gen_saves_for_all_v,
+                                                  save_all_segments=save_all_segments,
+                                                  gen_saves_for_only_populations=gen_saves_for_only_populations,
+                                                  gen_saves_for_quantities=gen_saves_for_quantities,
+                                                  gen_spike_saves_for_all_somas=gen_spike_saves_for_all_somas,
+                                                  gen_spike_saves_for_only_populations=gen_spike_saves_for_only_populations,
+                                                  gen_spike_saves_for_cells=gen_spike_saves_for_cells,
+                                                  spike_time_format=spike_time_format,
+                                                  seed=simulation_seed)
 
     del include_extra_lems_files[:]
 
