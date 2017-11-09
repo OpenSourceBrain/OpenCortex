@@ -894,6 +894,7 @@ def generate_lems_simulation(nml_doc,
                              gen_spike_saves_for_cells={},  # Dict with file names vs lists of quantity paths
                              spike_time_format='ID_TIME',
                              lems_file_name=None,
+                             lems_file_generate_seed=12345,
                              simulation_seed=12345):
                                  
     """
@@ -926,7 +927,8 @@ def generate_lems_simulation(nml_doc,
                                                   gen_spike_saves_for_only_populations=gen_spike_saves_for_only_populations,
                                                   gen_spike_saves_for_cells=gen_spike_saves_for_cells,
                                                   spike_time_format=spike_time_format,
-                                                  seed=simulation_seed)
+                                                  lems_file_generate_seed=lems_file_generate_seed,
+                                                  simulation_seed=simulation_seed)
 
     del include_extra_lems_files[:]
 
