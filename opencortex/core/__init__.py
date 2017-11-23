@@ -874,12 +874,12 @@ def save_network(nml_doc, nml_file_name, validate=True, format='xml', max_memory
 
 ##############################################################################################
 
-def generate_lems_simulation(nml_doc, 
-                             network, 
-                             nml_file_name, 
-                             duration, 
-                             dt, 
+def generate_lems_simulation(networkID,
+                             nml_file_name,
+                             duration,
+                             dt,
                              target_dir='.',
+                             nml_doc=None,  # Use this if the nml doc has already been loaded (to avoid delay in reload)
                              include_extra_lems_files=[],
                              gen_plots_for_all_v=True,
                              plot_all_segments=False,
@@ -894,6 +894,7 @@ def generate_lems_simulation(nml_doc,
                              gen_spike_saves_for_cells={},  # Dict with file names vs lists of quantity paths
                              spike_time_format='ID_TIME',
                              lems_file_name=None,
+                             copy_neuroml=True,
                              lems_file_generate_seed=12345,
                              simulation_seed=12345):
                                  
@@ -903,17 +904,18 @@ def generate_lems_simulation(nml_doc,
     """
 
     if not lems_file_name:
-        lems_file_name = "LEMS_%s.xml" % network.id
+        lems_file_name = "LEMS_%s.xml" % networkID
 
     include_extra_lems_files.extend(oc_build.all_included_files)
 
-    pyneuroml.lems.generate_lems_file_for_neuroml("Sim_%s" % network.id, 
+    pyneuroml.lems.generate_lems_file_for_neuroml("Sim_%s" % networkID, 
                                                   nml_file_name, 
-                                                  network.id, 
+                                                  networkID, 
                                                   duration, 
                                                   dt, 
                                                   lems_file_name,
                                                   target_dir,
+                                                  nml_doc=nml_doc,
                                                   include_extra_files=include_extra_lems_files,
                                                   gen_plots_for_all_v=gen_plots_for_all_v,
                                                   plot_all_segments=plot_all_segments,
@@ -927,6 +929,7 @@ def generate_lems_simulation(nml_doc,
                                                   gen_spike_saves_for_only_populations=gen_spike_saves_for_only_populations,
                                                   gen_spike_saves_for_cells=gen_spike_saves_for_cells,
                                                   spike_time_format=spike_time_format,
+                                                  copy_neuroml=copy_neuroml,
                                                   lems_file_generate_seed=lems_file_generate_seed,
                                                   simulation_seed=simulation_seed)
 
