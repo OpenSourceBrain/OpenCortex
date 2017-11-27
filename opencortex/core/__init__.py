@@ -645,15 +645,16 @@ def add_inputs_to_population(net,
         opencortex.print_comment_v(error)
         raise Exception(error)
     
-    if len(segment_ids)!=1 or len(segment_ids)!=number_per_cell:
+
+    if len(segment_ids)!=1 and len(segment_ids)!=number_per_cell:
         
         error = "Error! Attribute segment_ids in method opencortex.build.%s()"% sys._getframe().f_code.co_name+\
         " should be a list of one integer (id of the segment all inputs to each cell go into) or a "+ \
-        "list of the same length as number_per_cell!" 
+        "list of the same length as number_per_cell; not %s!"% segment_ids
         opencortex.print_comment_v(error)
         raise Exception(error)
     
-    if len(fraction_alongs)!=1 or len(fraction_alongs)!=number_per_cell:
+    if len(fraction_alongs)!=1 and len(fraction_alongs)!=number_per_cell:
         
         error = "Error! Attribute fraction_alongs in method opencortex.build.%s()"% sys._getframe().f_code.co_name+\
         " should be a list of one float (fraction along the segment all inputs to each cell go into) or a "+ \
@@ -907,7 +908,7 @@ def generate_lems_simulation(nml_doc,
 
     include_extra_lems_files.extend(oc_build.all_included_files)
 
-    pyneuroml.lems.generate_lems_file_for_neuroml("Sim_%s" % network.id, 
+    quantities_saved,lems_sim = pyneuroml.lems.generate_lems_file_for_neuroml("Sim_%s" % network.id, 
                                                   nml_file_name, 
                                                   network.id, 
                                                   duration, 
@@ -932,7 +933,7 @@ def generate_lems_simulation(nml_doc,
 
     del include_extra_lems_files[:]
 
-    return target_dir+'/'+lems_file_name
+    return target_dir+'/'+lems_file_name, lems_sim
 
 
 ##############################################################################################
