@@ -854,8 +854,6 @@ def save_network(nml_doc, nml_file_name, validate=True, format='xml', max_memory
 
     if format == 'xml':
         writers.NeuroMLWriter.write(nml_doc, nml_full_file_name)
-    elif format == 'xml_hdf5':
-        writers.NeuroMLHdf5Writer.write_xml_and_hdf5(nml_doc, nml_full_file_name, '%s.h5' % nml_full_file_name)
     elif format == 'hdf5':
         writers.NeuroMLHdf5Writer.write(nml_doc, nml_full_file_name)
 
