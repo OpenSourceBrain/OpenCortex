@@ -14,7 +14,7 @@ print("          Please note that OpenCortex is in a very preliminary state ");
 print("          and the API is subject to change without notice!  ")
 print("*********************************************************************************************\n")
 
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 
 
 verbose = False

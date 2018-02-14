@@ -93,6 +93,25 @@ def include_opencortex_cell(nml_doc, reference):
 
 ##############################################################################################
 
+def add_exp_one_syn(nml_doc, id, gbase, erev, tau_decay):
+    
+    """
+    Adds an <expOneSynapse> element to the document. See the definition of the 
+    behaviour of this here: https://www.neuroml.org/NeuroML2CoreTypes/Synapses.html#expOneSynapse
+    
+    Returns the class created.
+    """
+    syn0 = neuroml.ExpOneSynapse(id=id, gbase=gbase,
+                                 erev=erev,
+                                 tau_decay=tau_decay)
+
+    nml_doc.exp_one_synapses.append(syn0)
+
+    return syn0
+
+
+##############################################################################################
+
 def add_exp_two_syn(nml_doc, id, gbase, erev, tau_rise, tau_decay):
     
     """
