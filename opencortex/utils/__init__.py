@@ -324,7 +324,7 @@ def build_projection(net,
 
     delays_dict - optional dictionary that specifies the delays (in ms) for individual synapse components, e.g. {'NMDA':5.0} or {'AMPA':3.0,'NMDA':5};
 
-    weights_dict - optional dictionary that specifies the weights (in ms) for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}.'''  
+    weights_dict - optional dictionary that specifies the weights for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}.'''  
 
 
     if presynaptic_population.size == 0 or postsynaptic_population.size == 0:

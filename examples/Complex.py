@@ -121,7 +121,7 @@ offset+=yDim
 #####   Projections
 
                                 
-proj = oc.add_targeted_projection(network,
+proj0 = oc.add_targeted_projection(network,
                                 prefix="proj0",
                                 presynaptic_population=popStim,
                                 postsynaptic_population=popPyr,
@@ -134,12 +134,25 @@ proj = oc.add_targeted_projection(network,
                                 weights_dict={synAmpa1.id:1}) 
 
 
-oc.add_probabilistic_projection(network,
+proj1 = oc.add_probabilistic_projection(network,
                                 "proj1",
                                 popIaf,
                                 popIzh,
                                 synAmpa1.id,
                                 0.5)
+                                
+                                
+proj2 = oc.add_targeted_projection(network,
+                                prefix="proj2",
+                                presynaptic_population=popPyr,
+                                postsynaptic_population=popPyrS,
+                                targeting_mode="convergent",
+                                synapse_list=[synAmpa1.id],
+                                number_conns_per_cell=2,
+                                pre_segment_group="soma_group",
+                                post_segment_group="soma_group",
+                                delays_dict={synAmpa1.id:3},
+                                weights_dict={synAmpa1.id:'3*random()'}) 
           
 #####   Inputs
 

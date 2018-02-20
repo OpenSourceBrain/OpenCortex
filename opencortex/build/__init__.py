@@ -348,6 +348,17 @@ def add_probabilistic_projection_list(net,
         return None
 
 
+############################################################################################## 
+
+def _evaluate_expression(expr):
+    '''
+    For example for string expression for weights, e.g. '3*random()'
+    '''
+    expr2 = str(expr).replace('random','random.random')
+    val = eval(expr2)
+    #opencortex.print_comment_v('Evaluated %s as %s'%(expr, val))
+    return val
+    
 
 ############################################################################################## 
 
@@ -394,7 +405,7 @@ def add_targeted_projection_by_dicts(net,
 
     delays_dict - optional dictionary that specifies the delays (in ms) for individual synapse components, e.g. {'NMDA':5.0} or {'AMPA':3.0,'NMDA':5};
 
-    weights_dict - optional dictionary that specifies the weights (in ms) for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}.'''    
+    weights_dict - optional dictionary that specifies the weights for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}.'''    
 
     opencortex.print_comment_v("Adding %s projection with %s conns: %s: %s -> %s, %s" % (targeting_mode, subset_dict, proj_array, presynaptic_population.id, postsynaptic_population.id, synapse_list))
 
@@ -574,12 +585,12 @@ def add_targeted_projection_by_dicts(net,
                         if delays_dict != None:
                             for synapseComp in delays_dict.keys():
                                 if synapseComp in synapse_id:
-                                    delay = delays_dict[synapseComp]
+                                    delay = _evaluate_expression(delays_dict[synapseComp])
 
                         if weights_dict != None:
                             for synapseComp in weights_dict.keys():
                                 if synapseComp in synapse_id:
-                                    weight = weights_dict[synapseComp]
+                                    weight = _evaluate_expression(weights_dict[synapseComp])
 
                         _add_connection(proj_array[syn_counter], 
                                        count, 
@@ -904,7 +915,7 @@ def add_chem_spatial_projection(net,
 
     delays_dict - optional dictionary that specifies the delays (in ms) for individual synapse components, e.g. {'NMDA':5.0} or {'AMPA':3.0,'NMDA':5};
 
-    weights_dict - optional dictionary that specifies the weights (in ms) for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}.'''   
+    weights_dict - optional dictionary that specifies the weights for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}.'''   
 
     if targeting_mode == 'divergent':
 
@@ -1087,12 +1098,12 @@ def add_chem_spatial_projection(net,
                             if delays_dict != None:
                                 for synapseComp in delays_dict.keys():
                                     if synapseComp in synapse_id:
-                                        delay = delays_dict[synapseComp]
+                                        delay = _evaluate_expression(delays_dict[synapseComp])
 
                             if weights_dict != None:
                                 for synapseComp in weights_dict.keys():
                                     if synapseComp in synapse_id:
-                                        weight = weights_dict[synapseComp]
+                                        weight = _evaluate_expression(weights_dict[synapseComp])
 
 
                             _add_connection(proj_array[syn_counter], 
@@ -2799,7 +2810,7 @@ def add_advanced_inputs_to_population(net,
 
             cell_index = 0
             
-        weight = 1 if (not weight_dict or cell_id not in weight_dict) else weight_dict[cell_id]
+        weight = 1 if (not weight_dict or cell_id not in weight_dict) else _evaluate_expression(weight_dict[cell_id])
 
         if subset_dict != None and seg_length_dict == None and universal_target_segment == None and universal_fraction_along == None:
 

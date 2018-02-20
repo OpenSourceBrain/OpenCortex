@@ -461,7 +461,7 @@ def add_targeted_projection(net,
         optional dictionary that specifies the delays (in ms) for individual synapse components, e.g. {'NMDA':5.0} or {'AMPA':3.0,'NMDA':5}
 
     `weights_dict`
-        optional dictionary that specifies the weights (in ms) for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}
+        optional dictionary that specifies the weights for individual synapse components, e.g. {'NMDA':1} or {'NMDA':1,'AMPA':2}
     '''
 
     if presynaptic_population.size == 0 or postsynaptic_population.size == 0:
@@ -911,6 +911,7 @@ def generate_lems_simulation(nml_doc,
                              gen_spike_saves_for_only_populations=[],  #  List of populations, all pops if = []
                              gen_spike_saves_for_cells={},  # Dict with file names vs lists of quantity paths
                              spike_time_format='ID_TIME',
+                             report_file_name=None,
                              lems_file_name=None,
                              lems_file_generate_seed=12345,
                              simulation_seed=12345):
@@ -945,6 +946,7 @@ def generate_lems_simulation(nml_doc,
                                                   gen_spike_saves_for_only_populations=gen_spike_saves_for_only_populations,
                                                   gen_spike_saves_for_cells=gen_spike_saves_for_cells,
                                                   spike_time_format=spike_time_format,
+                                                  report_file_name=report_file_name,
                                                   lems_file_generate_seed=lems_file_generate_seed,
                                                   simulation_seed=simulation_seed)
 
