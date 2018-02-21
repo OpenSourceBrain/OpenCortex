@@ -354,9 +354,9 @@ def _evaluate_expression(expr):
     '''
     For example for string expression for weights, e.g. '3*random()'
     '''
-    expr2 = str(expr).replace('random','random.random')
+    expr2 = str(expr).replace('random','random.random').replace('normal','np.random.normal')
     val = eval(expr2)
-    #opencortex.print_comment_v('Evaluated %s as %s'%(expr, val))
+    opencortex.print_comment('Evaluated %s as %s'%(expr, val))
     return val
     
 
