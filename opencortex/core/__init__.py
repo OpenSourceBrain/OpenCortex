@@ -914,7 +914,8 @@ def generate_lems_simulation(nml_doc,
                              report_file_name=None,
                              lems_file_name=None,
                              lems_file_generate_seed=12345,
-                             simulation_seed=12345):
+                             simulation_seed=12345,
+                             verbose=False):
                                  
     """
     Generate a LEMS simulation file with which to run simulations of the network. Generated LEMS files can be run with
@@ -948,7 +949,8 @@ def generate_lems_simulation(nml_doc,
                                                   spike_time_format=spike_time_format,
                                                   report_file_name=report_file_name,
                                                   lems_file_generate_seed=lems_file_generate_seed,
-                                                  simulation_seed=simulation_seed)
+                                                  simulation_seed=simulation_seed,
+                                                  verbose=verbose)
 
     del include_extra_lems_files[:]
 

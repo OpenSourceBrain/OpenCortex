@@ -10,7 +10,7 @@
 ##############################################################
 
 print("\n*********************************************************************************************")
-print("          Please note that OpenCortex is in a very preliminary state ");
+print("          Please note that OpenCortex is in a preliminary state ");
 print("          and the API is subject to change without notice!  ")
 print("*********************************************************************************************\n")
 
