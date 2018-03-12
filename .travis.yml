@@ -13,6 +13,7 @@ addons:
     - python-scipy 
     - python-sympy
     - python-tables 
+    - python-tornado
 
     
 language: python
