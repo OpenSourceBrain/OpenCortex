@@ -239,13 +239,18 @@ def add_single_cell_population(net, pop_id, cell_id, x=0, y=0, z=0, color=None):
     """
 
     pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=1)
+
+    # TODO...
+    ##from neuroml.hdf5.NetworkContainer import PopulationContainer
+    ##pop = PopulationContainer(id=pop_id, component=cell_id, type="populationList", size=1)
+    
     if color is not None:
         pop.properties.append(Property("color", color))
     net.populations.append(pop)
 
     inst = neuroml.Instance(id=0)
-    pop.instances.append(inst)
     inst.location = neuroml.Location(x=x, y=y, z=z)
+    pop.instances.append(inst)
 
     return pop
 
@@ -624,7 +629,8 @@ def add_inputs_to_population(net,
                              all_cells=False, 
                              only_cells=None,
                              segment_ids=[0],
-                             fraction_alongs=[0.5]):
+                             fraction_alongs=[0.5],
+                             weights=1):
     
     """
     Add current input to the specified population. Attributes:
@@ -656,6 +662,8 @@ def add_inputs_to_population(net,
     `fraction_alongs`
         List of fractions along the specified segments to place inputs onto on each cell. Either list of 1 value or list of number_per_cell entries. Default [0.5]
         
+    `weights`
+        Either a scalar value (all weights set to this for all inputs), or a function to pick a (random) value per input. Default 1
         
     """
 
@@ -714,13 +722,23 @@ def add_inputs_to_population(net,
                 opencortex.print_comment_v(error)
                 raise Exception(error)
             
-                
-            input = neuroml.Input(id=count, 
-                                  target="../%s/%i/%s" % (population.id, cell_id, population.component),
-                                  segment_id=segment_id,
-                                  fraction_along=fraction_along,
-                                  destination="synapses")  
-            input_list.input.append(input)
+            if weights == 1:
+                input = neuroml.Input(id=count, 
+                                      target="../%s/%i/%s" % (population.id, cell_id, population.component),
+                                      segment_id=segment_id,
+                                      fraction_along=fraction_along,
+                                      destination="synapses")  
+                input_list.input.append(input)
+            else:
+                input = neuroml.InputW(id=count, 
+                                      target="../%s/%i/%s" % (population.id, cell_id, population.component),
+                                      segment_id=segment_id,
+                                      fraction_along=fraction_along,
+                                      destination="synapses",
+                                      weight=oc_build._evaluate_expression(weights))
+                                      
+                input_list.input_ws.append(input)
+                                  
             count += 1
 
     if count > 0:                 
@@ -733,7 +751,15 @@ def add_inputs_to_population(net,
 
 ##############################################################################################
 
-def add_targeted_inputs_to_population(net, id, population, input_comp_id, segment_group, number_per_cell=1, all_cells=False, only_cells=None):
+def add_targeted_inputs_to_population(net, 
+                                      id, 
+                                      population, 
+                                      input_comp_id, 
+                                      segment_group, 
+                                      number_per_cell=1, 
+                                      all_cells=False, 
+                                      only_cells=None,
+                                      weights=1):
     
     """
     Add current input to the specified population. Attributes:
@@ -762,6 +788,9 @@ def add_targeted_inputs_to_population(net, id, population, input_comp_id, segmen
         
     `only_cells`
         which specific cells to target. List of ids. Default None
+        
+    `weights`
+        Either a scalar value (all weights set to this for all inputs), or a function to pick a (random) value per input. Default 1
         
         
     """
@@ -799,12 +828,24 @@ def add_targeted_inputs_to_population(net, id, population, input_comp_id, segmen
         target_seg_array, target_fractions = oc_build.get_target_segments(seg_target_dict, subset_dict)
     
         for i in range(number_per_cell):
-            input = neuroml.Input(id=count, 
-                                  target="../%s/%i/%s" % (population.id, cell_id, population.component),
-                                  segment_id=target_seg_array[i],
-                                  fraction_along=target_fractions[i],
-                                  destination="synapses")  
-            input_list.input.append(input)
+            
+            if weights == 1:
+                input = neuroml.Input(id=count, 
+                                      target="../%s/%i/%s" % (population.id, cell_id, population.component),
+                                      segment_id=target_seg_array[i],
+                                      fraction_along=target_fractions[i],
+                                      destination="synapses")  
+                input_list.input.append(input)
+            else:
+                input = neuroml.InputW(id=count, 
+                                      target="../%s/%i/%s" % (population.id, cell_id, population.component),
+                                      segment_id=target_seg_array[i],
+                                      fraction_along=target_fractions[i],
+                                      destination="synapses",
+                                      weight=oc_build._evaluate_expression(weights))  
+                input_list.input_ws.append(input)
+                
+            
             count += 1
 
     if count > 0:                 
@@ -842,7 +883,13 @@ def generate_network(reference, network_seed=1234, temperature='32degC'):
     nml_doc.properties.append(neuroml.Property("Network seed", network_seed))
 
     # Create network
-    network = neuroml.Network(id='%s' % reference, type='networkWithTemperature', temperature=temperature)
+    network = neuroml.Network(id='%s' % reference)
+    # TODO
+    ###from neuroml.hdf5.NetworkContainer import NetworkContainer
+    ###network = NetworkContainer(id='%s' % reference)
+    network.type='networkWithTemperature'
+    network.temperature=temperature
+    
     nml_doc.networks.append(network)
 
     opencortex.print_comment_v("Created NeuroMLDocument containing a network with id: %s" % reference)

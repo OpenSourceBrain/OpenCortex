@@ -51,6 +51,12 @@ class TestNetMorphMethods(unittest.TestCase):
           self.assertEqual(set(test_return2['Seg1_comp_68']),set([135]) )
           self.assertEqual(set(test_return2['Seg1_comp_28']),set([55])  )
           
+          test_return3=oc_build.extract_seg_ids(cell_object,
+                                          target_compartment_array=['some_prox'],
+                                          targeting_mode='segGroups')
+          
+          self.assertEqual(len(test_return3['some_prox']), 24  )
+          
       ############################################################################################################   
       def test_get_seg_lengths(self):
           
@@ -99,9 +105,7 @@ class TestNetMorphMethods(unittest.TestCase):
           
           makeDict2=oc_build.make_target_dict(cell_object=cell_object,
                                         target_segs={'basal_obl_dends': [16, 17, 14, 15, 12, 13, 10, 11, 8, 9, 6, 7, 4, 5, 2, 3, 24, 25, 22, 23, 20, 21, 18, 19, 40, 41, 38, 39, 36, 37, 34, 35, 32, 33, 30, 31, 28, 29, 26, 27, 48, 49, 46, 47, 44, 45, 42, 43, 64, 65, 62, 63, 60, 61, 58, 59, 56, 57, 54, 55, 52, 53, 50, 51, 72, 73, 70, 71, 68, 69, 66, 67], 'most_prox_bas_dend': [16, 17, 14, 15, 12, 13, 10, 11, 8, 9, 6, 7, 4, 5, 2, 3]})
-                                        
-          print  makeDict2
-                                        
+                                  
           self.assertEqual(len(makeDict2['basal_obl_dends']['SegList']),len(makeDict2['basal_obl_dends']['LengthDist']) )
           
           self.assertEqual(set(makeDict2['most_prox_bas_dend']['SegList']),set([16, 17, 14, 15, 12, 13, 10, 11, 8, 9, 6, 7, 4, 5, 2, 3])) 

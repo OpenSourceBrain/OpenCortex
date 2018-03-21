@@ -111,3 +111,5 @@ build/lib*
 /examples/HDF5/*.py_main.json
 /examples/HDF5/*_netpyne.py
 /examples/redo.sh
+/examples/redo0.sh
+/examples/tens.py

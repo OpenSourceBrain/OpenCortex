@@ -1520,18 +1520,21 @@ def extract_seg_ids(cell_object,
     segment_id_array = []
     segment_group_array = {}
     cell_segment_array = []
+    
     for segment in cell_object.morphology.segments:
         segment_id_array.append(segment.id)   
         segment_name_and_id = []
         segment_name_and_id.append(segment.name)
         segment_name_and_id.append(segment.id)
         cell_segment_array.append(segment_name_and_id)
+        
     for segment_group in cell_object.morphology.segment_groups:
         pooled_segment_group_data = {}
         segment_list = []
         segment_group_list = []
-        for member in segment_group.members:
-            segment_list.append(member.segments)
+        
+        segment_list = cell_object.get_all_segments_in_group(segment_group)
+        
         for included_segment_group in segment_group.includes:
             segment_group_list.append(included_segment_group.segment_groups)
 
@@ -1563,11 +1566,9 @@ def extract_seg_ids(cell_object,
                     found_target_groups.append(target_compartment_array[target_group])
                     if segment_group_array[segment_group]["segments"] != []:
                         for segment in segment_group_array[segment_group]["segments"]:
-                            segment_target_array.append(segment)
-                    if segment_group_array[segment_group]["groups"] != []:
-                        for included_segment_group in segment_group_array[segment_group]["groups"]:
-                            for included_segment_group_segment in segment_group_array[included_segment_group]["segments"]:
-                                segment_target_array.append(included_segment_group_segment)
+                            if not segment in segment_target_array:
+                                segment_target_array.append(segment)
+         
                     target_segment_array[target_compartment_array[target_group]] = segment_target_array
 
 
@@ -1579,7 +1580,7 @@ def extract_seg_ids(cell_object,
                                    % (groups_not_found, cell_object.id))
 
         quit()
-
+        
     return target_segment_array       
 
 
@@ -2257,6 +2258,9 @@ def _add_population_in_rectangular_region(net,
     """
 
     pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
+    # TODO
+    ##from neuroml.hdf5.NetworkContainer import PopulationContainer
+    ##pop = PopulationContainer(id=pop_id, component=cell_id, type="populationList", size=size)
 
     if color is not None:
         pop.properties.append(neuroml.Property("color", color))
@@ -2289,12 +2293,12 @@ def _add_population_in_rectangular_region(net,
         if cell_bodies_overlap:
 
             inst = neuroml.Instance(id=i)
-            pop.instances.append(inst)
             X = x_min + (x_size) * random.random()
             Y = y_min + (y_size) * random.random()
             Z = z_min + (z_size) * random.random()
             inst.location = neuroml.Location(x="%.5f"%X, y="%.5f"%Y, z="%.5f"%Z)
             #inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z))
+            pop.instances.append(inst)
 
             if store_soma:
                 cell_position = []
@@ -2344,8 +2348,8 @@ def _add_population_in_rectangular_region(net,
                 if count_overlaps == 0:
 
                     inst = neuroml.Instance(id=i)
-                    pop.instances.append(inst)
                     inst.location = neuroml.Location(x="%.5f"%X, y="%.5f"%Y, z="%.5f"%Z)
+                    pop.instances.append(inst)
                     #inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z))
 
                     cellPositions.append(try_cell_position)
@@ -2426,6 +2430,9 @@ def add_population_in_cylindrical_region(net,
     '''
 
     pop = neuroml.Population(id=pop_id, component=cell_id, type="populationList", size=size)
+    # TODO
+    #from neuroml.hdf5.NetworkContainer import PopulationContainer
+    #pop = PopulationContainer(id=pop_id, component=cell_id, type="populationList", size=size)
 
     if color is not None:
         pop.properties.append(neuroml.Property("color", color))
@@ -2479,9 +2486,9 @@ def add_population_in_cylindrical_region(net,
             Z = dim_dict[map_xyz['z']]
 
             inst = neuroml.Instance(id=i)
-            pop.instances.append(inst)
 
             inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z))
+            pop.instances.append(inst)
 
             if store_soma:
 
@@ -2536,8 +2543,8 @@ def add_population_in_cylindrical_region(net,
                 if count_overlaps == 0:
 
                     inst = neuroml.Instance(id=i)
-                    pop.instances.append(inst)
                     inst.location = neuroml.Location(x=str(X), y=str(Y), z=str(Z))
+                    pop.instances.append(inst)
 
                     cellPositions.append(try_cell_position)
 
@@ -2973,10 +2980,15 @@ def add_projection_based_inputs(net,
         spike_source_counters = []
 
         for input_index in range(0, len(input_id_list[input_cell])):
-
+            
             spike_source_pop = neuroml.Population(id="Pop_" + id + "_%d_%d" % (input_cell, input_index), 
                                                   component=input_id_list[input_cell][input_index], 
                                                   size=population.size)
+            # TODO
+            ##from neuroml.hdf5.NetworkContainer import PopulationContainer
+            ##spike_source_pop = PopulationContainer(id="Pop_" + id + "_%d_%d" % (input_cell, input_index), 
+            ##                                      component=input_id_list[input_cell][input_index], 
+            ##                                      size=population.size)
 
             net.populations.append(spike_source_pop)
 

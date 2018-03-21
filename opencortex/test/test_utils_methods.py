@@ -120,11 +120,9 @@ class TestUtilsMethods(unittest.TestCase):
                   
                   location=instance_case.location
                   
-                  check_x= abs(location.x-stored_cell_positions[cell_loc][0]) < 0.00001  
-                  
-                  check_y= abs(location.y-stored_cell_positions[cell_loc][1]) < 0.00001           
-                  
-                  check_z= abs(location.z-stored_cell_positions[cell_loc][2]) < 0.00001   
+                  check_x= abs(location.x-stored_cell_positions[cell_loc][0]) < 0.00005 
+                  check_y= abs(location.y-stored_cell_positions[cell_loc][1]) < 0.00005         
+                  check_z= abs(location.z-stored_cell_positions[cell_loc][2]) < 0.00005  
                   
                   self.assertTrue(check_x)       
                   
@@ -151,7 +149,7 @@ class TestUtilsMethods(unittest.TestCase):
                                                                     z_vector=zs,
                                                                     cellBodiesOverlap=False,
                                                                     cellDiameterArray=cell_diameters)
-             
+                    
           for pop_index in range(0,len(network.populations)):
           
               pop=network.populations[pop_index]
@@ -205,6 +203,7 @@ class TestUtilsMethods(unittest.TestCase):
                                 d=oc_build.distance([location.x, location.y,location.z],[inner_location.x,inner_location.y,inner_location.z]) 
                          
                                 self.assertTrue( d < (cell_diameters[pop_inner.component]+cell_diameters[pop_inner.component] )/2 )
+                                
                          
       def test_add_populations_in_cylindrical_layers(self): 
       

@@ -2081,6 +2081,11 @@
                 <include segmentGroup="comp_2"/>
                 <include segmentGroup="comp_39"/>
             </segmentGroup>
+            
+            <segmentGroup id="some_prox">
+                <include segmentGroup="prox_dends_soma"/>
+                <include segmentGroup="prox_axon"/>
+            </segmentGroup>
 
             <segmentGroup id="ModelViewParmSubset_2">
                 <include segmentGroup="comp_69"/>
