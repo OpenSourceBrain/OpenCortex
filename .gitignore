@@ -113,3 +113,5 @@ build/lib*
 /examples/redo.sh
 /examples/redo0.sh
 /examples/tens.py
+/examples/*.gv.pdf
+/examples/*.gv
