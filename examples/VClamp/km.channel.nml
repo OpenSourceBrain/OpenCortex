@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.neuroml.org/schema/neuroml2 https://raw.github.com/NeuroML/NeuroML2/development/Schemas/NeuroML2/NeuroML_v2beta4.xsd" id="km">
+
+    <notes>ChannelML file based on Traub et al. 2003</notes>
+
+    <ionChannel id="km" conductance="10pS" type="ionChannelHH" species="k">
+
+        <notes>Potasium M type current (muscarinic receptor-suppressed). Based on NEURON port of model from Traub et al 2003</notes>
+                
+        <annotation>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description rdf:about="km">
+                    
+                    <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+                        <rdf:Bag>
+                            <rdf:li>Roger D. Traub, Eberhard H. Buhl, Tengis Gloveli, and Miles A. Whittington                
+Fast Rhythmic Bursting Can Be Induced in Layer 2/3 Cortical Neurons by Enhancing Persistent Na+ Conductance or by Blocking BK Channels
+J Neurophysiol 89: 909-921, 2003</rdf:li>
+                            <rdf:li rdf:resource="http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?cmd=Retrieve&amp;db=pubmed&amp;dopt=Abstract&amp;list_uids=12574468"/>
+                        </rdf:Bag>
+                    </bqmodel:isDescribedBy>
+
+                
+                    <bqmodel:isDescribedBy xmlns:bqmodel="http://biomodels.net/model-qualifiers/">
+                        <rdf:Bag>
+                            <rdf:li>Roger D. Traub, Diego Contreras, Mark O. Cunningham, Hilary Murray, Fiona E. N. LeBeau, Anita Roopun, Andrea Bibbig, W. Bryan Wilent, Michael J. Higley, and Miles A. Whittington
+Single-column thalamocortical network model exhibiting gamma oscillations, sleep spindles, and epileptogenic bursts.
+J. Neurophysiol. 93, 2194-2232, 2005</rdf:li>
+                            <rdf:li rdf:resource="http://www.ncbi.nlm.nih.gov/pubmed/15525801?dopt=Abstract"/>
+                        </rdf:Bag>
+                    </bqmodel:isDescribedBy>
+
+                
+                    <bqbiol:isVersionOf xmlns:bqbiol="http://biomodels.net/biology-qualifiers/">
+                        <rdf:Bag>
+                            <rdf:li>K channels</rdf:li>
+                            <rdf:li rdf:resource="http://senselab.med.yale.edu/senselab/NeuronDB/channelGene2.htm#table3"/>
+                        </rdf:Bag>
+                    </bqbiol:isVersionOf>
+
+                </rdf:Description>
+            </rdf:RDF>
+        </annotation>
+
+        <gate id="m" type="gateHHrates" instances="1">
+            <forwardRate type="HHSigmoidRate" rate="0.02per_ms" scale="5mV" midpoint="-20mV"/>
+            <reverseRate type="HHExpRate" rate="0.01per_ms" scale="-18mV" midpoint="-43mV"/>
+        </gate>
+                            
+    </ionChannel>
+
+</neuroml>

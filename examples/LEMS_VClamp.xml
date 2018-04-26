@@ -1,0 +1,56 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.3.12 (libNeuroML v0.2.41)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="Sim_VClamp"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+    <Include file="VClamp/L23PyrRS.cell.nml"/>
+    <Include file="VClamp/ar__m00_25.channel.nml"/>
+    <Include file="VClamp/cad__beta0_01__phi26000.nml"/>
+    <Include file="VClamp/cad__beta0_05__phi52000.nml"/>
+    <Include file="VClamp/cal.channel.nml"/>
+    <Include file="VClamp/cat.channel.nml"/>
+    <Include file="VClamp/k2.channel.nml"/>
+    <Include file="VClamp/ka.channel.nml"/>
+    <Include file="VClamp/kahp.channel.nml"/>
+    <Include file="VClamp/kc.channel.nml"/>
+    <Include file="VClamp/kdr.channel.nml"/>
+    <Include file="VClamp/km.channel.nml"/>
+    <Include file="VClamp/naf__a0__b0__c0__d0__fastNa_shiftmin3_5.channel.nml"/>
+    <Include file="VClamp/nap.channel.nml"/>
+    <Include file="VClamp/pas.channel.nml"/>
+    <Include file="VClamp.net.nml"/>
+   
+    <Simulation id="Sim_VClamp" length="500ms" step="0.025ms" target="VClamp" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+        
+        <Display id="Display_popRS_0_v" title="Plots of Display_popRS_0_v" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
+            <Line id="popRS_0_L23PyrRS_0_v" quantity="popRS/0/L23PyrRS/0/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_142_v" quantity="popRS/0/L23PyrRS/142/v" scale="1mV" color="#029a72" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_20_v" quantity="popRS/0/L23PyrRS/20/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_50_v" quantity="popRS/0/L23PyrRS/50/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_99_v" quantity="popRS/0/L23PyrRS/99/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_139_v" quantity="popRS/0/L23PyrRS/139/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
+        </Display>
+        
+        <OutputFile id="Sim_VClamp_popRS_0_v_dat" fileName="Sim_VClamp.popRS.0.v.dat">
+            <OutputColumn id="popRS_0_L23PyrRS_0_v" quantity="popRS/0/L23PyrRS/0/v"/> 
+            <OutputColumn id="popRS_0_L23PyrRS_142_v" quantity="popRS/0/L23PyrRS/142/v"/> 
+            <OutputColumn id="popRS_0_L23PyrRS_20_v" quantity="popRS/0/L23PyrRS/20/v"/> 
+            <OutputColumn id="popRS_0_L23PyrRS_50_v" quantity="popRS/0/L23PyrRS/50/v"/> 
+            <OutputColumn id="popRS_0_L23PyrRS_99_v" quantity="popRS/0/L23PyrRS/99/v"/> 
+            <OutputColumn id="popRS_0_L23PyrRS_139_v" quantity="popRS/0/L23PyrRS/139/v"/> 
+        </OutputFile>
+        
+    </Simulation>
+
+</Lems>
