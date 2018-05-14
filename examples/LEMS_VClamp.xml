@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.3.12 (libNeuroML v0.2.41)
+        This LEMS file has been automatically generated using PyNeuroML v0.3.12 (libNeuroML v0.2.42)
 
      -->
     
@@ -49,6 +49,14 @@
             <OutputColumn id="popRS_0_L23PyrRS_50_v" quantity="popRS/0/L23PyrRS/50/v"/> 
             <OutputColumn id="popRS_0_L23PyrRS_99_v" quantity="popRS/0/L23PyrRS/99/v"/> 
             <OutputColumn id="popRS_0_L23PyrRS_139_v" quantity="popRS/0/L23PyrRS/139/v"/> 
+        </OutputFile>
+        
+        <OutputFile id="v_clamps_i_seg0_dat" fileName="v_clamps_i_seg0.dat">
+            <OutputColumn id="popRS_0_L23PyrRS_0_vclamp0_i" quantity="popRS/0/L23PyrRS/0/vclamp0/i"/> 
+        </OutputFile>
+        
+        <OutputFile id="v_clamps_i_seg142_dat" fileName="v_clamps_i_seg142.dat">
+            <OutputColumn id="popRS_0_L23PyrRS_142_vclamp0_i" quantity="popRS/0/L23PyrRS/142/vclamp0/i"/> 
         </OutputFile>
         
     </Simulation>

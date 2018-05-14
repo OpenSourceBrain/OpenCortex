@@ -44,6 +44,10 @@ def generate(reference = "VClamp",
                                          all_cells=True)
 
     vclamp_segs = [0, 142]
+    
+    gen_plots_for_quantities = {}   #  Dict with displays vs lists of quantity paths
+    gen_saves_for_quantities = {}   #  Dict with file names vs lists of quantity paths
+    
     if use_vclamp:
     
         v_clamped = '-70mV'
@@ -59,13 +63,20 @@ def generate(reference = "VClamp",
 
         
         for seg_id in vclamp_segs:
+            
+            vc_dat_file = 'v_clamps_i_seg%s.dat'%(seg_id)
+            
+            gen_saves_for_quantities[vc_dat_file] = []
 
             oc.add_inputs_to_population(network, "vClamp_seg%s"%(seg_id),
                                         pop_rs, vc.id,
                                         all_cells=False,
                                         only_cells=[0],
-                                        segment_ids=[seg_id])   
-    
+                                        segment_ids=[seg_id])  
+                                        
+            q = '%s/%s/%s/%s/%s/i'%(pop_rs.id, 0,pop_rs.component,seg_id,vc.id)
+                
+            gen_saves_for_quantities[vc_dat_file].append(q)
     
 
     nml_file_name = '%s.net.%s'%(network.id,'nml.h5' if format == 'hdf5' else 'nml')
@@ -78,8 +89,6 @@ def generate(reference = "VClamp",
     segments_to_plot_record = {pop_rs.id:vclamp_segs+[20,50,99,139]}
     
     if format=='xml':
-        gen_plots_for_quantities = {}   #  Dict with displays vs lists of quantity paths
-        gen_saves_for_quantities = {}   #  Dict with file names vs lists of quantity paths
         
         for pop in segments_to_plot_record.keys():
             pop_nml = network.get_by_id(pop)

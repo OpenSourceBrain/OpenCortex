@@ -31,11 +31,13 @@ def generate(reference = "ACNet",
 
     pop_pyr = oc.add_population_in_rectangular_region(network, 'pop_pyr',
                                                   'pyr_4_sym', num_pyr,
-                                                  0,0,0, xDim,yDim,zDim)
+                                                  0,0,0, xDim,yDim,zDim,
+                                                  color='.8 0 0')
 
     pop_bask = oc.add_population_in_rectangular_region(network, 'pop_bask',
                                                   'bask', num_bask,
-                                                  0,yDim,0, xDim,yDim+yDim,zDim)
+                                                  0,yDim,0, xDim,yDim+yDim,zDim,
+                                                  color='0 0 .8')
                    
     ampa_syn = oc.add_exp_two_syn(nml_doc, id="AMPA_syn", 
                              gbase="30e-9S", erev="0mV",
