@@ -1,3 +1,6 @@
+'''
+Generates a NeuroML 2 network with a number of cells with voltage clamps
+'''
 
 import opencortex.core as oc
 
@@ -15,10 +18,14 @@ def generate(reference = "VClamp",
 
     oc.include_opencortex_cell(nml_doc, 'Thalamocortical/L23PyrRS.cell.nml')
     
+    num_cells = 4
 
-    pop_rs = oc.add_single_cell_population(network,
+    pop_rs = oc.add_population_in_rectangular_region(network,
                                      'popRS',
-                                     'L23PyrRS')
+                                     'L23PyrRS',
+                                     num_cells,
+                                     0,0,0,
+                                     1000,20,20)
 
     syn0 = oc.add_exp_two_syn(nml_doc, 
                              id="syn0", 
@@ -30,9 +37,11 @@ def generate(reference = "VClamp",
                             
     if poisson_inputs:
 
-        pfs = oc.add_poisson_firing_synapse(nml_doc,
+        pfs = oc.add_transient_poisson_firing_synapse(nml_doc,
                                            id="poissonFiringSyn",
                                            average_rate="20 Hz",
+                                           delay="50 ms",
+                                           duration="400 ms",
                                            synapse_id=syn0.id)
 
         oc.add_targeted_inputs_to_population(network, 
@@ -43,7 +52,8 @@ def generate(reference = "VClamp",
                                          number_per_cell = 100,
                                          all_cells=True)
 
-    vclamp_segs = [0, 142]
+    all_vclamp_segs = [0, 142, 87]
+    vclamp_segs = {0:[],1:[0],2:[0, 142], 3:all_vclamp_segs}
     
     gen_plots_for_quantities = {}   #  Dict with displays vs lists of quantity paths
     gen_saves_for_quantities = {}   #  Dict with file names vs lists of quantity paths
@@ -52,31 +62,33 @@ def generate(reference = "VClamp",
     
         v_clamped = '-70mV'
         
-        vc = oc.add_voltage_clamp_triple(nml_doc, id='vclamp0', 
-                             delay='0ms', 
-                             duration='%sms'%duration, 
-                             conditioning_voltage=v_clamped,
-                             testing_voltage=v_clamped,
-                             return_voltage=v_clamped, 
-                             simple_series_resistance="1e1ohm",
-                             active = "1")
+        for cell_id in vclamp_segs:
 
-        
-        for seg_id in vclamp_segs:
-            
-            vc_dat_file = 'v_clamps_i_seg%s.dat'%(seg_id)
-            
-            gen_saves_for_quantities[vc_dat_file] = []
 
-            oc.add_inputs_to_population(network, "vClamp_seg%s"%(seg_id),
-                                        pop_rs, vc.id,
-                                        all_cells=False,
-                                        only_cells=[0],
-                                        segment_ids=[seg_id])  
-                                        
-            q = '%s/%s/%s/%s/%s/i'%(pop_rs.id, 0,pop_rs.component,seg_id,vc.id)
-                
-            gen_saves_for_quantities[vc_dat_file].append(q)
+            for seg_id in vclamp_segs[cell_id]:
+
+                vc = oc.add_voltage_clamp_triple(nml_doc, id='vclamp_cell%i_seg%i'%(cell_id,seg_id), 
+                                     delay='0ms', 
+                                     duration='%sms'%duration, 
+                                     conditioning_voltage=v_clamped,
+                                     testing_voltage=v_clamped,
+                                     return_voltage=v_clamped, 
+                                     simple_series_resistance="1e1ohm",
+                                     active = "1")
+
+                vc_dat_file = 'v_clamps_i_cell%s_seg%s.dat'%(cell_id,seg_id)
+
+                gen_saves_for_quantities[vc_dat_file] = []
+
+                oc.add_inputs_to_population(network, "input_vClamp_cell%i_seg%i"%(cell_id,seg_id),
+                                            pop_rs, vc.id,
+                                            all_cells=False,
+                                            only_cells=[cell_id],
+                                            segment_ids=[seg_id])  
+
+                q = '%s/%s/%s/%s/%s/i'%(pop_rs.id, cell_id,pop_rs.component,seg_id,vc.id)
+
+                gen_saves_for_quantities[vc_dat_file].append(q)
     
 
     nml_file_name = '%s.net.%s'%(network.id,'nml.h5' if format == 'hdf5' else 'nml')
@@ -86,7 +98,7 @@ def generate(reference = "VClamp",
                     format = format)
 
     
-    segments_to_plot_record = {pop_rs.id:vclamp_segs+[20,50,99,139]}
+    segments_to_plot_record = {pop_rs.id:all_vclamp_segs+[20,50,99,139]}
     
     if format=='xml':
         

@@ -36,27 +36,105 @@
         <Display id="Display_popRS_0_v" title="Plots of Display_popRS_0_v" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
             <Line id="popRS_0_L23PyrRS_0_v" quantity="popRS/0/L23PyrRS/0/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
             <Line id="popRS_0_L23PyrRS_142_v" quantity="popRS/0/L23PyrRS/142/v" scale="1mV" color="#029a72" timeScale="1ms"/>
-            <Line id="popRS_0_L23PyrRS_20_v" quantity="popRS/0/L23PyrRS/20/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
-            <Line id="popRS_0_L23PyrRS_50_v" quantity="popRS/0/L23PyrRS/50/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
-            <Line id="popRS_0_L23PyrRS_99_v" quantity="popRS/0/L23PyrRS/99/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
-            <Line id="popRS_0_L23PyrRS_139_v" quantity="popRS/0/L23PyrRS/139/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_87_v" quantity="popRS/0/L23PyrRS/87/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_20_v" quantity="popRS/0/L23PyrRS/20/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_50_v" quantity="popRS/0/L23PyrRS/50/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_99_v" quantity="popRS/0/L23PyrRS/99/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
+            <Line id="popRS_0_L23PyrRS_139_v" quantity="popRS/0/L23PyrRS/139/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
         </Display>
+        
+        <Display id="Display_popRS_1_v" title="Plots of Display_popRS_1_v" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
+            <Line id="popRS_1_L23PyrRS_0_v" quantity="popRS/1/L23PyrRS/0/v" scale="1mV" color="#29645f" timeScale="1ms"/>
+            <Line id="popRS_1_L23PyrRS_142_v" quantity="popRS/1/L23PyrRS/142/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
+            <Line id="popRS_1_L23PyrRS_87_v" quantity="popRS/1/L23PyrRS/87/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
+            <Line id="popRS_1_L23PyrRS_20_v" quantity="popRS/1/L23PyrRS/20/v" scale="1mV" color="#8fe460" timeScale="1ms"/>
+            <Line id="popRS_1_L23PyrRS_50_v" quantity="popRS/1/L23PyrRS/50/v" scale="1mV" color="#2ca1c7" timeScale="1ms"/>
+            <Line id="popRS_1_L23PyrRS_99_v" quantity="popRS/1/L23PyrRS/99/v" scale="1mV" color="#8d9fe5" timeScale="1ms"/>
+            <Line id="popRS_1_L23PyrRS_139_v" quantity="popRS/1/L23PyrRS/139/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
+        </Display>
+        
+        <Display id="Display_popRS_2_v" title="Plots of Display_popRS_2_v" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
+            <Line id="popRS_2_L23PyrRS_0_v" quantity="popRS/2/L23PyrRS/0/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
+            <Line id="popRS_2_L23PyrRS_142_v" quantity="popRS/2/L23PyrRS/142/v" scale="1mV" color="#175f0c" timeScale="1ms"/>
+            <Line id="popRS_2_L23PyrRS_87_v" quantity="popRS/2/L23PyrRS/87/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
+            <Line id="popRS_2_L23PyrRS_20_v" quantity="popRS/2/L23PyrRS/20/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
+            <Line id="popRS_2_L23PyrRS_50_v" quantity="popRS/2/L23PyrRS/50/v" scale="1mV" color="#8101e8" timeScale="1ms"/>
+            <Line id="popRS_2_L23PyrRS_99_v" quantity="popRS/2/L23PyrRS/99/v" scale="1mV" color="#25ece8" timeScale="1ms"/>
+            <Line id="popRS_2_L23PyrRS_139_v" quantity="popRS/2/L23PyrRS/139/v" scale="1mV" color="#b80e3b" timeScale="1ms"/>
+        </Display>
+        
+        <Display id="Display_popRS_3_v" title="Plots of Display_popRS_3_v" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
+            <Line id="popRS_3_L23PyrRS_0_v" quantity="popRS/3/L23PyrRS/0/v" scale="1mV" color="#30a1f6" timeScale="1ms"/>
+            <Line id="popRS_3_L23PyrRS_142_v" quantity="popRS/3/L23PyrRS/142/v" scale="1mV" color="#577081" timeScale="1ms"/>
+            <Line id="popRS_3_L23PyrRS_87_v" quantity="popRS/3/L23PyrRS/87/v" scale="1mV" color="#06057c" timeScale="1ms"/>
+            <Line id="popRS_3_L23PyrRS_20_v" quantity="popRS/3/L23PyrRS/20/v" scale="1mV" color="#56eaa3" timeScale="1ms"/>
+            <Line id="popRS_3_L23PyrRS_50_v" quantity="popRS/3/L23PyrRS/50/v" scale="1mV" color="#f7acee" timeScale="1ms"/>
+            <Line id="popRS_3_L23PyrRS_99_v" quantity="popRS/3/L23PyrRS/99/v" scale="1mV" color="#fa9289" timeScale="1ms"/>
+            <Line id="popRS_3_L23PyrRS_139_v" quantity="popRS/3/L23PyrRS/139/v" scale="1mV" color="#be9985" timeScale="1ms"/>
+        </Display>
+        
+        <OutputFile id="Sim_VClamp_popRS_3_v_dat" fileName="Sim_VClamp.popRS.3.v.dat">
+            <OutputColumn id="popRS_3_L23PyrRS_0_v" quantity="popRS/3/L23PyrRS/0/v"/> 
+            <OutputColumn id="popRS_3_L23PyrRS_142_v" quantity="popRS/3/L23PyrRS/142/v"/> 
+            <OutputColumn id="popRS_3_L23PyrRS_87_v" quantity="popRS/3/L23PyrRS/87/v"/> 
+            <OutputColumn id="popRS_3_L23PyrRS_20_v" quantity="popRS/3/L23PyrRS/20/v"/> 
+            <OutputColumn id="popRS_3_L23PyrRS_50_v" quantity="popRS/3/L23PyrRS/50/v"/> 
+            <OutputColumn id="popRS_3_L23PyrRS_99_v" quantity="popRS/3/L23PyrRS/99/v"/> 
+            <OutputColumn id="popRS_3_L23PyrRS_139_v" quantity="popRS/3/L23PyrRS/139/v"/> 
+        </OutputFile>
+        
+        <OutputFile id="v_clamps_i_cell2_seg0_dat" fileName="v_clamps_i_cell2_seg0.dat">
+            <OutputColumn id="popRS_2_L23PyrRS_0_vclamp_cell2_seg0_i" quantity="popRS/2/L23PyrRS/0/vclamp_cell2_seg0/i"/> 
+        </OutputFile>
+        
+        <OutputFile id="v_clamps_i_cell3_seg87_dat" fileName="v_clamps_i_cell3_seg87.dat">
+            <OutputColumn id="popRS_3_L23PyrRS_87_vclamp_cell3_seg87_i" quantity="popRS/3/L23PyrRS/87/vclamp_cell3_seg87/i"/> 
+        </OutputFile>
         
         <OutputFile id="Sim_VClamp_popRS_0_v_dat" fileName="Sim_VClamp.popRS.0.v.dat">
             <OutputColumn id="popRS_0_L23PyrRS_0_v" quantity="popRS/0/L23PyrRS/0/v"/> 
             <OutputColumn id="popRS_0_L23PyrRS_142_v" quantity="popRS/0/L23PyrRS/142/v"/> 
+            <OutputColumn id="popRS_0_L23PyrRS_87_v" quantity="popRS/0/L23PyrRS/87/v"/> 
             <OutputColumn id="popRS_0_L23PyrRS_20_v" quantity="popRS/0/L23PyrRS/20/v"/> 
             <OutputColumn id="popRS_0_L23PyrRS_50_v" quantity="popRS/0/L23PyrRS/50/v"/> 
             <OutputColumn id="popRS_0_L23PyrRS_99_v" quantity="popRS/0/L23PyrRS/99/v"/> 
             <OutputColumn id="popRS_0_L23PyrRS_139_v" quantity="popRS/0/L23PyrRS/139/v"/> 
         </OutputFile>
         
-        <OutputFile id="v_clamps_i_seg0_dat" fileName="v_clamps_i_seg0.dat">
-            <OutputColumn id="popRS_0_L23PyrRS_0_vclamp0_i" quantity="popRS/0/L23PyrRS/0/vclamp0/i"/> 
+        <OutputFile id="v_clamps_i_cell3_seg0_dat" fileName="v_clamps_i_cell3_seg0.dat">
+            <OutputColumn id="popRS_3_L23PyrRS_0_vclamp_cell3_seg0_i" quantity="popRS/3/L23PyrRS/0/vclamp_cell3_seg0/i"/> 
         </OutputFile>
         
-        <OutputFile id="v_clamps_i_seg142_dat" fileName="v_clamps_i_seg142.dat">
-            <OutputColumn id="popRS_0_L23PyrRS_142_vclamp0_i" quantity="popRS/0/L23PyrRS/142/vclamp0/i"/> 
+        <OutputFile id="Sim_VClamp_popRS_1_v_dat" fileName="Sim_VClamp.popRS.1.v.dat">
+            <OutputColumn id="popRS_1_L23PyrRS_0_v" quantity="popRS/1/L23PyrRS/0/v"/> 
+            <OutputColumn id="popRS_1_L23PyrRS_142_v" quantity="popRS/1/L23PyrRS/142/v"/> 
+            <OutputColumn id="popRS_1_L23PyrRS_87_v" quantity="popRS/1/L23PyrRS/87/v"/> 
+            <OutputColumn id="popRS_1_L23PyrRS_20_v" quantity="popRS/1/L23PyrRS/20/v"/> 
+            <OutputColumn id="popRS_1_L23PyrRS_50_v" quantity="popRS/1/L23PyrRS/50/v"/> 
+            <OutputColumn id="popRS_1_L23PyrRS_99_v" quantity="popRS/1/L23PyrRS/99/v"/> 
+            <OutputColumn id="popRS_1_L23PyrRS_139_v" quantity="popRS/1/L23PyrRS/139/v"/> 
+        </OutputFile>
+        
+        <OutputFile id="v_clamps_i_cell3_seg142_dat" fileName="v_clamps_i_cell3_seg142.dat">
+            <OutputColumn id="popRS_3_L23PyrRS_142_vclamp_cell3_seg142_i" quantity="popRS/3/L23PyrRS/142/vclamp_cell3_seg142/i"/> 
+        </OutputFile>
+        
+        <OutputFile id="Sim_VClamp_popRS_2_v_dat" fileName="Sim_VClamp.popRS.2.v.dat">
+            <OutputColumn id="popRS_2_L23PyrRS_0_v" quantity="popRS/2/L23PyrRS/0/v"/> 
+            <OutputColumn id="popRS_2_L23PyrRS_142_v" quantity="popRS/2/L23PyrRS/142/v"/> 
+            <OutputColumn id="popRS_2_L23PyrRS_87_v" quantity="popRS/2/L23PyrRS/87/v"/> 
+            <OutputColumn id="popRS_2_L23PyrRS_20_v" quantity="popRS/2/L23PyrRS/20/v"/> 
+            <OutputColumn id="popRS_2_L23PyrRS_50_v" quantity="popRS/2/L23PyrRS/50/v"/> 
+            <OutputColumn id="popRS_2_L23PyrRS_99_v" quantity="popRS/2/L23PyrRS/99/v"/> 
+            <OutputColumn id="popRS_2_L23PyrRS_139_v" quantity="popRS/2/L23PyrRS/139/v"/> 
+        </OutputFile>
+        
+        <OutputFile id="v_clamps_i_cell1_seg0_dat" fileName="v_clamps_i_cell1_seg0.dat">
+            <OutputColumn id="popRS_1_L23PyrRS_0_vclamp_cell1_seg0_i" quantity="popRS/1/L23PyrRS/0/vclamp_cell1_seg0/i"/> 
+        </OutputFile>
+        
+        <OutputFile id="v_clamps_i_cell2_seg142_dat" fileName="v_clamps_i_cell2_seg142.dat">
+            <OutputColumn id="popRS_2_L23PyrRS_142_vclamp_cell2_seg142_i" quantity="popRS/2/L23PyrRS/142/vclamp_cell2_seg142/i"/> 
         </OutputFile>
         
     </Simulation>
