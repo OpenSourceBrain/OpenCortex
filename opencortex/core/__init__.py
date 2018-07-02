@@ -917,13 +917,17 @@ def save_network(nml_doc, nml_file_name, validate=True, format='xml', max_memory
         nml_doc.notes = info
         
     nml_full_file_name = target_dir+'/'+nml_file_name
+    abs_path = os.path.abspath(nml_full_file_name)
 
     if format == 'xml':
-        writers.NeuroMLWriter.write(nml_doc, nml_full_file_name)
+        writers.NeuroMLWriter.write(nml_doc, abs_path)
     elif format == 'hdf5':
-        writers.NeuroMLHdf5Writer.write(nml_doc, nml_full_file_name)
+        writers.NeuroMLHdf5Writer.write(nml_doc, abs_path)
 
-    opencortex.print_comment_v("Saved NeuroML with id: %s to %s" % (nml_doc.id, nml_full_file_name))
+    opencortex.print_comment_v("Saved NeuroML with id: %s to file: %s" % (nml_doc.id, abs_path))
+    if not os.path.isfile(abs_path):
+        raise Exception("Problem creating file: %s" % (abs_path))
+        
 
     if validate:
 
