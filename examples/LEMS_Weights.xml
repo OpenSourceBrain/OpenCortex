@@ -32,22 +32,31 @@
             <Line id="pop_pre[5]: v" quantity="pop_pre/5/HH_477127614/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
         </Display>
         
-        <Display id="DispPop__pop_post_chem" title="Membrane potentials of cells in pop_post_chem" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="pop_post_chem[0]: v" quantity="pop_post_chem/0/HH_477127614/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
-            <Line id="pop_post_chem[1]: v" quantity="pop_post_chem/1/HH_477127614/v" scale="1mV" color="#29645f" timeScale="1ms"/>
-            <Line id="pop_post_chem[2]: v" quantity="pop_post_chem/2/HH_477127614/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
-            <Line id="pop_post_chem[3]: v" quantity="pop_post_chem/3/HH_477127614/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
-            <Line id="pop_post_chem[4]: v" quantity="pop_post_chem/4/HH_477127614/v" scale="1mV" color="#8fe460" timeScale="1ms"/>
-            <Line id="pop_post_chem[5]: v" quantity="pop_post_chem/5/HH_477127614/v" scale="1mV" color="#2ca1c7" timeScale="1ms"/>
+        <Display id="DispPop__pop_post_chem_exc" title="Membrane potentials of cells in pop_post_chem_exc" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
+            <Line id="pop_post_chem_exc[0]: v" quantity="pop_post_chem_exc/0/HH_477127614/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
+            <Line id="pop_post_chem_exc[1]: v" quantity="pop_post_chem_exc/1/HH_477127614/v" scale="1mV" color="#29645f" timeScale="1ms"/>
+            <Line id="pop_post_chem_exc[2]: v" quantity="pop_post_chem_exc/2/HH_477127614/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
+            <Line id="pop_post_chem_exc[3]: v" quantity="pop_post_chem_exc/3/HH_477127614/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
+            <Line id="pop_post_chem_exc[4]: v" quantity="pop_post_chem_exc/4/HH_477127614/v" scale="1mV" color="#8fe460" timeScale="1ms"/>
+            <Line id="pop_post_chem_exc[5]: v" quantity="pop_post_chem_exc/5/HH_477127614/v" scale="1mV" color="#2ca1c7" timeScale="1ms"/>
         </Display>
         
-        <Display id="DispPop__pop_post_gap" title="Membrane potentials of cells in pop_post_gap" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="pop_post_gap[0]: v" quantity="pop_post_gap/0/HH_477127614/v" scale="1mV" color="#8d9fe5" timeScale="1ms"/>
-            <Line id="pop_post_gap[1]: v" quantity="pop_post_gap/1/HH_477127614/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
-            <Line id="pop_post_gap[2]: v" quantity="pop_post_gap/2/HH_477127614/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
-            <Line id="pop_post_gap[3]: v" quantity="pop_post_gap/3/HH_477127614/v" scale="1mV" color="#175f0c" timeScale="1ms"/>
-            <Line id="pop_post_gap[4]: v" quantity="pop_post_gap/4/HH_477127614/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
-            <Line id="pop_post_gap[5]: v" quantity="pop_post_gap/5/HH_477127614/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
+        <Display id="DispPop__pop_post_chem_inh" title="Membrane potentials of cells in pop_post_chem_inh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
+            <Line id="pop_post_chem_inh[0]: v" quantity="pop_post_chem_inh/0/HH_477127614/v" scale="1mV" color="#8d9fe5" timeScale="1ms"/>
+            <Line id="pop_post_chem_inh[1]: v" quantity="pop_post_chem_inh/1/HH_477127614/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
+            <Line id="pop_post_chem_inh[2]: v" quantity="pop_post_chem_inh/2/HH_477127614/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
+            <Line id="pop_post_chem_inh[3]: v" quantity="pop_post_chem_inh/3/HH_477127614/v" scale="1mV" color="#175f0c" timeScale="1ms"/>
+            <Line id="pop_post_chem_inh[4]: v" quantity="pop_post_chem_inh/4/HH_477127614/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
+            <Line id="pop_post_chem_inh[5]: v" quantity="pop_post_chem_inh/5/HH_477127614/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
+        </Display>
+        
+        <Display id="DispPop__pop_post_cont" title="Membrane potentials of cells in pop_post_cont" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
+            <Line id="pop_post_cont[0]: v" quantity="pop_post_cont/0/HH_477127614/v" scale="1mV" color="#8101e8" timeScale="1ms"/>
+            <Line id="pop_post_cont[1]: v" quantity="pop_post_cont/1/HH_477127614/v" scale="1mV" color="#25ece8" timeScale="1ms"/>
+            <Line id="pop_post_cont[2]: v" quantity="pop_post_cont/2/HH_477127614/v" scale="1mV" color="#b80e3b" timeScale="1ms"/>
+            <Line id="pop_post_cont[3]: v" quantity="pop_post_cont/3/HH_477127614/v" scale="1mV" color="#30a1f6" timeScale="1ms"/>
+            <Line id="pop_post_cont[4]: v" quantity="pop_post_cont/4/HH_477127614/v" scale="1mV" color="#577081" timeScale="1ms"/>
+            <Line id="pop_post_cont[5]: v" quantity="pop_post_cont/5/HH_477127614/v" scale="1mV" color="#06057c" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Volts_file__pop_pre" fileName="Sim_Weights.pop_pre.v.dat">
@@ -59,22 +68,31 @@
             <OutputColumn id="v_pop_pre_5_HH_477127614_v" quantity="pop_pre/5/HH_477127614/v"/> 
         </OutputFile>
         
-        <OutputFile id="Volts_file__pop_post_chem" fileName="Sim_Weights.pop_post_chem.v.dat">
-            <OutputColumn id="v_pop_post_chem_0_HH_477127614_v" quantity="pop_post_chem/0/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_1_HH_477127614_v" quantity="pop_post_chem/1/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_2_HH_477127614_v" quantity="pop_post_chem/2/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_3_HH_477127614_v" quantity="pop_post_chem/3/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_4_HH_477127614_v" quantity="pop_post_chem/4/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_5_HH_477127614_v" quantity="pop_post_chem/5/HH_477127614/v"/> 
+        <OutputFile id="Volts_file__pop_post_chem_exc" fileName="Sim_Weights.pop_post_chem_exc.v.dat">
+            <OutputColumn id="v_pop_post_chem_exc_0_HH_477127614_v" quantity="pop_post_chem_exc/0/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_exc_1_HH_477127614_v" quantity="pop_post_chem_exc/1/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_exc_2_HH_477127614_v" quantity="pop_post_chem_exc/2/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_exc_3_HH_477127614_v" quantity="pop_post_chem_exc/3/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_exc_4_HH_477127614_v" quantity="pop_post_chem_exc/4/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_exc_5_HH_477127614_v" quantity="pop_post_chem_exc/5/HH_477127614/v"/> 
         </OutputFile>
         
-        <OutputFile id="Volts_file__pop_post_gap" fileName="Sim_Weights.pop_post_gap.v.dat">
-            <OutputColumn id="v_pop_post_gap_0_HH_477127614_v" quantity="pop_post_gap/0/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_gap_1_HH_477127614_v" quantity="pop_post_gap/1/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_gap_2_HH_477127614_v" quantity="pop_post_gap/2/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_gap_3_HH_477127614_v" quantity="pop_post_gap/3/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_gap_4_HH_477127614_v" quantity="pop_post_gap/4/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_gap_5_HH_477127614_v" quantity="pop_post_gap/5/HH_477127614/v"/> 
+        <OutputFile id="Volts_file__pop_post_chem_inh" fileName="Sim_Weights.pop_post_chem_inh.v.dat">
+            <OutputColumn id="v_pop_post_chem_inh_0_HH_477127614_v" quantity="pop_post_chem_inh/0/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_inh_1_HH_477127614_v" quantity="pop_post_chem_inh/1/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_inh_2_HH_477127614_v" quantity="pop_post_chem_inh/2/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_inh_3_HH_477127614_v" quantity="pop_post_chem_inh/3/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_inh_4_HH_477127614_v" quantity="pop_post_chem_inh/4/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_inh_5_HH_477127614_v" quantity="pop_post_chem_inh/5/HH_477127614/v"/> 
+        </OutputFile>
+        
+        <OutputFile id="Volts_file__pop_post_cont" fileName="Sim_Weights.pop_post_cont.v.dat">
+            <OutputColumn id="v_pop_post_cont_0_HH_477127614_v" quantity="pop_post_cont/0/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_cont_1_HH_477127614_v" quantity="pop_post_cont/1/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_cont_2_HH_477127614_v" quantity="pop_post_cont/2/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_cont_3_HH_477127614_v" quantity="pop_post_cont/3/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_cont_4_HH_477127614_v" quantity="pop_post_cont/4/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_cont_5_HH_477127614_v" quantity="pop_post_cont/5/HH_477127614/v"/> 
         </OutputFile>
         
     </Simulation>
