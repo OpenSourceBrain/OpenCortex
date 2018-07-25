@@ -84,7 +84,7 @@ def generate(reference = "Weights",
                                 pop_pre,
                                 pop_post_chem_exc,
                                 ampa_syn.id,
-                                0.3,
+                                0.7,
                                 weight=1,
                                 delay=5)
                                 
@@ -98,7 +98,7 @@ def generate(reference = "Weights",
                                 pop_pre,
                                 pop_post_chem_inh,
                                 gaba_syn.id,
-                                0.3,
+                                0.7,
                                 weight=1,
                                 delay=5)
                                 
@@ -126,7 +126,7 @@ def generate(reference = "Weights",
         
         
             
-        gj_pops = [pop_post_chem_exc, pop_post_chem_inh, pop_post_cont]
+        gj_pops = [pop_pre, pop_post_chem_exc, pop_post_chem_inh, pop_post_cont]
         
         for pre in gj_pops:
             for post in gj_pops:
