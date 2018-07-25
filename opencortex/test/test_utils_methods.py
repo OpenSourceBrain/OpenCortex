@@ -658,7 +658,7 @@ class TestUtilsMethods(unittest.TestCase):
                              
                                  proj=network.electrical_projections[net_proj]
                                  
-                                 check_synapse=proj.electrical_connection_instances[0].synapse==synapse_list[syn_ind]
+                                 check_synapse=proj.electrical_connection_instance_ws[0].synapse==synapse_list[syn_ind]
                                  
                                  if proj.presynaptic_population==pre_pop_id and proj.postsynaptic_population==post_pop_id and check_synapse:
                                  
@@ -668,9 +668,9 @@ class TestUtilsMethods(unittest.TestCase):
                                     
                                     post_segments=[136, 137, 138, 139, 144, 145, 140, 141, 146, 147, 142, 143]
                                     
-                                    for conn_index in range(0,len(proj.electrical_connection_instances) ):
+                                    for conn_index in range(0,len(proj.electrical_connection_instance_ws) ):
                                     
-                                        connection= proj.electrical_connection_instances[conn_index]
+                                        connection= proj.electrical_connection_instance_ws[conn_index]
                                         
                                         self.assertTrue( connection.pre_segment in pre_segments )
                                         

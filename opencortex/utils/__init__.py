@@ -1851,11 +1851,11 @@ def replace_cell_types(net_file_name,
 
                         id_tag = True
 
-                elif hasattr(proj, 'electrical_connection_instances'):
+                elif hasattr(proj, 'electrical_connection_instance_ws'):
 
-                    if proj.electrical_connection_instances != []:
+                    if proj.electrical_connection_instance_ws != []:
 
-                        connections = proj.electrical_connection_instances
+                        connections = proj.electrical_connection_instance_ws
 
                         id_tag = False
 

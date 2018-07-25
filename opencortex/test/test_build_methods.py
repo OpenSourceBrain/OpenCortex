@@ -812,9 +812,9 @@ class TestNetConnectionMethods(unittest.TestCase):
                  
           self.assertEqual(len(network.electrical_projections),0)
           
-          self.assertEqual(len(proj_array[0].electrical_connection_instances),0)
+          self.assertEqual(len(proj_array[0].electrical_connection_instance_ws),0)
           
-          self.assertEqual(len(proj_array[1].electrical_connection_instances),len(proj_array[0].electrical_connection_instances))
+          self.assertEqual(len(proj_array[1].electrical_connection_instance_ws),len(proj_array[0].electrical_connection_instance_ws))
           
           ######## Test 2 convergent
           network = neuroml.Network(id='Net0')     
@@ -849,11 +849,11 @@ class TestNetConnectionMethods(unittest.TestCase):
           
           self.assertEqual(len(network.electrical_projections),2)
           
-          self.assertEqual(len(proj_array[0].electrical_connection_instances),len(network.electrical_projections[0].electrical_connection_instances) )
+          self.assertEqual(len(proj_array[0].electrical_connection_instance_ws),len(network.electrical_projections[0].electrical_connection_instance_ws) )
           
-          self.assertEqual(len(proj_array[1].electrical_connection_instances),len(proj_array[0].electrical_connection_instances))
+          self.assertEqual(len(proj_array[1].electrical_connection_instance_ws),len(proj_array[0].electrical_connection_instance_ws))
           
-          self.assertTrue(len(proj_array[0].electrical_connection_instances)==2 or len(proj_array[0].electrical_connection_instances)==3 )
+          self.assertTrue(len(proj_array[0].electrical_connection_instance_ws)==2 or len(proj_array[0].electrical_connection_instance_ws)==3 )
           
           self.assertEqual(network.electrical_projections[0].id,proj_array[0].id)
           
@@ -897,17 +897,17 @@ class TestNetConnectionMethods(unittest.TestCase):
                                              post_seg_target_dict=parsed_target_dict,
                                              subset_dict={'basal_obl_dends':0.4})
                                             
-          self.assertEqual(len(proj_array[1].electrical_connection_instances),len(proj_array[0].electrical_connection_instances))
+          self.assertEqual(len(proj_array[1].electrical_connection_instance_ws),len(proj_array[0].electrical_connection_instance_ws))
           
-          self.assertTrue(len(proj_array[0].electrical_connection_instances)==0 or len(proj_array[0].electrical_connection_instances)==1 )
+          self.assertTrue(len(proj_array[0].electrical_connection_instance_ws)==0 or len(proj_array[0].electrical_connection_instance_ws)==1 )
           
-          if len(proj_array[0].electrical_connection_instances)==1:
+          if len(proj_array[0].electrical_connection_instance_ws)==1:
           
              self.assertEqual(len(network.electrical_projections),2)
              
-             self.assertEqual(len(proj_array[0].electrical_connection_instances),len(network.electrical_projections[0].electrical_connection_instances) )
+             self.assertEqual(len(proj_array[0].electrical_connection_instance_ws),len(network.electrical_projections[0].electrical_connection_instance_ws) )
              
-          if len(proj_array[0].electrical_connection_instances)==0:
+          if len(proj_array[0].electrical_connection_instance_ws)==0:
           
              self.assertEqual(len(network.electrical_projections),0)
              
@@ -940,27 +940,27 @@ class TestNetConnectionMethods(unittest.TestCase):
                                              post_seg_target_dict=parsed_target_dict,
                                              subset_dict=0.4)
                                             
-          self.assertEqual(len(proj_array[1].electrical_connection_instances),len(proj_array[0].electrical_connection_instances))
+          self.assertEqual(len(proj_array[1].electrical_connection_instance_ws),len(proj_array[0].electrical_connection_instance_ws))
           
-          if len(proj_array[0].electrical_connection_instances)==1:
+          if len(proj_array[0].electrical_connection_instance_ws)==1:
           
              self.assertEqual(len(network.electrical_projections),2)
              
-             self.assertEqual(len(proj_array[0].electrical_connection_instances),len(network.electrical_projections[0].electrical_connection_instances) )
+             self.assertEqual(len(proj_array[0].electrical_connection_instance_ws),len(network.electrical_projections[0].electrical_connection_instance_ws) )
              
-          if len(proj_array[0].electrical_connection_instances)==0:
+          if len(proj_array[0].electrical_connection_instance_ws)==0:
           
              self.assertEqual(len(network.electrical_projections),0)
              
           else:
           
-             len(network.electrical_projections[0].electrical_connection_instances) <= 50
+             len(network.electrical_projections[0].electrical_connection_instance_ws) <= 50
           
-             for elect_conn_ind in range(0, len(network.electrical_projections[0].electrical_connection_instances) ):
+             for elect_conn_ind in range(0, len(network.electrical_projections[0].electrical_connection_instance_ws) ):
              
-                 elect_connection_comp1=proj_array[0].electrical_connection_instances[elect_conn_ind]
+                 elect_connection_comp1=proj_array[0].electrical_connection_instance_ws[elect_conn_ind]
                  
-                 elect_connection_comp2=proj_array[1].electrical_connection_instances[elect_conn_ind]
+                 elect_connection_comp2=proj_array[1].electrical_connection_instance_ws[elect_conn_ind]
                  
                  self.assertTrue(elect_connection_comp1.pre_cell == elect_connection_comp2.pre_cell)
                  
@@ -1000,21 +1000,21 @@ class TestNetConnectionMethods(unittest.TestCase):
                                              post_seg_target_dict=parsed_target_dict,
                                              subset_dict=1)
                                             
-          self.assertEqual(len(proj_array[1].electrical_connection_instances),len(proj_array[0].electrical_connection_instances))
+          self.assertEqual(len(proj_array[1].electrical_connection_instance_ws),len(proj_array[0].electrical_connection_instance_ws))
           
-          if len(proj_array[0].electrical_connection_instances)==1:
+          if len(proj_array[0].electrical_connection_instance_ws)==1:
           
              self.assertEqual(len(network.electrical_projections),2)
              
-             self.assertEqual(len(proj_array[0].electrical_connection_instances),len(network.electrical_projections[0].electrical_connection_instances) )
+             self.assertEqual(len(proj_array[0].electrical_connection_instance_ws),len(network.electrical_projections[0].electrical_connection_instance_ws) )
              
-          len(network.electrical_projections[0].electrical_connection_instances) == 50
+          len(network.electrical_projections[0].electrical_connection_instance_ws) == 50
           
-          for elect_conn_ind in range(0, len(network.electrical_projections[0].electrical_connection_instances) ):
+          for elect_conn_ind in range(0, len(network.electrical_projections[0].electrical_connection_instance_ws) ):
              
-              elect_connection_comp1=proj_array[0].electrical_connection_instances[elect_conn_ind]
+              elect_connection_comp1=proj_array[0].electrical_connection_instance_ws[elect_conn_ind]
                  
-              elect_connection_comp2=proj_array[1].electrical_connection_instances[elect_conn_ind]
+              elect_connection_comp2=proj_array[1].electrical_connection_instance_ws[elect_conn_ind]
                  
               self.assertTrue(elect_connection_comp1.pre_cell == elect_connection_comp2.pre_cell)
                  
@@ -1054,21 +1054,21 @@ class TestNetConnectionMethods(unittest.TestCase):
                                             post_seg_target_dict=parsed_target_dict,
                                             subset_dict=2)
                                             
-          self.assertEqual(len(proj_array[1].electrical_connection_instances),len(proj_array[0].electrical_connection_instances))
+          self.assertEqual(len(proj_array[1].electrical_connection_instance_ws),len(proj_array[0].electrical_connection_instance_ws))
           
-          if len(proj_array[0].electrical_connection_instances)==1:
+          if len(proj_array[0].electrical_connection_instance_ws)==1:
           
              self.assertEqual(len(network.electrical_projections),2)
              
-             self.assertEqual(len(proj_array[0].electrical_connection_instances),len(network.electrical_projections[0].electrical_connection_instances) )
+             self.assertEqual(len(proj_array[0].electrical_connection_instance_ws),len(network.electrical_projections[0].electrical_connection_instance_ws) )
              
-          len(network.electrical_projections[0].electrical_connection_instances) == 100
+          len(network.electrical_projections[0].electrical_connection_instance_ws) == 100
           
-          for elect_conn_ind in range(0, len(network.electrical_projections[0].electrical_connection_instances) ):
+          for elect_conn_ind in range(0, len(network.electrical_projections[0].electrical_connection_instance_ws) ):
              
-              elect_connection_comp1=proj_array[0].electrical_connection_instances[elect_conn_ind]
+              elect_connection_comp1=proj_array[0].electrical_connection_instance_ws[elect_conn_ind]
                  
-              elect_connection_comp2=proj_array[1].electrical_connection_instances[elect_conn_ind]
+              elect_connection_comp2=proj_array[1].electrical_connection_instance_ws[elect_conn_ind]
                  
               self.assertTrue(elect_connection_comp1.pre_cell == elect_connection_comp2.pre_cell)
                  
@@ -1134,9 +1134,9 @@ class TestNetConnectionMethods(unittest.TestCase):
           
           self.assertTrue(len(network.electrical_projections) >= 0 )
           
-          self.assertTrue(len(proj_array[0].electrical_connection_instances) >= 0)
+          self.assertTrue(len(proj_array[0].electrical_connection_instance_ws) >= 0)
           
-          self.assertEqual(len(proj_array[1].electrical_connection_instances),len(proj_array[0].electrical_connection_instances))
+          self.assertEqual(len(proj_array[1].electrical_connection_instance_ws),len(proj_array[0].electrical_connection_instance_ws))
           
           ######## Test 2 convergent
           network = neuroml.Network(id='Net0')       
@@ -1192,13 +1192,13 @@ class TestNetConnectionMethods(unittest.TestCase):
                                                                                         
           self.assertEqual(len(network.electrical_projections),2)
           
-          self.assertEqual(len(network.electrical_projections[0].electrical_connection_instances),len(network.electrical_projections[1].electrical_connection_instances) )
+          self.assertEqual(len(network.electrical_projections[0].electrical_connection_instance_ws),len(network.electrical_projections[1].electrical_connection_instance_ws) )
           
-          self.assertEqual(len(proj_array[0].electrical_connection_instances),len(network.electrical_projections[0].electrical_connection_instances) )
+          self.assertEqual(len(proj_array[0].electrical_connection_instance_ws),len(network.electrical_projections[0].electrical_connection_instance_ws) )
           
-          self.assertEqual(len(proj_array[1].electrical_connection_instances),len(proj_array[0].electrical_connection_instances))
+          self.assertEqual(len(proj_array[1].electrical_connection_instance_ws),len(proj_array[0].electrical_connection_instance_ws))
           
-          self.assertTrue(len(proj_array[0].electrical_connection_instances)==2 or len(proj_array[0].electrical_connection_instances)==3 )
+          self.assertTrue(len(proj_array[0].electrical_connection_instance_ws)==2 or len(proj_array[0].electrical_connection_instance_ws)==3 )
           
           self.assertEqual(network.electrical_projections[0].id,proj_array[0].id)
           
@@ -1220,29 +1220,29 @@ class TestNetConnectionMethods(unittest.TestCase):
           
           post_cell_Elect2_strings=[]
           
-          for conn_ind in range(0,len(network.electrical_projections[0].electrical_connection_instances) ):
+          for conn_ind in range(0,len(network.electrical_projections[0].electrical_connection_instance_ws) ):
           
-              self.assertEqual(network.electrical_projections[0].electrical_connection_instances[conn_ind].synapse,'Elect_1')
+              self.assertEqual(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].synapse,'Elect_1')
               
-              self.assertEqual(network.electrical_projections[1].electrical_connection_instances[conn_ind].synapse,'Elect_2')
+              self.assertEqual(network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].synapse,'Elect_2')
           
-              pre_cell_Elect1_strings.append(network.electrical_projections[0].electrical_connection_instances[conn_ind].pre_cell)
+              pre_cell_Elect1_strings.append(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].pre_cell)
              
-              post_cell_Elect1_strings.append(network.electrical_projections[0].electrical_connection_instances[conn_ind].post_cell)
+              post_cell_Elect1_strings.append(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].post_cell)
              
-              pre_cell_Elect2_strings.append(network.electrical_projections[1].electrical_connection_instances[conn_ind].pre_cell)
+              pre_cell_Elect2_strings.append(network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].pre_cell)
              
-              post_cell_Elect2_strings.append(network.electrical_projections[1].electrical_connection_instances[conn_ind].post_cell)
+              post_cell_Elect2_strings.append(network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].post_cell)
               
-              self.assertEqual(network.electrical_projections[0].electrical_connection_instances[conn_ind].post_cell,
-                               network.electrical_projections[1].electrical_connection_instances[conn_ind].post_cell)
+              self.assertEqual(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].post_cell,
+                               network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].post_cell)
               
-              self.assertEqual(network.electrical_projections[0].electrical_connection_instances[conn_ind].pre_cell,
-                               network.electrical_projections[1].electrical_connection_instances[conn_ind].pre_cell)
+              self.assertEqual(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].pre_cell,
+                               network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].pre_cell)
              
           self.assertTrue( len(set(post_cell_Elect1_strings)) ==1)
           
-          self.assertTrue(len(network.electrical_projections[0].electrical_connection_instances) == len(set(pre_cell_Elect1_strings) ))
+          self.assertTrue(len(network.electrical_projections[0].electrical_connection_instance_ws) == len(set(pre_cell_Elect1_strings) ))
           
           self.assertEqual(len(set(pre_cell_Elect1_strings)),len(set(pre_cell_Elect2_strings)) )
           
@@ -1302,13 +1302,13 @@ class TestNetConnectionMethods(unittest.TestCase):
                                                                                         
           self.assertEqual(len(network.electrical_projections),2)
           
-          self.assertEqual(len(network.electrical_projections[0].electrical_connection_instances),len(network.electrical_projections[1].electrical_connection_instances) ) 
+          self.assertEqual(len(network.electrical_projections[0].electrical_connection_instance_ws),len(network.electrical_projections[1].electrical_connection_instance_ws) ) 
           
-          self.assertEqual(len(proj_array[0].electrical_connection_instances),len(network.electrical_projections[0].electrical_connection_instances) )
+          self.assertEqual(len(proj_array[0].electrical_connection_instance_ws),len(network.electrical_projections[0].electrical_connection_instance_ws) )
           
-          self.assertEqual(len(proj_array[1].electrical_connection_instances),len(proj_array[0].electrical_connection_instances))
+          self.assertEqual(len(proj_array[1].electrical_connection_instance_ws),len(proj_array[0].electrical_connection_instance_ws))
           
-          self.assertTrue(len(proj_array[0].electrical_connection_instances)==2 or len(proj_array[0].electrical_connection_instances)==3 )
+          self.assertTrue(len(proj_array[0].electrical_connection_instance_ws)==2 or len(proj_array[0].electrical_connection_instance_ws)==3 )
           
           self.assertEqual(network.electrical_projections[0].id,proj_array[0].id)
           
@@ -1330,29 +1330,29 @@ class TestNetConnectionMethods(unittest.TestCase):
           
           post_cell_Elect2_strings=[]
           
-          for conn_ind in range(0,len(network.electrical_projections[0].electrical_connection_instances) ):
+          for conn_ind in range(0,len(network.electrical_projections[0].electrical_connection_instance_ws) ):
           
-              self.assertEqual(network.electrical_projections[0].electrical_connection_instances[conn_ind].synapse,'Elect_1')
+              self.assertEqual(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].synapse,'Elect_1')
               
-              self.assertEqual(network.electrical_projections[1].electrical_connection_instances[conn_ind].synapse,'Elect_2')
+              self.assertEqual(network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].synapse,'Elect_2')
           
-              pre_cell_Elect1_strings.append(network.electrical_projections[0].electrical_connection_instances[conn_ind].pre_cell)
+              pre_cell_Elect1_strings.append(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].pre_cell)
              
-              post_cell_Elect1_strings.append(network.electrical_projections[0].electrical_connection_instances[conn_ind].post_cell)
+              post_cell_Elect1_strings.append(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].post_cell)
              
-              pre_cell_Elect2_strings.append(network.electrical_projections[1].electrical_connection_instances[conn_ind].pre_cell)
+              pre_cell_Elect2_strings.append(network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].pre_cell)
              
-              post_cell_Elect2_strings.append(network.electrical_projections[1].electrical_connection_instances[conn_ind].post_cell)
+              post_cell_Elect2_strings.append(network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].post_cell)
               
-              self.assertEqual(network.electrical_projections[0].electrical_connection_instances[conn_ind].post_cell,
-                               network.electrical_projections[1].electrical_connection_instances[conn_ind].post_cell)
+              self.assertEqual(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].post_cell,
+                               network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].post_cell)
               
-              self.assertEqual(network.electrical_projections[0].electrical_connection_instances[conn_ind].pre_cell,
-                               network.electrical_projections[1].electrical_connection_instances[conn_ind].pre_cell)
+              self.assertEqual(network.electrical_projections[0].electrical_connection_instance_ws[conn_ind].pre_cell,
+                               network.electrical_projections[1].electrical_connection_instance_ws[conn_ind].pre_cell)
              
           self.assertTrue( len(set(pre_cell_Elect1_strings)) ==1)
           
-          self.assertTrue(len(network.electrical_projections[0].electrical_connection_instances) == len(set(post_cell_Elect1_strings) ))
+          self.assertTrue(len(network.electrical_projections[0].electrical_connection_instance_ws) == len(set(post_cell_Elect1_strings) ))
           
           self.assertEqual(len(set(pre_cell_Elect1_strings)),len(set(pre_cell_Elect2_strings)) )
           

@@ -93,16 +93,17 @@ def add_elect_connection(projection,
                              presynaptic_population.id, pre_cell_id, pre_seg_id, pre_fraction, \
                              postsynaptic_population.id, post_cell_id, post_seg_id, post_fraction))  
 
-    connection = neuroml.ElectricalConnectionInstance(id=id, \
+    connection = neuroml.ElectricalConnectionInstanceW(id=id, \
                                                       pre_cell="../%s/%i/%s" % (presynaptic_population.id, pre_cell_id, presynaptic_population.component), \
                                                       post_cell="../%s/%i/%s" % (postsynaptic_population.id, post_cell_id, postsynaptic_population.component), \
                                                       synapse=gap_junction_id, \
                                                       pre_segment=pre_seg_id, \
                                                       post_segment=post_seg_id, \
                                                       pre_fraction_along=pre_fraction, \
-                                                      post_fraction_along=post_fraction)
+                                                      post_fraction_along=post_fraction,
+                                                      weight=1)
 
-    projection.electrical_connection_instances.append(connection)
+    projection.electrical_connection_instance_ws.append(connection)
 
 
 
