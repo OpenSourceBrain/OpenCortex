@@ -245,7 +245,7 @@ def add_single_cell_population(net, pop_id, cell_id, x=0, y=0, z=0, color=None):
     ##pop = PopulationContainer(id=pop_id, component=cell_id, type="populationList", size=1)
     
     if color is not None:
-        pop.properties.append(Property("color", color))
+        pop.properties.append(neuroml.Property("color", color))
     net.populations.append(pop)
 
     inst = neuroml.Instance(id=0)

@@ -13,14 +13,16 @@ pop_pre = oc.add_population_in_rectangular_region(network,
                                               'RS',
                                               population_size0,
                                               0,0,0,
-                                              100,100,100)
+                                              100,100,100,
+                                              color='.8 0 0')
 
 pop_post = oc.add_population_in_rectangular_region(network,
                                               'pop_post',
                                               'RS',
                                               population_size1,
                                               0,100,0,
-                                              100,200,100)
+                                              100,200,100,
+                                              color='0 0 .8')
                                               
 syn0 = oc.add_exp_two_syn(nml_doc, 
                          id="syn0", 

@@ -24,7 +24,8 @@ def generate(reference = "SimpleNet",
                                                   'RS',
                                                   population_size,
                                                   0,0,0,
-                                                  100,100,100)
+                                                  100,100,100,
+                                                  color='0 .8 0')
 
     syn = oc.add_exp_two_syn(nml_doc, 
                              id="syn0", 

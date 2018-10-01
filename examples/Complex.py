@@ -74,7 +74,8 @@ popIaf = oc.add_population_in_rectangular_region(network,
                                               'iaf',
                                               scale_pop_size(20),
                                               0,offset,0,
-                                              xDim,yDim,zDim)
+                                              xDim,yDim,zDim,
+                                              color='.8 0 0')
 offset+=yDim
 
 popIafRef = oc.add_population_in_rectangular_region(network,
@@ -82,7 +83,8 @@ popIafRef = oc.add_population_in_rectangular_region(network,
                                               'iafRef',
                                               scale_pop_size(20),
                                               0,offset,0,
-                                              xDim,yDim,zDim)
+                                              xDim,yDim,zDim,
+                                              color='0 0 .8')
 offset+=yDim
 
 popIzh = oc.add_population_in_rectangular_region(network,
@@ -90,7 +92,8 @@ popIzh = oc.add_population_in_rectangular_region(network,
                                               'RS',
                                               scale_pop_size(20),
                                               0,offset,0,
-                                              xDim,yDim,zDim)
+                                              xDim,yDim,zDim,
+                                              color='0 .8 0')
 offset+=yDim
 
 popPyrS = oc.add_population_in_rectangular_region(network,
@@ -98,7 +101,8 @@ popPyrS = oc.add_population_in_rectangular_region(network,
                                               'pyr_4_sym_soma',
                                               scale_pop_size(20),
                                               0,offset,0,
-                                              xDim,yDim,zDim)
+                                              xDim,yDim,zDim,
+                                              color='0.8 .8 0')
 offset+=yDim
 
 popPyr = oc.add_population_in_rectangular_region(network,
@@ -106,7 +110,8 @@ popPyr = oc.add_population_in_rectangular_region(network,
                                               'pyr_4_sym',
                                               scale_pop_size(20),
                                               0,offset,0,
-                                              xDim,yDim,zDim)
+                                              xDim,yDim,zDim,
+                                              color='0 .8 0.8')
 offset+=yDim
 
 
@@ -115,7 +120,8 @@ popStim = oc.add_population_in_rectangular_region(network,
                                                   spike_gen.id,
                                                   scale_pop_size(100),
                                                   0,offset,0,
-                                                  xDim,yDim,zDim)
+                                                  xDim,yDim,zDim,
+                                                  color='.8 0 .8')
 offset+=yDim
 
 #####   Projections

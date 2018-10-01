@@ -25,7 +25,8 @@ def generate(reference = "VClamp",
                                      'L23PyrRS',
                                      num_cells,
                                      0,0,0,
-                                     1000,20,20)
+                                     1000,20,20,
+                                     color='.8 0 0')
 
     syn0 = oc.add_exp_two_syn(nml_doc, 
                              id="syn0", 

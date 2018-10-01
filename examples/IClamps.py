@@ -9,12 +9,14 @@ oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml')
 
 popIzh = oc.add_single_cell_population(network,
                                      'popIzh',
-                                     'RS')
+                                     'RS',
+                                     color='.8 0 0')
 
 popHH = oc.add_single_cell_population(network,
                                      'popHH',
                                      'pyr_4_sym_soma',
-                                     z=100)
+                                     z=100,
+                                     color='0 .8 0')
 '''
 popBBP = oc.add_single_cell_population(network,
                                      'popBBP',

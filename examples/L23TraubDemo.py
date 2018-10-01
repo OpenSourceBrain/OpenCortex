@@ -36,14 +36,16 @@ def generate(reference = "L23TraubDemo",
                                                   'L23PyrRS',
                                                   num_rs,
                                                   0,0,0,
-                                                  xDim,yDim,zDim)
+                                                  xDim,yDim,zDim,
+                                                  color='.8 0 0')
 
     pop_bask = oc.add_population_in_rectangular_region(network,
                                                   'pop_bask',
                                                   'SupBasket',
                                                   num_bask,
                                                   0,0,0,
-                                                  xDim,yDim,zDim)
+                                                  xDim,yDim,zDim,
+                                                  color='0 0 .8')
 
     syn0 = oc.add_exp_two_syn(nml_doc, 
                              id="syn0", 

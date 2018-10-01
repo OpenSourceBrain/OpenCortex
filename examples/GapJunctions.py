@@ -26,11 +26,13 @@ def generate(reference = "GapJunctions",
 
     pop_pre = oc.add_population_in_rectangular_region(network, 'pop_pre',
                                                   'pyr_4_sym', num_pre,
-                                                  0,0,0, xDim,yDim,zDim)
+                                                  0,0,0, xDim,yDim,zDim,
+                                                  color='0 .8 0')
 
     pop_post = oc.add_population_in_rectangular_region(network, 'pop_post',
                                                   'pyr_4_sym', num_post,
-                                                  0,yDim,0, xDim,yDim+yDim,zDim)
+                                                  0,yDim,0, xDim,yDim+yDim,zDim,
+                                                  color='0 .8 0.8')
 
     ampa_syn = oc.add_exp_two_syn(nml_doc, id="AMPA_syn", 
                              gbase="30e-9S", erev="0mV",

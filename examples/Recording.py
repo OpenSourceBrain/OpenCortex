@@ -56,7 +56,8 @@ pop0 = oc.add_population_in_rectangular_region(network,
                                               'pyr_4_sym',
                                               5,
                                               0,offset,0,
-                                              xDim,yDim,zDim)
+                                              xDim,yDim,zDim,
+                                              color='0 .8 0')
 
 offset+=yDim
 

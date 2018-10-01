@@ -71,19 +71,22 @@ def generate(reference = "Balanced",
                                                   'HH_477127614',
                                                   num_exc,
                                                   xs,ys,zs,
-                                                  xDim,yDim,zDim)
+                                                  xDim,yDim,zDim,
+                                                  color='.8 0 0')
 
     popInh = oc.add_population_in_rectangular_region(network,
                                                   'popInh',
                                                   'HH_476686112',
                                                   num_inh,
                                                   xs,ys,zs,
-                                                  xDim,yDim,zDim)
+                                                  xDim,yDim,zDim,
+                                                  color='0 0 .8')
     if num_bbp == 1:
         popBBP = oc.add_single_cell_population(network,
                                              'popBBP',
                                              'cADpyr229_L23_PC_5ecbf9b163_0_0',
-                                             z=200)
+                                             z=200,
+                                             color='0 .8 0')
     elif num_bbp > 1:
 
         popBBP = oc.add_population_in_rectangular_region(network,
@@ -91,7 +94,8 @@ def generate(reference = "Balanced",
                                                       'cADpyr229_L23_PC_5ecbf9b163_0_0',
                                                       num_bbp,
                                                       xs,ys,zs,
-                                                      xDim,yDim,zDim)
+                                                      xDim,yDim,zDim,
+                                                      color='0 .8 0')
 
 
     #####   Projections

@@ -51,7 +51,8 @@ pop_iaf = oc.add_population_in_rectangular_region(network,
                                               'iaf',
                                               5,
                                               0,offset,0,
-                                              xDim,yDim,zDim)
+                                              xDim,yDim,zDim,
+                                              color='.8 0 0')
 offset+=yDim
 
 pop_rs = oc.add_population_in_rectangular_region(network,
@@ -59,7 +60,8 @@ pop_rs = oc.add_population_in_rectangular_region(network,
                                               'RS',
                                               5,
                                               0,offset,0,
-                                              xDim,yDim,zDim)
+                                              xDim,yDim,zDim,
+                                              color='0 .8 0')
 
 
 #####   Projections
