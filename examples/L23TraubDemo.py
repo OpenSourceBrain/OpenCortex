@@ -15,6 +15,7 @@ def generate(reference = "L23TraubDemo",
              connections=False,
              poisson_inputs=True,
              offset_curent_range_pA=None,
+             prob_conn_ei = 1,
              global_delay = 0,
              duration = 300,
              segments_to_plot_record = {'pop_rs':[0],'pop_bask':[0]},
@@ -123,7 +124,7 @@ def generate(reference = "L23TraubDemo",
                                         pop_rs,
                                         pop_bask,
                                         syn1.id,
-                                        1,
+                                        prob_conn_ei,
                                         weight=1,
                                         delay=global_delay)
                                         
@@ -219,7 +220,8 @@ if __name__ == '__main__':
                  duration = 200,
                  offset_curent_range_pA = { 'pop_rs': [-50,50] },
                  connections = True,
-                 global_delay = 2)
+                 global_delay = 2,
+                 prob_conn_ei = 0.2)
                  
     else:
         
