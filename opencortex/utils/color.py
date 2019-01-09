@@ -12,6 +12,10 @@
 # Colors to use across different networks to ease visual comparison
 
 # Reds
+L1_PRINCIPAL_CELL = '0.4 0.6 0.6' # rgb(95,158,160)
+L1_INTERNEURON = '0.5 0.9 0.9'  	# rgb(175,238,238)
+
+# Reds
 L23_PRINCIPAL_CELL = '0.6 0 0'
 L23_PRINCIPAL_CELL_2 = '1 0.2 0.2'
 L23_INTERNEURON = '1 0.4 0.4'
