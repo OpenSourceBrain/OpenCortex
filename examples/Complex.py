@@ -126,6 +126,7 @@ popStim = oc.add_population_in_rectangular_region(network,
                                                   0,offset,0,
                                                   xDim,yDim,zDim,
                                                   color='.8 0 .8')
+popStim.properties.append(neuroml.Property('radius',3))
 offset+=yDim
 
 #####   Projections
