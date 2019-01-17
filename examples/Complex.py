@@ -76,6 +76,8 @@ popIaf = oc.add_population_in_rectangular_region(network,
                                               0,offset,0,
                                               xDim,yDim,zDim,
                                               color='.8 0 0')
+import neuroml
+popIaf.properties.append(neuroml.Property('radius',5))
 offset+=yDim
 
 popIafRef = oc.add_population_in_rectangular_region(network,
@@ -85,6 +87,7 @@ popIafRef = oc.add_population_in_rectangular_region(network,
                                               0,offset,0,
                                               xDim,yDim,zDim,
                                               color='0 0 .8')
+popIafRef.properties.append(neuroml.Property('radius',5))
 offset+=yDim
 
 popIzh = oc.add_population_in_rectangular_region(network,
@@ -94,6 +97,7 @@ popIzh = oc.add_population_in_rectangular_region(network,
                                               0,offset,0,
                                               xDim,yDim,zDim,
                                               color='0 .8 0')
+popIzh.properties.append(neuroml.Property('radius',5))
 offset+=yDim
 
 popPyrS = oc.add_population_in_rectangular_region(network,

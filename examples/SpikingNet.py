@@ -15,6 +15,8 @@ pop_pre = oc.add_population_in_rectangular_region(network,
                                               0,0,0,
                                               100,100,100,
                                               color='.8 0 0')
+import neuroml
+pop_pre.properties.append(neuroml.Property('radius',10))
 
 pop_post = oc.add_population_in_rectangular_region(network,
                                               'pop_post',
@@ -23,6 +25,8 @@ pop_post = oc.add_population_in_rectangular_region(network,
                                               0,100,0,
                                               100,200,100,
                                               color='0 0 .8')
+                                              
+pop_post.properties.append(neuroml.Property('radius',10))
                                               
 syn0 = oc.add_exp_two_syn(nml_doc, 
                          id="syn0", 

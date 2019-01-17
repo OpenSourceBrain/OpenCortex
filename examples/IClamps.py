@@ -11,6 +11,8 @@ popIzh = oc.add_single_cell_population(network,
                                      'popIzh',
                                      'RS',
                                      color='.8 0 0')
+import neuroml
+popIzh.properties.append(neuroml.Property('radius',5))
 
 popHH = oc.add_single_cell_population(network,
                                      'popHH',

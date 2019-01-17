@@ -14,7 +14,6 @@ nml_doc, network = oc.generate_network("Deterministic")
 
 oc.include_opencortex_cell(nml_doc, 'izhikevich/RS.cell.nml')
 oc.include_opencortex_cell(nml_doc, 'iaf/iaf.cell.nml')
-oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml')
 
 xDim = 500
 yDim = 100
@@ -53,6 +52,8 @@ pop_iaf = oc.add_population_in_rectangular_region(network,
                                               0,offset,0,
                                               xDim,yDim,zDim,
                                               color='.8 0 0')
+import neuroml
+pop_iaf.properties.append(neuroml.Property('radius',5))
 offset+=yDim
 
 pop_rs = oc.add_population_in_rectangular_region(network,
@@ -62,6 +63,7 @@ pop_rs = oc.add_population_in_rectangular_region(network,
                                               0,offset,0,
                                               xDim,yDim,zDim,
                                               color='0 .8 0')
+pop_rs.properties.append(neuroml.Property('radius',5))
 
 
 #####   Projections

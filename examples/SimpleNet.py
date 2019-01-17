@@ -26,6 +26,8 @@ def generate(reference = "SimpleNet",
                                                   0,0,0,
                                                   100,100,100,
                                                   color='0 .8 0')
+    import neuroml
+    pop.properties.append(neuroml.Property('radius',10))
 
     syn = oc.add_exp_two_syn(nml_doc, 
                              id="syn0", 

@@ -10,9 +10,6 @@ nml_doc, network = oc.generate_network("Recording")
 
 #####   Cells
 
-oc.include_opencortex_cell(nml_doc, 'izhikevich/RS.cell.nml')
-oc.include_opencortex_cell(nml_doc, 'iaf/iaf.cell.nml')
-oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym_soma.cell.nml')
 oc.include_opencortex_cell(nml_doc, 'acnet2/pyr_4_sym.cell.nml')
 
 xDim = 500

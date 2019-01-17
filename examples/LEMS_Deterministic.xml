@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.3.13 (libNeuroML v0.2.45)
+        This LEMS file has been automatically generated using PyNeuroML v0.3.14 (libNeuroML v0.2.45)
 
      -->
     
@@ -16,13 +16,6 @@
     
     <Include file="Deterministic/RS.cell.nml"/>
     <Include file="Deterministic/iaf.cell.nml"/>
-    <Include file="Deterministic/pyr_4_sym_soma.cell.nml"/>
-    <Include file="Deterministic/Ca_conc.nml"/>
-    <Include file="Deterministic/Ca_pyr.channel.nml"/>
-    <Include file="Deterministic/Kahp_pyr.channel.nml"/>
-    <Include file="Deterministic/Kdr_pyr.channel.nml"/>
-    <Include file="Deterministic/LeakConductance_pyr.channel.nml"/>
-    <Include file="Deterministic/Na_pyr.channel.nml"/>
     <Include file="Deterministic.net.nml"/>
    
     <Simulation id="Sim_Deterministic" length="500ms" step="0.005ms" target="Deterministic" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
