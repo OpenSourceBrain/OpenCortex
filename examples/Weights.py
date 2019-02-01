@@ -32,17 +32,17 @@ def generate(reference = "Weights",
                                                   color='.8 0 0')
 
     pop_post_chem_exc = oc.add_population_in_rectangular_region(network, 'pop_post_chem_exc',
-                                                  cell_id, num_each,
+                                                  cell_id, num_each+1,
                                                   0,yDim,0, xDim,yDim,zDim,
                                                   color='0 0 .8')
 
     pop_post_chem_inh = oc.add_population_in_rectangular_region(network, 'pop_post_chem_inh',
-                                                  cell_id, num_each,
+                                                  cell_id, num_each+2,
                                                   xDim,yDim,0, xDim,yDim,zDim,
                                                   color='0 .8 .8')
                                                   
     pop_post_cont = oc.add_population_in_rectangular_region(network, 'pop_post_cont',
-                                                  cell_id, num_each,
+                                                  cell_id, num_each+3,
                                                   xDim,0,0, xDim,yDim,zDim,
                                                   color='0 .8 0')
 
@@ -115,13 +115,12 @@ def generate(reference = "Weights",
         
         for i in range(pop_pre.get_size()):
             for j in range(pop_post_cont.get_size()):
-                
                 conn0 = ContinuousConnectionInstanceW(id='%s'%(j+i*pop_pre.get_size()), \
                            pre_cell='../%s/%s/%s'%(pop_pre.id,i,cell_id),
                            post_cell='../%s/%s/%s'%(pop_post_cont.id,j,cell_id),
                            pre_component=silent_syn.id,
                            post_component=analog_syn.id,
-                           weight=(i+j)/10)
+                           weight=(i+j)/10.0)
                 proj_cont.continuous_connection_instance_ws.append(conn0)
         
         
