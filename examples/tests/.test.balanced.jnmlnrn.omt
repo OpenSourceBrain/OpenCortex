@@ -2,3 +2,38 @@
 
 target: ../LEMS_Balanced.xml
 engine: jNeuroML_NEURON
+mep: .test.balanced.mep
+experiments:
+  pe_0:
+    observables:
+      spike times:
+        file: 
+          path: ../popExc_v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0.0
+  pi_0:
+    observables:
+      spike times:
+        file: 
+          path: ../popInh_v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0.0
+  pb_0:
+    observables:
+      spike times:
+        file: 
+          path: ../popBBP_v.dat
+          columns: [0,1]
+          scaling: [1000, 1000]
+        spike detection: 
+          method: threshold
+          threshold: 0
+        tolerance: 0.0
