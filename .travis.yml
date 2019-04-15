@@ -35,6 +35,9 @@ install:
     # Get latest libNeuroML & pyNeuroML
     - pip install git+https://github.com/NeuralEnsemble/libNeuroML.git@development
     - pip install git+https://github.com/NeuroML/pyNeuroML
+    
+    - pip install matplotlib --upgrade # This is because Matplotlib v2.x is required for NetPyNE...
+    
     - pip install .
 
 script:
