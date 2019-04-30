@@ -149,10 +149,13 @@ def generate(reference = "Weights",
 
 
     nml_file_name = '%s.net.%s'%(network.id,'nml.h5' if format == 'hdf5' else 'nml')
+    target_dir = 'HDF5/' if format == 'hdf5' else './'
+    
     oc.save_network(nml_doc, 
                     nml_file_name, 
                     validate=(format=='xml'),
-                    format = format)
+                    format = format,
+                    target_dir=target_dir)
 
     if format=='xml':
 
@@ -177,3 +180,4 @@ if __name__ == '__main__':
 
     else:
         generate()
+        generate(format='hdf5')
