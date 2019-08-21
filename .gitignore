@@ -115,3 +115,5 @@ build/lib*
 /examples/tens.py
 /examples/*.gv.pdf
 /examples/*.gv
+/examples/HDF5/report*.txt
+/examples/report*.txt

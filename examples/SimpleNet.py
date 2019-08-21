@@ -58,7 +58,8 @@ def generate(reference = "SimpleNet",
                                     network, 
                                     nml_file_name, 
                                     duration =      500, 
-                                    dt =            0.025)
+                                    dt =            0.025,
+                                    report_file_name='report.simple.txt')
 
 
 if __name__ == '__main__':

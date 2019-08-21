@@ -2,12 +2,12 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.3.18 (libNeuroML v0.2.47)
+        This LEMS file has been automatically generated using PyNeuroML v0.3.19 (libNeuroML v0.2.47)
 
      -->
     
     <!-- Specify which component to run -->
-    <Target component="Sim_IClamps"/>
+    <Target component="Sim_IClamps" reportFile="report.iclamp.h5.txt"/>
 
     <!-- Include core NeuroML2 ComponentType definitions -->
     <Include file="Cells.xml"/>

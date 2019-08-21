@@ -72,7 +72,8 @@ oc.generate_lems_simulation(nml_doc,
                             network, 
                             nml_file_name, 
                             duration, 
-                            dt)
+                            dt,
+                            report_file_name='report.iclamp.txt')
                             
 nml_file_name = '%s.net.nml.h5'%network.id
 target_dir='HDF5/'
@@ -83,5 +84,6 @@ oc.generate_lems_simulation(nml_doc,
                             target_dir+nml_file_name, 
                             duration, 
                             dt,
-                            target_dir=target_dir)
+                            target_dir=target_dir,
+                            report_file_name='report.iclamp.h5.txt')
                                               

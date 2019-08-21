@@ -503,7 +503,7 @@ def add_targeted_projection_by_dicts(net,
 
                 pre_subset_dict = None
 
-            pop2_cell_ids = range(0, pop2_size)
+            pop2_cell_ids = list(range(0, pop2_size))
 
             if pop1_id == pop2_id:
 
@@ -748,13 +748,13 @@ def _add_elect_projection(net,
 
                 pre_subset_dict = {}
 
-                pre_subset_dict[pre_seg_target_dict.keys()[0]] = total_conns
+                pre_subset_dict[list(pre_seg_target_dict.keys())[0]] = total_conns
 
             else:
 
                 pre_subset_dict = None
 
-            pop2_cell_ids = range(0, pop2_size)
+            pop2_cell_ids = list(range(0, pop2_size))
 
             if pop1_id == pop2_id:
 
@@ -1012,13 +1012,13 @@ def add_chem_spatial_projection(net,
 
                 pre_subset_dict = {}
 
-                pre_subset_dict[pre_seg_target_dict.keys()[0]] = total_conns
+                pre_subset_dict[list(pre_seg_target_dict.keys())[0]] = total_conns
 
             else:
 
                 pre_subset_dict = None
 
-            pop2_cell_ids = range(0, pop2_size)
+            pop2_cell_ids = list(range(0, pop2_size))
 
             if pop1_id == pop2_id:
 
@@ -1286,13 +1286,13 @@ def add_elect_spatial_projection(net,
 
                 pre_subset_dict = {}
 
-                pre_subset_dict[pre_seg_target_dict.keys()[0]] = total_conns
+                pre_subset_dict[list(pre_seg_target_dict.keys())[0]] = total_conns
 
             else:
 
                 pre_subset_dict = None  
 
-            pop2_cell_ids = range(0, pop2_size)
+            pop2_cell_ids = list(range(0, pop2_size))
 
             if pop1_id == pop2_id:
 
@@ -2775,7 +2775,7 @@ def add_advanced_inputs_to_population(net,
     cell_ids = []
 
     if all_cells:
-        cell_ids = range(population.size)
+        cell_ids = list(range(population.size))
     if only_cells is not None:
         if only_cells == []:
             return
@@ -2960,7 +2960,7 @@ def add_projection_based_inputs(net,
     cell_ids = []
 
     if all_cells:
-        cell_ids = range(population.size)
+        cell_ids = list(range(population.size))
     if only_cells is not None:
         if only_cells == []:
             return
