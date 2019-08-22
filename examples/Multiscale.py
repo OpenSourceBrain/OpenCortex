@@ -188,7 +188,7 @@ def generate(scalePops = 1,
         
         if run_in_simulator:
             
-            print ("Running %s in %s"%(lems_file_name, run_in_simulator))
+            print("Running %s in %s"%(lems_file_name, run_in_simulator))
             
             traces, events = oc.simulate_network(lems_file_name,
                      run_in_simulator,
@@ -367,7 +367,6 @@ if __name__ == '__main__':
                                 tr_shade_i*=0.8
                                 
                     
-                    print colours
                     pynml.generate_plot(all_t,all_v,"Sim g=%s, i=%s"%(g,i),colors=colours,show_plot_already=False)
                 count+=1
                     

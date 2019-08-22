@@ -91,7 +91,6 @@ def generate(reference = "Weights",
         for conn in proj_chem_exc.connection_wds:
             if conn.get_pre_cell_id() < 3 and conn.get_post_cell_id() < 3:
                 conn.weight = 0.5
-            print conn
         
         proj_chem_inh = oc.add_probabilistic_projection(network,
                                 "proj_chem_inh",
@@ -105,7 +104,6 @@ def generate(reference = "Weights",
         for conn in proj_chem_inh.connection_wds:
             if conn.get_pre_cell_id() < 3 and conn.get_post_cell_id() < 3:
                 conn.weight = 2
-            print conn
             
         
         proj_cont = ContinuousProjection(id='proj_cont', \
@@ -143,9 +141,6 @@ def generate(reference = "Weights",
 
                 for conn in network.electrical_projections[-1].electrical_connection_instance_ws:
                     conn.weight = conn.get_pre_cell_id() + conn.get_post_cell_id()
-                    print conn
-
-
 
 
     nml_file_name = '%s.net.%s'%(network.id,'nml.h5' if format == 'hdf5' else 'nml')

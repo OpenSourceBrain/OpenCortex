@@ -1,5 +1,6 @@
 # Framework for running automated tests on OSB using Travis-CI, see https://github.com/OpenSourceBrain/osb-model-validation
 
+dist: trusty
 sudo: false  
 
 addons:
@@ -19,11 +20,9 @@ addons:
 language: python
 
 python:
-  - "2.7"
-  - "3.6"
+  - 2.7
+  - 3.6
 
-virtualenv:
-    system_site_packages: true
     
 env:
     - OMV_ENGINE=jNeuroML
@@ -35,9 +34,6 @@ env:
 
 install: 
     - pip install git+https://github.com/OpenSourceBrain/osb-model-validation
-    # Get latest libNeuroML & pyNeuroML
-    - pip install git+https://github.com/NeuralEnsemble/libNeuroML.git@development
-    - pip install git+https://github.com/NeuroML/pyNeuroML
     
     - pip install matplotlib --upgrade # This is because Matplotlib v2.x is required for NetPyNE...
     
@@ -46,7 +42,7 @@ install:
 script:
     - omv all -V; export OMV_SUCCESS=$?; echo $OMV_SUCCESS
     - echo "Finished all OMV tests"
-    - omv list-engines
+    - omv list-engines -V
     - if [[ ${OMV_ENGINE} == "NON_OMV_TESTS" ]]; then echo "Continuing with tests not under OMV..."; else exit $OMV_SUCCESS; fi
     - echo "Running non OMV tests..."
     - cd examples
