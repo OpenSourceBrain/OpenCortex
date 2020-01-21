@@ -36,7 +36,11 @@ env:
     - OMV_ENGINE=NON_OMV_TESTS
 
 install: 
-    - pip install git+https://github.com/OpenSourceBrain/osb-model-validation
+    - git clone https://github.com/OpenSourceBrain/osb-model-validation
+    - cd osb-model-validation
+    - git checkout test_nrn76 
+    - python setup.py install
+    - cd ..
     
     - pip install matplotlib --upgrade # This is because Matplotlib v2.x is required for NetPyNE...
     
