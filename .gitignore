@@ -117,3 +117,4 @@ build/lib*
 /examples/*.gv
 /examples/HDF5/report*.txt
 /examples/report*.txt
+/examples/HDF5/libjhdf5.jnilib
