@@ -30,7 +30,6 @@ env:
 install: 
     - git clone https://github.com/OpenSourceBrain/osb-model-validation
     - cd osb-model-validation
-    - git checkout test_nrn76 
     - python setup.py install
     - cd ..
     
