@@ -1,6 +1,6 @@
 # Framework for running automated tests on OSB using Travis-CI, see https://github.com/OpenSourceBrain/osb-model-validation
 
-dist: trusty
+dist: xenial
 sudo: false  
 
 addons:
@@ -29,10 +29,10 @@ virtualenv:
     
 env:
     - OMV_ENGINE=jNeuroML
-    - OMV_ENGINE=jNeuroML_NEURON
+    #- OMV_ENGINE=jNeuroML_NEURON
     - OMV_ENGINE=jNeuroML_NetPyNE
-    - OMV_ENGINE=jNeuroML_PyNN_NEURON
-    - OMV_ENGINE=jNeuroML_validate
+    #- OMV_ENGINE=jNeuroML_PyNN_NEURON
+    #- OMV_ENGINE=jNeuroML_validate
     - OMV_ENGINE=NON_OMV_TESTS
 
 install: 
