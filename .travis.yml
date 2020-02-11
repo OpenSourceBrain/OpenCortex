@@ -5,20 +5,16 @@ sudo: false
 
 addons:
   apt:
-    packages:
-    - python-matplotlib 
+    packages:  
+    #- python-matplotlib 
+    #- python-numpy 
+    #- python-scipy 
     - python-tk
     - python-lxml
-       # Requirements for Brian & NEST
-    - python-numpy 
-    - python-scipy 
-    - python-sympy
-    - python-tables 
     - python-tornado
-
+    - python-tables
     
 language: python
-
 python:
   - 2.7
   - 3.6
@@ -38,7 +34,9 @@ install:
     - python setup.py install
     - cd ..
     
-    - pip install matplotlib --upgrade # This is because Matplotlib v2.x is required for NetPyNE...
+    - pip install matplotlib --upgrade # This is because Matplotlib v2.x is required for NetPyNE...    
+    - pip install numpy scipy # Why is this needed? Scipy doesn't seem to get installed correctly on trusty with addons above...
+    - pip install tables # Ditto
     
     - pip install .
 
