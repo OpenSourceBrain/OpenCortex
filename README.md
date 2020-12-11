@@ -6,4 +6,4 @@ In development, subject to change without notice... Contact P Gleeson for more d
 
 See also: https://github.com/NeuroML/NeuroMLlite
 
-[![Build Status](https://travis-ci.org/OpenSourceBrain/OpenCortex.svg?branch=master)](https://travis-ci.org/OpenSourceBrain/OpenCortex)
+[![Build Status](https://travis-ci.com/OpenSourceBrain/OpenCortex.svg?branch=master)](https://travis-ci.com/OpenSourceBrain/OpenCortex)
