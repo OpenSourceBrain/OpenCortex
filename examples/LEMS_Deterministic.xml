@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.5.6 (libNeuroML v0.2.52)
+        This LEMS file has been automatically generated using PyNeuroML v0.5.9 (libNeuroML v0.2.54)
 
      -->
     
@@ -21,19 +21,19 @@
     <Simulation id="Sim_Deterministic" length="500ms" step="0.005ms" target="Deterministic" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="DispPop__pop_iaf" title="Membrane potentials of cells in pop_iaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
-            <Line id="pop_iaf[0]: v" quantity="pop_iaf/0/iaf/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
-            <Line id="pop_iaf[1]: v" quantity="pop_iaf/1/iaf/v" scale="1mV" color="#029a72" timeScale="1ms"/>
-            <Line id="pop_iaf[2]: v" quantity="pop_iaf/2/iaf/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
-            <Line id="pop_iaf[3]: v" quantity="pop_iaf/3/iaf/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
-            <Line id="pop_iaf[4]: v" quantity="pop_iaf/4/iaf/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
+            <Line id="pop_iaf[0]: v" quantity="pop_iaf/0/iaf/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
+            <Line id="pop_iaf[1]: v" quantity="pop_iaf/1/iaf/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
+            <Line id="pop_iaf[2]: v" quantity="pop_iaf/2/iaf/v" scale="1mV" color="#98e752" timeScale="1ms"/>
+            <Line id="pop_iaf[3]: v" quantity="pop_iaf/3/iaf/v" scale="1mV" color="#bca074" timeScale="1ms"/>
+            <Line id="pop_iaf[4]: v" quantity="pop_iaf/4/iaf/v" scale="1mV" color="#632794" timeScale="1ms"/>
         </Display>
         
         <Display id="DispPop__pop_rs" title="Membrane potentials of cells in pop_rs" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
-            <Line id="pop_rs[0]: v" quantity="pop_rs/0/RS/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
-            <Line id="pop_rs[1]: v" quantity="pop_rs/1/RS/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
-            <Line id="pop_rs[2]: v" quantity="pop_rs/2/RS/v" scale="1mV" color="#29645f" timeScale="1ms"/>
-            <Line id="pop_rs[3]: v" quantity="pop_rs/3/RS/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
-            <Line id="pop_rs[4]: v" quantity="pop_rs/4/RS/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
+            <Line id="pop_rs[0]: v" quantity="pop_rs/0/RS/v" scale="1mV" color="#8a5d88" timeScale="1ms"/>
+            <Line id="pop_rs[1]: v" quantity="pop_rs/1/RS/v" scale="1mV" color="#df5954" timeScale="1ms"/>
+            <Line id="pop_rs[2]: v" quantity="pop_rs/2/RS/v" scale="1mV" color="#52c8bf" timeScale="1ms"/>
+            <Line id="pop_rs[3]: v" quantity="pop_rs/3/RS/v" scale="1mV" color="#bf0239" timeScale="1ms"/>
+            <Line id="pop_rs[4]: v" quantity="pop_rs/4/RS/v" scale="1mV" color="#3f9fe8" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Volts_file__pop_iaf" fileName="Sim_Deterministic.pop_iaf.v.dat">

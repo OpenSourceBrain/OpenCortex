@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.5.6 (libNeuroML v0.2.52)
+        This LEMS file has been automatically generated using PyNeuroML v0.5.9 (libNeuroML v0.2.54)
 
      -->
     
@@ -20,29 +20,29 @@
     <Simulation id="Sim_SpikingNet" length="1000ms" step="0.01ms" target="SpikingNet" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="DispPop__pop_pre" title="Membrane potentials of cells in pop_pre" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="pop_pre[0]: v" quantity="pop_pre/0/RS/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
-            <Line id="pop_pre[1]: v" quantity="pop_pre/1/RS/v" scale="1mV" color="#029a72" timeScale="1ms"/>
-            <Line id="pop_pre[2]: v" quantity="pop_pre/2/RS/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
-            <Line id="pop_pre[3]: v" quantity="pop_pre/3/RS/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
-            <Line id="pop_pre[4]: v" quantity="pop_pre/4/RS/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
-            <Line id="pop_pre[5]: v" quantity="pop_pre/5/RS/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
-            <Line id="pop_pre[6]: v" quantity="pop_pre/6/RS/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
-            <Line id="pop_pre[7]: v" quantity="pop_pre/7/RS/v" scale="1mV" color="#29645f" timeScale="1ms"/>
-            <Line id="pop_pre[8]: v" quantity="pop_pre/8/RS/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
-            <Line id="pop_pre[9]: v" quantity="pop_pre/9/RS/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
+            <Line id="pop_pre[0]: v" quantity="pop_pre/0/RS/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
+            <Line id="pop_pre[1]: v" quantity="pop_pre/1/RS/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
+            <Line id="pop_pre[2]: v" quantity="pop_pre/2/RS/v" scale="1mV" color="#98e752" timeScale="1ms"/>
+            <Line id="pop_pre[3]: v" quantity="pop_pre/3/RS/v" scale="1mV" color="#bca074" timeScale="1ms"/>
+            <Line id="pop_pre[4]: v" quantity="pop_pre/4/RS/v" scale="1mV" color="#632794" timeScale="1ms"/>
+            <Line id="pop_pre[5]: v" quantity="pop_pre/5/RS/v" scale="1mV" color="#8a5d88" timeScale="1ms"/>
+            <Line id="pop_pre[6]: v" quantity="pop_pre/6/RS/v" scale="1mV" color="#df5954" timeScale="1ms"/>
+            <Line id="pop_pre[7]: v" quantity="pop_pre/7/RS/v" scale="1mV" color="#52c8bf" timeScale="1ms"/>
+            <Line id="pop_pre[8]: v" quantity="pop_pre/8/RS/v" scale="1mV" color="#bf0239" timeScale="1ms"/>
+            <Line id="pop_pre[9]: v" quantity="pop_pre/9/RS/v" scale="1mV" color="#3f9fe8" timeScale="1ms"/>
         </Display>
         
         <Display id="DispPop__pop_post" title="Membrane potentials of cells in pop_post" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
-            <Line id="pop_post[0]: v" quantity="pop_post/0/RS/v" scale="1mV" color="#8fe460" timeScale="1ms"/>
-            <Line id="pop_post[1]: v" quantity="pop_post/1/RS/v" scale="1mV" color="#2ca1c7" timeScale="1ms"/>
-            <Line id="pop_post[2]: v" quantity="pop_post/2/RS/v" scale="1mV" color="#8d9fe5" timeScale="1ms"/>
-            <Line id="pop_post[3]: v" quantity="pop_post/3/RS/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
-            <Line id="pop_post[4]: v" quantity="pop_post/4/RS/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
-            <Line id="pop_post[5]: v" quantity="pop_post/5/RS/v" scale="1mV" color="#175f0c" timeScale="1ms"/>
-            <Line id="pop_post[6]: v" quantity="pop_post/6/RS/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
-            <Line id="pop_post[7]: v" quantity="pop_post/7/RS/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
-            <Line id="pop_post[8]: v" quantity="pop_post/8/RS/v" scale="1mV" color="#8101e8" timeScale="1ms"/>
-            <Line id="pop_post[9]: v" quantity="pop_post/9/RS/v" scale="1mV" color="#25ece8" timeScale="1ms"/>
+            <Line id="pop_post[0]: v" quantity="pop_post/0/RS/v" scale="1mV" color="#dda9d2" timeScale="1ms"/>
+            <Line id="pop_post[1]: v" quantity="pop_post/1/RS/v" scale="1mV" color="#85ad96" timeScale="1ms"/>
+            <Line id="pop_post[2]: v" quantity="pop_post/2/RS/v" scale="1mV" color="#59438f" timeScale="1ms"/>
+            <Line id="pop_post[3]: v" quantity="pop_post/3/RS/v" scale="1mV" color="#5fa56f" timeScale="1ms"/>
+            <Line id="pop_post[4]: v" quantity="pop_post/4/RS/v" scale="1mV" color="#b5b5a2" timeScale="1ms"/>
+            <Line id="pop_post[5]: v" quantity="pop_post/5/RS/v" scale="1mV" color="#2ebe19" timeScale="1ms"/>
+            <Line id="pop_post[6]: v" quantity="pop_post/6/RS/v" scale="1mV" color="#d30150" timeScale="1ms"/>
+            <Line id="pop_post[7]: v" quantity="pop_post/7/RS/v" scale="1mV" color="#55490a" timeScale="1ms"/>
+            <Line id="pop_post[8]: v" quantity="pop_post/8/RS/v" scale="1mV" color="#4bd9d0" timeScale="1ms"/>
+            <Line id="pop_post[9]: v" quantity="pop_post/9/RS/v" scale="1mV" color="#69535e" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Volts_file__pop_pre" fileName="Sim_SpikingNet.pop_pre.v.dat">

@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.5.6 (libNeuroML v0.2.52)
+        This LEMS file has been automatically generated using PyNeuroML v0.5.9 (libNeuroML v0.2.54)
 
      -->
     
@@ -30,69 +30,69 @@
     <Simulation id="Sim_ACNet" length="250ms" step="0.025ms" target="ACNet" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="Display_pop_bask_v" title="Plots of Display_pop_bask_v" timeScale="1ms" xmin="-25.0" xmax="275.0" ymin="-80" ymax="40">
-            <Line id="pop_bask_0_bask_0_v" quantity="pop_bask/0/bask/0/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
-            <Line id="pop_bask_1_bask_0_v" quantity="pop_bask/1/bask/0/v" scale="1mV" color="#029a72" timeScale="1ms"/>
-            <Line id="pop_bask_2_bask_0_v" quantity="pop_bask/2/bask/0/v" scale="1mV" color="#d340bb" timeScale="1ms"/>
-            <Line id="pop_bask_3_bask_0_v" quantity="pop_bask/3/bask/0/v" scale="1mV" color="#4c73a9" timeScale="1ms"/>
-            <Line id="pop_bask_4_bask_0_v" quantity="pop_bask/4/bask/0/v" scale="1mV" color="#5e503a" timeScale="1ms"/>
-            <Line id="pop_bask_5_bask_0_v" quantity="pop_bask/5/bask/0/v" scale="1mV" color="#3193ca" timeScale="1ms"/>
-            <Line id="pop_bask_6_bask_0_v" quantity="pop_bask/6/bask/0/v" scale="1mV" color="#90e5e9" timeScale="1ms"/>
-            <Line id="pop_bask_7_bask_0_v" quantity="pop_bask/7/bask/0/v" scale="1mV" color="#29645f" timeScale="1ms"/>
-            <Line id="pop_bask_8_bask_0_v" quantity="pop_bask/8/bask/0/v" scale="1mV" color="#1fcff4" timeScale="1ms"/>
-            <Line id="pop_bask_9_bask_0_v" quantity="pop_bask/9/bask/0/v" scale="1mV" color="#6ed4e9" timeScale="1ms"/>
-            <Line id="pop_bask_10_bask_0_v" quantity="pop_bask/10/bask/0/v" scale="1mV" color="#8fe460" timeScale="1ms"/>
-            <Line id="pop_bask_11_bask_0_v" quantity="pop_bask/11/bask/0/v" scale="1mV" color="#2ca1c7" timeScale="1ms"/>
+            <Line id="pop_bask_0_bask_0_v" quantity="pop_bask/0/bask/0/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
+            <Line id="pop_bask_1_bask_0_v" quantity="pop_bask/1/bask/0/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
+            <Line id="pop_bask_2_bask_0_v" quantity="pop_bask/2/bask/0/v" scale="1mV" color="#98e752" timeScale="1ms"/>
+            <Line id="pop_bask_3_bask_0_v" quantity="pop_bask/3/bask/0/v" scale="1mV" color="#bca074" timeScale="1ms"/>
+            <Line id="pop_bask_4_bask_0_v" quantity="pop_bask/4/bask/0/v" scale="1mV" color="#632794" timeScale="1ms"/>
+            <Line id="pop_bask_5_bask_0_v" quantity="pop_bask/5/bask/0/v" scale="1mV" color="#8a5d88" timeScale="1ms"/>
+            <Line id="pop_bask_6_bask_0_v" quantity="pop_bask/6/bask/0/v" scale="1mV" color="#df5954" timeScale="1ms"/>
+            <Line id="pop_bask_7_bask_0_v" quantity="pop_bask/7/bask/0/v" scale="1mV" color="#52c8bf" timeScale="1ms"/>
+            <Line id="pop_bask_8_bask_0_v" quantity="pop_bask/8/bask/0/v" scale="1mV" color="#bf0239" timeScale="1ms"/>
+            <Line id="pop_bask_9_bask_0_v" quantity="pop_bask/9/bask/0/v" scale="1mV" color="#3f9fe8" timeScale="1ms"/>
+            <Line id="pop_bask_10_bask_0_v" quantity="pop_bask/10/bask/0/v" scale="1mV" color="#dda9d2" timeScale="1ms"/>
+            <Line id="pop_bask_11_bask_0_v" quantity="pop_bask/11/bask/0/v" scale="1mV" color="#85ad96" timeScale="1ms"/>
         </Display>
         
         <Display id="Display_pop_pyr_v" title="Plots of Display_pop_pyr_v" timeScale="1ms" xmin="-25.0" xmax="275.0" ymin="-80" ymax="40">
-            <Line id="pop_pyr_0_pyr_4_sym_0_v" quantity="pop_pyr/0/pyr_4_sym/0/v" scale="1mV" color="#8d9fe5" timeScale="1ms"/>
-            <Line id="pop_pyr_1_pyr_4_sym_0_v" quantity="pop_pyr/1/pyr_4_sym/0/v" scale="1mV" color="#5adad1" timeScale="1ms"/>
-            <Line id="pop_pyr_2_pyr_4_sym_0_v" quantity="pop_pyr/2/pyr_4_sym/0/v" scale="1mV" color="#f543bb" timeScale="1ms"/>
-            <Line id="pop_pyr_3_pyr_4_sym_0_v" quantity="pop_pyr/3/pyr_4_sym/0/v" scale="1mV" color="#175f0c" timeScale="1ms"/>
-            <Line id="pop_pyr_4_pyr_4_sym_0_v" quantity="pop_pyr/4/pyr_4_sym/0/v" scale="1mV" color="#fa8826" timeScale="1ms"/>
-            <Line id="pop_pyr_5_pyr_4_sym_0_v" quantity="pop_pyr/5/pyr_4_sym/0/v" scale="1mV" color="#6980a8" timeScale="1ms"/>
-            <Line id="pop_pyr_6_pyr_4_sym_0_v" quantity="pop_pyr/6/pyr_4_sym/0/v" scale="1mV" color="#8101e8" timeScale="1ms"/>
-            <Line id="pop_pyr_7_pyr_4_sym_0_v" quantity="pop_pyr/7/pyr_4_sym/0/v" scale="1mV" color="#25ece8" timeScale="1ms"/>
-            <Line id="pop_pyr_8_pyr_4_sym_0_v" quantity="pop_pyr/8/pyr_4_sym/0/v" scale="1mV" color="#b80e3b" timeScale="1ms"/>
-            <Line id="pop_pyr_9_pyr_4_sym_0_v" quantity="pop_pyr/9/pyr_4_sym/0/v" scale="1mV" color="#30a1f6" timeScale="1ms"/>
-            <Line id="pop_pyr_10_pyr_4_sym_0_v" quantity="pop_pyr/10/pyr_4_sym/0/v" scale="1mV" color="#577081" timeScale="1ms"/>
-            <Line id="pop_pyr_11_pyr_4_sym_0_v" quantity="pop_pyr/11/pyr_4_sym/0/v" scale="1mV" color="#06057c" timeScale="1ms"/>
-            <Line id="pop_pyr_12_pyr_4_sym_0_v" quantity="pop_pyr/12/pyr_4_sym/0/v" scale="1mV" color="#56eaa3" timeScale="1ms"/>
-            <Line id="pop_pyr_13_pyr_4_sym_0_v" quantity="pop_pyr/13/pyr_4_sym/0/v" scale="1mV" color="#f7acee" timeScale="1ms"/>
-            <Line id="pop_pyr_14_pyr_4_sym_0_v" quantity="pop_pyr/14/pyr_4_sym/0/v" scale="1mV" color="#fa9289" timeScale="1ms"/>
-            <Line id="pop_pyr_15_pyr_4_sym_0_v" quantity="pop_pyr/15/pyr_4_sym/0/v" scale="1mV" color="#be9985" timeScale="1ms"/>
-            <Line id="pop_pyr_16_pyr_4_sym_0_v" quantity="pop_pyr/16/pyr_4_sym/0/v" scale="1mV" color="#00e266" timeScale="1ms"/>
-            <Line id="pop_pyr_17_pyr_4_sym_0_v" quantity="pop_pyr/17/pyr_4_sym/0/v" scale="1mV" color="#f0b378" timeScale="1ms"/>
-            <Line id="pop_pyr_18_pyr_4_sym_0_v" quantity="pop_pyr/18/pyr_4_sym/0/v" scale="1mV" color="#deea95" timeScale="1ms"/>
-            <Line id="pop_pyr_19_pyr_4_sym_0_v" quantity="pop_pyr/19/pyr_4_sym/0/v" scale="1mV" color="#c55566" timeScale="1ms"/>
-            <Line id="pop_pyr_20_pyr_4_sym_0_v" quantity="pop_pyr/20/pyr_4_sym/0/v" scale="1mV" color="#2dcaab" timeScale="1ms"/>
-            <Line id="pop_pyr_21_pyr_4_sym_0_v" quantity="pop_pyr/21/pyr_4_sym/0/v" scale="1mV" color="#1978ce" timeScale="1ms"/>
-            <Line id="pop_pyr_22_pyr_4_sym_0_v" quantity="pop_pyr/22/pyr_4_sym/0/v" scale="1mV" color="#6a1ecc" timeScale="1ms"/>
-            <Line id="pop_pyr_23_pyr_4_sym_0_v" quantity="pop_pyr/23/pyr_4_sym/0/v" scale="1mV" color="#e2b284" timeScale="1ms"/>
-            <Line id="pop_pyr_24_pyr_4_sym_0_v" quantity="pop_pyr/24/pyr_4_sym/0/v" scale="1mV" color="#93fd72" timeScale="1ms"/>
-            <Line id="pop_pyr_25_pyr_4_sym_0_v" quantity="pop_pyr/25/pyr_4_sym/0/v" scale="1mV" color="#bc90a6" timeScale="1ms"/>
-            <Line id="pop_pyr_26_pyr_4_sym_0_v" quantity="pop_pyr/26/pyr_4_sym/0/v" scale="1mV" color="#3b8d0e" timeScale="1ms"/>
-            <Line id="pop_pyr_27_pyr_4_sym_0_v" quantity="pop_pyr/27/pyr_4_sym/0/v" scale="1mV" color="#860a7d" timeScale="1ms"/>
-            <Line id="pop_pyr_28_pyr_4_sym_0_v" quantity="pop_pyr/28/pyr_4_sym/0/v" scale="1mV" color="#b59a59" timeScale="1ms"/>
-            <Line id="pop_pyr_29_pyr_4_sym_0_v" quantity="pop_pyr/29/pyr_4_sym/0/v" scale="1mV" color="#d32851" timeScale="1ms"/>
-            <Line id="pop_pyr_30_pyr_4_sym_0_v" quantity="pop_pyr/30/pyr_4_sym/0/v" scale="1mV" color="#ce9fb6" timeScale="1ms"/>
-            <Line id="pop_pyr_31_pyr_4_sym_0_v" quantity="pop_pyr/31/pyr_4_sym/0/v" scale="1mV" color="#3b788b" timeScale="1ms"/>
-            <Line id="pop_pyr_32_pyr_4_sym_0_v" quantity="pop_pyr/32/pyr_4_sym/0/v" scale="1mV" color="#df8960" timeScale="1ms"/>
-            <Line id="pop_pyr_33_pyr_4_sym_0_v" quantity="pop_pyr/33/pyr_4_sym/0/v" scale="1mV" color="#3764b5" timeScale="1ms"/>
-            <Line id="pop_pyr_34_pyr_4_sym_0_v" quantity="pop_pyr/34/pyr_4_sym/0/v" scale="1mV" color="#cd4944" timeScale="1ms"/>
-            <Line id="pop_pyr_35_pyr_4_sym_0_v" quantity="pop_pyr/35/pyr_4_sym/0/v" scale="1mV" color="#8e1a11" timeScale="1ms"/>
-            <Line id="pop_pyr_36_pyr_4_sym_0_v" quantity="pop_pyr/36/pyr_4_sym/0/v" scale="1mV" color="#2f9272" timeScale="1ms"/>
-            <Line id="pop_pyr_37_pyr_4_sym_0_v" quantity="pop_pyr/37/pyr_4_sym/0/v" scale="1mV" color="#96af0d" timeScale="1ms"/>
-            <Line id="pop_pyr_38_pyr_4_sym_0_v" quantity="pop_pyr/38/pyr_4_sym/0/v" scale="1mV" color="#84ab56" timeScale="1ms"/>
-            <Line id="pop_pyr_39_pyr_4_sym_0_v" quantity="pop_pyr/39/pyr_4_sym/0/v" scale="1mV" color="#f56ae7" timeScale="1ms"/>
-            <Line id="pop_pyr_40_pyr_4_sym_0_v" quantity="pop_pyr/40/pyr_4_sym/0/v" scale="1mV" color="#0aa250" timeScale="1ms"/>
-            <Line id="pop_pyr_41_pyr_4_sym_0_v" quantity="pop_pyr/41/pyr_4_sym/0/v" scale="1mV" color="#2a04f7" timeScale="1ms"/>
-            <Line id="pop_pyr_42_pyr_4_sym_0_v" quantity="pop_pyr/42/pyr_4_sym/0/v" scale="1mV" color="#fbb911" timeScale="1ms"/>
-            <Line id="pop_pyr_43_pyr_4_sym_0_v" quantity="pop_pyr/43/pyr_4_sym/0/v" scale="1mV" color="#d50b61" timeScale="1ms"/>
-            <Line id="pop_pyr_44_pyr_4_sym_0_v" quantity="pop_pyr/44/pyr_4_sym/0/v" scale="1mV" color="#267841" timeScale="1ms"/>
-            <Line id="pop_pyr_45_pyr_4_sym_0_v" quantity="pop_pyr/45/pyr_4_sym/0/v" scale="1mV" color="#3aa725" timeScale="1ms"/>
-            <Line id="pop_pyr_46_pyr_4_sym_0_v" quantity="pop_pyr/46/pyr_4_sym/0/v" scale="1mV" color="#8a04f7" timeScale="1ms"/>
-            <Line id="pop_pyr_47_pyr_4_sym_0_v" quantity="pop_pyr/47/pyr_4_sym/0/v" scale="1mV" color="#282fe5" timeScale="1ms"/>
+            <Line id="pop_pyr_0_pyr_4_sym_0_v" quantity="pop_pyr/0/pyr_4_sym/0/v" scale="1mV" color="#59438f" timeScale="1ms"/>
+            <Line id="pop_pyr_1_pyr_4_sym_0_v" quantity="pop_pyr/1/pyr_4_sym/0/v" scale="1mV" color="#5fa56f" timeScale="1ms"/>
+            <Line id="pop_pyr_2_pyr_4_sym_0_v" quantity="pop_pyr/2/pyr_4_sym/0/v" scale="1mV" color="#b5b5a2" timeScale="1ms"/>
+            <Line id="pop_pyr_3_pyr_4_sym_0_v" quantity="pop_pyr/3/pyr_4_sym/0/v" scale="1mV" color="#2ebe19" timeScale="1ms"/>
+            <Line id="pop_pyr_4_pyr_4_sym_0_v" quantity="pop_pyr/4/pyr_4_sym/0/v" scale="1mV" color="#d30150" timeScale="1ms"/>
+            <Line id="pop_pyr_5_pyr_4_sym_0_v" quantity="pop_pyr/5/pyr_4_sym/0/v" scale="1mV" color="#55490a" timeScale="1ms"/>
+            <Line id="pop_pyr_6_pyr_4_sym_0_v" quantity="pop_pyr/6/pyr_4_sym/0/v" scale="1mV" color="#4bd9d0" timeScale="1ms"/>
+            <Line id="pop_pyr_7_pyr_4_sym_0_v" quantity="pop_pyr/7/pyr_4_sym/0/v" scale="1mV" color="#69535e" timeScale="1ms"/>
+            <Line id="pop_pyr_8_pyr_4_sym_0_v" quantity="pop_pyr/8/pyr_4_sym/0/v" scale="1mV" color="#27dae9" timeScale="1ms"/>
+            <Line id="pop_pyr_9_pyr_4_sym_0_v" quantity="pop_pyr/9/pyr_4_sym/0/v" scale="1mV" color="#6143ed" timeScale="1ms"/>
+            <Line id="pop_pyr_10_pyr_4_sym_0_v" quantity="pop_pyr/10/pyr_4_sym/0/v" scale="1mV" color="#aee102" timeScale="1ms"/>
+            <Line id="pop_pyr_11_pyr_4_sym_0_v" quantity="pop_pyr/11/pyr_4_sym/0/v" scale="1mV" color="#a4e245" timeScale="1ms"/>
+            <Line id="pop_pyr_12_pyr_4_sym_0_v" quantity="pop_pyr/12/pyr_4_sym/0/v" scale="1mV" color="#0c0af9" timeScale="1ms"/>
+            <Line id="pop_pyr_13_pyr_4_sym_0_v" quantity="pop_pyr/13/pyr_4_sym/0/v" scale="1mV" color="#eaece2" timeScale="1ms"/>
+            <Line id="pop_pyr_14_pyr_4_sym_0_v" quantity="pop_pyr/14/pyr_4_sym/0/v" scale="1mV" color="#add546" timeScale="1ms"/>
+            <Line id="pop_pyr_15_pyr_4_sym_0_v" quantity="pop_pyr/15/pyr_4_sym/0/v" scale="1mV" color="#0dc1e8" timeScale="1ms"/>
+            <Line id="pop_pyr_16_pyr_4_sym_0_v" quantity="pop_pyr/16/pyr_4_sym/0/v" scale="1mV" color="#d4b998" timeScale="1ms"/>
+            <Line id="pop_pyr_17_pyr_4_sym_0_v" quantity="pop_pyr/17/pyr_4_sym/0/v" scale="1mV" color="#01c4cd" timeScale="1ms"/>
+            <Line id="pop_pyr_18_pyr_4_sym_0_v" quantity="pop_pyr/18/pyr_4_sym/0/v" scale="1mV" color="#036aae" timeScale="1ms"/>
+            <Line id="pop_pyr_19_pyr_4_sym_0_v" quantity="pop_pyr/19/pyr_4_sym/0/v" scale="1mV" color="#53de83" timeScale="1ms"/>
+            <Line id="pop_pyr_20_pyr_4_sym_0_v" quantity="pop_pyr/20/pyr_4_sym/0/v" scale="1mV" color="#5b9557" timeScale="1ms"/>
+            <Line id="pop_pyr_21_pyr_4_sym_0_v" quantity="pop_pyr/21/pyr_4_sym/0/v" scale="1mV" color="#92b9f4" timeScale="1ms"/>
+            <Line id="pop_pyr_22_pyr_4_sym_0_v" quantity="pop_pyr/22/pyr_4_sym/0/v" scale="1mV" color="#32f19d" timeScale="1ms"/>
+            <Line id="pop_pyr_23_pyr_4_sym_0_v" quantity="pop_pyr/23/pyr_4_sym/0/v" scale="1mV" color="#d43d99" timeScale="1ms"/>
+            <Line id="pop_pyr_24_pyr_4_sym_0_v" quantity="pop_pyr/24/pyr_4_sym/0/v" scale="1mV" color="#36379e" timeScale="1ms"/>
+            <Line id="pop_pyr_25_pyr_4_sym_0_v" quantity="pop_pyr/25/pyr_4_sym/0/v" scale="1mV" color="#5d01b7" timeScale="1ms"/>
+            <Line id="pop_pyr_26_pyr_4_sym_0_v" quantity="pop_pyr/26/pyr_4_sym/0/v" scale="1mV" color="#c0004f" timeScale="1ms"/>
+            <Line id="pop_pyr_27_pyr_4_sym_0_v" quantity="pop_pyr/27/pyr_4_sym/0/v" scale="1mV" color="#771a1c" timeScale="1ms"/>
+            <Line id="pop_pyr_28_pyr_4_sym_0_v" quantity="pop_pyr/28/pyr_4_sym/0/v" scale="1mV" color="#a8e7b4" timeScale="1ms"/>
+            <Line id="pop_pyr_29_pyr_4_sym_0_v" quantity="pop_pyr/29/pyr_4_sym/0/v" scale="1mV" color="#149bc7" timeScale="1ms"/>
+            <Line id="pop_pyr_30_pyr_4_sym_0_v" quantity="pop_pyr/30/pyr_4_sym/0/v" scale="1mV" color="#76f116" timeScale="1ms"/>
+            <Line id="pop_pyr_31_pyr_4_sym_0_v" quantity="pop_pyr/31/pyr_4_sym/0/v" scale="1mV" color="#3d56b9" timeScale="1ms"/>
+            <Line id="pop_pyr_32_pyr_4_sym_0_v" quantity="pop_pyr/32/pyr_4_sym/0/v" scale="1mV" color="#ff9a67" timeScale="1ms"/>
+            <Line id="pop_pyr_33_pyr_4_sym_0_v" quantity="pop_pyr/33/pyr_4_sym/0/v" scale="1mV" color="#6ec96a" timeScale="1ms"/>
+            <Line id="pop_pyr_34_pyr_4_sym_0_v" quantity="pop_pyr/34/pyr_4_sym/0/v" scale="1mV" color="#5f24e5" timeScale="1ms"/>
+            <Line id="pop_pyr_35_pyr_4_sym_0_v" quantity="pop_pyr/35/pyr_4_sym/0/v" scale="1mV" color="#83f5a5" timeScale="1ms"/>
+            <Line id="pop_pyr_36_pyr_4_sym_0_v" quantity="pop_pyr/36/pyr_4_sym/0/v" scale="1mV" color="#de0aae" timeScale="1ms"/>
+            <Line id="pop_pyr_37_pyr_4_sym_0_v" quantity="pop_pyr/37/pyr_4_sym/0/v" scale="1mV" color="#427e32" timeScale="1ms"/>
+            <Line id="pop_pyr_38_pyr_4_sym_0_v" quantity="pop_pyr/38/pyr_4_sym/0/v" scale="1mV" color="#1544a0" timeScale="1ms"/>
+            <Line id="pop_pyr_39_pyr_4_sym_0_v" quantity="pop_pyr/39/pyr_4_sym/0/v" scale="1mV" color="#5409ee" timeScale="1ms"/>
+            <Line id="pop_pyr_40_pyr_4_sym_0_v" quantity="pop_pyr/40/pyr_4_sym/0/v" scale="1mV" color="#9a477d" timeScale="1ms"/>
+            <Line id="pop_pyr_41_pyr_4_sym_0_v" quantity="pop_pyr/41/pyr_4_sym/0/v" scale="1mV" color="#04ca61" timeScale="1ms"/>
+            <Line id="pop_pyr_42_pyr_4_sym_0_v" quantity="pop_pyr/42/pyr_4_sym/0/v" scale="1mV" color="#4cf083" timeScale="1ms"/>
+            <Line id="pop_pyr_43_pyr_4_sym_0_v" quantity="pop_pyr/43/pyr_4_sym/0/v" scale="1mV" color="#754e4b" timeScale="1ms"/>
+            <Line id="pop_pyr_44_pyr_4_sym_0_v" quantity="pop_pyr/44/pyr_4_sym/0/v" scale="1mV" color="#b30f75" timeScale="1ms"/>
+            <Line id="pop_pyr_45_pyr_4_sym_0_v" quantity="pop_pyr/45/pyr_4_sym/0/v" scale="1mV" color="#af1648" timeScale="1ms"/>
+            <Line id="pop_pyr_46_pyr_4_sym_0_v" quantity="pop_pyr/46/pyr_4_sym/0/v" scale="1mV" color="#505fca" timeScale="1ms"/>
+            <Line id="pop_pyr_47_pyr_4_sym_0_v" quantity="pop_pyr/47/pyr_4_sym/0/v" scale="1mV" color="#c5a380" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Sim_ACNet_pop_bask_v_dat" fileName="Sim_ACNet.pop_bask.v.dat">

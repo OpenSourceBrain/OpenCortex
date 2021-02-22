@@ -2,7 +2,7 @@
     
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v0.5.6 (libNeuroML v0.2.52)
+        This LEMS file has been automatically generated using PyNeuroML v0.5.9 (libNeuroML v0.2.54)
 
      -->
     
@@ -27,11 +27,11 @@
     <Simulation id="Sim_IClamps" length="500ms" step="0.005ms" target="IClamps" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         
         <Display id="DispPop__popIzh" title="Membrane potentials of cells in popIzh" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
-            <Line id="popIzh[0]: v" quantity="popIzh/0/RS/v" scale="1mV" color="#6aa799" timeScale="1ms"/>
+            <Line id="popIzh[0]: v" quantity="popIzh/0/RS/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
         </Display>
         
         <Display id="DispPop__popHH" title="Membrane potentials of cells in popHH" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
-            <Line id="popHH[0]: v" quantity="popHH/0/pyr_4_sym_soma/v" scale="1mV" color="#029a72" timeScale="1ms"/>
+            <Line id="popHH[0]: v" quantity="popHH/0/pyr_4_sym_soma/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
         </Display>
         
         <OutputFile id="Volts_file__popIzh" fileName="Sim_IClamps.popIzh.v.dat">
