@@ -7,33 +7,33 @@ experiments:
   p_0:
     observables:
       spike times:
-        file: 
+        file:
           path: ../HDF5/Sim_ACNet.pop_pyr.v.dat
           columns: [0,1]
           scaling: [1000, 1000]
-        spike detection: 
+        spike detection:
           method: threshold
           threshold: 0
-        tolerance: 4.1e-8
+        tolerance: 1.8686199494019725e-16
   p_1:
     observables:
       spike times:
-        file: 
+        file:
           path: ../HDF5/Sim_ACNet.pop_pyr.v.dat
           columns: [0,2]
           scaling: [1000, 1000]
-        spike detection: 
+        spike detection:
           method: threshold
           threshold: 0
-        tolerance: 0.00011273957159
+        tolerance: 2.267388067842362e-16
   b_0:
     observables:
       spike times:
-        file: 
+        file:
           path: ../HDF5/Sim_ACNet.pop_bask.v.dat
           columns: [0,1]
           scaling: [1000, 1000]
-        spike detection: 
+        spike detection:
           method: threshold
           threshold: 0
-        tolerance: 4.1e-8
+        tolerance: 2.14220534617705e-16
