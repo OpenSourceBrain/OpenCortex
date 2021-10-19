@@ -30,5 +30,6 @@ jobs:
         ./regenerateAll.sh
         ls -alt
         cd ../opencortex/test
+        pip install nose
         nosetests -vs
         pip freeze
