@@ -20,16 +20,15 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version:  ${{ matrix.python-version }}
-    - name: Install c302
+    - name: Install OpenCortex
       run: |
         pip install .
     - name: Run some examples
       run: |
-        cd c302
-        mkdir examples
-        python c302_IClamp.py A
-        #- omv install NEURON # Need to install NEURON
-        #- export NEURON_HOME=/home/travis/neuron/nrn/x86_64/
-        #- python runAndPlot.py -test
-        #- python c302_utils.py -nogui
+        echo "Running non OMV tests..."
+        cd examples
+        ./regenerateAll.sh
+        ls -alt
+        cd ../opencortex/test
+        nosetests -vs
         pip freeze
