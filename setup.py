@@ -21,7 +21,7 @@ setup(
             '../NeuroML2/prototypes/BlueBrainProject_NMC/*',
             '../NeuroML2/prototypes/AllenInstituteCellTypesDB_HH/*',
             '../NeuroML2/prototypes/L23Pyr_SmithEtAl2013/*',
-            '../NeuroML2/prototypes/acnet2/*']}, 
+            '../NeuroML2/prototypes/acnet2/*']},
 
     url='https://github.com/OpenSourceBrain/OpenCortex',
     license='LICENSE.lesser',
@@ -31,7 +31,8 @@ setup(
         'libNeuroML>=0.2.39',
         'pylems',
         'pyNeuroML>=0.3.11',
-        'matplotlib'],
+        'matplotlib',
+        'tables'],
     dependency_links=[
       'git+https://github.com/NeuralEnsemble/libNeuroML.git@development#egg=libNeuroML-0.2.10'
     ],

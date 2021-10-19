@@ -4,6 +4,6 @@ A framework for building cortical network models on OSB in NeuroML format.
 
 In development, subject to change without notice... Contact P Gleeson for more details.
 
-See also: https://github.com/NeuroML/NeuroMLlite.
+**Note: much of this functionality has been replaced by: https://github.com/NeuroML/NeuroMLlite**
 
-[![Build Status](https://travis-ci.com/OpenSourceBrain/OpenCortex.svg?branch=master)](https://travis-ci.com/OpenSourceBrain/OpenCortex)
+[![Continuous builds - OMV tests](https://github.com/OpenSourceBrain/OpenCortex/actions/workflows/ci.yml/badge.svg)](https://github.com/OpenSourceBrain/OpenCortex/actions/workflows/ci.yml)
