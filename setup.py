@@ -28,9 +28,7 @@ setup(
     description='A framework for building cortical network models',
     long_description=open('README.md').read(),
     install_requires=[
-        'libNeuroML>=0.2.39',
-        'pylems',
-        'pyNeuroML>=0.3.11',
+        'pyNeuroML>=0.3.18', # sets dependencies for other neuroml libs
         'matplotlib',
         'tables'],
     dependency_links=[
