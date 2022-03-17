@@ -118,3 +118,6 @@ build/lib*
 /examples/HDF5/report*.txt
 /examples/report*.txt
 /examples/HDF5/libjhdf5.jnilib
+/examples/neuromllite/*.gv*
+/examples/neuromllite/*.dat
+/examples/neuromllite/report*txt
