@@ -1,0 +1,11 @@
+{
+    "SimSimpleNet": {
+        "version": "NeuroMLlite v0.5.2",
+        "network": "SimpleNet.json",
+        "duration": 1000.0,
+        "dt": 0.025,
+        "record_traces": {
+            "all": "*"
+        }
+    }
+}

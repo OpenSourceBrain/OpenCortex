@@ -1,0 +1,56 @@
+{
+    "SimpleNet": {
+        "version": "NeuroMLlite v0.5.2",
+        "notes": "Simple network with single population",
+        "cells": {
+            "RS": {
+                "neuroml2_source_file": "../../NeuroML2/prototypes/izhikevich/RS.cell.nml"
+            }
+        },
+        "synapses": {
+            "ampa": {
+                "neuroml2_source_file": "../../NeuroML2/prototypes/synapses/ampa.synapse.nml"
+            }
+        },
+        "input_sources": {
+            "poissonFiringSyn": {
+                "parameters": {
+                    "average_rate": "50Hz",
+                    "synapse": "ampa",
+                    "spike_target": "./ampa"
+                },
+                "neuroml2_input": "poissonFiringSynapse"
+            }
+        },
+        "regions": {
+            "region1": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "width": 100.0,
+                "height": 100.0,
+                "depth": 100.0
+            }
+        },
+        "populations": {
+            "RS_pop": {
+                "size": 3,
+                "component": "RS",
+                "properties": {
+                    "color": "0 .8 0"
+                },
+                "random_layout": {
+                    "region": "region1"
+                }
+            }
+        },
+        "inputs": {
+            "Stim0": {
+                "input_source": "poissonFiringSyn",
+                "population": "RS_pop",
+                "percentage": 100.0
+            }
+        },
+        "temperature": 32.0
+    }
+}

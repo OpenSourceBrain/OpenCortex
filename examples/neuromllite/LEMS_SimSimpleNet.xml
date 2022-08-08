@@ -1,0 +1,37 @@
+<Lems>
+    
+    <!-- 
+
+        This LEMS file has been automatically generated using PyNeuroML v0.7.1 (libNeuroML v0.4.1)
+
+     -->
+    
+    <!-- Specify which component to run -->
+    <Target component="SimSimpleNet" reportFile="report.SimSimpleNet.txt"/>
+
+    <!-- Include core NeuroML2 ComponentType definitions -->
+    <Include file="Cells.xml"/>
+    <Include file="Networks.xml"/>
+    <Include file="Simulation.xml"/>
+    
+    <Include file="PyNN.xml"/>
+    <Include file="SimpleNet.net.nml"/>
+    <Include file="../../NeuroML2/prototypes/synapses/ampa.synapse.nml"/>
+   
+    <Simulation id="SimSimpleNet" length="1000.0ms" step="0.025ms" target="SimpleNet" seed="5678">  <!-- Note seed: ensures same random numbers used every run -->
+        
+        <Display id="RS_pop_v" title="Plots of RS_pop_v" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
+            <Line id="RS_pop_0_RS_v" quantity="RS_pop/0/RS/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
+            <Line id="RS_pop_1_RS_v" quantity="RS_pop/1/RS/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
+            <Line id="RS_pop_2_RS_v" quantity="RS_pop/2/RS/v" scale="1mV" color="#98e752" timeScale="1ms"/>
+        </Display>
+        
+        <OutputFile id="SimSimpleNet_RS_pop_v_dat" fileName="SimSimpleNet.RS_pop.v.dat">
+            <OutputColumn id="RS_pop_0_RS_v" quantity="RS_pop/0/RS/v"/> 
+            <OutputColumn id="RS_pop_1_RS_v" quantity="RS_pop/1/RS/v"/> 
+            <OutputColumn id="RS_pop_2_RS_v" quantity="RS_pop/2/RS/v"/> 
+        </OutputFile>
+        
+    </Simulation>
+
+</Lems>
