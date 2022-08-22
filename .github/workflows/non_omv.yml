@@ -22,6 +22,9 @@ jobs:
         python-version:  ${{ matrix.python-version }}
     - name: Install OpenCortex
       run: |
+        # test with specific branch of libNeuroML
+        python -m pip install git+https://github.com/NeuralEnsemble/libNeuroML@experimental
+        
         pip install .
     - name: Run some examples
       run: |
