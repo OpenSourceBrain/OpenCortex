@@ -7,3 +7,4 @@ In development, subject to change without notice... Contact P Gleeson for more d
 **Note: much of this functionality has been replaced by: https://github.com/NeuroML/NeuroMLlite**
 
 [![Continuous builds - OMV tests](https://github.com/OpenSourceBrain/OpenCortex/actions/workflows/ci.yml/badge.svg)](https://github.com/OpenSourceBrain/OpenCortex/actions/workflows/ci.yml)
+[![Non OMV tests](https://github.com/OpenSourceBrain/OpenCortex/actions/workflows/non_omv.yml/badge.svg)](https://github.com/OpenSourceBrain/OpenCortex/actions/workflows/non_omv.yml)
