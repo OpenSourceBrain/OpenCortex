@@ -31,5 +31,5 @@ jobs:
         ls -alt
         cd ../opencortex/test
         pip install pytest
-        pytest -v
+        pytest -vs
         pip freeze

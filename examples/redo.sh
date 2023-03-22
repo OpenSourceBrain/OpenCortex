@@ -1,9 +1,9 @@
 #!/bin/bash
 set -ex
 cd ..
-python setup.py install
+pip install .
 cd opencortex/test
-nosetests -vs
+pytest -vs
 cd ../../examples
 
 cleanGenNML.sh
