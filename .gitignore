@@ -120,3 +120,4 @@ build/lib*
 /examples/neuromllite/*.gv*
 /examples/neuromllite/*.dat
 /examples/neuromllite/report*txt
+arm64
