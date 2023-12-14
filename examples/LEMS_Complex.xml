@@ -1,11 +1,11 @@
 <Lems>
-    
+
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.1 (libNeuroML v0.5.5)
+        This LEMS file has been automatically generated using PyNeuroML v1.1.10 (libNeuroML v0.5.8)
 
      -->
-    
+
     <!-- Specify which component to run -->
     <Target component="Sim_Complex"/>
 
@@ -13,7 +13,7 @@
     <Include file="Cells.xml"/>
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
-    
+
     <Include file="Complex/RS.cell.nml"/>
     <Include file="Complex/iaf.cell.nml"/>
     <Include file="Complex/iafRef.cell.nml"/>
@@ -26,39 +26,38 @@
     <Include file="Complex/Na_pyr.channel.nml"/>
     <Include file="Complex/pyr_4_sym.cell.nml"/>
     <Include file="Complex.net.nml"/>
-   
+
     <Simulation id="Sim_Complex" length="500ms" step="0.025ms" target="Complex" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
-        
         <Display id="DispPop__popIaf" title="Membrane potentials of cells in popIaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="popIaf[0]: v" quantity="popIaf/0/iaf/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
             <Line id="popIaf[1]: v" quantity="popIaf/1/iaf/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
             <Line id="popIaf[2]: v" quantity="popIaf/2/iaf/v" scale="1mV" color="#98e752" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__popIafRef" title="Membrane potentials of cells in popIafRef" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="popIafRef[0]: v" quantity="popIafRef/0/iafRef/v" scale="1mV" color="#bca074" timeScale="1ms"/>
             <Line id="popIafRef[1]: v" quantity="popIafRef/1/iafRef/v" scale="1mV" color="#632794" timeScale="1ms"/>
             <Line id="popIafRef[2]: v" quantity="popIafRef/2/iafRef/v" scale="1mV" color="#8a5d88" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__popIzh" title="Membrane potentials of cells in popIzh" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="popIzh[0]: v" quantity="popIzh/0/RS/v" scale="1mV" color="#df5954" timeScale="1ms"/>
             <Line id="popIzh[1]: v" quantity="popIzh/1/RS/v" scale="1mV" color="#52c8bf" timeScale="1ms"/>
             <Line id="popIzh[2]: v" quantity="popIzh/2/RS/v" scale="1mV" color="#bf0239" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__popPyrS" title="Membrane potentials of cells in popPyrS" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="popPyrS[0]: v" quantity="popPyrS/0/pyr_4_sym_soma/v" scale="1mV" color="#3f9fe8" timeScale="1ms"/>
             <Line id="popPyrS[1]: v" quantity="popPyrS/1/pyr_4_sym_soma/v" scale="1mV" color="#dda9d2" timeScale="1ms"/>
             <Line id="popPyrS[2]: v" quantity="popPyrS/2/pyr_4_sym_soma/v" scale="1mV" color="#85ad96" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__popPyr" title="Membrane potentials of cells in popPyr" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="popPyr[0]: v" quantity="popPyr/0/pyr_4_sym/v" scale="1mV" color="#59438f" timeScale="1ms"/>
             <Line id="popPyr[1]: v" quantity="popPyr/1/pyr_4_sym/v" scale="1mV" color="#5fa56f" timeScale="1ms"/>
             <Line id="popPyr[2]: v" quantity="popPyr/2/pyr_4_sym/v" scale="1mV" color="#b5b5a2" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__popPoisson" title="Membrane potentials of cells in popPoisson" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="popPoisson[0]: v" quantity="popPoisson/0/poissonInput/tsince" scale="1mV" color="#2ebe19" timeScale="1ms"/>
             <Line id="popPoisson[1]: v" quantity="popPoisson/1/poissonInput/tsince" scale="1mV" color="#d30150" timeScale="1ms"/>
@@ -71,50 +70,50 @@
             <Line id="popPoisson[8]: v" quantity="popPoisson/8/poissonInput/tsince" scale="1mV" color="#a4e245" timeScale="1ms"/>
             <Line id="popPoisson[9]: v" quantity="popPoisson/9/poissonInput/tsince" scale="1mV" color="#0c0af9" timeScale="1ms"/>
         </Display>
-        
+
         <OutputFile id="Volts_file__popIaf" fileName="Sim_Complex.popIaf.v.dat">
-            <OutputColumn id="v_popIaf_0_iaf_v" quantity="popIaf/0/iaf/v"/> 
-            <OutputColumn id="v_popIaf_1_iaf_v" quantity="popIaf/1/iaf/v"/> 
-            <OutputColumn id="v_popIaf_2_iaf_v" quantity="popIaf/2/iaf/v"/> 
+            <OutputColumn id="v_popIaf_0_iaf_v" quantity="popIaf/0/iaf/v"/>
+            <OutputColumn id="v_popIaf_1_iaf_v" quantity="popIaf/1/iaf/v"/>
+            <OutputColumn id="v_popIaf_2_iaf_v" quantity="popIaf/2/iaf/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__popIafRef" fileName="Sim_Complex.popIafRef.v.dat">
-            <OutputColumn id="v_popIafRef_0_iafRef_v" quantity="popIafRef/0/iafRef/v"/> 
-            <OutputColumn id="v_popIafRef_1_iafRef_v" quantity="popIafRef/1/iafRef/v"/> 
-            <OutputColumn id="v_popIafRef_2_iafRef_v" quantity="popIafRef/2/iafRef/v"/> 
+            <OutputColumn id="v_popIafRef_0_iafRef_v" quantity="popIafRef/0/iafRef/v"/>
+            <OutputColumn id="v_popIafRef_1_iafRef_v" quantity="popIafRef/1/iafRef/v"/>
+            <OutputColumn id="v_popIafRef_2_iafRef_v" quantity="popIafRef/2/iafRef/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__popIzh" fileName="Sim_Complex.popIzh.v.dat">
-            <OutputColumn id="v_popIzh_0_RS_v" quantity="popIzh/0/RS/v"/> 
-            <OutputColumn id="v_popIzh_1_RS_v" quantity="popIzh/1/RS/v"/> 
-            <OutputColumn id="v_popIzh_2_RS_v" quantity="popIzh/2/RS/v"/> 
+            <OutputColumn id="v_popIzh_0_RS_v" quantity="popIzh/0/RS/v"/>
+            <OutputColumn id="v_popIzh_1_RS_v" quantity="popIzh/1/RS/v"/>
+            <OutputColumn id="v_popIzh_2_RS_v" quantity="popIzh/2/RS/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__popPyrS" fileName="Sim_Complex.popPyrS.v.dat">
-            <OutputColumn id="v_popPyrS_0_pyr_4_sym_soma_v" quantity="popPyrS/0/pyr_4_sym_soma/v"/> 
-            <OutputColumn id="v_popPyrS_1_pyr_4_sym_soma_v" quantity="popPyrS/1/pyr_4_sym_soma/v"/> 
-            <OutputColumn id="v_popPyrS_2_pyr_4_sym_soma_v" quantity="popPyrS/2/pyr_4_sym_soma/v"/> 
+            <OutputColumn id="v_popPyrS_0_pyr_4_sym_soma_v" quantity="popPyrS/0/pyr_4_sym_soma/v"/>
+            <OutputColumn id="v_popPyrS_1_pyr_4_sym_soma_v" quantity="popPyrS/1/pyr_4_sym_soma/v"/>
+            <OutputColumn id="v_popPyrS_2_pyr_4_sym_soma_v" quantity="popPyrS/2/pyr_4_sym_soma/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__popPyr" fileName="Sim_Complex.popPyr.v.dat">
-            <OutputColumn id="v_popPyr_0_pyr_4_sym_v" quantity="popPyr/0/pyr_4_sym/v"/> 
-            <OutputColumn id="v_popPyr_1_pyr_4_sym_v" quantity="popPyr/1/pyr_4_sym/v"/> 
-            <OutputColumn id="v_popPyr_2_pyr_4_sym_v" quantity="popPyr/2/pyr_4_sym/v"/> 
+            <OutputColumn id="v_popPyr_0_pyr_4_sym_v" quantity="popPyr/0/pyr_4_sym/v"/>
+            <OutputColumn id="v_popPyr_1_pyr_4_sym_v" quantity="popPyr/1/pyr_4_sym/v"/>
+            <OutputColumn id="v_popPyr_2_pyr_4_sym_v" quantity="popPyr/2/pyr_4_sym/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__popPoisson" fileName="Sim_Complex.popPoisson.tsince.dat">
-            <OutputColumn id="v_popPoisson_0_poissonInput_tsince" quantity="popPoisson/0/poissonInput/tsince"/> 
-            <OutputColumn id="v_popPoisson_1_poissonInput_tsince" quantity="popPoisson/1/poissonInput/tsince"/> 
-            <OutputColumn id="v_popPoisson_2_poissonInput_tsince" quantity="popPoisson/2/poissonInput/tsince"/> 
-            <OutputColumn id="v_popPoisson_3_poissonInput_tsince" quantity="popPoisson/3/poissonInput/tsince"/> 
-            <OutputColumn id="v_popPoisson_4_poissonInput_tsince" quantity="popPoisson/4/poissonInput/tsince"/> 
-            <OutputColumn id="v_popPoisson_5_poissonInput_tsince" quantity="popPoisson/5/poissonInput/tsince"/> 
-            <OutputColumn id="v_popPoisson_6_poissonInput_tsince" quantity="popPoisson/6/poissonInput/tsince"/> 
-            <OutputColumn id="v_popPoisson_7_poissonInput_tsince" quantity="popPoisson/7/poissonInput/tsince"/> 
-            <OutputColumn id="v_popPoisson_8_poissonInput_tsince" quantity="popPoisson/8/poissonInput/tsince"/> 
-            <OutputColumn id="v_popPoisson_9_poissonInput_tsince" quantity="popPoisson/9/poissonInput/tsince"/> 
+            <OutputColumn id="v_popPoisson_0_poissonInput_tsince" quantity="popPoisson/0/poissonInput/tsince"/>
+            <OutputColumn id="v_popPoisson_1_poissonInput_tsince" quantity="popPoisson/1/poissonInput/tsince"/>
+            <OutputColumn id="v_popPoisson_2_poissonInput_tsince" quantity="popPoisson/2/poissonInput/tsince"/>
+            <OutputColumn id="v_popPoisson_3_poissonInput_tsince" quantity="popPoisson/3/poissonInput/tsince"/>
+            <OutputColumn id="v_popPoisson_4_poissonInput_tsince" quantity="popPoisson/4/poissonInput/tsince"/>
+            <OutputColumn id="v_popPoisson_5_poissonInput_tsince" quantity="popPoisson/5/poissonInput/tsince"/>
+            <OutputColumn id="v_popPoisson_6_poissonInput_tsince" quantity="popPoisson/6/poissonInput/tsince"/>
+            <OutputColumn id="v_popPoisson_7_poissonInput_tsince" quantity="popPoisson/7/poissonInput/tsince"/>
+            <OutputColumn id="v_popPoisson_8_poissonInput_tsince" quantity="popPoisson/8/poissonInput/tsince"/>
+            <OutputColumn id="v_popPoisson_9_poissonInput_tsince" quantity="popPoisson/9/poissonInput/tsince"/>
         </OutputFile>
-        
+
     </Simulation>
 
 </Lems>

@@ -1,11 +1,11 @@
 <Lems>
-    
+
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.1 (libNeuroML v0.5.5)
+        This LEMS file has been automatically generated using PyNeuroML v1.1.10 (libNeuroML v0.5.8)
 
      -->
-    
+
     <!-- Specify which component to run -->
     <Target component="Sim_SpikingNet" reportFile="report.spiking.h5.txt"/>
 
@@ -13,12 +13,11 @@
     <Include file="Cells.xml"/>
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
-    
+
     <Include file="SpikingNet/RS.cell.nml"/>
     <Include file="SpikingNet.net.nml.h5"/>
-   
+
     <Simulation id="Sim_SpikingNet" length="1000ms" step="0.01ms" target="SpikingNet" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
-        
         <Display id="DispPop__pop_post" title="Membrane potentials of cells in pop_post" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
             <Line id="pop_post[0]: v" quantity="pop_post/0/RS/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
             <Line id="pop_post[1]: v" quantity="pop_post/1/RS/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
@@ -31,7 +30,7 @@
             <Line id="pop_post[8]: v" quantity="pop_post/8/RS/v" scale="1mV" color="#bf0239" timeScale="1ms"/>
             <Line id="pop_post[9]: v" quantity="pop_post/9/RS/v" scale="1mV" color="#3f9fe8" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__pop_pre" title="Membrane potentials of cells in pop_pre" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
             <Line id="pop_pre[0]: v" quantity="pop_pre/0/RS/v" scale="1mV" color="#dda9d2" timeScale="1ms"/>
             <Line id="pop_pre[1]: v" quantity="pop_pre/1/RS/v" scale="1mV" color="#85ad96" timeScale="1ms"/>
@@ -44,33 +43,33 @@
             <Line id="pop_pre[8]: v" quantity="pop_pre/8/RS/v" scale="1mV" color="#4bd9d0" timeScale="1ms"/>
             <Line id="pop_pre[9]: v" quantity="pop_pre/9/RS/v" scale="1mV" color="#69535e" timeScale="1ms"/>
         </Display>
-        
+
         <OutputFile id="Volts_file__pop_post" fileName="Sim_SpikingNet.pop_post.v.dat">
-            <OutputColumn id="v_pop_post_0_RS_v" quantity="pop_post/0/RS/v"/> 
-            <OutputColumn id="v_pop_post_1_RS_v" quantity="pop_post/1/RS/v"/> 
-            <OutputColumn id="v_pop_post_2_RS_v" quantity="pop_post/2/RS/v"/> 
-            <OutputColumn id="v_pop_post_3_RS_v" quantity="pop_post/3/RS/v"/> 
-            <OutputColumn id="v_pop_post_4_RS_v" quantity="pop_post/4/RS/v"/> 
-            <OutputColumn id="v_pop_post_5_RS_v" quantity="pop_post/5/RS/v"/> 
-            <OutputColumn id="v_pop_post_6_RS_v" quantity="pop_post/6/RS/v"/> 
-            <OutputColumn id="v_pop_post_7_RS_v" quantity="pop_post/7/RS/v"/> 
-            <OutputColumn id="v_pop_post_8_RS_v" quantity="pop_post/8/RS/v"/> 
-            <OutputColumn id="v_pop_post_9_RS_v" quantity="pop_post/9/RS/v"/> 
+            <OutputColumn id="v_pop_post_0_RS_v" quantity="pop_post/0/RS/v"/>
+            <OutputColumn id="v_pop_post_1_RS_v" quantity="pop_post/1/RS/v"/>
+            <OutputColumn id="v_pop_post_2_RS_v" quantity="pop_post/2/RS/v"/>
+            <OutputColumn id="v_pop_post_3_RS_v" quantity="pop_post/3/RS/v"/>
+            <OutputColumn id="v_pop_post_4_RS_v" quantity="pop_post/4/RS/v"/>
+            <OutputColumn id="v_pop_post_5_RS_v" quantity="pop_post/5/RS/v"/>
+            <OutputColumn id="v_pop_post_6_RS_v" quantity="pop_post/6/RS/v"/>
+            <OutputColumn id="v_pop_post_7_RS_v" quantity="pop_post/7/RS/v"/>
+            <OutputColumn id="v_pop_post_8_RS_v" quantity="pop_post/8/RS/v"/>
+            <OutputColumn id="v_pop_post_9_RS_v" quantity="pop_post/9/RS/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__pop_pre" fileName="Sim_SpikingNet.pop_pre.v.dat">
-            <OutputColumn id="v_pop_pre_0_RS_v" quantity="pop_pre/0/RS/v"/> 
-            <OutputColumn id="v_pop_pre_1_RS_v" quantity="pop_pre/1/RS/v"/> 
-            <OutputColumn id="v_pop_pre_2_RS_v" quantity="pop_pre/2/RS/v"/> 
-            <OutputColumn id="v_pop_pre_3_RS_v" quantity="pop_pre/3/RS/v"/> 
-            <OutputColumn id="v_pop_pre_4_RS_v" quantity="pop_pre/4/RS/v"/> 
-            <OutputColumn id="v_pop_pre_5_RS_v" quantity="pop_pre/5/RS/v"/> 
-            <OutputColumn id="v_pop_pre_6_RS_v" quantity="pop_pre/6/RS/v"/> 
-            <OutputColumn id="v_pop_pre_7_RS_v" quantity="pop_pre/7/RS/v"/> 
-            <OutputColumn id="v_pop_pre_8_RS_v" quantity="pop_pre/8/RS/v"/> 
-            <OutputColumn id="v_pop_pre_9_RS_v" quantity="pop_pre/9/RS/v"/> 
+            <OutputColumn id="v_pop_pre_0_RS_v" quantity="pop_pre/0/RS/v"/>
+            <OutputColumn id="v_pop_pre_1_RS_v" quantity="pop_pre/1/RS/v"/>
+            <OutputColumn id="v_pop_pre_2_RS_v" quantity="pop_pre/2/RS/v"/>
+            <OutputColumn id="v_pop_pre_3_RS_v" quantity="pop_pre/3/RS/v"/>
+            <OutputColumn id="v_pop_pre_4_RS_v" quantity="pop_pre/4/RS/v"/>
+            <OutputColumn id="v_pop_pre_5_RS_v" quantity="pop_pre/5/RS/v"/>
+            <OutputColumn id="v_pop_pre_6_RS_v" quantity="pop_pre/6/RS/v"/>
+            <OutputColumn id="v_pop_pre_7_RS_v" quantity="pop_pre/7/RS/v"/>
+            <OutputColumn id="v_pop_pre_8_RS_v" quantity="pop_pre/8/RS/v"/>
+            <OutputColumn id="v_pop_pre_9_RS_v" quantity="pop_pre/9/RS/v"/>
         </OutputFile>
-        
+
     </Simulation>
 
 </Lems>

@@ -1,11 +1,11 @@
 <Lems>
-    
+
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.1 (libNeuroML v0.5.5)
+        This LEMS file has been automatically generated using PyNeuroML v1.1.10 (libNeuroML v0.5.8)
 
      -->
-    
+
     <!-- Specify which component to run -->
     <Target component="Sim_Weights"/>
 
@@ -13,16 +13,15 @@
     <Include file="Cells.xml"/>
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
-    
+
     <Include file="Weights/HH_477127614.cell.nml"/>
     <Include file="Weights/IMchan.channel.nml"/>
     <Include file="Weights/Kd.channel.nml"/>
     <Include file="Weights/Leak.channel.nml"/>
     <Include file="Weights/Na.channel.nml"/>
     <Include file="Weights.net.nml"/>
-   
+
     <Simulation id="Sim_Weights" length="1000ms" step="0.025ms" target="Weights" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
-        
         <Display id="DispPop__pop_pre" title="Membrane potentials of cells in pop_pre" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
             <Line id="pop_pre[0]: v" quantity="pop_pre/0/HH_477127614/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
             <Line id="pop_pre[1]: v" quantity="pop_pre/1/HH_477127614/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
@@ -31,7 +30,7 @@
             <Line id="pop_pre[4]: v" quantity="pop_pre/4/HH_477127614/v" scale="1mV" color="#632794" timeScale="1ms"/>
             <Line id="pop_pre[5]: v" quantity="pop_pre/5/HH_477127614/v" scale="1mV" color="#8a5d88" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__pop_post_chem_exc" title="Membrane potentials of cells in pop_post_chem_exc" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
             <Line id="pop_post_chem_exc[0]: v" quantity="pop_post_chem_exc/0/HH_477127614/v" scale="1mV" color="#df5954" timeScale="1ms"/>
             <Line id="pop_post_chem_exc[1]: v" quantity="pop_post_chem_exc/1/HH_477127614/v" scale="1mV" color="#52c8bf" timeScale="1ms"/>
@@ -41,7 +40,7 @@
             <Line id="pop_post_chem_exc[5]: v" quantity="pop_post_chem_exc/5/HH_477127614/v" scale="1mV" color="#85ad96" timeScale="1ms"/>
             <Line id="pop_post_chem_exc[6]: v" quantity="pop_post_chem_exc/6/HH_477127614/v" scale="1mV" color="#59438f" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__pop_post_chem_inh" title="Membrane potentials of cells in pop_post_chem_inh" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
             <Line id="pop_post_chem_inh[0]: v" quantity="pop_post_chem_inh/0/HH_477127614/v" scale="1mV" color="#5fa56f" timeScale="1ms"/>
             <Line id="pop_post_chem_inh[1]: v" quantity="pop_post_chem_inh/1/HH_477127614/v" scale="1mV" color="#b5b5a2" timeScale="1ms"/>
@@ -52,7 +51,7 @@
             <Line id="pop_post_chem_inh[6]: v" quantity="pop_post_chem_inh/6/HH_477127614/v" scale="1mV" color="#69535e" timeScale="1ms"/>
             <Line id="pop_post_chem_inh[7]: v" quantity="pop_post_chem_inh/7/HH_477127614/v" scale="1mV" color="#27dae9" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__pop_post_cont" title="Membrane potentials of cells in pop_post_cont" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-90" ymax="50">
             <Line id="pop_post_cont[0]: v" quantity="pop_post_cont/0/HH_477127614/v" scale="1mV" color="#6143ed" timeScale="1ms"/>
             <Line id="pop_post_cont[1]: v" quantity="pop_post_cont/1/HH_477127614/v" scale="1mV" color="#aee102" timeScale="1ms"/>
@@ -64,49 +63,49 @@
             <Line id="pop_post_cont[7]: v" quantity="pop_post_cont/7/HH_477127614/v" scale="1mV" color="#d4b998" timeScale="1ms"/>
             <Line id="pop_post_cont[8]: v" quantity="pop_post_cont/8/HH_477127614/v" scale="1mV" color="#01c4cd" timeScale="1ms"/>
         </Display>
-        
+
         <OutputFile id="Volts_file__pop_pre" fileName="Sim_Weights.pop_pre.v.dat">
-            <OutputColumn id="v_pop_pre_0_HH_477127614_v" quantity="pop_pre/0/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_pre_1_HH_477127614_v" quantity="pop_pre/1/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_pre_2_HH_477127614_v" quantity="pop_pre/2/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_pre_3_HH_477127614_v" quantity="pop_pre/3/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_pre_4_HH_477127614_v" quantity="pop_pre/4/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_pre_5_HH_477127614_v" quantity="pop_pre/5/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_pre_0_HH_477127614_v" quantity="pop_pre/0/HH_477127614/v"/>
+            <OutputColumn id="v_pop_pre_1_HH_477127614_v" quantity="pop_pre/1/HH_477127614/v"/>
+            <OutputColumn id="v_pop_pre_2_HH_477127614_v" quantity="pop_pre/2/HH_477127614/v"/>
+            <OutputColumn id="v_pop_pre_3_HH_477127614_v" quantity="pop_pre/3/HH_477127614/v"/>
+            <OutputColumn id="v_pop_pre_4_HH_477127614_v" quantity="pop_pre/4/HH_477127614/v"/>
+            <OutputColumn id="v_pop_pre_5_HH_477127614_v" quantity="pop_pre/5/HH_477127614/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__pop_post_chem_exc" fileName="Sim_Weights.pop_post_chem_exc.v.dat">
-            <OutputColumn id="v_pop_post_chem_exc_0_HH_477127614_v" quantity="pop_post_chem_exc/0/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_exc_1_HH_477127614_v" quantity="pop_post_chem_exc/1/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_exc_2_HH_477127614_v" quantity="pop_post_chem_exc/2/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_exc_3_HH_477127614_v" quantity="pop_post_chem_exc/3/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_exc_4_HH_477127614_v" quantity="pop_post_chem_exc/4/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_exc_5_HH_477127614_v" quantity="pop_post_chem_exc/5/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_exc_6_HH_477127614_v" quantity="pop_post_chem_exc/6/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_exc_0_HH_477127614_v" quantity="pop_post_chem_exc/0/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_exc_1_HH_477127614_v" quantity="pop_post_chem_exc/1/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_exc_2_HH_477127614_v" quantity="pop_post_chem_exc/2/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_exc_3_HH_477127614_v" quantity="pop_post_chem_exc/3/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_exc_4_HH_477127614_v" quantity="pop_post_chem_exc/4/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_exc_5_HH_477127614_v" quantity="pop_post_chem_exc/5/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_exc_6_HH_477127614_v" quantity="pop_post_chem_exc/6/HH_477127614/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__pop_post_chem_inh" fileName="Sim_Weights.pop_post_chem_inh.v.dat">
-            <OutputColumn id="v_pop_post_chem_inh_0_HH_477127614_v" quantity="pop_post_chem_inh/0/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_inh_1_HH_477127614_v" quantity="pop_post_chem_inh/1/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_inh_2_HH_477127614_v" quantity="pop_post_chem_inh/2/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_inh_3_HH_477127614_v" quantity="pop_post_chem_inh/3/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_inh_4_HH_477127614_v" quantity="pop_post_chem_inh/4/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_inh_5_HH_477127614_v" quantity="pop_post_chem_inh/5/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_inh_6_HH_477127614_v" quantity="pop_post_chem_inh/6/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_chem_inh_7_HH_477127614_v" quantity="pop_post_chem_inh/7/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_chem_inh_0_HH_477127614_v" quantity="pop_post_chem_inh/0/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_inh_1_HH_477127614_v" quantity="pop_post_chem_inh/1/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_inh_2_HH_477127614_v" quantity="pop_post_chem_inh/2/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_inh_3_HH_477127614_v" quantity="pop_post_chem_inh/3/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_inh_4_HH_477127614_v" quantity="pop_post_chem_inh/4/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_inh_5_HH_477127614_v" quantity="pop_post_chem_inh/5/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_inh_6_HH_477127614_v" quantity="pop_post_chem_inh/6/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_chem_inh_7_HH_477127614_v" quantity="pop_post_chem_inh/7/HH_477127614/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__pop_post_cont" fileName="Sim_Weights.pop_post_cont.v.dat">
-            <OutputColumn id="v_pop_post_cont_0_HH_477127614_v" quantity="pop_post_cont/0/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_cont_1_HH_477127614_v" quantity="pop_post_cont/1/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_cont_2_HH_477127614_v" quantity="pop_post_cont/2/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_cont_3_HH_477127614_v" quantity="pop_post_cont/3/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_cont_4_HH_477127614_v" quantity="pop_post_cont/4/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_cont_5_HH_477127614_v" quantity="pop_post_cont/5/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_cont_6_HH_477127614_v" quantity="pop_post_cont/6/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_cont_7_HH_477127614_v" quantity="pop_post_cont/7/HH_477127614/v"/> 
-            <OutputColumn id="v_pop_post_cont_8_HH_477127614_v" quantity="pop_post_cont/8/HH_477127614/v"/> 
+            <OutputColumn id="v_pop_post_cont_0_HH_477127614_v" quantity="pop_post_cont/0/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_cont_1_HH_477127614_v" quantity="pop_post_cont/1/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_cont_2_HH_477127614_v" quantity="pop_post_cont/2/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_cont_3_HH_477127614_v" quantity="pop_post_cont/3/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_cont_4_HH_477127614_v" quantity="pop_post_cont/4/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_cont_5_HH_477127614_v" quantity="pop_post_cont/5/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_cont_6_HH_477127614_v" quantity="pop_post_cont/6/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_cont_7_HH_477127614_v" quantity="pop_post_cont/7/HH_477127614/v"/>
+            <OutputColumn id="v_pop_post_cont_8_HH_477127614_v" quantity="pop_post_cont/8/HH_477127614/v"/>
         </OutputFile>
-        
+
     </Simulation>
 
 </Lems>

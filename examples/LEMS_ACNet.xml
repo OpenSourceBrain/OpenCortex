@@ -1,11 +1,11 @@
 <Lems>
-    
+
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.1 (libNeuroML v0.5.5)
+        This LEMS file has been automatically generated using PyNeuroML v1.1.10 (libNeuroML v0.5.8)
 
      -->
-    
+
     <!-- Specify which component to run -->
     <Target component="Sim_ACNet" reportFile="report.acnet.txt"/>
 
@@ -13,7 +13,7 @@
     <Include file="Cells.xml"/>
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
-    
+
     <Include file="ACNet/pyr_4_sym.cell.nml"/>
     <Include file="ACNet/Ca_conc.nml"/>
     <Include file="ACNet/Ca_pyr.channel.nml"/>
@@ -26,9 +26,8 @@
     <Include file="ACNet/LeakConductance_bask.channel.nml"/>
     <Include file="ACNet/Na_bask.channel.nml"/>
     <Include file="ACNet.net.nml"/>
-   
+
     <Simulation id="Sim_ACNet" length="250ms" step="0.025ms" target="ACNet" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
-        
         <Display id="Display_pop_bask_v" title="Plots of Display_pop_bask_v" timeScale="1ms" xmin="-25.0" xmax="275.0" ymin="-80" ymax="40">
             <Line id="pop_bask_0_bask_0_v" quantity="pop_bask/0/bask/0/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
             <Line id="pop_bask_1_bask_0_v" quantity="pop_bask/1/bask/0/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
@@ -43,7 +42,7 @@
             <Line id="pop_bask_10_bask_0_v" quantity="pop_bask/10/bask/0/v" scale="1mV" color="#dda9d2" timeScale="1ms"/>
             <Line id="pop_bask_11_bask_0_v" quantity="pop_bask/11/bask/0/v" scale="1mV" color="#85ad96" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="Display_pop_pyr_v" title="Plots of Display_pop_pyr_v" timeScale="1ms" xmin="-25.0" xmax="275.0" ymin="-80" ymax="40">
             <Line id="pop_pyr_0_pyr_4_sym_0_v" quantity="pop_pyr/0/pyr_4_sym/0/v" scale="1mV" color="#59438f" timeScale="1ms"/>
             <Line id="pop_pyr_1_pyr_4_sym_0_v" quantity="pop_pyr/1/pyr_4_sym/0/v" scale="1mV" color="#5fa56f" timeScale="1ms"/>
@@ -94,73 +93,73 @@
             <Line id="pop_pyr_46_pyr_4_sym_0_v" quantity="pop_pyr/46/pyr_4_sym/0/v" scale="1mV" color="#505fca" timeScale="1ms"/>
             <Line id="pop_pyr_47_pyr_4_sym_0_v" quantity="pop_pyr/47/pyr_4_sym/0/v" scale="1mV" color="#c5a380" timeScale="1ms"/>
         </Display>
-        
+
         <OutputFile id="Sim_ACNet_pop_bask_v_dat" fileName="Sim_ACNet.pop_bask.v.dat">
-            <OutputColumn id="pop_bask_0_bask_0_v" quantity="pop_bask/0/bask/0/v"/> 
-            <OutputColumn id="pop_bask_1_bask_0_v" quantity="pop_bask/1/bask/0/v"/> 
-            <OutputColumn id="pop_bask_2_bask_0_v" quantity="pop_bask/2/bask/0/v"/> 
-            <OutputColumn id="pop_bask_3_bask_0_v" quantity="pop_bask/3/bask/0/v"/> 
-            <OutputColumn id="pop_bask_4_bask_0_v" quantity="pop_bask/4/bask/0/v"/> 
-            <OutputColumn id="pop_bask_5_bask_0_v" quantity="pop_bask/5/bask/0/v"/> 
-            <OutputColumn id="pop_bask_6_bask_0_v" quantity="pop_bask/6/bask/0/v"/> 
-            <OutputColumn id="pop_bask_7_bask_0_v" quantity="pop_bask/7/bask/0/v"/> 
-            <OutputColumn id="pop_bask_8_bask_0_v" quantity="pop_bask/8/bask/0/v"/> 
-            <OutputColumn id="pop_bask_9_bask_0_v" quantity="pop_bask/9/bask/0/v"/> 
-            <OutputColumn id="pop_bask_10_bask_0_v" quantity="pop_bask/10/bask/0/v"/> 
-            <OutputColumn id="pop_bask_11_bask_0_v" quantity="pop_bask/11/bask/0/v"/> 
+            <OutputColumn id="pop_bask_0_bask_0_v" quantity="pop_bask/0/bask/0/v"/>
+            <OutputColumn id="pop_bask_1_bask_0_v" quantity="pop_bask/1/bask/0/v"/>
+            <OutputColumn id="pop_bask_2_bask_0_v" quantity="pop_bask/2/bask/0/v"/>
+            <OutputColumn id="pop_bask_3_bask_0_v" quantity="pop_bask/3/bask/0/v"/>
+            <OutputColumn id="pop_bask_4_bask_0_v" quantity="pop_bask/4/bask/0/v"/>
+            <OutputColumn id="pop_bask_5_bask_0_v" quantity="pop_bask/5/bask/0/v"/>
+            <OutputColumn id="pop_bask_6_bask_0_v" quantity="pop_bask/6/bask/0/v"/>
+            <OutputColumn id="pop_bask_7_bask_0_v" quantity="pop_bask/7/bask/0/v"/>
+            <OutputColumn id="pop_bask_8_bask_0_v" quantity="pop_bask/8/bask/0/v"/>
+            <OutputColumn id="pop_bask_9_bask_0_v" quantity="pop_bask/9/bask/0/v"/>
+            <OutputColumn id="pop_bask_10_bask_0_v" quantity="pop_bask/10/bask/0/v"/>
+            <OutputColumn id="pop_bask_11_bask_0_v" quantity="pop_bask/11/bask/0/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Sim_ACNet_pop_pyr_v_dat" fileName="Sim_ACNet.pop_pyr.v.dat">
-            <OutputColumn id="pop_pyr_0_pyr_4_sym_0_v" quantity="pop_pyr/0/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_1_pyr_4_sym_0_v" quantity="pop_pyr/1/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_2_pyr_4_sym_0_v" quantity="pop_pyr/2/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_3_pyr_4_sym_0_v" quantity="pop_pyr/3/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_4_pyr_4_sym_0_v" quantity="pop_pyr/4/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_5_pyr_4_sym_0_v" quantity="pop_pyr/5/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_6_pyr_4_sym_0_v" quantity="pop_pyr/6/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_7_pyr_4_sym_0_v" quantity="pop_pyr/7/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_8_pyr_4_sym_0_v" quantity="pop_pyr/8/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_9_pyr_4_sym_0_v" quantity="pop_pyr/9/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_10_pyr_4_sym_0_v" quantity="pop_pyr/10/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_11_pyr_4_sym_0_v" quantity="pop_pyr/11/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_12_pyr_4_sym_0_v" quantity="pop_pyr/12/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_13_pyr_4_sym_0_v" quantity="pop_pyr/13/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_14_pyr_4_sym_0_v" quantity="pop_pyr/14/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_15_pyr_4_sym_0_v" quantity="pop_pyr/15/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_16_pyr_4_sym_0_v" quantity="pop_pyr/16/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_17_pyr_4_sym_0_v" quantity="pop_pyr/17/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_18_pyr_4_sym_0_v" quantity="pop_pyr/18/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_19_pyr_4_sym_0_v" quantity="pop_pyr/19/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_20_pyr_4_sym_0_v" quantity="pop_pyr/20/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_21_pyr_4_sym_0_v" quantity="pop_pyr/21/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_22_pyr_4_sym_0_v" quantity="pop_pyr/22/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_23_pyr_4_sym_0_v" quantity="pop_pyr/23/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_24_pyr_4_sym_0_v" quantity="pop_pyr/24/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_25_pyr_4_sym_0_v" quantity="pop_pyr/25/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_26_pyr_4_sym_0_v" quantity="pop_pyr/26/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_27_pyr_4_sym_0_v" quantity="pop_pyr/27/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_28_pyr_4_sym_0_v" quantity="pop_pyr/28/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_29_pyr_4_sym_0_v" quantity="pop_pyr/29/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_30_pyr_4_sym_0_v" quantity="pop_pyr/30/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_31_pyr_4_sym_0_v" quantity="pop_pyr/31/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_32_pyr_4_sym_0_v" quantity="pop_pyr/32/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_33_pyr_4_sym_0_v" quantity="pop_pyr/33/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_34_pyr_4_sym_0_v" quantity="pop_pyr/34/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_35_pyr_4_sym_0_v" quantity="pop_pyr/35/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_36_pyr_4_sym_0_v" quantity="pop_pyr/36/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_37_pyr_4_sym_0_v" quantity="pop_pyr/37/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_38_pyr_4_sym_0_v" quantity="pop_pyr/38/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_39_pyr_4_sym_0_v" quantity="pop_pyr/39/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_40_pyr_4_sym_0_v" quantity="pop_pyr/40/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_41_pyr_4_sym_0_v" quantity="pop_pyr/41/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_42_pyr_4_sym_0_v" quantity="pop_pyr/42/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_43_pyr_4_sym_0_v" quantity="pop_pyr/43/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_44_pyr_4_sym_0_v" quantity="pop_pyr/44/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_45_pyr_4_sym_0_v" quantity="pop_pyr/45/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_46_pyr_4_sym_0_v" quantity="pop_pyr/46/pyr_4_sym/0/v"/> 
-            <OutputColumn id="pop_pyr_47_pyr_4_sym_0_v" quantity="pop_pyr/47/pyr_4_sym/0/v"/> 
+            <OutputColumn id="pop_pyr_0_pyr_4_sym_0_v" quantity="pop_pyr/0/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_1_pyr_4_sym_0_v" quantity="pop_pyr/1/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_2_pyr_4_sym_0_v" quantity="pop_pyr/2/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_3_pyr_4_sym_0_v" quantity="pop_pyr/3/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_4_pyr_4_sym_0_v" quantity="pop_pyr/4/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_5_pyr_4_sym_0_v" quantity="pop_pyr/5/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_6_pyr_4_sym_0_v" quantity="pop_pyr/6/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_7_pyr_4_sym_0_v" quantity="pop_pyr/7/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_8_pyr_4_sym_0_v" quantity="pop_pyr/8/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_9_pyr_4_sym_0_v" quantity="pop_pyr/9/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_10_pyr_4_sym_0_v" quantity="pop_pyr/10/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_11_pyr_4_sym_0_v" quantity="pop_pyr/11/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_12_pyr_4_sym_0_v" quantity="pop_pyr/12/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_13_pyr_4_sym_0_v" quantity="pop_pyr/13/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_14_pyr_4_sym_0_v" quantity="pop_pyr/14/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_15_pyr_4_sym_0_v" quantity="pop_pyr/15/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_16_pyr_4_sym_0_v" quantity="pop_pyr/16/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_17_pyr_4_sym_0_v" quantity="pop_pyr/17/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_18_pyr_4_sym_0_v" quantity="pop_pyr/18/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_19_pyr_4_sym_0_v" quantity="pop_pyr/19/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_20_pyr_4_sym_0_v" quantity="pop_pyr/20/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_21_pyr_4_sym_0_v" quantity="pop_pyr/21/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_22_pyr_4_sym_0_v" quantity="pop_pyr/22/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_23_pyr_4_sym_0_v" quantity="pop_pyr/23/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_24_pyr_4_sym_0_v" quantity="pop_pyr/24/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_25_pyr_4_sym_0_v" quantity="pop_pyr/25/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_26_pyr_4_sym_0_v" quantity="pop_pyr/26/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_27_pyr_4_sym_0_v" quantity="pop_pyr/27/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_28_pyr_4_sym_0_v" quantity="pop_pyr/28/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_29_pyr_4_sym_0_v" quantity="pop_pyr/29/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_30_pyr_4_sym_0_v" quantity="pop_pyr/30/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_31_pyr_4_sym_0_v" quantity="pop_pyr/31/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_32_pyr_4_sym_0_v" quantity="pop_pyr/32/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_33_pyr_4_sym_0_v" quantity="pop_pyr/33/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_34_pyr_4_sym_0_v" quantity="pop_pyr/34/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_35_pyr_4_sym_0_v" quantity="pop_pyr/35/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_36_pyr_4_sym_0_v" quantity="pop_pyr/36/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_37_pyr_4_sym_0_v" quantity="pop_pyr/37/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_38_pyr_4_sym_0_v" quantity="pop_pyr/38/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_39_pyr_4_sym_0_v" quantity="pop_pyr/39/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_40_pyr_4_sym_0_v" quantity="pop_pyr/40/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_41_pyr_4_sym_0_v" quantity="pop_pyr/41/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_42_pyr_4_sym_0_v" quantity="pop_pyr/42/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_43_pyr_4_sym_0_v" quantity="pop_pyr/43/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_44_pyr_4_sym_0_v" quantity="pop_pyr/44/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_45_pyr_4_sym_0_v" quantity="pop_pyr/45/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_46_pyr_4_sym_0_v" quantity="pop_pyr/46/pyr_4_sym/0/v"/>
+            <OutputColumn id="pop_pyr_47_pyr_4_sym_0_v" quantity="pop_pyr/47/pyr_4_sym/0/v"/>
         </OutputFile>
-        
+
     </Simulation>
 
 </Lems>

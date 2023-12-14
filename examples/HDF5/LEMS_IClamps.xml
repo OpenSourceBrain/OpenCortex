@@ -1,11 +1,11 @@
 <Lems>
-    
+
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.1 (libNeuroML v0.5.5)
+        This LEMS file has been automatically generated using PyNeuroML v1.1.10 (libNeuroML v0.5.8)
 
      -->
-    
+
     <!-- Specify which component to run -->
     <Target component="Sim_IClamps" reportFile="report.iclamp.h5.txt"/>
 
@@ -13,7 +13,7 @@
     <Include file="Cells.xml"/>
     <Include file="Networks.xml"/>
     <Include file="Simulation.xml"/>
-    
+
     <Include file="IClamps/RS.cell.nml"/>
     <Include file="IClamps/pyr_4_sym_soma.cell.nml"/>
     <Include file="IClamps/Ca_conc.nml"/>
@@ -23,25 +23,24 @@
     <Include file="IClamps/LeakConductance_pyr.channel.nml"/>
     <Include file="IClamps/Na_pyr.channel.nml"/>
     <Include file="IClamps.net.nml.h5"/>
-   
+
     <Simulation id="Sim_IClamps" length="500ms" step="0.005ms" target="IClamps" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
-        
         <Display id="DispPop__popHH" title="Membrane potentials of cells in popHH" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="popHH[0]: v" quantity="popHH/0/pyr_4_sym_soma/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
         </Display>
-        
+
         <Display id="DispPop__popIzh" title="Membrane potentials of cells in popIzh" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="popIzh[0]: v" quantity="popIzh/0/RS/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
         </Display>
-        
+
         <OutputFile id="Volts_file__popHH" fileName="Sim_IClamps.popHH.v.dat">
-            <OutputColumn id="v_popHH_0_pyr_4_sym_soma_v" quantity="popHH/0/pyr_4_sym_soma/v"/> 
+            <OutputColumn id="v_popHH_0_pyr_4_sym_soma_v" quantity="popHH/0/pyr_4_sym_soma/v"/>
         </OutputFile>
-        
+
         <OutputFile id="Volts_file__popIzh" fileName="Sim_IClamps.popIzh.v.dat">
-            <OutputColumn id="v_popIzh_0_RS_v" quantity="popIzh/0/RS/v"/> 
+            <OutputColumn id="v_popIzh_0_RS_v" quantity="popIzh/0/RS/v"/>
         </OutputFile>
-        
+
     </Simulation>
 
 </Lems>
