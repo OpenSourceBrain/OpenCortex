@@ -2,7 +2,7 @@
 
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.14 (libNeuroML v0.5.8)
+        This LEMS file has been automatically generated using PyNeuroML v1.2.13 (libNeuroML v0.5.9)
 
      -->
 
@@ -23,7 +23,7 @@
     <Include file="GapJunctions/Na_pyr.channel.nml"/>
     <Include file="GapJunctions.net.nml"/>
 
-    <Simulation id="Sim_GapJunctions" length="1000ms" step="0.025ms" target="GapJunctions" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="Sim_GapJunctions" length="1000.0ms" step="0.025ms" target="GapJunctions" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         <Display id="Display_pop_post_v" title="Plots of Display_pop_post_v" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
             <Line id="pop_post_0_pyr_4_sym_0_v" quantity="pop_post/0/pyr_4_sym/0/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
             <Line id="pop_post_1_pyr_4_sym_0_v" quantity="pop_post/1/pyr_4_sym/0/v" scale="1mV" color="#0534e4" timeScale="1ms"/>

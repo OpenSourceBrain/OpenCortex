@@ -2,7 +2,7 @@
 
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.14 (libNeuroML v0.5.8)
+        This LEMS file has been automatically generated using PyNeuroML v1.2.13 (libNeuroML v0.5.9)
 
      -->
 
@@ -31,7 +31,7 @@
     <Include file="VClamp/pas.channel.nml"/>
     <Include file="VClamp.net.nml"/>
 
-    <Simulation id="Sim_VClamp" length="500ms" step="0.025ms" target="VClamp" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="Sim_VClamp" length="500.0ms" step="0.025ms" target="VClamp" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         <Display id="Display_popRS_0_v" title="Plots of Display_popRS_0_v" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-80" ymax="40">
             <Line id="popRS_0_L23PyrRS_0_v" quantity="popRS/0/L23PyrRS/0/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
             <Line id="popRS_0_L23PyrRS_142_v" quantity="popRS/0/L23PyrRS/142/v" scale="1mV" color="#0534e4" timeScale="1ms"/>

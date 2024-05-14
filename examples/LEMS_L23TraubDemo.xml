@@ -2,7 +2,7 @@
 
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.14 (libNeuroML v0.5.8)
+        This LEMS file has been automatically generated using PyNeuroML v1.2.13 (libNeuroML v0.5.9)
 
      -->
 
@@ -38,7 +38,7 @@
     <Include file="L23TraubDemo/naf2__a0__b0__c0__d0__fastNa_shiftmin2_5.channel.nml"/>
     <Include file="L23TraubDemo.net.nml"/>
 
-    <Simulation id="Sim_L23TraubDemo" length="300ms" step="0.025ms" target="L23TraubDemo" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="Sim_L23TraubDemo" length="300.0ms" step="0.025ms" target="L23TraubDemo" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         <Display id="Display_pop_bask_0_v" title="Plots of Display_pop_bask_0_v" timeScale="1ms" xmin="-30.0" xmax="330.0" ymin="-80" ymax="40">
             <Line id="pop_bask_0_SupBasket_0_v" quantity="pop_bask/0/SupBasket/0/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
         </Display>

@@ -2,7 +2,7 @@
 
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.14 (libNeuroML v0.5.8)
+        This LEMS file has been automatically generated using PyNeuroML v1.2.13 (libNeuroML v0.5.9)
 
      -->
 
@@ -27,7 +27,7 @@
     <Include file="Complex/pyr_4_sym.cell.nml"/>
     <Include file="Complex.net.nml"/>
 
-    <Simulation id="Sim_Complex" length="500ms" step="0.025ms" target="Complex" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="Sim_Complex" length="500.0ms" step="0.025ms" target="Complex" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         <Display id="DispPop__popIaf" title="Membrane potentials of cells in popIaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="popIaf[0]: v" quantity="popIaf/0/iaf/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
             <Line id="popIaf[1]: v" quantity="popIaf/1/iaf/v" scale="1mV" color="#0534e4" timeScale="1ms"/>

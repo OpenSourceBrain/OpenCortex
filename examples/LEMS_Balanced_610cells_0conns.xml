@@ -2,7 +2,7 @@
 
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.14 (libNeuroML v0.5.8)
+        This LEMS file has been automatically generated using PyNeuroML v1.2.13 (libNeuroML v0.5.9)
 
      -->
 
@@ -36,7 +36,7 @@
     <Include file="Balanced/Ca_LVAst.channel.nml"/>
     <Include file="Balanced_610cells_0conns.net.nml"/>
 
-    <Simulation id="Sim_Balanced_610cells_0conns" length="1000ms" step="0.025ms" target="Balanced_610cells_0conns" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="Sim_Balanced_610cells_0conns" length="1000.0ms" step="0.025ms" target="Balanced_610cells_0conns" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         <Display id="popBBP" title="Plots of popBBP" timeScale="1ms" xmin="-100.0" xmax="1100.0" ymin="-80" ymax="40">
             <Line id="popBBP_0_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/0/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
             <Line id="popBBP_1_cADpyr229_L23_PC_5ecbf9b163_0_0_v" quantity="popBBP/1/cADpyr229_L23_PC_5ecbf9b163_0_0/v" scale="1mV" color="#0534e4" timeScale="1ms"/>

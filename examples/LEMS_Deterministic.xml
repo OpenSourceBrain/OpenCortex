@@ -2,7 +2,7 @@
 
     <!-- 
 
-        This LEMS file has been automatically generated using PyNeuroML v1.1.14 (libNeuroML v0.5.8)
+        This LEMS file has been automatically generated using PyNeuroML v1.2.13 (libNeuroML v0.5.9)
 
      -->
 
@@ -18,7 +18,7 @@
     <Include file="Deterministic/iaf.cell.nml"/>
     <Include file="Deterministic.net.nml"/>
 
-    <Simulation id="Sim_Deterministic" length="500ms" step="0.005ms" target="Deterministic" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
+    <Simulation id="Sim_Deterministic" length="500.0ms" step="0.005ms" target="Deterministic" seed="12345">  <!-- Note seed: ensures same random numbers used every run -->
         <Display id="DispPop__pop_iaf" title="Membrane potentials of cells in pop_iaf" timeScale="1ms" xmin="-50.0" xmax="550.0" ymin="-90" ymax="50">
             <Line id="pop_iaf[0]: v" quantity="pop_iaf/0/iaf/v" scale="1mV" color="#d54f33" timeScale="1ms"/>
             <Line id="pop_iaf[1]: v" quantity="pop_iaf/1/iaf/v" scale="1mV" color="#0534e4" timeScale="1ms"/>
