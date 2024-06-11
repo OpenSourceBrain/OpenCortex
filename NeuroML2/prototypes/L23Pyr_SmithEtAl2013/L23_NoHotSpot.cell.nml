@@ -16742,6 +16742,8 @@
         
         <channelDensity ionChannel="ca" id="ca_soma" condDensity = "5e-5 S_per_cm2" ion="ca" segmentGroup="soma_group" erev="140.67523 mV"/>
         
+        <spikeThresh value="10mV"/>
+        
         <specificCapacitance  value="1 uF_per_cm2" />
                 
         <initMembPotential value="-75.0 mV"/>
