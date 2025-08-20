@@ -22,8 +22,6 @@ Components:
 
 # See https://github.com/Neurosim-lab/netpyne
 
-from netpyne import init  # import netpyne init module
-
 
 ###############################################################################
 # NETWORK PARAMETERS

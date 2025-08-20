@@ -12,7 +12,6 @@ import opencortex.build as oc_build
 import opencortex.utils as oc_utils
 import neuroml
 import numpy as np
-import os
 
 import random
 

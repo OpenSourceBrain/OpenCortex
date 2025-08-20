@@ -1581,7 +1581,7 @@ def extract_seg_ids(cell_object, target_compartment_array, targeting_mode):
                     found_target_groups.append(target_compartment_array[target_group])
                     if segment_group_array[segment_group]["segments"] != []:
                         for segment in segment_group_array[segment_group]["segments"]:
-                            if not segment in segment_target_array:
+                            if segment not in segment_target_array:
                                 segment_target_array.append(segment)
 
                     target_segment_array[target_compartment_array[target_group]] = (
@@ -1938,7 +1938,7 @@ def _include_neuroml2_cell(nml_doc, cell_nml2_path, cell_id, channels_also=True)
 
             new_file = "%s/%s" % (nml_doc.id, os.path.basename(cell_nml2_path))
 
-            if not new_file in all_included_files:
+            if new_file not in all_included_files:
                 nml_doc.includes.append(neuroml.IncludeType(new_file))
                 all_included_files.append(new_file)
 
@@ -1954,7 +1954,7 @@ def _include_neuroml2_cell(nml_doc, cell_nml2_path, cell_id, channels_also=True)
 
                     new_file = "%s/%s" % (nml_doc.id, os.path.basename(included.href))
 
-                    if not new_file in all_included_files:
+                    if new_file not in all_included_files:
                         nml_doc.includes.append(neuroml.IncludeType(new_file))
                         all_included_files.append(new_file)
 
@@ -1987,7 +1987,7 @@ def _add_cell_and_channels(nml_doc, cell_nml2_rel_path, cell_id, use_prototypes=
 
             _copy_to_dir_for_model(nml_doc, cell_nml2_path)
             new_file = "%s/%s.cell.nml" % (nml_doc.id, cell_id)
-            if not new_file in all_included_files:
+            if new_file not in all_included_files:
                 nml_doc.includes.append(neuroml.IncludeType(new_file))
                 all_included_files.append(new_file)
 
@@ -2017,7 +2017,7 @@ def _add_cell_and_channels(nml_doc, cell_nml2_rel_path, cell_id, use_prototypes=
                 _copy_to_dir_for_model(nml_doc, old_loc)
                 new_loc = "%s/%s" % (nml_doc.id, channel_file)
 
-                if not new_loc in all_included_files:
+                if new_loc not in all_included_files:
                     nml_doc.includes.append(neuroml.IncludeType(new_loc))
                     all_included_files.append(new_loc)
 
