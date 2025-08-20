@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 
+ruff format *.py */*.py */*/*.py */*/*/*.py */*/*/*/*.py
+
 pip install .
 cd opencortex/test
 pytest -vs
