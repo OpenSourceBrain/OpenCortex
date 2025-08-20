@@ -9,15 +9,20 @@
 ###
 ##############################################################
 
-print("\n*********************************************************************************************")
-print("          Please note that OpenCortex is in a preliminary state ");
+print(
+    "\n*********************************************************************************************"
+)
+print("          Please note that OpenCortex is in a preliminary state ")
 print("          and the API is subject to change without notice!  ")
-print("*********************************************************************************************\n")
+print(
+    "*********************************************************************************************\n"
+)
 
-__version__ = '0.1.18'
+__version__ = "0.1.18"
 
 
 verbose = False
+
 
 def print_comment_v(text):
     """
@@ -31,10 +36,11 @@ def print_comment(text, print_it=verbose):
     Print a comment only if print_it == True
     """
     prefix = "OpenCortex >>> "
-    if not isinstance(text, str): text = text.decode('ascii')
+    if not isinstance(text, str):
+        text = text.decode("ascii")
     if print_it:
+        print("%s%s" % (prefix, text.replace("\n", "\n" + prefix)))
 
-        print("%s%s"%(prefix, text.replace("\n", "\n"+prefix)))
 
 def set_verbose(value=True):
     global verbose
