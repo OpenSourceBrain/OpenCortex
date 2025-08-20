@@ -1685,7 +1685,7 @@ def get_target_segments(seg_specifications, subset_dict):
         not_selected = True
 
         while not_selected:
-            random_target_group = random.sample(seg_specifications.keys(), 1)[0]
+            random_target_group = random.sample(list(seg_specifications.keys()), 1)[0]
 
             cumulative_length_dist = seg_specifications[random_target_group][
                 "LengthDist"
