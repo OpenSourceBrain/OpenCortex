@@ -1,6 +1,6 @@
 #!/bin/bash
 set -ex
-cd ..
+
 pip install .
 cd opencortex/test
 pytest -vs
